@@ -1,0 +1,58 @@
+#' Validate presentation environment
+#'
+#' @param presentation A single string naming a presentation environment.
+#'
+#' @returns
+#' Nothing. The function will error if the specified environment doesn't
+#' exist in `.GlobalEnv` or if it's missing any of the required objects
+#' (`presentation_id`, `slide_ids`, or `current_slide_id`).
+#'
+#' @keywords internal
+validatePresentation <- function(presentation) {
+  presentation <- sym(presentation)
+
+  if (!exists(presentation, envir = .GlobalEnv)) {
+    cli::cli_abort(
+      c(
+        "Invalid or missing presentation.",
+        i = "Provide a valid environment.",
+        i = "You can create a new presentation or register a presentation to fix this problem."
+      ),
+      call = caller_env()
+    )
+  }
+
+  # Check for required objects
+  required_objects <- c("presentation_id", "slide_ids", "current_slide_id")
+  missing_objects <- setdiff(required_objects, ls(get(presentation)))
+
+  if (length(missing_objects) > 0) {
+    cli::cli_abort(
+      c(
+        "Your presentation is corrupted or missing.",
+        x = "The environment {.var {presentation}} is missing required objects:",
+        rlang::set_names(missing_objects, rep("i", length(missing_objects)))
+      ),
+      call = caller_env()
+    )
+  }
+
+  # Future presentation validation checks go here
+}
+
+
+#' Create presentation environment
+#'
+#' @returns
+#' Creates a `google_presentation` environment in the global environment if one does
+#' not already exist.
+#'
+#' @export
+create_presentation_env_in_global <- function() {
+  if (!exists("google_presentation", envir = .GlobalEnv)) {
+    eval(
+      quote(.GlobalEnv$google_presentation <- new.env(parent = emptyenv())),
+      envir = .GlobalEnv
+    )
+  }
+}
