@@ -26,3 +26,5 @@ Imports:
     cli,
     gargle,
     httr
+URL: https://github.com/Adam-Hubbs/r2slides
+BugReports: https://github.com/Adam-Hubbs/r2slides/issues
