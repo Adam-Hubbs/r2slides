@@ -37,6 +37,17 @@ query2 <- function(
     )
   }
 
+
+  # If the endpoint does not contain the base, error
+  if (!stringr::str_detect(endpoint, base)) {
+    cli::cli_abort(
+      c(x = "Incompatible endpoint and base",
+        i = "Contact the package developers if you ever incounter this error."),
+      call = call
+    )
+  }
+
+
   req <- rlang::try_fetch(
     {
       gargle::request_develop(
@@ -56,7 +67,7 @@ query2 <- function(
 
   if (!rlang::is_empty(req$body) & !is.null(body)) {
     cli::cli_warn(c(
-      x = "Duplicate body",
+      x = "Internal Error: duplicate body",
       "!" = "A body is supplied both directly and through params.",
       i = "Using `body` and ignoring `params`.",
       i = "Contact the package developers if you ever incounter this error."
