@@ -1,4 +1,14 @@
 
+
+## 0.0.9010
+
+### Working version
+* Moved everything over to query2 to use the discovery document for validation
+* Now a working package
+
+
+
+
 ## 0.0.9000
 
 #### New
