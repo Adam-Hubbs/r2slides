@@ -34,17 +34,6 @@ new_slide <- function(
     cli::cli_abort("{.var layout} must be a {.code character}")
   }
 
-  #validate token
-
-  #Get presentation_id
-  slides_api_url <- paste0(
-    "https://slides.googleapis.com/v1/presentations/",
-    presentation$presentation_id,
-    ":batchUpdate"
-  )
-  #Get access_token
-  access_token <- token$credentials$access_token
-
   add_slide_request <- list(
     requests = list(
       list(
@@ -57,19 +46,15 @@ new_slide <- function(
     )
   )
 
-  #query the new slide
-  rsp <- query(
-    url = slides_api_url,
-    access_token = access_token,
-    body = add_slide_request
+  params <- list(presentationId = presentation$presentation_id)
+
+  rsp <- query2(
+    endpoint = 'slides.presentations.batchUpdate',
+    params = params,
+    body = add_slide_request,
+    base = 'slides',
+    #call = #Leave null so caller_env points to this function as the lowest exported function?
   )
-
-  #Print status update
-  if (verbose == TRUE) {
-    print(rsp)
-  }
-
-  rsp <- resp_body_json(rsp)
 
   #Update slides list
   #Update current slide

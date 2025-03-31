@@ -1,6 +1,3 @@
-
-
-
 #' Add or update text in a Google Slides presentation
 #'
 #' @param text A character string of text to add.
@@ -83,19 +80,10 @@ add_text <- function(
   width <- in_to_pt(width)
   height <- in_to_pt(height)
 
-  # Get presentation_id and current slide_id
-  presentation_id <- presentation$presentation_id
+  # Get current slide_id
   slide_id <- presentation$current_slide_id
 
-  # Get access_token
-  access_token <- token$credentials$access_token
-
-  # Set up API URL for batch update
-  slides_api_url <- paste0(
-    "https://slides.googleapis.com/v1/presentations/",
-    presentation_id,
-    ":batchUpdate"
-  )
+  params <- list(presentationId = presentation$presentation_id)
 
   if (is.null(element_id)) {
     # Create a new text box
@@ -129,20 +117,20 @@ add_text <- function(
       )
     )
 
-    # Send request to create shape
-    rsp <- query(
-      url = slides_api_url,
-      access_token = access_token,
-      body = text_request
+
+
+    rsp <- query2(
+      endpoint = 'slides.presentations.batchUpdate',
+      params = params,
+      body = text_request,
+      base = 'slides',
+      #call = #Leave null so caller_env points to this function as the lowest exported function?
     )
 
-    if (verbose == TRUE) {
-      print(rsp)
-    }
 
     # Get the object ID of the created shape
-    rsp_data <- resp_body_json(rsp)
-    element_id <- rsp_data$replies[[1]]$createShape$objectId
+    # TODO CHECK THAT THIS WORKS WITH QUERY2!!!
+    element_id <- rsp$replies[[1]]$createShape$objectId
 
     # Format background color (if supplied)
     if (!is.null(bg_color)) {
@@ -188,16 +176,14 @@ add_text <- function(
       )
     }
 
-    # Send request to insert text
-    rsp <- query(
-      url = slides_api_url,
-      access_token = access_token,
-      body = text_request
+    rsp <- query2(
+      endpoint = 'slides.presentations.batchUpdate',
+      params = params,
+      body = text_request,
+      base = 'slides',
+      #call = #Leave null so caller_env points to this function as the lowest exported function?
     )
 
-    if (verbose == TRUE) {
-      print(rsp)
-    }
   } else {
     # Update existing text element
     text_update_request <- list(
@@ -219,11 +205,12 @@ add_text <- function(
       )
     )
 
-    # Send request to update text
-    rsp <- query(
-      url = slides_api_url,
-      access_token = access_token,
-      body = text_update_request
+    rsp <- query2(
+      endpoint = 'slides.presentations.batchUpdate',
+      params = params,
+      body = text_update_request,
+      base = 'slides',
+      #call = #Leave null so caller_env points to this function as the lowest exported function?
     )
 
     if (verbose == TRUE) {
@@ -250,16 +237,14 @@ add_text <- function(
       )
     )
 
-    # Send request to style text
-    rsp <- query(
-      url = slides_api_url,
-      access_token = access_token,
-      body = style_request
+    rsp <- query2(
+      endpoint = 'slides.presentations.batchUpdate',
+      params = params,
+      body = style_request,
+      base = 'slides',
+      #call = #Leave null so caller_env points to this function as the lowest exported function?
     )
 
-    if (verbose == TRUE) {
-      print(rsp)
-    }
   }
 
   # Return the element ID for future reference

@@ -9,7 +9,7 @@
 #'
 #' @keywords internal
 validatePresentation <- function(presentation) {
-  presentation <- sym(presentation)
+  presentation <- rlang::sym(presentation)
 
   if (!exists(presentation, envir = .GlobalEnv)) {
     cli::cli_abort(
@@ -18,7 +18,7 @@ validatePresentation <- function(presentation) {
         i = "Provide a valid environment.",
         i = "You can create a new presentation or register a presentation to fix this problem."
       ),
-      call = caller_env()
+      call = rlang::caller_env()
     )
   }
 
@@ -33,7 +33,7 @@ validatePresentation <- function(presentation) {
         x = "The environment {.var {presentation}} is missing required objects:",
         rlang::set_names(missing_objects, rep("i", length(missing_objects)))
       ),
-      call = caller_env()
+      call = rlang::caller_env()
     )
   }
 

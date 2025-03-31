@@ -15,7 +15,7 @@ new_presentation <- function(
     name,
     location = NULL,
     verbose = TRUE,
-    overwrite = FALSE,
+    overwrite = FALSE, #Set to TRUE for Testing purposes
     ...
 ) {
   #Checks if a presentation already has that name, and ask for confirmation if that is the case
@@ -33,30 +33,20 @@ new_presentation <- function(
     #Get any presentations with that name
     #Ask for clarification if any are found
   } else {
-    slides_api_url <- "https://slides.googleapis.com/v1/presentations"
-
-    access_token <- token$credentials$access_token
-
     create_presentation <- list(
       title = {{ name }}
     )
 
-    rsp <- query(
-      url = slides_api_url,
-      access_token = access_token,
-      body = create_presentation
+    rsp <- query2(
+      endpoint = 'slides.presentations.create',
+      body = create_presentation,
+      base = 'slides',
+      #call = #Leave null so caller_env points to this function as the lowest exported function?
     )
-
-    #Print status update
-    if (verbose == TRUE) {
-      print(rsp)
-    }
-
-    presentation_info <- resp_body_json(rsp)
 
     create_presentation_env_in_global()
 
-    google_presentation$presentation_id <- presentation_info$presentationId
+    google_presentation$presentation_id <- rsp$presentationId
     google_presentation$slide_ids <- NA
     google_presentation$current_slide_id <- NA
   }
@@ -115,11 +105,11 @@ register_presentation <- function(
       cli::cli_abort("{.var presentation_id} must be a {.code character}")
     } else {
       r <- tryCatch(
-        drive_get(id = presentation_id),
+        googledrive::drive_get(id = presentation_id),
         error = \(e)
         cli::cli_abort(
           "No presentation with that presentation_id found",
-          call = caller_env()
+          call = rlang::caller_env()
         )
       )
     }
@@ -128,7 +118,7 @@ register_presentation <- function(
     if (!is.character(name)) {
       cli::cli_abort("{.var name} must be a {.code character}")
     } else {
-      r <- drive_get({{ name }})
+      r <- googledrive::drive_get({{ name }})
     }
   } else if (!is.null(url)) {
     # Handle url
@@ -146,11 +136,11 @@ register_presentation <- function(
       }
 
       r <- tryCatch(
-        drive_get(id = extracted_id),
+        googledrive::drive_get(id = extracted_id),
         error = \(e)
         cli::cli_abort(
           "No presentation with that URL found",
-          call = caller_env()
+          call = rlang::caller_env()
         )
       )
     }

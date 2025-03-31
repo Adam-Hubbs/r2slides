@@ -7,10 +7,10 @@
 query2(
   endpoint = "slides.presentations.batchUpdate",
   params = list(),
-  call = caller_env(),
-  token = NULL,
   body = NULL,
   base = NULL,
+  token = NULL,
+  call = rlang::caller_env(),
   ...
 )
 }
@@ -19,13 +19,13 @@ query2(
 
 \item{params}{Optional. A list of parameters for the API request.}
 
-\item{call}{Optional. Call environment used in error messages.}
-
-\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
-
 \item{body}{Optional. A request body.}
 
 \item{base}{Optional. A string indicating the API base service name. (i.e. 'slides', or 'sheets')}
+
+\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
+
+\item{call}{Optional. Call environment used in error messages.}
 
 \item{...}{Additional arguments reserved for future expansion.}
 }

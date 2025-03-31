@@ -42,6 +42,7 @@ r2slides_auth <- function(
 ) {
   # this catches a common error, where the user passes JSON for an OAuth client
   # to the `path` argument, which only expects a service account token
+  #TODO: Change this error to point to r2slides package
   gargle::check_is_service_account(NULL, hint = "drive_auth_configure")
 
   cred <- gargle::token_fetch(
@@ -83,8 +84,9 @@ r2slides_get_key_from_json <- function(path = NULL, name = NULL) {
     "~/Y2 Analytics Dropbox/Adam Hubbs/Development/client_secret_573448088645-29u0g68rq8nkuqag9f1ag2cbfqpg8u30.apps.googleusercontent.com.json"
   name <- name %||% "Adam Desktop Client 1"
 
-  gargle_oauth_client_from_json(
+  gargle::gargle_oauth_client_from_json(
     path = path,
     name = name
   )
 }
+

@@ -2,10 +2,10 @@
 #'
 #' @param endpoint A single string indicating the API endpoint.
 #' @param params Optional. A list of parameters for the API request.
-#' @param call Optional. Call environment used in error messages.
-#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param body Optional. A request body.
 #' @param base Optional. A string indicating the API base service name. (i.e. 'slides', or 'sheets')
+#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
+#' @param call Optional. Call environment used in error messages.
 #' @param ... Additional arguments reserved for future expansion.
 #'
 #' @returns
@@ -16,15 +16,17 @@
 query2 <- function(
     endpoint = 'slides.presentations.batchUpdate',
     params = list(),
-    call = caller_env(),
-    token = NULL,
     body = NULL,
     base = NULL,
+    token = NULL,
+    call = rlang::caller_env(),
     ...
 ) {
+
   #Base
   base <- base %||% 'slides'
-  base_url <- str_c('https://', base, '.googleapis.com')
+  #Check that this pattern also works for sheets
+  base_url <- stringr::str_c('https://', base, '.googleapis.com')
 
   ept <- mthds[[endpoint]]
 
@@ -52,11 +54,12 @@ query2 <- function(
     }
   )
 
-  if (!is_empty(req$body) & !is.null(body)) {
+  if (!rlang::is_empty(req$body) & !is.null(body)) {
     cli::cli_warn(c(
       x = "Duplicate body",
       "!" = "A body is supplied both directly and through params.",
-      i = "Using `body` and ignoring `params`."
+      i = "Using `body` and ignoring `params`.",
+      i = "Contact the package developers if you ever incounter this error."
     ))
   }
 
@@ -71,11 +74,11 @@ query2 <- function(
     token = token %||% r2slides_token()
   )
 
-  if(is_testing() == FALSE) {
+  if(is_testing() == TRUE) {
     return(req)
   } else {
-    rsp <- request_make(req)
-    rsp <- response_process(rsp)
+    rsp <- gargle::request_make(req)
+    rsp <- gargle::response_process(rsp)
   }
 }
 

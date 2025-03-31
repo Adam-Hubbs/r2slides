@@ -1,30 +1,28 @@
-Package: r2slides
 Type: Package
+Package: r2slides
 Title: Google Slides/Sheets creation from R
 Version: 0.0.9000
-Authors@R: c(
-    person(
-      "Adam", "Hubbs",
-      email = "adam@y2analytics.com",
-      role = c("aut", "cre")
-    )
-  )
-Description: Create Google Slides from R code. This utilizes the Google Slides and 
-    Google Sheets API's to create charts and slides from R code. It is roughly similar
-    to Officer, but with the Google Suite.
+Authors@R: 
+    person("Adam", "Hubbs", , "adam@y2analytics.com", role = c("aut", "cre"))
+Description: Create Google Slides from R code. This utilizes the Google
+    Slides and Google Sheets API's to create charts and slides from R
+    code. It is roughly similar to Officer, but with the Google Suite.
 License: Private
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.3.2
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
+URL: https://github.com/Adam-Hubbs/r2slides
+BugReports: https://github.com/Adam-Hubbs/r2slides/issues
 Depends: 
     R (>= 4.1.0)
 Imports:
-    rlang,
     cli,
     gargle,
-    httr
-URL: https://github.com/Adam-Hubbs/r2slides
-BugReports: https://github.com/Adam-Hubbs/r2slides/issues
+    httr,
+    rlang,
+    stringr,
+    utils,
+    googledrive
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
