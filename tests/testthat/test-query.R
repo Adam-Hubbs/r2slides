@@ -1,7 +1,8 @@
 
 test_that("query2 errors on unrecognized endpoints", {
   expect_error(
-    query2(endpoint = "nonexistent.endpoint"),
+    query2(endpoint = "nonexistent.endpoint",
+           token = test_token),
     "Endpoint not recognized"
   )
 })
@@ -28,7 +29,8 @@ test_that("query2 handles slides.presentations.batchUpdate endpoint", {
   req <- query2(
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = "test123"),
-    body = test_body
+    body = test_body,
+    token = test_token
   )
 
   expect_type(req, "list")
@@ -50,7 +52,8 @@ test_that("query2 handles slides.presentations.create endpoint", {
 
   req <- query2(
     endpoint = "slides.presentations.create",
-    body = test_body
+    body = test_body,
+    token = test_token
   )
 
   expect_type(req, "list")
@@ -70,6 +73,7 @@ test_that("query2 errors on missing required parameters", {
   expect_error(
     query2(
       endpoint = "slides.presentations.batchUpdate",
+      token = test_token,
       body = list(requests = list())
     ),
     "Missing or malformed argument"
@@ -96,7 +100,8 @@ test_that("query2 correctly handles body parameter", {
   req <- query2(
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = "test123"),
-    body = test_body
+    body = test_body,
+    token = test_token
   )
 
   # Verify the body is included in the request
@@ -106,7 +111,8 @@ test_that("query2 correctly handles body parameter", {
   req_null_body <- query2(
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = "test123"),
-    body = NULL
+    body = NULL,
+    token = test_token
   )
 
   # Body is an empty list
@@ -123,7 +129,8 @@ test_that("query2 constructs correct base URL", {
   req_default <- query2(
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = "test123"),
-    body = list(requests = list())
+    body = list(requests = list()),
+    token = test_token
   )
 
   expect_match(req_default$url, "^https://slides\\.googleapis\\.com")
@@ -133,7 +140,8 @@ test_that("query2 constructs correct base URL", {
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = "test123"),
     body = list(requests = list()),
-    base = "slides"
+    base = "slides",
+    token = test_token
   )
 
   expect_match(req_slides$url, "^https://slides\\.googleapis\\.com")
@@ -151,7 +159,8 @@ test_that("query2 errors when passed a base that conflicts with the endpoint", {
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = "test123"),
     body = list(requests = list()),
-    base = "sheets"
+    base = "sheets",
+    token = test_token
   ),
   "Incompatible endpoint"
   )
@@ -184,7 +193,8 @@ test_that("query2 errors on wrong parameters", {
       endpoint = "slides.presentations.batchUpdate",
       params = test_params,
       body = test_body,
-      base = "slides"
+      base = "slides",
+      token = test_token
     ),
     "parameters are unknown"
   )

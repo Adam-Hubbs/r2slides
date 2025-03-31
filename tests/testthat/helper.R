@@ -29,3 +29,5 @@ default_footer_args <- list(
   footer_width = NULL,
   footer_height = NULL
 )
+
+test_token <- list("Test Token")
