@@ -1,8 +1,6 @@
-
 test_that("query2 errors on unrecognized endpoints", {
   expect_error(
-    query2(endpoint = "nonexistent.endpoint",
-           token = test_token),
+    query2(endpoint = "nonexistent.endpoint", token = test_token),
     "Endpoint not recognized"
   )
 })
@@ -10,8 +8,10 @@ test_that("query2 errors on unrecognized endpoints", {
 
 test_that("query2 handles slides.presentations.batchUpdate endpoint", {
   # Skip if mthds is not available or doesn't have the endpoint
-  skip_if_not(exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
-              "batchUpdate endpoint definition not available")
+  skip_if_not(
+    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    "batchUpdate endpoint definition not available"
+  )
 
   test_body <- list(
     requests = list(
@@ -24,7 +24,6 @@ test_that("query2 handles slides.presentations.batchUpdate endpoint", {
       )
     )
   )
-
 
   req <- query2(
     endpoint = "slides.presentations.batchUpdate",
@@ -43,8 +42,10 @@ test_that("query2 handles slides.presentations.batchUpdate endpoint", {
 
 test_that("query2 handles slides.presentations.create endpoint", {
   # Skip if mthds is not available or doesn't have the endpoint
-  skip_if_not(exists("mthds") && !is.null(mthds[["slides.presentations.create"]]),
-              "create endpoint definition not available")
+  skip_if_not(
+    exists("mthds") && !is.null(mthds[["slides.presentations.create"]]),
+    "create endpoint definition not available"
+  )
 
   test_body <- list(
     title = "Test Presentation"
@@ -66,8 +67,10 @@ test_that("query2 handles slides.presentations.create endpoint", {
 
 test_that("query2 errors on missing required parameters", {
   # Skip if mthds is not available or doesn't have the endpoint
-  skip_if_not(exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
-              "batchUpdate endpoint definition not available")
+  skip_if_not(
+    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    "batchUpdate endpoint definition not available"
+  )
 
   # Test with missing presentationId
   expect_error(
@@ -83,8 +86,10 @@ test_that("query2 errors on missing required parameters", {
 
 test_that("query2 correctly handles body parameter", {
   # Skip if mthds is not available or doesn't have the endpoint
-  skip_if_not(exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
-              "batchUpdate endpoint definition not available")
+  skip_if_not(
+    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    "batchUpdate endpoint definition not available"
+  )
 
   test_body <- list(
     requests = list(
@@ -122,8 +127,10 @@ test_that("query2 correctly handles body parameter", {
 # Test base URL construction
 test_that("query2 constructs correct base URL", {
   # Skip if mthds is not available or doesn't have the endpoint
-  skip_if_not(exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
-              "batchUpdate endpoint definition not available")
+  skip_if_not(
+    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    "batchUpdate endpoint definition not available"
+  )
 
   # Test default base (slides)
   req_default <- query2(
@@ -145,33 +152,34 @@ test_that("query2 constructs correct base URL", {
   )
 
   expect_match(req_slides$url, "^https://slides\\.googleapis\\.com")
-
-
 })
 
 
 test_that("query2 errors when passed a base that conflicts with the endpoint", {
-  skip_if_not(exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
-              "batchUpdate endpoint definition not available")
-
-  # Test sheets base with slides endpoint
-  expect_error(query2(
-    endpoint = "slides.presentations.batchUpdate",
-    params = list(presentationId = "test123"),
-    body = list(requests = list()),
-    base = "sheets",
-    token = test_token
-  ),
-  "Incompatible endpoint"
+  skip_if_not(
+    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    "batchUpdate endpoint definition not available"
   )
 
-
+  # Test sheets base with slides endpoint
+  expect_error(
+    query2(
+      endpoint = "slides.presentations.batchUpdate",
+      params = list(presentationId = "test123"),
+      body = list(requests = list()),
+      base = "sheets",
+      token = test_token
+    ),
+    "Incompatible endpoint"
+  )
 })
 
 
 test_that("query2 errors on wrong parameters", {
-  skip_if_not(exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
-              "batchUpdate endpoint definition not available")
+  skip_if_not(
+    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    "batchUpdate endpoint definition not available"
+  )
 
   test_body <- list(
     requests = list(
@@ -184,9 +192,10 @@ test_that("query2 errors on wrong parameters", {
     )
   )
 
-  test_params <- list(presentationId = "test123",
-       wrong_param = "This test paremeter is not supported by this endpoint")
-
+  test_params <- list(
+    presentationId = "test123",
+    wrong_param = "This test paremeter is not supported by this endpoint"
+  )
 
   expect_error(
     query2(
