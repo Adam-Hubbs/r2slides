@@ -19,7 +19,8 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/query2.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides-package.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_auth.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_get_key_from_json.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_deauth.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_default_client.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_token.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/register_presentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/set_defaults.html</loc></url>
