@@ -47,13 +47,11 @@ r2slides_auth <- function(
 
   cred <- gargle::token_fetch(
     scopes = scopes,
-    client = .auth$client %||% r2slides_get_key_from_json(),
+    client = .auth$client %||% r2slides_default_client(),
     package = "r2slides Testing",
     cache = cache,
     use_oob = use_oob
   )
-
-  print(cred)
 
   if (!inherits(cred, "Token2.0")) {
     cli::cli_abort(
@@ -68,25 +66,33 @@ r2slides_auth <- function(
 }
 
 
-#' Get an OAuth client from a JSON file
-#'
-#' @param path Optional. A single string specifying the path to a JSON credentials file.
-#' @param name Optional. A single string specifying the client name.
+#' Get the default OAuth client
 #'
 #' @returns
 #' A gargle OAuth client.
 #'
 #' @keywords internal
-r2slides_get_key_from_json <- function(path = NULL, name = NULL) {
-  # Set Defaults. Only works on Adam's computer (testing purposes)
-  # In the future, this file will be bundled with the package and refer to itself internally.
-  path <- path %||%
-    "~/Y2 Analytics Dropbox/Adam Hubbs/Development/client_secret_573448088645-29u0g68rq8nkuqag9f1ag2cbfqpg8u30.apps.googleusercontent.com.json"
+r2slides_default_client <- function(path = NULL, name = NULL) {
+  path <- path %||% "./inst/encrypted_json.json"
   name <- name %||% "Adam Desktop Client 1"
 
+
+  decrypted_json <- gargle::secret_decrypt_json(path, R2SLIDES_KEY)
+
   gargle::gargle_oauth_client_from_json(
-    path = path,
+    path = decrypted_json,
     name = name
   )
 }
 
+
+#' Clear current token
+#'
+#' If you ever get an error saying client error: (401) UNAUTHENTICATED with a warning message of `Unable to refresh token: invalid_grant`,
+#' then run this function, and restart the R Session. It should restart the auth process next time you need it.
+#'
+#' @export
+r2slides_deauth <- function() {
+  .auth$clear_cred()
+  invisible()
+}

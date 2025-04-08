@@ -1,5 +1,12 @@
 # r2slides
 
+## 0.0.9011
+
+### Built in default OAuth client
+* Built in default OAuth client now means that this package will work from anyone's computer (Once their google account has been whitelisted)
+
+
+
 ## 0.0.9010
 
 ### Working version

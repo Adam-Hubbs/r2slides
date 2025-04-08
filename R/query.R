@@ -103,7 +103,3 @@ query2 <- function(
 
 
 
-
-
-
-
