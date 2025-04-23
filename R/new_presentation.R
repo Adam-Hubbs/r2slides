@@ -45,12 +45,18 @@ new_presentation <- function(
     )
 
     create_presentation_env_in_global()
-
+    google_presentation$raw <- rsp
     google_presentation$presentation_id <- rsp$presentationId
-    google_presentation$slide_ids <- NA
-    google_presentation$current_slide_id <- NA
+    google_presentation$slide_ids <- lapply(rsp$slides, function(slide) {
+      slide$objectId
+    })
+    google_presentation$current_slide_id <- google_presentation$slide_ids[[length(google_presentation$slide_ids)]]
+    google_presentation$version <- list(time = Sys.time(), revision_id = rsp$revisionId)
+    google_presentation$slide_size <- rsp$pageSize
+
+
   }
-  #return invisible?
+  invisible()
 }
 
 
@@ -97,7 +103,26 @@ register_presentation <- function(
     cli::cli_abort(
       "Please provide only one of {.var name}, {.var url}, or {.var presentation_id}"
     )
+  } else if (identifiers_provided == 0) {
+    # No identifier provided
+    cli::cli_abort(
+      "Please provide one of {.var name}, {.var url}, or {.var presentation_id}"
+    )
   }
+
+  # Pass authentication tokens to googledrive and googlesheets4
+  pass_client <- r2slides_token()$auth_token$client
+  googledrive::drive_auth_configure(client = pass_client)
+  googlesheets4::gs4_auth_configure(client = pass_client)
+
+
+
+  # Error handling flow when no files found by drive needs updating. Currently drive puts out warnings which get printed then we error later.
+  # Need to catch the googledrive warnings, wrap our error around, then print googledrive errors (after turning them into errors).
+
+  # Also need to improve error handling when multiple files have the same name and match the name argument of register_presentation.
+  # Currently gives warnings and then the readLines for overriding. Do not override unless we have a match.
+
 
   # Handle presentation_id
   if (!is.null(presentation_id)) {
@@ -144,11 +169,6 @@ register_presentation <- function(
         )
       )
     }
-  } else {
-    # No identifier provided
-    cli::cli_abort(
-      "Please provide one of {.var name}, {.var url}, or {.var presentation_id}"
-    )
   }
 
   if (nrow(r) > 1) {
@@ -157,7 +177,7 @@ register_presentation <- function(
     )
   } else {
     if (nrow(r) != 1) {
-      cli::cli_alert_warning(
+      cli::cli_abort(
         "No presentation with that name or presentation_id was found. Please provide a valid name or the presentation_id."
       )
     } else {
@@ -173,6 +193,7 @@ register_presentation <- function(
         "A presentation is already registered in the global environment."
       )
 
+       # Wrap this around logic on only sucsessful finds (see notes above)
       confirmation <- readline("Do you want to override it? (y/n): ")
       if (tolower(confirmation) != "y") {
         cli::cli_alert_info("Registration canceled.")
@@ -185,6 +206,8 @@ register_presentation <- function(
     google_presentation$presentation_id <- id
     google_presentation$slide_ids <- NA
     google_presentation$current_slide_id <- NA
+    google_presentation$version <- list(time = Sys.time(), revision_id = NA)
+    google_presentation$slide_size <- NA
 
     return(invisible())
   } else {
@@ -193,7 +216,12 @@ register_presentation <- function(
     rtn_env$presentation_id <- id
     rtn_env$slide_ids <- NA
     rtn_env$current_slide_id <- NA
-
+    rtn_env$version <- list(time = Sys.time(), revision_id = NA)
+    rtn_env$slide_size <- NA
     return(rtn_env)
   }
 }
+
+
+
+
