@@ -19,8 +19,9 @@ Imports:
     rlang,
     stringr,
     utils,
+    httr2,
     googledrive,
-    httr2
+    googlesheets4
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
