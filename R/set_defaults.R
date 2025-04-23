@@ -110,9 +110,9 @@ set_defaults <- function(
         'Flama Semicondensed Basic'
       args$footer_color <- args$footer_color %||% "#A6A6A6"
       args$footer_left <- args$footer_left %||% 0
-      args$footer_top <- args$footer_top %||% 7.23
+      args$footer_top <- args$footer_top %||% 7.1 # Deviation from current y2artisan value (7.23) Using 7.23 makes it run off the slide.
       args$footer_width <- args$footer_width %||% 12.46
-      args$footer_height <- args$footer_height %||% 0.27
+      args$footer_height <- args$footer_height %||% 0.4 # Deviation from current y2artisan value (0.27) Using 0.27 makes it run off the slide.
     }
   }
 

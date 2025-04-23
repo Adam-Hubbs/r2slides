@@ -15,7 +15,7 @@
 #' @export
 new_slide <- function(
     presentation = google_presentation,
-    layout = "TITLE_AND_BODY",
+    layout = "BLANK",
     verbose = TRUE,
     master = NULL,
     ...
@@ -109,7 +109,7 @@ new_slide <- function(
 #' @export
 add1s <- function(
     presentation = google_presentation,
-    layout = "TITLE_AND_BODY",
+    layout = "BLANK",
     title = "Title",
     commentary = "Commentary",
     footer = "Footer",
@@ -150,22 +150,7 @@ add1s <- function(
 
   new_slide(layout = layout, verbose = verbose)
 
-  add_title(
-    text = title,
-    verbose = verbose,
-    report_style = report_style,
-    title_font_size = title_font_size,
-    title_font_family = title_font_family,
-    title_font_bold = title_font_bold,
-    title_color = title_color,
-    title_bg_color = title_bg_color,
-    title_left = title_left,
-    title_top = title_top,
-    title_width = title_width,
-    title_height = title_height,
-    convert_slide_size = convert_slide_size,
-    slide_size = slide_size
-  )
+  # Doing Commentary first then title so title will be frontmost.
 
   add_commentary(
     text = commentary,
@@ -179,6 +164,23 @@ add1s <- function(
     commentary_top = commentary_top,
     commentary_width = commentary_width,
     commentary_height = commentary_height,
+    convert_slide_size = convert_slide_size,
+    slide_size = slide_size
+  )
+
+  add_title(
+    text = title,
+    verbose = verbose,
+    report_style = report_style,
+    title_font_size = title_font_size,
+    title_font_family = title_font_family,
+    title_font_bold = title_font_bold,
+    title_color = title_color,
+    title_bg_color = title_bg_color,
+    title_left = title_left,
+    title_top = title_top,
+    title_width = title_width,
+    title_height = title_height,
     convert_slide_size = convert_slide_size,
     slide_size = slide_size
   )
