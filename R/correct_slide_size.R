@@ -15,8 +15,6 @@
 #' @returns
 #' A numeric value of corrected position/size. Will error if `slide_size` is provided
 #' but is not a list.
-#'
-#' @keywords internal
 correct_slide_size <- function(
     pos,
     dim = c('width', 'height'),

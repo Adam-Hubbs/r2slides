@@ -6,7 +6,7 @@
 \usage{
 add1s(
   presentation = google_presentation,
-  layout = "TITLE_AND_BODY",
+  layout = "BLANK",
   title = "Title",
   commentary = "Commentary",
   footer = "Footer",

@@ -6,7 +6,7 @@
 \usage{
 new_slide(
   presentation = google_presentation,
-  layout = "TITLE_AND_BODY",
+  layout = "BLANK",
   verbose = TRUE,
   master = NULL,
   ...

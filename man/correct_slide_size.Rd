@@ -31,4 +31,3 @@ Google Slides and PowerPoint, this function converts sizes and positions that us
 PowerPoint system to the Google Slides System. You may also override the slide_size argument
 to convert between custom slide sizes.
 }
-\keyword{internal}

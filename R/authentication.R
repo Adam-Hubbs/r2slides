@@ -5,8 +5,6 @@
 #'
 #' @returns
 #' An authentication configuration or `NULL` if authentication is not active.
-#'
-#' @keywords internal
 r2slides_token <- function() {
   if (isFALSE(.auth$auth_active)) {
     return(NULL)
