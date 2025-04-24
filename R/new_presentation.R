@@ -3,7 +3,7 @@
 #' @param name A single string specifying the title of the presentation.
 #' @param location Optional. A folder location for where to create the presentation. Defaults to your My Drive Home.
 #' @param verbose Optional. A logical indicating whether to print status updates. (DEV)
-#' @param overwrite Optional. A logical indicating whether to overwrite existing presentations. Defaults to FALSE.
+#' @param overwrite Optional. A logical indicating whether to overwrite existing presentations. Defaults to FALSE. (TRUE for testing purposes)
 #' @param ... Additional arguments reserved for future expansion
 #'
 #' @returns
