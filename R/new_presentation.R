@@ -56,6 +56,11 @@ new_presentation <- function(
 
 
   }
+
+
+  # Currently this does not set all of the meta-data needed. In particular it does not get the slide id of the one default slide.
+  # Because of this, currently one needs to call new_slide() before any functions that add text or images so that the text/image setting functions have a slide_id to grab.
+
   invisible()
 }
 
