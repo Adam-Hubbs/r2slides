@@ -46,7 +46,7 @@ r2slides_auth <- function(
   cred <- gargle::token_fetch(
     scopes = scopes,
     client = .auth$client %||% r2slides_default_client(),
-    package = "r2slides Testing",
+    package = "r2slides",
     cache = cache,
     use_oob = use_oob
   )
@@ -72,7 +72,7 @@ r2slides_auth <- function(
 #' @keywords internal
 r2slides_default_client <- function(path = NULL, name = NULL) {
   path <- path %||% "./inst/encrypted_json.json"
-  name <- name %||% "Adam Desktop Client 1"
+  name <- name %||% "r2slides y2 client"
 
 
   decrypted_json <- gargle::secret_decrypt_json(path, R2SLIDES_KEY)
@@ -94,3 +94,4 @@ r2slides_deauth <- function() {
   .auth$clear_cred()
   invisible()
 }
+
