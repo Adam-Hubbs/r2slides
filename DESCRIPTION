@@ -20,6 +20,7 @@ Imports:
     stringr,
     utils,
     httr2,
+    tibble,
     googledrive,
     googlesheets4
 Suggests: 

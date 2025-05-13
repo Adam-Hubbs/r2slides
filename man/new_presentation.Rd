@@ -13,7 +13,7 @@ new_presentation(name, location = NULL, verbose = TRUE, overwrite = FALSE, ...)
 
 \item{verbose}{Optional. A logical indicating whether to print status updates. (DEV)}
 
-\item{overwrite}{Optional. A logical indicating whether to overwrite existing presentations. Defaults to FALSE.}
+\item{overwrite}{Optional. A logical indicating whether to overwrite existing presentations. Defaults to FALSE. (TRUE for testing purposes)}
 
 \item{...}{Additional arguments reserved for future expansion}
 }
