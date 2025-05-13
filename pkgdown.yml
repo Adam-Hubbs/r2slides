@@ -1,8 +1,8 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-04-25T17:25Z
+last_built: 2025-05-13T16:44Z
 urls:
   reference: https://adam-hubbs.github.io/r2slides/reference
   article: https://adam-hubbs.github.io/r2slides/articles
