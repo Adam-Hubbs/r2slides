@@ -5,7 +5,7 @@
 
 
 update_presentation_state <- function(presentation_id) {
-  # Update slide ids
+  # TODO Update slide ids
 
 
   # Update presentation Name
