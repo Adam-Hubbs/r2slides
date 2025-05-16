@@ -16,7 +16,20 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
     gargle::init_AuthState(package = "r2slides", auth_active = TRUE)
   )
 
+  # Testing automatic authentication sharing 
+  r2slides_auth()
+  googledrive::drive_auth(token = r2slides_token())
+  googlesheets4::gs4_auth(token = r2slides_token())
+
+
+  # pass_client <- r2slides_token()$auth_token$client
+  # googledrive::drive_auth_configure(client = pass_client)
+  # googlesheets4::gs4_auth_configure(client = pass_client)
 }
+
+
+# TODO Need to add gs discovery document into mthds (and combine slides and gs into one top level directory?)
+# Use gargle internal functions to extract and clean discovery document
 
 
 ### This is code to create and save the discovery package in a internal only way in R --
