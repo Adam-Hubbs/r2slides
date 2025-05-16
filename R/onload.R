@@ -7,24 +7,17 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
 
 #Set up when package is created
 .onLoad <- function(libname, pkgname) {
-  #.auth flow
-  #figure out how to silence google_presentation
-
 
   utils::assignInMyNamespace(
     ".auth",
     gargle::init_AuthState(package = "r2slides", auth_active = TRUE)
   )
 
-  # Testing automatic authentication sharing 
-  r2slides_auth()
-  googledrive::drive_auth(token = r2slides_token())
-  googlesheets4::gs4_auth(token = r2slides_token())
-
-
-  # pass_client <- r2slides_token()$auth_token$client
-  # googledrive::drive_auth_configure(client = pass_client)
-  # googlesheets4::gs4_auth_configure(client = pass_client)
+  if(interactive()) {
+    r2slides_auth()
+    googledrive::drive_auth(token = r2slides_token())
+    googlesheets4::gs4_auth(token = r2slides_token())
+  }
 }
 
 
