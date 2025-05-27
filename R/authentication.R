@@ -60,8 +60,15 @@ r2slides_auth <- function(
   .auth$set_cred(cred)
   .auth$set_auth_active(TRUE)
 
+
+  # Set auth in gs4 and googlesdrive
+  googledrive::drive_auth(token = r2slides_token())
+  googlesheets4::gs4_auth(token = r2slides_token())
+
   invisible()
 }
+
+    
 
 
 #' Get the default OAuth client
@@ -71,7 +78,7 @@ r2slides_auth <- function(
 #'
 #' @keywords internal
 r2slides_default_client <- function(path = NULL, name = NULL) {
-  path <- path %||% "./inst/encrypted_json.json"
+  path <- path %||% "inst/encrypted_json.json" # Figure out various States for this, and make it work everywhere
   name <- name %||% "r2slides y2 client"
 
 

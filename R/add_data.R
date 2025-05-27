@@ -6,12 +6,12 @@ add_data <- function(data, name, url, spreadsheet_id, sheet_name) {
   data <- tibble::as_tibble(data)
 
   # Find the spreadsheet - TODO
-
+  # Get sheet id from spreadsheet object. 
 
   # If not found, create it
   sheet <- googlesheets4::gs4_create(
     name,
-    sheets = list(Main = sheet_name)
+    sheets = list(Main = sheet_name) # I'm now sure on this syntax
   )
 
   sheet <- googlesheets4::gs4_get(sheet)
@@ -32,3 +32,6 @@ update_data <- function(data, name, url, spreadsheet_id, sheet_name) {
 
   # Return updated spreadsheet object
 }
+
+
+

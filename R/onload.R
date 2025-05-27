@@ -13,11 +13,6 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
     gargle::init_AuthState(package = "r2slides", auth_active = TRUE)
   )
 
-  if(interactive()) {
-    r2slides_auth()
-    googledrive::drive_auth(token = r2slides_token())
-    googlesheets4::gs4_auth(token = r2slides_token())
-  }
 }
 
 
