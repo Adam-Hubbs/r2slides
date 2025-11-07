@@ -23,9 +23,15 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
 ### This is code to create and save the discovery package in a internal only way in R --
 # For Development only. Read in low level function helpers for working with the discovery document
 # source(system.file("discovery-doc-ingest/ingest-functions.R", package = "gargle"))
-#
+
 # slidesDiscDoc <- read_discovery_document('/Users/adamhubbs/Y2 Analytics Dropbox/Y2 Analytics Team Folder/Active Projects_AH/Google Slides Automation/Slides Disc Doc.json')
-#
-# mthds <- get_raw_methods(slidesDiscDoc)
-#
-# usethis::use_data(mthds, internal = TRUE)
+# '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/Development/Google Slides Automation/Sheets Disc Doc.json'
+
+# sheetsDiscDoc <- read_discovery_document(
+#   '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/Development/Google Slides Automation/Sheets Disc Doc.json'
+# )
+
+# mthds_slides <- get_raw_methods(slidesDiscDoc)
+# mthds_sheets <- get_raw_methods(sheetsDiscDoc)
+
+# usethis::use_data(mthds_slides, mthds_sheets,internal = TRUE, overwrite = TRUE)
