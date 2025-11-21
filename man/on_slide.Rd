@@ -5,6 +5,7 @@
 \alias{on_current_slide}
 \alias{on_newest_slide}
 \alias{on_slide_id}
+\alias{on_slide_url}
 \title{Specify a slide by ID or URL}
 \usage{
 on_slide(n)
@@ -14,6 +15,8 @@ on_current_slide()
 on_newest_slide()
 
 on_slide_id(id)
+
+on_slide_url(id)
 }
 \arguments{
 \item{n}{A numeric slide ID}

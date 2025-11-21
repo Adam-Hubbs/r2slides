@@ -194,5 +194,6 @@ on_slide_id <- function(id) {
   ))
 }
 
+#' @rdname on_slide
 #' @export
 on_slide_url <- on_slide_id
