@@ -29,14 +29,14 @@ r2slides_token <- function() {
 #'
 #' @keywords internal
 r2slides_auth <- function(
-    email = gargle::gargle_oauth_email(),
-    scopes = c(
-      "https://www.googleapis.com/auth/spreadsheets",
-      "https://www.googleapis.com/auth/presentations",
-      "https://www.googleapis.com/auth/drive"
-    ),
-    cache = gargle::gargle_oauth_cache(),
-    use_oob = gargle::gargle_oob_default()
+  email = gargle::gargle_oauth_email(),
+  scopes = c(
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/presentations",
+    "https://www.googleapis.com/auth/drive"
+  ),
+  cache = gargle::gargle_oauth_cache(),
+  use_oob = gargle::gargle_oob_default()
 ) {
   # this catches a common error, where the user passes JSON for an OAuth client
   # to the `path` argument, which only expects a service account token
@@ -60,15 +60,12 @@ r2slides_auth <- function(
   .auth$set_cred(cred)
   .auth$set_auth_active(TRUE)
 
-
   # Set auth in gs4 and googlesdrive
   googledrive::drive_auth(token = r2slides_token())
   googlesheets4::gs4_auth(token = r2slides_token())
 
   invisible()
 }
-
-    
 
 
 #' Get the default OAuth client
@@ -78,14 +75,14 @@ r2slides_auth <- function(
 #'
 #' @keywords internal
 r2slides_default_client <- function(path = NULL, name = NULL) {
-  path <- path %||% "inst/encrypted_json.json" # Figure out various States for this, and make it work everywhere
-  name <- name %||% "r2slides y2 client"
-
-
-  decrypted_json <- gargle::secret_decrypt_json(path, R2SLIDES_KEY)
+  rds_path <- path %||% "client_json.rds"
+  name <- name %||% 'r2slides y2 client'
+  json_path <- tempfile()
+  decrypted_json <- gargle::secret_read_rds(rds_path, key = .json_key) |>
+    writeLines(json_path)
 
   gargle::gargle_oauth_client_from_json(
-    path = decrypted_json,
+    path = json_path,
     name = name
   )
 }
@@ -101,4 +98,3 @@ r2slides_deauth <- function() {
   .auth$clear_cred()
   invisible()
 }
-
