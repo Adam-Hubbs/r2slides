@@ -22,9 +22,13 @@ Imports:
     httr2,
     tibble,
     googledrive,
-    googlesheets4
+    googlesheets4,
+    S7,
+    dplyr,
+    purrr
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vdiffr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true

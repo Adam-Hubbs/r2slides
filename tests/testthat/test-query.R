@@ -7,9 +7,9 @@ test_that("query2 errors on unrecognized endpoints", {
 
 
 test_that("query2 handles slides.presentations.batchUpdate endpoint", {
-  # Skip if mthds is not available or doesn't have the endpoint
+  # Skip if mthds_slides is not available or doesn't have the endpoint
   skip_if_not(
-    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    exists("mthds_slides") && !is.null(mthds_slides[["slides.presentations.batchUpdate"]]),
     "batchUpdate endpoint definition not available"
   )
 
@@ -41,9 +41,9 @@ test_that("query2 handles slides.presentations.batchUpdate endpoint", {
 
 
 test_that("query2 handles slides.presentations.create endpoint", {
-  # Skip if mthds is not available or doesn't have the endpoint
+  # Skip if mthds_slides is not available or doesn't have the endpoint
   skip_if_not(
-    exists("mthds") && !is.null(mthds[["slides.presentations.create"]]),
+    exists("mthds_slides") && !is.null(mthds_slides[["slides.presentations.create"]]),
     "create endpoint definition not available"
   )
 
@@ -66,9 +66,9 @@ test_that("query2 handles slides.presentations.create endpoint", {
 
 
 test_that("query2 errors on missing required parameters", {
-  # Skip if mthds is not available or doesn't have the endpoint
+  # Skip if mthds_slides is not available or doesn't have the endpoint
   skip_if_not(
-    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    exists("mthds_slides") && !is.null(mthds_slides[["slides.presentations.batchUpdate"]]),
     "batchUpdate endpoint definition not available"
   )
 
@@ -85,9 +85,9 @@ test_that("query2 errors on missing required parameters", {
 
 
 test_that("query2 correctly handles body parameter", {
-  # Skip if mthds is not available or doesn't have the endpoint
+  # Skip if mthds_slides is not available or doesn't have the endpoint
   skip_if_not(
-    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    exists("mthds_slides") && !is.null(mthds_slides[["slides.presentations.batchUpdate"]]),
     "batchUpdate endpoint definition not available"
   )
 
@@ -126,9 +126,9 @@ test_that("query2 correctly handles body parameter", {
 
 # Test base URL construction
 test_that("query2 constructs correct base URL", {
-  # Skip if mthds is not available or doesn't have the endpoint
+  # Skip if mthds_slides is not available or doesn't have the endpoint
   skip_if_not(
-    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    exists("mthds_slides") && !is.null(mthds_slides[["slides.presentations.batchUpdate"]]),
     "batchUpdate endpoint definition not available"
   )
 
@@ -157,7 +157,7 @@ test_that("query2 constructs correct base URL", {
 
 test_that("query2 errors when passed a base that conflicts with the endpoint", {
   skip_if_not(
-    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    exists("mthds_slides") && !is.null(mthds_slides[["slides.presentations.batchUpdate"]]),
     "batchUpdate endpoint definition not available"
   )
 
@@ -170,14 +170,14 @@ test_that("query2 errors when passed a base that conflicts with the endpoint", {
       base = "sheets",
       token = test_token
     ),
-    "Incompatible endpoint"
+    "Endpoint not recognized"
   )
 })
 
 
 test_that("query2 errors on wrong parameters", {
   skip_if_not(
-    exists("mthds") && !is.null(mthds[["slides.presentations.batchUpdate"]]),
+    exists("mthds_slides") && !is.null(mthds_slides[["slides.presentations.batchUpdate"]]),
     "batchUpdate endpoint definition not available"
   )
 

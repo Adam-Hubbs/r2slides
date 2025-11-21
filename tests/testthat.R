@@ -7,6 +7,8 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
+library(vdiffr)
 library(r2slides)
+library(googlesheets4)
 
 test_check("r2slides")

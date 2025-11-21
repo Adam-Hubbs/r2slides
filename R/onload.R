@@ -31,7 +31,19 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
 #   '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/Development/Google Slides Automation/Sheets Disc Doc.json'
 # )
 
+# client_json_path <- '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/Development/client_secret_573448088645-29u0g68rq8nkuqag9f1ag2cbfqpg8u30.apps.googleusercontent.com.json'
+# client_json <- readLines(client_json_path)
+
+# jsonlite::fromJSON(client_json)
+# .json_key <- gargle::secret_make_key()
+# # secret_json <- gargle::secret_encrypt_json(client_json, key = .json_key)
+# secret_write_rds(client_json, path = "client_json.rds", key = .json_key)
+
 # mthds_slides <- get_raw_methods(slidesDiscDoc)
 # mthds_sheets <- get_raw_methods(sheetsDiscDoc)
 
-# usethis::use_data(mthds_slides, mthds_sheets,internal = TRUE, overwrite = TRUE)
+
+# usethis::use_data(mthds_slides, mthds_sheets, .json_key, internal = TRUE, overwrite = TRUE)
+
+
+
