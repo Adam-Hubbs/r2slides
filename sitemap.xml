@@ -7,16 +7,25 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/add1s.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/add_commentary.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/add_footer.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/add_linked_chart.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/add_text.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/add_title.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/create_presentation_env_in_global.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/create_spreadsheet_env_in_global.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/get_chart_id.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/hex_to_rgb.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/in_bottom_left.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/in_bottom_middle.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/in_bottom_right.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/in_to_pt.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/in_top_left.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/in_top_middle.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/in_top_right.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/index.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/new_presentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/new_slide.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/on_slide.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/query2.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides-package.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_auth.html</loc></url>
@@ -27,5 +36,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/set_defaults.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/validatePresentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/validatespreadsheet.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/write_gs.html</loc></url>
 </urlset>
 

@@ -1,0 +1,76 @@
+### r2slides
+
+[![Codecov test
+coverage](https://codecov.io/gh/Adam-Hubbs/r2slides/graph/badge.svg)](https://app.codecov.io/gh/Adam-Hubbs/r2slides)
+[![R-CMD-check](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml)
+
+r2slides is a package designed to create and modify google slides
+presentations in R. This website housed the current documentation
+surrounding the functions. This package is currently in DEVELOPMENT and
+syntax will change frequently.
+
+# Package index
+
+## All functions
+
+- [`add1s()`](https://adam-hubbs.github.io/r2slides/reference/add1s.md)
+  : Create a slide with title, commentary, and footer
+- [`add_commentary()`](https://adam-hubbs.github.io/r2slides/reference/add_commentary.md)
+  : Add commentary text to a Google Slide
+- [`add_footer()`](https://adam-hubbs.github.io/r2slides/reference/add_footer.md)
+  : Add a footer to a Google Slide
+- [`add_linked_chart()`](https://adam-hubbs.github.io/r2slides/reference/add_linked_chart.md)
+  : Add a linked Google Sheets chart to a Google Slides presentation
+- [`add_text()`](https://adam-hubbs.github.io/r2slides/reference/add_text.md)
+  : Add or update text in a Google Slides presentation
+- [`add_title()`](https://adam-hubbs.github.io/r2slides/reference/add_title.md)
+  : Add a title to a Google Slide
+- [`correct_slide_size()`](https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.md)
+  : Correct slide sizes
+- [`create_presentation_env_in_global()`](https://adam-hubbs.github.io/r2slides/reference/create_presentation_env_in_global.md)
+  : Create presentation environment
+- [`create_spreadsheet_env_in_global()`](https://adam-hubbs.github.io/r2slides/reference/create_spreadsheet_env_in_global.md)
+  : Create spreadsheet environment
+- [`get_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/get_chart_id.md)
+  : Get chart_id from a Google Sheet
+- [`in_bottom_left()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_left.md)
+  : Creates a slide_position object with defaults in the bottom left of
+  the slide
+- [`in_bottom_middle()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_middle.md)
+  : Creates a slide_position object with defaults in the bottom middle
+  of the slide
+- [`in_bottom_right()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_right.md)
+  : Creates a slide_position object with defaults in the bottom right of
+  the slide
+- [`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/in_top_left.md)
+  : Creates a slide_position object with defaults in the top left of the
+  slide
+- [`in_top_middle()`](https://adam-hubbs.github.io/r2slides/reference/in_top_middle.md)
+  : Creates a slide_position object with defaults in the top middle of
+  the slide
+- [`in_top_right()`](https://adam-hubbs.github.io/r2slides/reference/in_top_right.md)
+  : Creates a slide_position object with defaults in the top right of
+  the slide
+- [`new_presentation()`](https://adam-hubbs.github.io/r2slides/reference/new_presentation.md)
+  : Create a new Google Slides presentation
+- [`new_slide()`](https://adam-hubbs.github.io/r2slides/reference/new_slide.md)
+  : Create a new slide in a Google Slides presentation
+- [`on_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
+  [`on_current_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
+  [`on_newest_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
+  [`on_slide_id()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
+  [`on_slide_url()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
+  : Specify a slide by ID or URL
+- [`query2()`](https://adam-hubbs.github.io/r2slides/reference/query2.md)
+  : Query Google API's
+- [`r2slides_deauth()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_deauth.md)
+  : Clear current token
+- [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
+  : Get authentication token
+- [`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
+  : Register a Google Slides presentation
+- [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
+  : Set default style values
+- [`write_gs()`](https://adam-hubbs.github.io/r2slides/reference/write_gs.md)
+  : Writes data to a Google Sheet
+
