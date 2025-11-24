@@ -510,7 +510,7 @@ in_bottom_left <- function(
   slide_size = c(5.625, 10)
 ) {
   slide_position(
-    top = 6.48,
+    top = 3.69,
     left = 0.12,
     width = 3.2,
     height = 1.8,
@@ -533,7 +533,7 @@ in_bottom_middle <- function(
   slide_size = c(5.625, 10)
 ) {
   slide_position(
-    top = 6.48,
+    top = 3.69,
     left = 3.42,
     width = 3.2,
     height = 1.8,
@@ -556,7 +556,7 @@ in_bottom_right <- function(
   slide_size = c(5.625, 10)
 ) {
   slide_position(
-    top = 6.48,
+    top = 3.69,
     left = 6.72,
     width = 3.2,
     height = 1.8,
