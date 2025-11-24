@@ -75,7 +75,7 @@ r2slides_auth <- function(
 #'
 #' @keywords internal
 r2slides_default_client <- function(path = NULL, name = NULL) {
-  rds_path <- path %||% "client_json.rds"
+  rds_path <- path %||% system.file("client_json.rds", package = "r2slides", mustWork = TRUE) 
   name <- name %||% 'r2slides y2 client'
   json_path <- tempfile()
   decrypted_json <- gargle::secret_read_rds(rds_path, key = .json_key) |>
