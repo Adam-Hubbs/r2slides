@@ -63,6 +63,8 @@ syntax will change frequently.
   : Specify a slide by ID or URL
 - [`query2()`](https://adam-hubbs.github.io/r2slides/reference/query2.md)
   : Query Google API's
+- [`r2slides_auth()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_auth.md)
+  : Create OAuth authentication token
 - [`r2slides_deauth()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_deauth.md)
   : Clear current token
 - [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
