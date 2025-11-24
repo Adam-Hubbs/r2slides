@@ -29,4 +29,3 @@ OAuth2.0 token.
 \description{
 Create OAuth authentication token
 }
-\keyword{internal}

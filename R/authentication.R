@@ -27,7 +27,7 @@ r2slides_token <- function() {
 #' Nothing directly. Updates the .auth token. Will error if unable to retrieve a valid
 #' OAuth2.0 token.
 #'
-#' @keywords internal
+#' @export
 r2slides_auth <- function(
   email = gargle::gargle_oauth_email(),
   scopes = c(
