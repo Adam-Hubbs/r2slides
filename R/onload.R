@@ -13,6 +13,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
     gargle::init_AuthState(package = "r2slides", auth_active = TRUE)
   )
 
+  S7::methods_register()
+
 }
 
 
