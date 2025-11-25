@@ -1,3 +1,4 @@
 # License
 
-    Copyright 2025 Y2 Analytics. All rights reserved.
+    YEAR: 2025
+    COPYRIGHT HOLDER: Adam Hubbs

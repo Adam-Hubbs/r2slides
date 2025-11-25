@@ -1,5 +1,7 @@
 # Changelog
 
+## Version 0.0.9025
+
 ## Version 0.0.9011
 
 ### Built in default OAuth client
