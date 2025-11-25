@@ -1,3 +1,13 @@
+## Version 0.0.9025
+## Authentication Fixes
+* Fixed Authentication flow and exported more helpers
+
+## Slide Position Objects and Helpers
+* New system for Slide Position using S7 objects
+
+## Tools for Linked Charts
+* Pipeable syntax for adding linked charts to Google Slides
+
 ## Version 0.0.9011
 ### Built in default OAuth client
 * Built in default OAuth client now means that this package will work from anyone's computer (Once their google account has been whitelisted)
