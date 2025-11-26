@@ -27,13 +27,12 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
 # source(system.file("discovery-doc-ingest/ingest-functions.R", package = "gargle"))
 
 # slidesDiscDoc <- read_discovery_document('/Users/adamhubbs/Y2 Analytics Dropbox/Y2 Analytics Team Folder/Active Projects_AH/Google Slides Automation/Slides Disc Doc.json')
-# '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/Development/Google Slides Automation/Sheets Disc Doc.json'
 
 # sheetsDiscDoc <- read_discovery_document(
 #   '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/Development/Google Slides Automation/Sheets Disc Doc.json'
 # )
 
-# client_json_path <- '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/Development/client_secret_573448088645-29u0g68rq8nkuqag9f1ag2cbfqpg8u30.apps.googleusercontent.com.json'
+# client_json_path <- '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/y2_client.json'
 # client_json <- readLines(client_json_path)
 
 # jsonlite::fromJSON(client_json)
