@@ -35,7 +35,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
 # client_json_path <- '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/y2_client.json'
 # client_json <- readLines(client_json_path)
 
-# jsonlite::fromJSON(client_json)
+# #client_json <-jsonlite::fromJSON(client_json)
 # .json_key <- gargle::secret_make_key()
 # # secret_json <- gargle::secret_encrypt_json(client_json, key = .json_key)
 # secret_write_rds(client_json, path = "client_json.rds", key = .json_key)
