@@ -360,7 +360,10 @@ S7::method(plot, slide_position) <- function(
 }
 
 
-S7::method(convert, list(slide_position, S7::class_list)) <- function(from, to) {
+S7::method(convert, list(slide_position, S7::class_list)) <- function(
+  from,
+  to
+) {
   list(
     left = from@left,
     top = from@top,
@@ -428,7 +431,6 @@ S7::method(mirror, slide_position) <- function(
 }
 
 
-
 #' Creates a slide_position object with defaults in the top left of the slide
 #' @param convert_slide_size A logical. Optional.
 #' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
@@ -450,7 +452,6 @@ in_top_left <- function(
     slide_size = slide_size
   )
 }
-
 
 
 #' Creates a slide_position object with defaults in the top middle of the slide
@@ -563,5 +564,148 @@ in_bottom_right <- function(
     convert_slide_size = convert_slide_size,
     slide_size_old = slide_size_old,
     slide_size = slide_size
+  )
+}
+
+#' Creates a slide_position object with defaults in the title of the slide
+#' @param revision A date object to specify the defaults for qualtrics title as of a given date
+#' @param convert_slide_size A logical. Optional.
+#' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
+#' @param slide_size New Slide size specifications. Optional.
+#'
+#' @export
+in_qualtrics_title <- function(
+  revision = Sys.Date(),
+  convert_slide_size = FALSE,
+  slide_size_old = NULL,
+  slide_size = c(5.625, 10)
+) {
+  slide_position(
+    top = 0.25,
+    left = 0.5,
+    width = 10.5,
+    height = 0.75,
+    convert_slide_size = convert_slide_size,
+    slide_size_old = slide_size_old,
+    slide_size = slide_size
+  )
+}
+
+
+#' Transform a slide position object to create a new position
+#' @internal
+process_transformation <- function(trans, param_name, call = rlang::caller_env()) {
+  # If it's a scalar numeric, convert to a function that returns that value
+  if (is.numeric(trans) && length(trans) == 1) {
+    return(function(x) trans)
+  }
+
+  # If it's a function, return as-is
+  if (is.function(trans)) {
+    return(trans)
+  }
+
+  # Otherwise, error
+  cli::cli_abort(
+    "{.arg {param_name}} must be either a function or a scalar numeric value",
+    call = call
+  )
+}
+
+#'
+#' Takes a slide position object, applies transformations to its dimensions,
+#' and returns a new slide_position object. Transformations can be either
+#' functions or scalar numeric values. If a scalar is provided, it replaces
+#' the original value. If a function is provided, it's applied to the original
+#' value.
+#'
+#' @param position An object of class `r2slides::slide_position`
+#' @param top_transformation A function to apply to the top value, or a scalar numeric to replace it
+#' @param left_transformation A function to apply to the left value, or a scalar numeric to replace it
+#' @param width_transformation A function to apply to the width value, or a scalar numeric to replace it
+#' @param height_transformation A function to apply to the height value, or a scalar numeric to replace it
+#'
+#' @returns A new object of class `r2slides::slide_position`
+#'
+#' @examples
+#' \dontrun{
+#' # Create a base position
+#' base_pos <- slide_position(left = 1, top = 2, width = 5, height = 3)
+#'
+#' # Move right by 0.5 inches using a function, set the maximum width at 5
+#' new_pos <- relative_annotation(
+#'   base_pos,
+#'   top_transformation = identity,
+#'   left_transformation = function(x) x + 0.5,
+#'   width_transformation = \(x) min(x, 5),
+#'   height_transformation = identity
+#' )
+#'
+#' # Set absolute position using scalars
+#' new_pos2 <- relative_annotation(
+#'   base_pos,
+#'   top_transformation = 3,
+#'   left_transformation = 2,
+#'   width_transformation = identity,
+#'   height_transformation = identity
+#' )
+#' }
+#'
+#' @export
+relative_annotation <- function(
+  position,
+  top_transformation = identity,
+  left_transformation = identity,
+  width_transformation = identity,
+  height_transformation = identity
+) {
+  # Validate input position
+  if (!inherits(position, "r2slides::slide_position")) {
+    cli::cli_abort(
+      "Position must be an object of class {.cls r2slides::slide_position}"
+    )
+  }
+
+  # Process all transformations
+  top_fn <- process_transformation(top_transformation, "top_transformation")
+  left_fn <- process_transformation(left_transformation, "left_transformation")
+  width_fn <- process_transformation(
+    width_transformation,
+    "width_transformation"
+  )
+  height_fn <- process_transformation(
+    height_transformation,
+    "height_transformation"
+  )
+
+  # Apply transformations to the position values
+  new_top <- top_fn(position@top)
+  new_left <- left_fn(position@left)
+  new_width <- width_fn(position@width)
+  new_height <- height_fn(position@height)
+
+  # Create and return new slide_position object
+  slide_position(
+    top = new_top,
+    left = new_left,
+    width = new_width,
+    height = new_height
+  )
+}
+
+
+#' Testing function for how to use relative_annotation
+#' 
+#' @param position An object of class `r2slides::slide_position`
+#' 
+#' @returns An object of class `r2slides::slide_position`
+#' 
+#' @export
+chart_annotation_1 <- function(position) {
+  relative_annotation(
+    position,
+    top_transformation = \(x) x - 0.5,
+    width_transformation = 0.5,
+    height_transformation = 0.25
   )
 }
