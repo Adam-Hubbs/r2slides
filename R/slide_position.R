@@ -700,6 +700,13 @@ relative_annotation <- function(
 #' 
 #' @returns An object of class `r2slides::slide_position`
 #' 
+#' @example 
+#' \dontrun{
+#' data |>
+#'   write_gs("Sheet Name") |>
+#'   add_linked_chart(on_slide_url("URL Of Slide"), in_top_left()) |>
+#'   add_text("Title", in_top_left() |> chart_annotation_1())
+#' }
 #' @export
 chart_annotation_1 <- function(position) {
   relative_annotation(
