@@ -694,7 +694,35 @@ relative_annotation <- function(
 }
 
 
-#' Testing function for how to use relative_annotation
+#' This function takes transformations for top, left, width, and height, and returns a function that applies those transformations to a slide_position object.
+#' 
+#' @param top_transformation A function to apply to the top value, or a scalar numeric to replace it
+#' @param left_transformation A function to apply to the left value, or a scalar numeric to replace it
+#' @param width_transformation A function to apply to the width value, or a scalar numeric to replace it
+#' @param height_transformation A function to apply to the height value, or a scalar numeric to replace it
+#' 
+#' @returns A function that applies those transformations to a slide_position object.
+#' 
+#' @export
+define_relative_transformation_function <- function(
+  top_transformation = identity,
+  left_transformation = identity,
+  width_transformation = identity,
+  height_transformation = identity
+) {
+  function(position) {
+    relative_annotation(
+      position,
+      top_transformation = top_transformation,
+      left_transformation = left_transformation,
+      width_transformation = width_transformation,
+      height_transformation = height_transformation
+    )
+  }
+}
+
+
+#' Testing function for how to use define_relative_transformation_function
 #' 
 #' @param position An object of class `r2slides::slide_position`
 #' 
@@ -708,11 +736,7 @@ relative_annotation <- function(
 #'   add_text("Title", in_top_left() |> chart_annotation_1())
 #' }
 #' @export
-chart_annotation_1 <- function(position) {
-  relative_annotation(
-    position,
-    top_transformation = \(x) x - 0.5,
-    width_transformation = 0.5,
-    height_transformation = 0.25
-  )
-}
+chart_annotation_1 <- define_relative_transformation_function(
+  top_transformation = \(x) x - 0.5,
+  width_transformation = 0.5,
+  height_transformation = 0.25)
