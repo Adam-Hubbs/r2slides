@@ -7,7 +7,7 @@
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param call Optional. Call environment used in error messages.
 #'
-#' @returns The API response from the batch update request.
+#' @returns The Google Slides slide object (invisibly)
 #'
 #' @export
 add_linked_chart <- function(
@@ -75,4 +75,8 @@ add_linked_chart <- function(
     token = token,
     call = call
   )
+
+
+
+  return(invisible(slide_obj))
 }
