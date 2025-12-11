@@ -27,7 +27,7 @@ add_linked_chart(
 \item{call}{Optional. Call environment used in error messages.}
 }
 \value{
-The API response from the batch update request.
+The Google Slides slide object (invisibly)
 }
 \description{
 Add a linked Google Sheets chart to a Google Slides presentation

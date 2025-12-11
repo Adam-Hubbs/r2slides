@@ -7,7 +7,7 @@ Authors@R:
 Description: Create Google Slides from R code. This utilizes the Google
     Slides and Google Sheets API's to create charts and slides from R
     code. It is roughly similar to Officer, but with the Google Suite.
-License: MIT 
+License: MIT + file LICENSE
 URL: https://github.com/Adam-Hubbs/r2slides
 BugReports: https://github.com/Adam-Hubbs/r2slides/issues
 Depends: 

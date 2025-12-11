@@ -593,7 +593,7 @@ in_qualtrics_title <- function(
 
 
 #' Transform a slide position object to create a new position
-#' @internal
+#' @noRd
 process_transformation <- function(trans, param_name, call = rlang::caller_env()) {
   # If it's a scalar numeric, convert to a function that returns that value
   if (is.numeric(trans) && length(trans) == 1) {
@@ -728,7 +728,7 @@ define_relative_transformation_function <- function(
 #' 
 #' @returns An object of class `r2slides::slide_position`
 #' 
-#' @example 
+#' @examples
 #' \dontrun{
 #' data |>
 #'   write_gs("Sheet Name") |>

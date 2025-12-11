@@ -7,19 +7,16 @@
 add_title(
   text = "Title",
   presentation = google_presentation,
+  position = NULL,
   title_font_size = NULL,
   title_font_family = NULL,
   title_font_bold = NULL,
   title_color = NULL,
   title_bg_color = NULL,
-  title_left = NULL,
-  title_top = NULL,
-  title_width = NULL,
-  title_height = NULL,
   report_style = c("qualtrics", "municipal", "y2"),
   verbose = TRUE,
-  convert_slide_size = TRUE,
-  slide_size = NULL,
+  token = NULL,
+  call = rlang::caller_env(),
   ...
 )
 }
@@ -28,6 +25,8 @@ add_title(
 
 \item{presentation}{Optional. A Google Slides presentation object. By default it searches for
 an environment named `google_presentation`.}
+
+\item{position}{An object of class `r2slides::slide_position`. If `NULL`, default position will be created based on `report_style`.}
 
 \item{title_font_size}{Optional. Font size in points.}
 
@@ -39,21 +38,13 @@ an environment named `google_presentation`.}
 
 \item{title_bg_color}{Optional. Title background color as hex code.}
 
-\item{title_left}{Optional. Left position of title.}
-
-\item{title_top}{Optional. Top position of title.}
-
-\item{title_width}{Optional. Width of title element.}
-
-\item{title_height}{Optional. Height of title element.}
-
 \item{report_style}{One of `"qualtrics"`, `"municipal"`, or `"y2"`.}
 
 \item{verbose}{Optional. A logical indicating whether to print API responses. Default: `TRUE`.}
 
-\item{convert_slide_size}{Optional. A logical indicating whether to convert dimensions from PowerPoint into Google Slides. If `TRUE`, then positioning would work identically to a PowerPoint presentation. If `FALSE` it uses the raw inches directly. Default: TRUE.}
+\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
 
-\item{slide_size}{Optional. A list containing slide size specifications for converting. In the form of list(x_height = 7.5, x_width = 13.3, y_height = 5, y_width = 9). `x_` indicates converting from and `y_` indicates converting too. You can override this to convert between custom slide sizes. If left blank it converts from PowerPoint to Google Slides.}
+\item{call}{Optional. Call environment used in error messages.}
 
 \item{...}{Additional arguments reserved for future expansion.}
 }

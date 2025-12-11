@@ -1,5 +1,6 @@
 #' Add or update text in a Google Slides presentation
 #'
+#' @param slide_obj A Google Slides slide object.
 #' @param text A character string of text to add.
 #' @param position An object of class `r2slides::slide_position`
 #' @param element_id Optional. A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.
@@ -215,6 +216,20 @@ add_text <- function(
   return(invisible(slide_obj))
 }
 
+
+
+
+
+
+#' Apply text styling to all elements on a slide that match the selector function
+#' Can be used to apply to every text element containing a +, every element containing a -, only the text parts of all elements, etc. 
+#' @param selector A function that takes a text element and returns TRUE if it should be styled.
+#' @param style A list of text styling properties.
+#' 
+#' @export
+style_text_if <- function (selector, style) {
+  NULL
+}
 
 #' Add a title to a Google Slide
 #'
