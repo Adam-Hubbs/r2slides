@@ -14,12 +14,19 @@
   : Add or update text in a Google Slides presentation
 - [`add_title()`](https://adam-hubbs.github.io/r2slides/reference/add_title.md)
   : Add a title to a Google Slide
+- [`chart_annotation_1()`](https://adam-hubbs.github.io/r2slides/reference/chart_annotation_1.md)
+  : Testing function for how to use
+  define_relative_transformation_function
 - [`correct_slide_size()`](https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.md)
   : Correct slide sizes
 - [`create_presentation_env_in_global()`](https://adam-hubbs.github.io/r2slides/reference/create_presentation_env_in_global.md)
   : Create presentation environment
 - [`create_spreadsheet_env_in_global()`](https://adam-hubbs.github.io/r2slides/reference/create_spreadsheet_env_in_global.md)
   : Create spreadsheet environment
+- [`define_relative_transformation_function()`](https://adam-hubbs.github.io/r2slides/reference/define_relative_transformation_function.md)
+  : This function takes transformations for top, left, width, and
+  height, and returns a function that applies those transformations to a
+  slide_position object.
 - [`get_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/get_chart_id.md)
   : Get chart_id from a Google Sheet
 - [`in_bottom_left()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_left.md)
@@ -31,6 +38,9 @@
 - [`in_bottom_right()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_right.md)
   : Creates a slide_position object with defaults in the bottom right of
   the slide
+- [`in_qualtrics_title()`](https://adam-hubbs.github.io/r2slides/reference/in_qualtrics_title.md)
+  : Creates a slide_position object with defaults in the title of the
+  slide
 - [`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/in_top_left.md)
   : Creates a slide_position object with defaults in the top left of the
   slide
@@ -60,7 +70,18 @@
   : Get authentication token
 - [`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
   : Register a Google Slides presentation
+- [`relative_annotation()`](https://adam-hubbs.github.io/r2slides/reference/relative_annotation.md)
+  : Takes a slide position object, applies transformations to its
+  dimensions, and returns a new slide_position object. Transformations
+  can be either functions or scalar numeric values. If a scalar is
+  provided, it replaces the original value. If a function is provided,
+  it's applied to the original value.
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
+- [`style_text_if()`](https://adam-hubbs.github.io/r2slides/reference/style_text_if.md)
+  : Apply text styling to all elements on a slide that match the
+  selector function Can be used to apply to every text element
+  containing a +, every element containing a -, only the text parts of
+  all elements, etc.
 - [`write_gs()`](https://adam-hubbs.github.io/r2slides/reference/write_gs.md)
   : Writes data to a Google Sheet

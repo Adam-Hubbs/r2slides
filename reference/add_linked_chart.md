@@ -45,4 +45,4 @@ add_linked_chart(
 
 ## Value
 
-The API response from the batch update request.
+The Google Slides slide object (invisibly)
