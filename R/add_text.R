@@ -6,10 +6,9 @@
 #' @param element_id Optional. A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.
 #' @param text_style Optional. A list of text styling properties.
 #' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
-#' @param bg_color Optional. A list specifying background color (RGB).
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
-#' @param call Optional. Call environment used in error messages.
-#' @param ... Additional arguments reserved for future expansion.
+#' @param debug Optional. A logical indicating whether to print debug messages. Default: FALSE.
+#' @param ... Additional values available to style_rule objects.
 #'
 #' @returns The Google Slides slide object (invisibly).
 #'
@@ -21,25 +20,24 @@ add_text <- function(
   element_id = NULL,
   text_style = NULL,
   verbose = TRUE,
-  bg_color = NULL,
   token = NULL,
-  call = rlang::caller_env(),
+  debug = FALSE,
   ...
 ) {
   # Adds text to the current slide in a presentation
   # If element_id is provided, it will update that text element
   # Otherwise, it creates a new text box at the specified position
 
-
   if (!is.character(text)) {
-    cli::cli_abort("{.var text} must be a {.code character}", call = call)
+    cli::cli_abort(
+      "{.var text} must be a {.code character}, not a {.cls {class(text)}}"
+    )
   }
 
   # Validate position object
   if (!inherits(position, "r2slides::slide_position")) {
     cli::cli_abort(
-      "Position must be an object of class {.cls r2slides::slide_position}",
-      call = call
+      "Position must be an object of class {.cls r2slides::slide_position} not a {.cls {class(position)}}"
     )
   }
 
@@ -55,17 +53,17 @@ add_text <- function(
   params <- list(presentationId = slide_obj$presentation_id)
 
   if (is.null(element_id)) {
-    # Create a new text box
-    text_request <- list(
-      requests = list(
+    element_id <- paste0(
+      "text_",
+      format(Sys.time(), "%Y%m%d%H%M%S"),
+      "_",
+      sample(1000:9999, 1)
+    )
+    shape_request <-
+      list(
         list(
           createShape = list(
-            objectId = paste0(
-              "text_",
-              format(Sys.time(), "%Y%m%d%H%M%S"),
-              "_",
-              sample(1000:9999, 1)
-            ),
+            objectId = element_id,
             shapeType = "TEXT_BOX",
             elementProperties = list(
               pageObjectId = slide_id,
@@ -84,150 +82,319 @@ add_text <- function(
           )
         )
       )
-    )
+  }
 
-    rsp <- query2(
-      endpoint = 'slides.presentations.batchUpdate',
-      params = params,
-      body = text_request,
-      base = 'slides',
-      token = token,
-      call = call
-    )
-
-    # Get the object ID of the created shape
-    element_id <- rsp$replies[[1]]$createShape$objectId
-
-    # Format background color (if supplied)
-    if (!is.null(bg_color)) {
-      background_request <- list(
-        updateShapeProperties = list(
-          objectId = element_id,
-          fields = "shapeBackgroundFill",
-          shapeProperties = list(
-            shapeBackgroundFill = list(
-              solidFill = list(
-                color = list(
-                  rgbColor = bg_color
-                )
-              )
-            )
-          )
-        )
-      )
-    }
-
-    # insert text request
-    text_insert_request <-
+  insert_text_request <-
+    list(
       list(
         insertText = list(
           objectId = element_id,
           text = text
         )
       )
-
-    #Put requests together
-    if (!is.null(bg_color)) {
-      text_request <- list(
-        requests = list(
-          background_request,
-          text_insert_request
-        )
-      )
-    } else {
-      text_request <- list(
-        requests = list(
-          text_insert_request
-        )
-      )
-    }
-
-    rsp <- query2(
-      endpoint = 'slides.presentations.batchUpdate',
-      params = params,
-      body = text_request,
-      base = 'slides',
-      token = token,
-      call = call
-    )
-  } else {
-    # Update existing text element
-    text_update_request <- list(
-      requests = list(
-        list(
-          deleteText = list(
-            objectId = element_id,
-            textRange = list(
-              type = "ALL"
-            )
-          )
-        ),
-        list(
-          insertText = list(
-            objectId = element_id,
-            text = text
-          )
-        )
-      )
     )
 
-    rsp <- query2(
-      endpoint = 'slides.presentations.batchUpdate',
-      params = params,
-      body = text_update_request,
-      base = 'slides',
-      token = token,
-      call = call
-    )
-
-    if (verbose == TRUE) {
-      print(rsp)
-    }
-  }
-
-  # Apply text styling if provided
   if (!is.null(text_style)) {
-    style_request <- list(
-      requests = list(
-        list(
-          updateTextStyle = list(
-            objectId = element_id,
-            textRange = list(
-              type = "ALL"
-            ),
-            style = text_style,
-            fields = paste(names(text_style), collapse = ",")
-          )
-        )
+    # if it is a text_style object, convert it to a style_rule object
+    if (inherits(text_style, "r2slides::text_style")) {
+      text_style <- style_rule(default = text_style)
+    }
+    text_style_request <-
+      create_styling_request(
+        style_rule = text_style,
+        text = text,
+        element_id = element_id,
+        ...
       )
-    )
+  }
 
-    rsp <- query2(
-      endpoint = 'slides.presentations.batchUpdate',
-      params = params,
-      body = style_request,
-      base = 'slides',
-      token = token,
-      call = call
+  shape_request <- list(requests = purrr::compact(shape_request))
+  insert_text_request <- list(requests = purrr::compact(insert_text_request))
+
+  text_style_request <- purrr::compact(text_style_request)
+
+  all_text_style_requests <- NULL
+
+  for (i in 1:length(text_style_request)) {
+    all_text_style_requests <- c(
+      all_text_style_requests,
+      list(list(requests = text_style_request[i]))
     )
   }
 
-  # Return the element ID for future reference
+  query2(
+    endpoint = 'slides.presentations.batchUpdate',
+    params = params,
+    body = shape_request,
+    base = 'slides',
+    token = token
+  )
+
+  query2(
+    endpoint = 'slides.presentations.batchUpdate',
+    params = params,
+    body = insert_text_request,
+    base = 'slides',
+    token = token
+  )
+
+  purrr::walk(all_text_style_requests, \(x) {
+    query2(
+      endpoint = 'slides.presentations.batchUpdate',
+      params = params,
+      body = x,
+      base = 'slides',
+      token = token
+    )
+  })
+
   return(invisible(slide_obj))
 }
 
+#' Get the length of an argument
+#'
+#' @param arg An argument to get the length of.
+#'
+#' @export
+get_safe_length <- function(arg) {
+  tryCatch(
+    {
+      if (is.null(arg)) {
+        return(0L)
+      }
+      if (rlang::is_function(arg)) {
+        return(1L)
+      }
+      if (rlang::is_quosure(arg)) {
+        return(1L)
+      }
+      length(arg)
+    },
+    error = function(e) {
+      if (grepl("\"position\" is missing", e$message)) {
+        func_name <- "in_top_left"
+
+        if (!is.null(e$call)) {
+          func_name <- deparse1(e$call[[1]])
+        }
+
+        cli::cli_abort(
+          c(
+            "x" = "A realtive slide position function call was passed to the position argument. Please pass the name of the function, or a {.cls r2slides::slide_position} object instead.",
+            "i" = "  - {.strong Good}: position = {func_name}",
+            "i" = "  - {.strong Bad}: position = {func_name}()"
+          ),
+          parent = e,
+          call = rlang::caller_env(5) # First 3 are tryCatch internals. 4 is get_safe_length(). We want 5.
+        )
+      } else {
+        cli::cli_abort(
+          c(
+            "x" = "Error evaluating length of {.var {deparse(substitute(arg))}}"
+          ),
+          call = rlang::caller_env(5)
+        )
+      }
+    }
+  )
+}
 
 
+#' Add or update text in a Google Slides presentation
+#'
+#' @param slide_obj A Google Slides slide object.
+#' @param text A vector of character strings to add.
+#' @param position A vector of objects of class `r2slides::slide_position`
+#' @param position_base A vector of objects of class `r2slides::slide_position`
+#' @param element_id Optional. A vector of string IDs of an existing text element to update. If element_id is `NULL` a new element will be created.
+#' @param text_style Optional. A vector of text_style or style_rule objects.
+#' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
+#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
+#' @param pass_strategy Optional. A strategy to pass additional values to style_rule objects.
+#' @param debug Optional. A logical indicating whether to print debug messages. Default: FALSE.
+#' @param ... Additional values available to style_rule objects.
+#'
+#' @returns The Google Slides slide object (invisibly).
+#'
+#' @export
+add_text_multi <- function(
+  slide_obj,
+  text,
+  position,
+  position_base = NULL,
+  element_id = NULL,
+  text_style = NULL,
+  verbose = TRUE,
+  token = NULL,
+  pass_strategy = c('one', 'all'),
+  debug = FALSE,
+  ...
+) {
+  pass_strategy <- rlang::arg_match(pass_strategy)
 
+  # Determine the target length from non-scalar arguments
+  lengths <- c(
+    text = get_safe_length(text),
+    position = get_safe_length(position),
+    position_base = get_safe_length(position_base),
+    element_id = get_safe_length(element_id),
+    text_style = get_safe_length(text_style)
+  )
+
+  # Remove NULLs (they have length 0)
+  lengths <- lengths[lengths > 0]
+
+  # Check for valid recycling: all lengths should be 1 or the max length
+  max_len <- max(lengths)
+  invalid <- lengths[lengths != 1 & lengths != max_len]
+
+  if (length(invalid) > 0) {
+    cli::cli_abort(
+      c(
+        "Cannot recycle arguments to a common length.",
+        "i" = "All arguments must have length 1 or length {max_len}.",
+        "x" = "Invalid lengths: {.val {invalid}}"
+      )
+    )
+  }
+
+  # Recycle each argument to max_len
+  recycle_arg <- function(arg, name) {
+    if (is.null(arg)) {
+      return(rep(list(NULL), max_len))
+    }
+    len <- length(arg)
+    if (len == 1 && max_len > 1) {
+      return(rep(list(arg), max_len))
+    } else if (len == max_len) {
+      # Convert to list if not already
+      if (is.list(arg)) {
+        return(arg)
+      }
+      return(as.list(arg))
+    }
+    return(list(arg))
+  }
+
+  text_recycled <- recycle_arg(text, "text")
+  position_recycled <- recycle_arg(position, "position")
+  position_base_recycled <- recycle_arg(position_base, "position_base")
+  element_id_recycled <- recycle_arg(element_id, "element_id")
+  text_style_recycled <- recycle_arg(text_style, "text_style")
+
+  # Handle ... based on pass_strategy
+  dots <- rlang::list2(...)
+
+  if (pass_strategy == 'one') {
+    # Recycle each element of ... individually
+    dots_recycled <- purrr::map(dots, recycle_arg, name = "...")
+
+    # Transpose so each iteration gets one element from each dots argument
+    if (length(dots) > 0) {
+      dots_for_map <- purrr::transpose(dots_recycled)
+    } else {
+      dots_for_map <- vector("list", max_len)
+    }
+  } else {
+    # pass_strategy == 'all': pass entire ... to each iteration
+    dots_for_map <- rep(list(dots), max_len)
+  }
+
+  final_position <- purrr::pmap(
+    list(position_recycled, position_base_recycled),
+    function(position, position_base) {
+      if (rlang::is_function(position)) {
+        if (rlang::is_function(position_base)) {
+          final_position <- position_base() |> position()
+        } else {
+          final_position <- position(position_base)
+        }
+      } else {
+        position
+      }
+    }
+  )
+
+  # Now map over recycled arguments
+  results <- tryCatch(
+    purrr::pmap(
+      list(
+        text = text_recycled,
+        final_position = final_position,
+        element_id = element_id_recycled,
+        text_style = text_style_recycled,
+        dots = dots_for_map
+      ),
+      function(text, final_position, element_id, text_style, dots) {
+        add_text(
+          slide_obj = slide_obj,
+          text = text,
+          position = final_position,
+          element_id = element_id,
+          text_style = text_style,
+          verbose = verbose,
+          token = token,
+          debug = debug,
+          ... = !!!dots
+        )
+      }
+    ),
+    error = function(error) {
+      cli::cli_abort(c("x" = "Failed to add text to slide"), parent = error)
+    }
+  )
+
+  return(invisible(results[[1]]))
+}
+
+#' Apply text styling to an existing text element
+#' @param slide_obj A Google Slides slide object.
+#' @param element_id The object ID of the text element.
+#' @param style A list of text styling properties.
+#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
+#' @param call Optional. Call environment used in error messages.
+#'
+#' @export
+style_text <- function(
+  slide_obj,
+  element_id,
+  style,
+  token = NULL,
+  call = NULL
+) {
+  style_request <- list(
+    requests = list(
+      list(
+        updateTextStyle = list(
+          objectId = element_id,
+          textRange = list(
+            type = "ALL"
+          ),
+          style = style@style,
+          fields = paste(names(style@style), collapse = ",")
+        )
+      )
+    )
+  )
+
+  rsp <- query2(
+    endpoint = 'slides.presentations.batchUpdate',
+    params = list(presentationId = slide_obj$presentation_id),
+    body = style_request,
+    base = 'slides',
+    token = token,
+    call = call
+  )
+}
 
 
 #' Apply text styling to all elements on a slide that match the selector function
-#' Can be used to apply to every text element containing a +, every element containing a -, only the text parts of all elements, etc. 
+#' Can be used to apply to every text element containing a +, every element containing a -, only the text parts of all elements, etc.
 #' @param selector A function that takes a text element and returns TRUE if it should be styled.
 #' @param style A list of text styling properties.
-#' 
+#'
 #' @export
-style_text_if <- function (selector, style) {
+style_text_if <- function(selector, style) {
   NULL
 }
 
@@ -267,7 +434,6 @@ add_title <- function(
   call = rlang::caller_env(),
   ...
 ) {
-
   cli::cli_abort(
     "This function is deprecated. Please use `add_text()` instead.",
     call = call
@@ -307,7 +473,6 @@ add_commentary <- function(
   call = rlang::caller_env(),
   ...
 ) {
-
   cli::cli_abort(
     "This function is deprecated. Please use `add_text()` instead.",
     call = call
@@ -348,7 +513,6 @@ add_footer <- function(
   call = rlang::caller_env(),
   ...
 ) {
-
   cli::cli_abort(
     "This function is deprecated. Please use `add_text()` instead.",
     call = call
