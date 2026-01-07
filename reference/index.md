@@ -60,11 +60,11 @@
   : Create a new Google Slides presentation
 - [`new_slide()`](https://adam-hubbs.github.io/r2slides/reference/new_slide.md)
   : Create a new slide in a Google Slides presentation
-- [`on_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
-  [`on_current_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
-  [`on_newest_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
-  [`on_slide_id()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
-  [`on_slide_url()`](https://adam-hubbs.github.io/r2slides/reference/on_slide.md)
+- [`on_slide_number()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+  [`on_current_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+  [`on_newest_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+  [`on_slide_id()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+  [`on_slide_url()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   : Specify a slide by ID or URL
 - [`query2()`](https://adam-hubbs.github.io/r2slides/reference/query2.md)
   : Query Google API's
@@ -84,6 +84,10 @@
   it's applied to the original value.
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
+- [`str_before()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
+  [`str_after()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
+  [`str_matches()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
+  : String helper functions for text positioning
 - [`style_text()`](https://adam-hubbs.github.io/r2slides/reference/style_text.md)
   : Apply text styling to an existing text element
 - [`style_text_if()`](https://adam-hubbs.github.io/r2slides/reference/style_text_if.md)

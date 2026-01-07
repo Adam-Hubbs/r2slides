@@ -32,7 +32,7 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/index.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/new_presentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/new_slide.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/on_slide.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/on_slide_id.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/query2.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides-package.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_auth.html</loc></url>
@@ -42,6 +42,7 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/register_presentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/relative_annotation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/set_defaults.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/string-helpers.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/style_text.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/style_text_if.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/text_style.html</loc></url>
