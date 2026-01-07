@@ -497,7 +497,12 @@ create_styling_request <- function(
       } else {
         selection_index <- NULL
       }
-    } else {
+    } else if (is.numeric(f_output) && length(f_output) == 2) {
+      # Support for partial text selection with 1-based R indices
+      # Convert to 0-based indices for Google Slides API
+      selection_index <- f_output
+    }
+    else {
       cli::cli_abort(
         "Selection Functions which style only certain parts of the text are not yet supported.",
         call = call
@@ -505,6 +510,10 @@ create_styling_request <- function(
     }
 
     if (!is.null(selection_index)) {
+      # Convert 1-based R indices to 0-based Google Slides API indices
+      start_index <- as.integer(selection_index[1] - 1)
+      end_index <- as.integer(selection_index[2])
+
       # Create request
       style_requests <- append(
         style_requests,
@@ -512,7 +521,9 @@ create_styling_request <- function(
           updateTextStyle = list(
             objectId = element_id,
             textRange = list(
-              type = "ALL"
+              type = "FIXED_RANGE",
+              startIndex = start_index,
+              endIndex = end_index
             ),
             style = style_rule@style[[rule]]@style,
             fields = paste(

@@ -60,7 +60,7 @@ create_presentation_env_in_global <- function() {
 #' @param n A numeric slide ID
 #' @rdname on_slide
 #' @export
-on_slide <- function(n) {
+on_slide_number <- function(n) {
   cli::cli_abort(c(x = "This function is not yet implemented", i = "Please use {.code on_slide_id()}"))
 }
 
