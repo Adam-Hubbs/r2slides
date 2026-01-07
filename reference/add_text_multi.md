@@ -5,14 +5,16 @@ Add or update text in a Google Slides presentation
 ## Usage
 
 ``` r
-add_text(
+add_text_multi(
   slide_obj,
   text,
   position,
+  position_base = NULL,
   element_id = NULL,
   text_style = NULL,
   verbose = TRUE,
   token = NULL,
+  pass_strategy = c("one", "all"),
   debug = FALSE,
   ...
 )
@@ -26,20 +28,24 @@ add_text(
 
 - text:
 
-  A character string of text to add.
+  A vector of character strings to add.
 
 - position:
 
-  An object of class \`r2slides::slide_position\`
+  A vector of objects of class \`r2slides::slide_position\`
+
+- position_base:
+
+  A vector of objects of class \`r2slides::slide_position\`
 
 - element_id:
 
-  Optional. A string ID of an existing text element to update. If
-  element_id is \`NULL\` a new element will be created.
+  Optional. A vector of string IDs of an existing text element to
+  update. If element_id is \`NULL\` a new element will be created.
 
 - text_style:
 
-  Optional. A list of text styling properties.
+  Optional. A vector of text_style or style_rule objects.
 
 - verbose:
 
@@ -50,6 +56,10 @@ add_text(
 
   Optional. An OAuth2 token. The default uses \`r2slides_token()\` to
   find a token.
+
+- pass_strategy:
+
+  Optional. A strategy to pass additional values to style_rule objects.
 
 - debug:
 

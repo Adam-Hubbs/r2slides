@@ -12,6 +12,8 @@
   : Add a linked Google Sheets chart to a Google Slides presentation
 - [`add_text()`](https://adam-hubbs.github.io/r2slides/reference/add_text.md)
   : Add or update text in a Google Slides presentation
+- [`add_text_multi()`](https://adam-hubbs.github.io/r2slides/reference/add_text_multi.md)
+  : Add or update text in a Google Slides presentation
 - [`add_title()`](https://adam-hubbs.github.io/r2slides/reference/add_title.md)
   : Add a title to a Google Slide
 - [`chart_annotation_1()`](https://adam-hubbs.github.io/r2slides/reference/chart_annotation_1.md)
@@ -23,12 +25,16 @@
   : Create presentation environment
 - [`create_spreadsheet_env_in_global()`](https://adam-hubbs.github.io/r2slides/reference/create_spreadsheet_env_in_global.md)
   : Create spreadsheet environment
+- [`create_styling_request()`](https://adam-hubbs.github.io/r2slides/reference/create_styling_request.md)
+  : Create a styling request
 - [`define_relative_transformation_function()`](https://adam-hubbs.github.io/r2slides/reference/define_relative_transformation_function.md)
   : This function takes transformations for top, left, width, and
   height, and returns a function that applies those transformations to a
   slide_position object.
 - [`get_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/get_chart_id.md)
   : Get chart_id from a Google Sheet
+- [`get_safe_length()`](https://adam-hubbs.github.io/r2slides/reference/get_safe_length.md)
+  : Get the length of an argument
 - [`in_bottom_left()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_left.md)
   : Creates a slide_position object with defaults in the bottom left of
   the slide
@@ -78,10 +84,14 @@
   it's applied to the original value.
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
+- [`style_text()`](https://adam-hubbs.github.io/r2slides/reference/style_text.md)
+  : Apply text styling to an existing text element
 - [`style_text_if()`](https://adam-hubbs.github.io/r2slides/reference/style_text_if.md)
   : Apply text styling to all elements on a slide that match the
   selector function Can be used to apply to every text element
   containing a +, every element containing a -, only the text parts of
   all elements, etc.
+- [`text_style()`](https://adam-hubbs.github.io/r2slides/reference/text_style.md)
+  : Text styling properties
 - [`write_gs()`](https://adam-hubbs.github.io/r2slides/reference/write_gs.md)
   : Writes data to a Google Sheet

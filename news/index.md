@@ -1,10 +1,35 @@
 # Changelog
 
+## Version 0.0.9030
+
+### Style Objects
+
+- Text style objects can style and text with several different styles
+- Style rule objects apply text style objects to text which matches a
+  selector function
+
+### Add Text
+
+- Added add_text() and add_text_multi() to add text with relevant
+  stylings.
+
 ## Version 0.0.9025
+
+### Authentication Fixes
+
+- Fixed Authentication flow and exported more helpers
+
+### Slide Position Objects and Helpers
+
+- New system for Slide Position using S7 objects
+
+### Tools for Linked Charts
+
+- Pipeable syntax for adding linked charts to Google Slides
 
 ## Version 0.0.9011
 
-### Built in default OAuth client
+#### Built in default OAuth client
 
 - Built in default OAuth client now means that this package will work
   from anyone’s computer (Once their google account has been
@@ -12,7 +37,7 @@
 
 ## Version 0.0.9010
 
-### Working version
+#### Working version
 
 - Moved everything over to query2 to use the discovery document for
   validation
@@ -20,7 +45,7 @@
 
 ## Version 0.0.9000
 
-### New
+#### New
 
 - Initial Commit
 - Basically just put my local functions in a package. It will not build
@@ -28,6 +53,6 @@
 - CI Workflow setup - test, coverage, and documentation website
   automatically runs
 
-### Bug fixes
+#### Bug fixes
 
 - None
