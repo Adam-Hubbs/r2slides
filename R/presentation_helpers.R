@@ -58,13 +58,13 @@ create_presentation_env_in_global <- function() {
 }
 
 #' @param n A numeric slide ID
-#' @rdname on_slide
+#' @rdname on_slide_id
 #' @export
 on_slide_number <- function(n) {
   cli::cli_abort(c(x = "This function is not yet implemented", i = "Please use {.code on_slide_id()}"))
 }
 
-#' @rdname on_slide
+#' @rdname on_slide_id
 #' @export
 on_current_slide <- function() {
   cli::cli_abort(c(
@@ -73,7 +73,7 @@ on_current_slide <- function() {
   ))
 }
 
-#' @rdname on_slide
+#' @rdname on_slide_id
 #' @export
 on_newest_slide <- function() {
   cli::cli_abort(c(
@@ -113,7 +113,7 @@ on_newest_slide <- function() {
 #' slide_ref <- on_slide_id(6)
 #'}
 #' 
-#' @rdname on_slide
+#' @rdname on_slide_id
 #' @export
 on_slide_id <- function(id) {
 
@@ -194,6 +194,6 @@ on_slide_id <- function(id) {
   ))
 }
 
-#' @rdname on_slide
+#' @rdname on_slide_id
 #' @export
 on_slide_url <- on_slide_id
