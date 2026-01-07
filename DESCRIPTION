@@ -11,7 +11,7 @@ License: MIT + file LICENSE
 URL: https://github.com/Adam-Hubbs/r2slides
 BugReports: https://github.com/Adam-Hubbs/r2slides/issues
 Depends: 
-    R (>= 4.3.0)
+    R (>= 4.1.0)
 Imports:
     cli,
     gargle,
