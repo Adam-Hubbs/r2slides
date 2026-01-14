@@ -76,12 +76,8 @@
   : Get authentication token
 - [`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
   : Register a Google Slides presentation
-- [`relative_annotation()`](https://adam-hubbs.github.io/r2slides/reference/relative_annotation.md)
-  : Takes a slide position object, applies transformations to its
-  dimensions, and returns a new slide_position object. Transformations
-  can be either functions or scalar numeric values. If a scalar is
-  provided, it replaces the original value. If a function is provided,
-  it's applied to the original value.
+- [`relative_position()`](https://adam-hubbs.github.io/r2slides/reference/relative_position.md)
+  : Relative Position
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
 - [`str_before()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
