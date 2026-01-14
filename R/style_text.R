@@ -329,6 +329,22 @@ S7::method(print, text_style) <- function(x, ...) {
 
 
 # Currently no validation for the function. It should return either TRUE/FALSE (And be applied to the whole string), or return a vector of START_INDEX, END_INDEX
+
+
+
+
+
+
+#' Style Rule Object
+#'
+#' A style rule object is a list of text styles that are applied to a set of selectors.
+#' @param when A list of selection functions that determine when to apply each style.
+#' Each function should return either TRUE/FALSE (to apply to the whole text) or a vector of START_INDEX, END_INDEX (to apply to a specific part of the text).
+#' @param what A list of text styles. Each style corresponds to a selector in `when`.
+#' If the number of styles is less than the number of selectors, the last style is treated as the default style to apply when no other selectors match.
+#' @param default An optional default text style to apply when no selectors match.
+#' 
+#' @export
 style_rule <- S7::new_class(
   'style_rule',
   properties = list(
