@@ -88,6 +88,8 @@
   [`str_after()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
   [`str_matches()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
   : String helper functions for text positioning
+- [`style_rule()`](https://adam-hubbs.github.io/r2slides/reference/style_rule.md)
+  : Style Rule Object
 - [`style_text()`](https://adam-hubbs.github.io/r2slides/reference/style_text.md)
   : Apply text styling to an existing text element
 - [`style_text_if()`](https://adam-hubbs.github.io/r2slides/reference/style_text_if.md)
