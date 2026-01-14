@@ -4,6 +4,12 @@
 # Silence CRAN check over missing global binding (because we make it when the user registers/creates a presentation)
 if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
 
+if(getRversion() < "4.4.0") {
+  `%||%` <- function(a, b) {
+    if (!is.null(a)) a else b
+  }
+}
+
 
 #Set up when package is created
 .onLoad <- function(libname, pkgname) {
