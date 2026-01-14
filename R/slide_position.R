@@ -633,7 +633,7 @@ process_transformation <- function(trans, param_name, call = rlang::caller_env()
 #' base_pos <- slide_position(left = 1, top = 2, width = 5, height = 3)
 #'
 #' # Move right by 0.5 inches using a function, set the maximum width at 5
-#' new_pos <- relative_annotation(
+#' new_pos <- relative_position(
 #'   base_pos,
 #'   top_transformation = identity,
 #'   left_transformation = function(x) x + 0.5,
@@ -642,7 +642,7 @@ process_transformation <- function(trans, param_name, call = rlang::caller_env()
 #' )
 #'
 #' # Set absolute position using scalars
-#' new_pos2 <- relative_annotation(
+#' new_pos2 <- relative_position(
 #'   base_pos,
 #'   top_transformation = 3,
 #'   left_transformation = 2,
@@ -652,7 +652,7 @@ process_transformation <- function(trans, param_name, call = rlang::caller_env()
 #' }
 #'
 #' @export
-relative_annotation <- function(
+relative_position <- function(
   position,
   top_transformation = identity,
   left_transformation = identity,
@@ -711,7 +711,7 @@ define_relative_transformation_function <- function(
   height_transformation = identity
 ) {
   function(position) {
-    relative_annotation(
+    relative_position(
       position,
       top_transformation = top_transformation,
       left_transformation = left_transformation,
