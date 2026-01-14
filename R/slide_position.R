@@ -612,7 +612,8 @@ process_transformation <- function(trans, param_name, call = rlang::caller_env()
   )
 }
 
-#'
+#' Relative Position
+#' 
 #' Takes a slide position object, applies transformations to its dimensions,
 #' and returns a new slide_position object. Transformations can be either
 #' functions or scalar numeric values. If a scalar is provided, it replaces
