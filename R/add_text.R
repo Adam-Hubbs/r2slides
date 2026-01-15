@@ -271,7 +271,7 @@ add_text_multi <- function(
       if (is.list(arg)) {
         return(arg)
       }
-      return(as.list(arg))
+      return(list(arg))
     }
     return(list(arg))
   }
