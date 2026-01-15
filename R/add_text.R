@@ -270,7 +270,7 @@ add_text_multi <- function(
       # Convert to list if not already
       if (is.list(arg)) {
         return(arg)
-      } else if (inherits(arg, "r2slides::slide_position") | inherits(arg, "r2slides::text_style") | inherits(arg, "r2slides::style_rule")) {
+      } else if (inherits(arg, "r2slides::slide_position") | inherits(arg, "r2slides::text_style") | inherits(arg, "r2slides::style_rule") | is.function(arg) | rlang::is_quosure(arg)) {
         return(list(arg))
       } else {
         return(as.list(arg))
