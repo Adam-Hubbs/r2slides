@@ -12,7 +12,7 @@ write_gs(data, sheet)
 \item{sheet}{The name of the sheet to write to.}
 }
 \value{
-A list of spreadsheet_id and sheet_id
+A sht_id object
 }
 \description{
 Writes data to a Google Sheet

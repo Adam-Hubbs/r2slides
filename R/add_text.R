@@ -7,7 +7,7 @@
 #' @param text_style Optional. A list of text styling properties.
 #' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
-#' @param debug Optional. A logical indicating whether to print debug messages. Default: FALSE.
+#' @param debug Optional. A logical indicating whether to return hte request objects, or evaluate them. Default: FALSE.
 #' @param ... Additional values available to style_rule objects.
 #'
 #' @returns The Google Slides slide object (invisibly).
@@ -127,7 +127,8 @@ add_text <- function(
     params = params,
     body = shape_request,
     base = 'slides',
-    token = token
+    token = token,
+    debug = debug
   )
 
   query(
@@ -135,7 +136,8 @@ add_text <- function(
     params = params,
     body = insert_text_request,
     base = 'slides',
-    token = token
+    token = token,
+    debug = debug
   )
 
   purrr::walk(all_text_style_requests, \(x) {
@@ -144,7 +146,8 @@ add_text <- function(
       params = params,
       body = x,
       base = 'slides',
-      token = token
+      token = token,
+      debug = debug
     )
   })
 

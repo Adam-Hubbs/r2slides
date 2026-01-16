@@ -7,7 +7,7 @@
 get_chart_id(spreadsheet_obj, token = NULL, call = rlang::caller_env())
 }
 \arguments{
-\item{spreadsheet_obj}{A list of spreadsheet_id (string) and sheet_id (integer).}
+\item{spreadsheet_obj}{A sht_id object.}
 
 \item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
 

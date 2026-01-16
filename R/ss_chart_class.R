@@ -1,9 +1,134 @@
+#' Sheet Id class
+#'
+#' @param gs4_sheet A googlesheets4 sheet id, or something coercible to one
+#' @param sheet_id An integer referencing a sheet id
+#' @param call Optional. Call environment used in error messages.
+#' @param x An object of class `sht_id`
+#' @param ... Additional arguments from print
+#'
+#' @rdname new_sht_id
+#' @export
+new_sht_id <- function(gs4_sheet, sheet_id, call = rlang::caller_env()) {
+  gs4_obj <- tryCatch(
+    googlesheets4::as_sheets_id(gs4_sheet),
+    error = function(e) {
+      cli::cli_abort(
+        c(
+          "x" = "{.arg gs4_sheet} must be coercible to a googlesheets4 sheets id."
+        ),
+        call = call
+      )
+    }
+  )
+
+  if (!rlang::is_string(sheet_id)) {
+    cli::cli_abort(
+      c("x" = "{.arg sheet_id} must be a single string."),
+      call = call
+    )
+  }
+
+  structure(
+    list(
+      gs4_sheet = gs4_sheet,
+      sheet_id = sheet_id
+    ),
+    class = "sht_id"
+  )
+}
+
+#' @rdname new_sht_id
+#' @export
+is_sht_id <- function(x) {
+  inherits(x, "sht_id") &&
+    is.list(x) &&
+    !is.null(x$gs4_sheet) &&
+    rlang::is_string(x$sheet_id)
+}
+
+#' @rdname new_sht_id
+#' @export
+print.sht_id <- function(x, ...) {
+  cli::cli_text("sht_id:")
+  cli::cli_bullets(c(
+    "Spreadsheet: {.val {as.character(x$gs4_sheet)}}",
+    "Sheet id: {.val {x$sheet_id}}"
+  ))
+  invisible(x)
+}
+
+
+#' Chart Id class
+#'
+#' @param gs4_sheet A googlesheets4 sheet id, or something coercible to one
+#' @param sheet_id An integer referencing a sheet id
+#' @param chart_id An integer referencing a chart id
+#' @param call Optional. Call environment used in error messages.
+#' @param x An object of class `chart_id`
+#' @param ... Additional arguments from print
+#'
+#' @rdname new_chart_id
+#' @export
+new_chart_id <- function(
+  gs4_sheet,
+  sheet_id,
+  chart_id,
+  call = rlang::caller_env()
+) {
+  gs4_obj <- tryCatch(
+    googlesheets4::as_sheets_id(gs4_sheet),
+    error = function(e) {
+      cli::cli_abort(
+        c(
+          "x" = "{.arg gs4_sheet} must be coercible to a googlesheets4 sheets id."
+        ),
+        call = call
+      )
+    }
+  )
+
+  if (!rlang::is_string(sheet_id)) {
+    cli::cli_abort(
+      c("x" = "{.arg sheet_id} must be a single string."),
+      call = call
+    )
+  }
+
+  if (!rlang::is_scalar_integer(chart_id)) {
+    cli::cli_abort(
+      c("x" = "{.arg chart_id} must be a single integer"),
+      call = call
+    )
+  }
+
+  structure(
+    list(
+      gs4_sheet = gs4_sheet,
+      sheet_id = sheet_id,
+      chart_id = chart_id
+    ),
+    class = c("chart_id", "sht_id")
+  )
+}
+
+#' @rdname new_chart_id
+#' @export
+print.chart_id <- function(x, ...) {
+  cli::cli_text("chart_id:")
+  cli::cli_bullets(c(
+    "Spreadsheet: {.val {as.character(x$gs4_sheet)}}",
+    "Sheet id: {.val {x$sheet_id}}",
+    "Chart id: {.val {x$chart_id}}"
+  ))
+  invisible(x)
+}
+
 
 #' Get chart_id from a Google Sheet
 #'
 #' Retrieves Sheet object from a specified sheet. Errors is 0 or more than 1 chart is found.
 #'
-#' @param spreadsheet_obj A list of spreadsheet_id (string) and sheet_id (integer).
+#' @param spreadsheet_obj A sht_id object.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param call Optional. Call environment used in error messages.
 #'
@@ -15,20 +140,13 @@ get_chart_id <- function(
   token = NULL,
   call = rlang::caller_env()
 ) {
-  # Validate inputs
-  if (!is.list(spreadsheet_obj) || length(spreadsheet_obj) != 2) {
+  if (!is_sht_id(spreadsheet_obj)) {
     cli::cli_abort(
-      c(x = "{.arg spreadsheet_obj} must be a list of size 2.")
+      c(
+        'x' = "{.arg spreadsheet_obj} must be a {.cls sht_id} object."
+      )
     )
   }
-
-  if (!rlang::is_string(spreadsheet_obj$spreadsheet_id)) {
-    cli::cli_abort(
-      c(x = "{.arg spreadsheet_obj$spreadsheet_id} must be a single string.")
-    )
-  }
-
-  ## Error checking for sheet_id
 
   # Get spreadsheet data with sheet information
   response <- query(
@@ -79,8 +197,8 @@ get_chart_id <- function(
       )
     )
   } else {
-    return(list(
-      spreadsheet_id = spreadsheet_obj$spreadsheet_id,
+    return(new_chart_id(
+      gs4_sheet = spreadsheet_obj$spreadsheet_id,
       sheet_id = spreadsheet_obj$sheet_id,
       chart_id = matching_sheet[[1]]$charts[[1]]$chartId
     ))

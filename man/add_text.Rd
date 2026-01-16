@@ -31,7 +31,7 @@ add_text(
 
 \item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
 
-\item{debug}{Optional. A logical indicating whether to print debug messages. Default: FALSE.}
+\item{debug}{Optional. A logical indicating whether to return hte request objects, or evaluate them. Default: FALSE.}
 
 \item{...}{Additional values available to style_rule objects.}
 }

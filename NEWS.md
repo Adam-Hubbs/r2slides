@@ -1,5 +1,7 @@
 # Dev version
 * renamed query2 to query, added better debugging
+* Great refactoring
+* sht_id and chart_id classes
 
 # Version 0.0.9030
 ## Style Objects

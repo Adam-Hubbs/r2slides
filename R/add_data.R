@@ -4,7 +4,7 @@
 #' @param data A data frame to write to the Google Sheet.
 #' @param sheet The name of the sheet to write to.
 #'
-#' @returns A list of spreadsheet_id and sheet_id
+#' @returns A sht_id object
 #'
 #' @export
 write_gs <- function(data, sheet) {
@@ -63,5 +63,5 @@ write_gs <- function(data, sheet) {
   # Extract spreadsheet ID from ss object
   ss_id <- ss_metadata_updated$spreadsheet_id
 
-  return(list(spreadsheet_id = ss_id, sheet_id = sheet_id))
+  return(new_sht_id(gs4_sheet = ss_id, sheet_id = sheet_id))
 }
