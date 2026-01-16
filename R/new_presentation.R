@@ -227,12 +227,3 @@ register_presentation <- function(
   }
 }
 
-
-copy_presentation <- function(presentation, new_name) {
-  # Validate presentation
-  # Copy presentation
-
-  # Display message saying previous presentation has been overridden by new presentation
-  # Provide a clickable link to the new presentation URL
-}
-

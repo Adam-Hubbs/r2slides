@@ -76,7 +76,5 @@ add_linked_chart <- function(
     call = call
   )
 
-
-
   return(invisible(slide_obj))
 }

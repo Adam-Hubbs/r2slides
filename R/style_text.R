@@ -1,18 +1,3 @@
-style_text_object <- function(
-  element_id,
-  bg_color,
-  font_color,
-  bold,
-  italic,
-  font_family,
-  font_size,
-  link,
-  baseline_offset,
-  small_caps,
-  strikethrough,
-  underline
-) {}
-
 
 theme_colors <- c(
   "DARK1",
@@ -329,9 +314,6 @@ S7::method(print, text_style) <- function(x, ...) {
 
 
 # Currently no validation for the function. It should return either TRUE/FALSE (And be applied to the whole string), or return a vector of START_INDEX, END_INDEX
-
-
-
 
 
 

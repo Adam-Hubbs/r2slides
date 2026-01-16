@@ -151,54 +151,6 @@ add_text <- function(
   return(invisible(slide_obj))
 }
 
-#' Get the length of an argument
-#'
-#' @param arg An argument to get the length of.
-#'
-#' @export
-get_safe_length <- function(arg) {
-  tryCatch(
-    {
-      if (is.null(arg)) {
-        return(0L)
-      }
-      if (rlang::is_function(arg)) {
-        return(1L)
-      }
-      if (rlang::is_quosure(arg)) {
-        return(1L)
-      }
-      length(arg)
-    },
-    error = function(e) {
-      if (grepl("\"position\" is missing", e$message)) {
-        func_name <- "in_top_left"
-
-        if (!is.null(e$call)) {
-          func_name <- deparse1(e$call[[1]])
-        }
-
-        cli::cli_abort(
-          c(
-            "x" = "A realtive slide position function call was passed to the position argument. Please pass the name of the function, or a {.cls r2slides::slide_position} object instead.",
-            "i" = "  - {.strong Good}: position = {func_name}",
-            "i" = "  - {.strong Bad}: position = {func_name}()"
-          ),
-          parent = e,
-          call = rlang::caller_env(5) # First 3 are tryCatch internals. 4 is get_safe_length(). We want 5.
-        )
-      } else {
-        cli::cli_abort(
-          c(
-            "x" = "Error evaluating length of {.var {deparse(substitute(arg))}}"
-          ),
-          call = rlang::caller_env(5)
-        )
-      }
-    }
-  )
-}
-
 
 #' Add or update text in a Google Slides presentation
 #'
@@ -351,56 +303,57 @@ add_text_multi <- function(
   return(invisible(results[[1]]))
 }
 
-#' Apply text styling to an existing text element
-#' @param slide_obj A Google Slides slide object.
-#' @param element_id The object ID of the text element.
-#' @param style A list of text styling properties.
-#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
-#' @param call Optional. Call environment used in error messages.
+
+
+#' Get the length of an argument
+#'
+#' @param arg An argument to get the length of.
 #'
 #' @export
-style_text <- function(
-  slide_obj,
-  element_id,
-  style,
-  token = NULL,
-  call = NULL
-) {
-  style_request <- list(
-    requests = list(
-      list(
-        updateTextStyle = list(
-          objectId = element_id,
-          textRange = list(
-            type = "ALL"
+get_safe_length <- function(arg) {
+  tryCatch(
+    {
+      if (is.null(arg)) {
+        return(0L)
+      }
+      if (rlang::is_function(arg)) {
+        return(1L)
+      }
+      if (rlang::is_quosure(arg)) {
+        return(1L)
+      }
+      length(arg)
+    },
+    error = function(e) {
+      if (grepl("\"position\" is missing", e$message)) {
+        func_name <- "in_top_left"
+
+        if (!is.null(e$call)) {
+          func_name <- deparse1(e$call[[1]])
+        }
+
+        cli::cli_abort(
+          c(
+            "x" = "A realtive slide position function call was passed to the position argument. Please pass the name of the function, or a {.cls r2slides::slide_position} object instead.",
+            "i" = "  - {.strong Good}: position = {func_name}",
+            "i" = "  - {.strong Bad}: position = {func_name}()"
           ),
-          style = style@style,
-          fields = paste(names(style@style), collapse = ",")
+          parent = e,
+          call = rlang::caller_env(5) # First 3 are tryCatch internals. 4 is get_safe_length(). We want 5.
         )
-      )
-    )
-  )
-
-  rsp <- query(
-    endpoint = 'slides.presentations.batchUpdate',
-    params = list(presentationId = slide_obj$presentation_id),
-    body = style_request,
-    base = 'slides',
-    token = token,
-    call = call
+      } else {
+        cli::cli_abort(
+          c(
+            "x" = "Error evaluating length of {.var {deparse(substitute(arg))}}"
+          ),
+          call = rlang::caller_env(5)
+        )
+      }
+    }
   )
 }
 
 
-#' Apply text styling to all elements on a slide that match the selector function
-#' Can be used to apply to every text element containing a +, every element containing a -, only the text parts of all elements, etc.
-#' @param selector A function that takes a text element and returns TRUE if it should be styled.
-#' @param style A list of text styling properties.
-#'
-#' @export
-style_text_if <- function(selector, style) {
-  NULL
-}
 
 #' Add a title to a Google Slide
 #'
