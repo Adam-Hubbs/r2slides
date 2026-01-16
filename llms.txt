@@ -77,7 +77,7 @@ syntax will change frequently.
   [`on_slide_id()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   [`on_slide_url()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   : Specify a slide by ID or URL
-- [`query2()`](https://adam-hubbs.github.io/r2slides/reference/query2.md)
+- [`query()`](https://adam-hubbs.github.io/r2slides/reference/query.md)
   : Query Google API's
 - [`r2slides_auth()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_auth.md)
   : Create OAuth authentication token
@@ -97,13 +97,6 @@ syntax will change frequently.
   : String helper functions for text positioning
 - [`style_rule()`](https://adam-hubbs.github.io/r2slides/reference/style_rule.md)
   : Style Rule Object
-- [`style_text()`](https://adam-hubbs.github.io/r2slides/reference/style_text.md)
-  : Apply text styling to an existing text element
-- [`style_text_if()`](https://adam-hubbs.github.io/r2slides/reference/style_text_if.md)
-  : Apply text styling to all elements on a slide that match the
-  selector function Can be used to apply to every text element
-  containing a +, every element containing a -, only the text parts of
-  all elements, etc.
 - [`text_style()`](https://adam-hubbs.github.io/r2slides/reference/text_style.md)
   : Text styling properties
 - [`write_gs()`](https://adam-hubbs.github.io/r2slides/reference/write_gs.md)
