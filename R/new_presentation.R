@@ -37,7 +37,7 @@ new_presentation <- function(
       title = {{ name }}
     )
 
-    rsp <- query2(
+    rsp <- query(
       endpoint = 'slides.presentations.create',
       body = create_presentation,
       base = 'slides',

@@ -122,7 +122,7 @@ add_text <- function(
     )
   }
 
-  query2(
+  query(
     endpoint = 'slides.presentations.batchUpdate',
     params = params,
     body = shape_request,
@@ -130,7 +130,7 @@ add_text <- function(
     token = token
   )
 
-  query2(
+  query(
     endpoint = 'slides.presentations.batchUpdate',
     params = params,
     body = insert_text_request,
@@ -139,7 +139,7 @@ add_text <- function(
   )
 
   purrr::walk(all_text_style_requests, \(x) {
-    query2(
+    query(
       endpoint = 'slides.presentations.batchUpdate',
       params = params,
       body = x,
@@ -381,7 +381,7 @@ style_text <- function(
     )
   )
 
-  rsp <- query2(
+  rsp <- query(
     endpoint = 'slides.presentations.batchUpdate',
     params = list(presentationId = slide_obj$presentation_id),
     body = style_request,

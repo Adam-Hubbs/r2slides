@@ -48,7 +48,7 @@ new_slide <- function(
 
   params <- list(presentationId = presentation$presentation_id)
 
-  rsp <- query2(
+  rsp <- query(
     endpoint = 'slides.presentations.batchUpdate',
     params = params,
     body = add_slide_request,

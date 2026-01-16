@@ -1,3 +1,6 @@
+# Dev version
+* renamed query2 to query, added better debugging
+
 # Version 0.0.9030
 ## Style Objects
 * Text style objects can style and text with several different styles

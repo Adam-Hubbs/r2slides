@@ -14,7 +14,7 @@ create_chart <- function(range, ...) {
   
   # Create rest of json, add unpack_range() in the correct spot
 
-  # Pass json to query2
+  # Pass json to query
   # Need to check the correct endpoint in mthds for gs chart creation
 
   
@@ -28,7 +28,7 @@ register_chart <- function(presentation, spreadsheet, chart_id) {
   # Find spreadsheet_id, sheet_name, and chart_id from spreadsheet
 
   # Create json body for linked chart request
-  # Pass to query2
+  # Pass to query
 
   # return updated state of presentation 
   # Should we also update spreadsheet to chow that the chart_id is now linked?

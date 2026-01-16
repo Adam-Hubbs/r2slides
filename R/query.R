@@ -5,6 +5,7 @@
 #' @param body Optional. A request body.
 #' @param base Optional. A string indicating the API base service name. (i.e. 'slides', or 'sheets')
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
+#' @param debug Optional. If `TRUE`, return the unexecuted request. If `FALSE`, execute the request.` Default: `FALSE`.
 #' @param call Optional. Call environment used in error messages.
 #' @param ... Additional arguments reserved for future expansion.
 #'
@@ -13,12 +14,13 @@
 #' or if required parameters are missing or malformed.
 #'
 #' @export
-query2 <- function(
+query <- function(
   endpoint = 'slides.presentations.batchUpdate',
   params = list(),
   body = NULL,
   base = NULL,
   token = NULL,
+  debug = FALSE,
   call = rlang::caller_env(),
   ...
 ) {
@@ -75,7 +77,9 @@ query2 <- function(
       "!" = "A body is supplied both directly and through params.",
       i = "Using `body` and ignoring `params`.",
       i = "Contact the package developers if you ever incounter this error."
-    ))
+    ),
+    call = call
+    )
   }
 
   body <- body %||% req$body
@@ -89,11 +93,11 @@ query2 <- function(
     token = token %||% r2slides_token()
   )
 
-  if (is_testing() == TRUE) {
+  if (is_testing() == TRUE | debug == TRUE) {
     return(req)
   } else {
     rsp <- gargle::request_make(req)
-    rsp <- gargle::response_process(rsp)
+    rsp <- gargle::response_process(rsp, call = call)
   }
 }
 
@@ -130,7 +134,7 @@ get_chart_id <- function(
   ## Error checking for sheet_id
 
   # Get spreadsheet data with sheet information
-  response <- query2(
+  response <- query(
     endpoint = 'sheets.spreadsheets.get',
     params = list(
       spreadsheetId = spreadsheet_obj$spreadsheet_id,

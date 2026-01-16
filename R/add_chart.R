@@ -67,7 +67,7 @@ add_linked_chart <- function(
   )
 
   # Make the API request
-  query2(
+  query(
     endpoint = 'slides.presentations.batchUpdate',
     params = list(presentationId = slide_obj$presentation_id),
     body = add_linked_chart_request,
