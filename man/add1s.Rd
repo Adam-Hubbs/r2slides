@@ -5,7 +5,7 @@
 \title{Create a slide with title, commentary, and footer}
 \usage{
 add1s(
-  presentation = google_presentation,
+  presentation = get_active_presentation(),
   layout = "BLANK",
   title = "Title",
   commentary = "Commentary",
@@ -42,8 +42,7 @@ add1s(
 )
 }
 \arguments{
-\item{presentation}{Optional. A Google Slides presentation object. By default it searches for
-an environment named `google_presentation`.}
+\item{presentation}{Optional. A Google Slides presentation object.}
 
 \item{layout}{One of the available Google Slides layouts. Optional.}
 

@@ -1,8 +1,7 @@
 
 #' Create a new slide in a Google Slides presentation
 #'
-#' @param presentation Optional. A Google Slides presentation object. By default it searches for
-#' an environment named `google_presentation`.
+#' @param presentation Optional. A Google Slides presentation object. 
 #' @param layout Optional. A character string specifying the slide layout. Default is "TITLE_AND_BODY".
 #' @param verbose Optional. A logical value indicating whether to print status updates.
 #' @param master Currently unused; must be NULL. Reserved for officer compatibility. (May drop in future)
@@ -14,13 +13,12 @@
 #'
 #' @export
 new_slide <- function(
-    presentation = google_presentation,
+    presentation = get_active_presentation(),
     layout = "BLANK",
     verbose = TRUE,
     master = NULL,
     ...
 ) {
-  validatePresentation(deparse(substitute(presentation)))
 
   if (!is.null(master)) {
     cli::cli_abort("{.var master} is reserved for officer compatibility")
@@ -58,18 +56,16 @@ new_slide <- function(
 
   #Update slides list
   #Update current slide
-  presentation$current_slide_id <- rsp$replies[[1]]$createSlide$objectId
-  presentation$slide_ids <- c(
-    presentation$slide_ids,
-    presentation$current_slide_id
-  )
+  presentation$refresh()
+
+  # TODO: REturn slide_id object
+  invisible()
 }
 
 
 #' Create a slide with title, commentary, and footer
 #'
-#' @param presentation Optional. A Google Slides presentation object. By default it searches for
-#' an environment named `google_presentation`.
+#' @param presentation Optional. A Google Slides presentation object. 
 #' @param layout One of the available Google Slides layouts. Optional.
 #' @param title A single string for the slide title. Optional.
 #' @param commentary A single string for the slide commentary. Optional.
@@ -108,7 +104,7 @@ new_slide <- function(
 #' Updates the presentation object with the new slide ID, invisibly.
 #' @export
 add1s <- function(
-    presentation = google_presentation,
+    presentation = get_active_presentation(),
     layout = "BLANK",
     title = "Title",
     commentary = "Commentary",

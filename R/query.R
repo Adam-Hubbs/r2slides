@@ -72,26 +72,43 @@ query <- function(
   )
 
   if (!rlang::is_empty(req$body) & !is.null(body)) {
-    cli::cli_warn(c(
-      x = "Internal Error: duplicate body",
-      "!" = "A body is supplied both directly and through params.",
-      i = "Using `body` and ignoring `params`.",
-      i = "Contact the package developers if you ever incounter this error."
-    ),
-    call = call
+    cli::cli_warn(
+      c(
+        x = "Internal Error: duplicate body",
+        "!" = "A body is supplied both directly and through params.",
+        i = "Using `body` and ignoring `params`.",
+        i = "Contact the package developers if you ever incounter this error."
+      ),
+      call = call
     )
   }
 
   body <- body %||% req$body
 
-  req <- gargle::request_build(
-    path = req$path,
-    method = req$method,
-    params = req$params,
-    body = body,
-    base_url = req$base_url,
-    token = token %||% r2slides_token()
-  )
+  # Special handeling for "GET" methods until this github issue is fixed: https://github.com/r-lib/gargle/issues/292
+  if (req$method == 'GET') {
+    req <- gargle::request_build(
+      path = stringr::str_replace(
+        req$path,
+        stringr::fixed('{+presentationId}'),
+        req$params$presentationId
+      ),
+      method = req$method,
+      params = NULL,
+      body = body,
+      base_url = req$base_url,
+      token = token %||% r2slides_token()
+    )
+  } else {
+    req <- gargle::request_build(
+      path = req$path,
+      method = req$method,
+      params = req$params,
+      body = body,
+      base_url = req$base_url,
+      token = token %||% r2slides_token()
+    )
+  }
 
   if (is_testing() == TRUE | debug == TRUE) {
     return(req)
@@ -100,4 +117,3 @@ query <- function(
     rsp <- gargle::response_process(rsp, call = call)
   }
 }
-

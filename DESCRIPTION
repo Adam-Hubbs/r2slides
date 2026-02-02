@@ -1,7 +1,7 @@
 Type: Package
 Package: r2slides
 Title: Google Slides/Sheets creation from R
-Version: 0.0.9032
+Version: 0.0.9040
 Authors@R: 
     person("Adam", "Hubbs", , "adam@y2analytics.com", role = c("aut", "cre"))
 Description: Create Google Slides from R code. This utilizes the Google
@@ -24,7 +24,8 @@ Imports:
     googlesheets4,
     S7,
     dplyr,
-    purrr
+    purrr,
+    R6
 Suggests: 
     testthat (>= 3.0.0),
     vdiffr

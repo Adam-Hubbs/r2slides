@@ -44,8 +44,7 @@ on_newest_slide <- function() {
 #'   - `slide_id`: The specific slide ID within that presentation
 #'
 #' @details
-#' This function requires a presentation context to be available, either in the
-#' calling environment or in the global environment as `google_presentation`.
+#' This function requires a presentation context to be available.
 #' Use [create_presentation_env_in_global()] or register a presentation first.
 #'
 #' When a URL is provided, the function validates that the presentation ID
@@ -62,17 +61,10 @@ on_newest_slide <- function() {
 on_slide_id <- function(id) {
   # If numeric or looks like a numeric string, treat as slide_id
   if (is.numeric(id) || (!grepl("^https?://", id) && !grepl("/", id))) {
-    if (
-      !exists("google_presentation", envir = parent.frame()) &&
-        !exists("google_presentation", envir = .GlobalEnv)
-    ) {
-      cli::cli_abort(
-        "No presentation context found. Please register a presentation first."
-      )
-    }
+    pres <- get_active_presentation()
 
     slide_obj <- list(
-      presentation_id = google_presentation$presentation_id,
+      presentation_id = pres$presentation_id,
       slide_id = id
     )
 
@@ -101,26 +93,7 @@ on_slide_id <- function(id) {
   }
   url_slide_id <- slide_match[[1]][2]
 
-  # Get cached presentation_id and validate
-  if (
-    !exists("google_presentation", envir = parent.frame()) &&
-      !exists("google_presentation", envir = .GlobalEnv)
-  ) {
-    cli::cli_abort(
-      "No presentation context found. Please register a presentation first."
-    )
-  }
-
-  env <- if (exists("google_presentation", envir = parent.frame())) {
-    parent.frame()
-  } else {
-    .GlobalEnv
-  }
-
-  cached_presentation_id <- get(
-    "google_presentation",
-    envir = env
-  )$presentation_id
+  cached_presentation_id <- get_active_presentation()$presentation_id
 
   # Validate presentation_id matches
   if (url_presentation_id != cached_presentation_id) {

@@ -1,8 +1,6 @@
 #Create null .auth so .onLoad can work properly
 .auth <- NULL
-
-# Silence CRAN check over missing global binding (because we make it when the user registers/creates a presentation)
-if(getRversion() >= "2.15.1") utils::globalVariables(c("google_presentation"))
+.r2slides_objects <- new.env(parent = emptyenv())
 
 if(getRversion() < "4.4.0") {
   `%||%` <- function(a, b) {
@@ -41,16 +39,16 @@ if(getRversion() < "4.4.0") {
 # client_json_path <- '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/y2_client.json'
 # client_json <- readLines(client_json_path)
 
-# #client_json <-jsonlite::fromJSON(client_json)
+# #client_json <- jsonlite::fromJSON(client_json)
 # .json_key <- gargle::secret_make_key()
 # # secret_json <- gargle::secret_encrypt_json(client_json, key = .json_key)
 # secret_write_rds(client_json, path = "client_json.rds", key = .json_key)
 
 # mthds_slides <- get_raw_methods(slidesDiscDoc)
 # mthds_sheets <- get_raw_methods(sheetsDiscDoc)
+# test_rsp <- get_responses
 
-
-# usethis::use_data(mthds_slides, mthds_sheets, .json_key, internal = TRUE, overwrite = TRUE)
+# usethis::use_data(mthds_slides, mthds_sheets, .json_key, test_rsp, internal = TRUE, overwrite = TRUE)
 
 
 

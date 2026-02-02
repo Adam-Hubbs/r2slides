@@ -40,19 +40,3 @@ validatePresentation <- function(presentation) {
   # Future presentation validation checks go here
 }
 
-
-#' Create presentation environment
-#'
-#' @returns
-#' Creates a `google_presentation` environment in the global environment if one does
-#' not already exist.
-#'
-#' @export
-create_presentation_env_in_global <- function() {
-  if (!exists("google_presentation", envir = .GlobalEnv)) {
-    eval(
-      quote(.GlobalEnv$google_presentation <- new.env(parent = emptyenv())),
-      envir = .GlobalEnv
-    )
-  }
-}

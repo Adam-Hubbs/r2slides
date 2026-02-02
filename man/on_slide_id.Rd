@@ -37,8 +37,7 @@ in a Google Slides presentation. Accepts either a slide ID (numeric) or a
 full Google Slides URL.
 }
 \details{
-This function requires a presentation context to be available, either in the
-calling environment or in the global environment as `google_presentation`.
+This function requires a presentation context to be available.
 Use [create_presentation_env_in_global()] or register a presentation first.
 
 When a URL is provided, the function validates that the presentation ID

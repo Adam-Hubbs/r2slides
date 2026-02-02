@@ -48,5 +48,3 @@ in_to_pt <- function(x) {
   return(x * 72)
 }
 
-
-

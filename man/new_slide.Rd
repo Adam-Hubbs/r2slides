@@ -5,7 +5,7 @@
 \title{Create a new slide in a Google Slides presentation}
 \usage{
 new_slide(
-  presentation = google_presentation,
+  presentation = get_active_presentation(),
   layout = "BLANK",
   verbose = TRUE,
   master = NULL,
@@ -13,8 +13,7 @@ new_slide(
 )
 }
 \arguments{
-\item{presentation}{Optional. A Google Slides presentation object. By default it searches for
-an environment named `google_presentation`.}
+\item{presentation}{Optional. A Google Slides presentation object.}
 
 \item{layout}{Optional. A character string specifying the slide layout. Default is "TITLE_AND_BODY".}
 
