@@ -5,28 +5,20 @@
 \title{Register a Google Slides presentation}
 \usage{
 register_presentation(
-  name = NULL,
-  url = NULL,
-  presentation_id = NULL,
-  local = FALSE,
-  ...
+  id = NULL,
+  title = "Untitled Presentation",
+  set_active = TRUE
 )
 }
 \arguments{
-\item{name}{Optional. A single string. The name of the presentation in Google Drive.}
+\item{id}{Optional. A single string. The Google Slides presentation ID.}
 
-\item{url}{Optional. A single string. The URL of the Google Slides presentation.}
+\item{title}{Optional. A single string. The title of the presentation.}
 
-\item{presentation_id}{Optional. A single string. The Google Slides presentation ID.}
-
-\item{local}{Optional. A logical value indicating whether to register the presentation in a new environment.}
-
-\item{...}{Currently unused; must be empty.}
+\item{set_active}{Optional. A logical value indicating whether to set the presentation as the active presentation.}
 }
 \value{
-If `local = TRUE`, returns a new environment containing presentation details.
-If `local = FALSE`, modifies the global environment and returns invisibly.
-Will error if more than one identifier is provided or if no presentation is found.
+A Presentation object
 }
 \description{
 Registers an already created google slides presentation so you can modify it in R.

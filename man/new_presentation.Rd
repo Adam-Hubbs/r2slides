@@ -4,22 +4,17 @@
 \alias{new_presentation}
 \title{Create a new Google Slides presentation}
 \usage{
-new_presentation(name, location = NULL, verbose = TRUE, overwrite = FALSE, ...)
+new_presentation(id = NULL, title = "Untitled Presentation", set_active = TRUE)
 }
 \arguments{
-\item{name}{A single string specifying the title of the presentation.}
+\item{id}{Optional. A single string. The Google Slides presentation ID.}
 
-\item{location}{Optional. A folder location for where to create the presentation. Defaults to your My Drive Home.}
+\item{title}{Optional. A single string. The title of the presentation.}
 
-\item{verbose}{Optional. A logical indicating whether to print status updates. (DEV)}
-
-\item{overwrite}{Optional. A logical indicating whether to overwrite existing presentations. Defaults to FALSE. (TRUE for testing purposes)}
-
-\item{...}{Additional arguments reserved for future expansion}
+\item{set_active}{Optional. A logical value indicating whether to set the presentation as the active presentation.}
 }
 \value{
-Creates a new Google Slides presentation and modifies the global environment.
-Returns invisibly.
+A Presentation object
 }
 \description{
 Create a new Google Slides presentation

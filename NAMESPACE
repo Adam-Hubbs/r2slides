@@ -2,13 +2,9 @@
 
 S3method(print,chart_id)
 S3method(print,sht_id)
-export(add1s)
-export(add_commentary)
-export(add_footer)
 export(add_linked_chart)
 export(add_text)
 export(add_text_multi)
-export(add_title)
 export(chart_annotation_1)
 export(create_spreadsheet_env_in_global)
 export(create_styling_request)
