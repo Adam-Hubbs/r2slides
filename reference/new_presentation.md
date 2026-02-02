@@ -5,34 +5,24 @@ Create a new Google Slides presentation
 ## Usage
 
 ``` r
-new_presentation(name, location = NULL, verbose = TRUE, overwrite = FALSE, ...)
+new_presentation(id = NULL, title = "Untitled Presentation", set_active = TRUE)
 ```
 
 ## Arguments
 
-- name:
+- id:
 
-  A single string specifying the title of the presentation.
+  Optional. A single string. The Google Slides presentation ID.
 
-- location:
+- title:
 
-  Optional. A folder location for where to create the presentation.
-  Defaults to your My Drive Home.
+  Optional. A single string. The title of the presentation.
 
-- verbose:
+- set_active:
 
-  Optional. A logical indicating whether to print status updates. (DEV)
-
-- overwrite:
-
-  Optional. A logical indicating whether to overwrite existing
-  presentations. Defaults to FALSE. (TRUE for testing purposes)
-
-- ...:
-
-  Additional arguments reserved for future expansion
+  Optional. A logical value indicating whether to set the presentation
+  as the active presentation.
 
 ## Value
 
-Creates a new Google Slides presentation and modifies the global
-environment. Returns invisibly.
+A Presentation object

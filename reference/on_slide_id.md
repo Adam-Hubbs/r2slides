@@ -36,10 +36,9 @@ ID - \`slide_id\`: The specific slide ID within that presentation
 
 ## Details
 
-This function requires a presentation context to be available, either in
-the calling environment or in the global environment as
-\`google_presentation\`. Use \[create_presentation_env_in_global()\] or
-register a presentation first.
+This function requires a presentation context to be available. Use
+\[create_presentation_env_in_global()\] or register a presentation
+first.
 
 When a URL is provided, the function validates that the presentation ID
 extracted from the URL matches the currently registered presentation.

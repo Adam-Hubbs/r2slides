@@ -53,8 +53,8 @@ add_text(
 
 - debug:
 
-  Optional. A logical indicating whether to print debug messages.
-  Default: FALSE.
+  Optional. A logical indicating whether to return hte request objects,
+  or evaluate them. Default: FALSE.
 
 - ...:
 

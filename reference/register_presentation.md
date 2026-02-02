@@ -11,41 +11,27 @@ package) and ask which one you want.
 
 ``` r
 register_presentation(
-  name = NULL,
-  url = NULL,
-  presentation_id = NULL,
-  local = FALSE,
-  ...
+  id = NULL,
+  title = "Untitled Presentation",
+  set_active = TRUE
 )
 ```
 
 ## Arguments
 
-- name:
-
-  Optional. A single string. The name of the presentation in Google
-  Drive.
-
-- url:
-
-  Optional. A single string. The URL of the Google Slides presentation.
-
-- presentation_id:
+- id:
 
   Optional. A single string. The Google Slides presentation ID.
 
-- local:
+- title:
 
-  Optional. A logical value indicating whether to register the
-  presentation in a new environment.
+  Optional. A single string. The title of the presentation.
 
-- ...:
+- set_active:
 
-  Currently unused; must be empty.
+  Optional. A logical value indicating whether to set the presentation
+  as the active presentation.
 
 ## Value
 
-If \`local = TRUE\`, returns a new environment containing presentation
-details. If \`local = FALSE\`, modifies the global environment and
-returns invisibly. Will error if more than one identifier is provided or
-if no presentation is found.
+A Presentation object

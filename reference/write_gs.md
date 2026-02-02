@@ -20,4 +20,4 @@ write_gs(data, sheet)
 
 ## Value
 
-A list of spreadsheet_id and sheet_id
+A sht_id object

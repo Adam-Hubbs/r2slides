@@ -13,7 +13,7 @@ get_chart_id(spreadsheet_obj, token = NULL, call = rlang::caller_env())
 
 - spreadsheet_obj:
 
-  A list of spreadsheet_id (string) and sheet_id (integer).
+  A sht_id object.
 
 - token:
 
