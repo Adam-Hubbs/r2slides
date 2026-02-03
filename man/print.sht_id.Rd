@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{The object to print}
+
+\item{...}{Additional arguments}
 }
 \description{
 Print a sht_id object

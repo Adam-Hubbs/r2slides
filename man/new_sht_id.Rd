@@ -17,8 +17,6 @@ is_sht_id(x)
 \item{call}{Optional. Call environment used in error messages.}
 
 \item{x}{An object of class `sht_id`}
-
-\item{...}{Additional arguments from print}
 }
 \description{
 Sheet Id class
