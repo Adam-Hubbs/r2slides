@@ -8,9 +8,6 @@ Sheet Id class
 new_sht_id(gs4_sheet, sheet_id, call = rlang::caller_env())
 
 is_sht_id(x)
-
-# S3 method for class 'sht_id'
-print(x, ...)
 ```
 
 ## Arguments

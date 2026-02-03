@@ -55,7 +55,6 @@
   : Create a new Google Slides presentation
 - [`new_sht_id()`](https://adam-hubbs.github.io/r2slides/reference/new_sht_id.md)
   [`is_sht_id()`](https://adam-hubbs.github.io/r2slides/reference/new_sht_id.md)
-  [`print(`*`<sht_id>`*`)`](https://adam-hubbs.github.io/r2slides/reference/new_sht_id.md)
   : Sheet Id class
 - [`new_slide()`](https://adam-hubbs.github.io/r2slides/reference/new_slide.md)
   : Create a new slide in a Google Slides presentation
@@ -67,6 +66,8 @@
   : Specify a slide by ID or URL
 - [`presentation`](https://adam-hubbs.github.io/r2slides/reference/presentation.md)
   : R6 Class for Google Slides Presentations
+- [`print(`*`<sht_id>`*`)`](https://adam-hubbs.github.io/r2slides/reference/print.sht_id.md)
+  : Print a sht_id object
 - [`query()`](https://adam-hubbs.github.io/r2slides/reference/query.md)
   : Query Google API's
 - [`r2slides_auth()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_auth.md)
