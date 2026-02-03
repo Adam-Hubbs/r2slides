@@ -18,7 +18,6 @@ Imports:
     httr,
     rlang,
     stringr,
-    utils,
     httr2,
     googledrive,
     googlesheets4,
