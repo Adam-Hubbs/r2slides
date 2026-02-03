@@ -8,6 +8,7 @@ if(getRversion() < "4.4.0") {
   }
 }
 
+utils::globalVariables("properties")
 
 #Set up when package is created
 .onLoad <- function(libname, pkgname) {
