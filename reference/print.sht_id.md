@@ -14,3 +14,7 @@ print(x, ...)
 - x:
 
   The object to print
+
+- ...:
+
+  Additional arguments

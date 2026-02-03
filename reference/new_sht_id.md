@@ -27,7 +27,3 @@ is_sht_id(x)
 - x:
 
   An object of class \`sht_id\`
-
-- ...:
-
-  Additional arguments from print
