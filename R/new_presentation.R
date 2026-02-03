@@ -3,7 +3,7 @@
 #' @param id Optional. A single string. The Google Slides presentation ID.
 #' @param title Optional. A single string. The title of the presentation.
 #' @param set_active Optional. A logical value indicating whether to set the presentation as the active presentation.
-#' 
+#'
 #' @returns A Presentation object
 #'
 #' @export
@@ -27,7 +27,7 @@ new_presentation <- function(
 #' @param id Optional. A single string. The Google Slides presentation ID.
 #' @param title Optional. A single string. The title of the presentation.
 #' @param set_active Optional. A logical value indicating whether to set the presentation as the active presentation.
-#' 
+#'
 #' @returns A Presentation object
 #' @export
 register_presentation <- function(
@@ -324,6 +324,73 @@ presentation <- R6::R6Class(
       invisible(self)
     },
 
+    #' Get elements from the presentation
+    #' 
+    #' @description
+    #' Filter the elements you ahve constructed to return a list of elements
+    #' 
+    #' @param modified_since Optional. Only return elements modified since this time
+    #' @param modified_end Optional. Only return elements modified before this time
+    #' @param created_since Optional. Only return elements created since this time
+    #' @param created_end Optional. Only return elements created before this time
+    #' @param element_type Optional. Only return elements of this type
+    #' @param element_text Optional. Only return elements with this text
+    #' @param show_deleted Optional. Show deleted elements
+    #' 
+    #' @return List of elements
+    get_elements = function(
+      modified_since = NULL,
+      modified_end = NULL,
+      created_since = NULL,
+      created_end = NULL,
+      element_type = NULL,
+      element_text = NULL,
+      show_deleted = FALSE
+    ) {
+      modify_since <- modified_since %|% "1970-01-01T00:00:00.000Z"
+      modify_end <- modified_end %|% Sys.time()
+      create_since <- created_since %|% "1970-01-01T00:00:00.000Z"
+      create_end <- created_end %|% Sys.time()
+
+      ldgr <- private$ledger |>
+        dplyr::filter(
+          time_updated > modified_since,
+          time_updated < modified_end,
+          time_created > created_since,
+          time_created < created_end
+        )
+
+      if (!null(element_type)) {
+        ldgr <- ldgr |>
+          dplyr::filter(element_type == element_type)
+      }
+
+      if (!null(element_text)) {
+        ldgr <- ldgr |>
+          dplyr::filter(element_text == element_text)
+      }
+
+      if (!show_deleted) {
+        ldgr <- ldgr |>
+          dplyr::filter(is_deleted == FALSE)
+      }
+
+      if (nrow(ldgr) == 0) {
+        return(NULL)
+      }
+
+      element_ids <- ldgr$element_id
+      slide_ids <- ldgr$slide_id
+
+      elements_rtn <- list(
+        element_id = element_ids,
+        slide_id = slide_ids
+      ) |>
+        transpose()
+
+      return(elements_rtn)
+    },
+
     #' @description
     #' Print method for presentation objects
     #'
@@ -476,6 +543,40 @@ presentation <- R6::R6Class(
       }
 
       drive_file$id[1]
+    },
+
+    ledger = tibble::tibble(
+      element_id = character(),
+      slide_id = character(),
+      element_type = character(),
+      element_text = character(),
+      time_created = NULL,
+      time_updated = NULL,
+      time_deleted = NULL,
+      is_deleted = logical(),
+      time_known_deletion = NULL
+    ),
+
+    refresh_ledger = function() {
+      # Check that the elements exist. If not, add is_deleted and time_known_deletion
+      NULL
+    },
+
+    add_to_ledger = function(element_id, slide_id, element_type, element_text) {
+      private$ledger <- dplyr::bind_rows(
+        private$ledger,
+        tibble::tibble_row(
+          element_id = element_id,
+          slide_id = slide_id,
+          element_type = element_type,
+          element_text = element_text,
+          time_created = Sys.time(),
+          time_updated = Sys.time(),
+          time_deleted = NA,
+          is_deleted = FALSE,
+          time_known_deletion = NA
+        )
+      )
     },
 
     # Populate object fields from API response

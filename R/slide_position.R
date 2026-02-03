@@ -1,4 +1,19 @@
 #' @import S7
+NULL
+
+#' Slide Position Object
+#' 
+#' A system for working with Google Slides positions and sizes.
+#' 
+#' @param top The position in inches from the top of the slide
+#' @param left The position in inches from the left of the slide
+#' @param width The width of the object in inches
+#' @param height The height of the object in inches
+#' @param convert_slide_size A logical. Optional. Converts the position and size to Google Slides from a PowerPoint (or custom) size if TRUE.
+#' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes.
+#' @param slide_size New Slide size specifications. Optional.
+#' 
+#' @export
 slide_position <- S7::new_class(
   "slide_position",
   properties = list(
@@ -358,7 +373,6 @@ S7::method(plot, slide_position) <- function(
 
   invisible(x)
 }
-
 
 S7::method(convert, list(slide_position, S7::class_list)) <- function(
   from,

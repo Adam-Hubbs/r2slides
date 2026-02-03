@@ -24,7 +24,8 @@ Imports:
     S7,
     dplyr,
     purrr,
-    R6
+    R6,
+    tibble
 Suggests: 
     testthat (>= 3.0.0),
     vdiffr

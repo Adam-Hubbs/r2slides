@@ -43,6 +43,7 @@ An R6 class to represent and manipulate Google Slides presentations.
 \item \href{#method-presentation-is_active}{\code{presentation$is_active()}}
 \item \href{#method-presentation-get_url}{\code{presentation$get_url()}}
 \item \href{#method-presentation-browse}{\code{presentation$browse()}}
+\item \href{#method-presentation-get_elements}{\code{presentation$get_elements()}}
 \item \href{#method-presentation-print}{\code{presentation$print()}}
 }
 }
@@ -219,6 +220,47 @@ Open the presentation in a browser
 
 \subsection{Returns}{
 Self, invisibly (for method chaining)
+Get elements from the presentation
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-presentation-get_elements"></a>}}
+\if{latex}{\out{\hypertarget{method-presentation-get_elements}{}}}
+\subsection{Method \code{get_elements()}}{
+Filter the elements you ahve constructed to return a list of elements
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{presentation$get_elements(
+  modified_since = NULL,
+  modified_end = NULL,
+  created_since = NULL,
+  created_end = NULL,
+  element_type = NULL,
+  element_text = NULL,
+  show_deleted = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{modified_since}}{Optional. Only return elements modified since this time}
+
+\item{\code{modified_end}}{Optional. Only return elements modified before this time}
+
+\item{\code{created_since}}{Optional. Only return elements created since this time}
+
+\item{\code{created_end}}{Optional. Only return elements created before this time}
+
+\item{\code{element_type}}{Optional. Only return elements of this type}
+
+\item{\code{element_text}}{Optional. Only return elements with this text}
+
+\item{\code{show_deleted}}{Optional. Show deleted elements}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+List of elements
 }
 }
 \if{html}{\out{<hr>}}
