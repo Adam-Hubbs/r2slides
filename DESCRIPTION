@@ -1,7 +1,7 @@
 Type: Package
 Package: r2slides
 Title: Google Slides/Sheets creation from R
-Version: 0.0.9041
+Version: 0.0.9042
 Authors@R: 
     person("Adam", "Hubbs", , "adam@y2analytics.com", role = c("aut", "cre"))
 Description: Create Google Slides from R code. This utilizes the Google
@@ -11,7 +11,7 @@ License: MIT + file LICENSE
 URL: https://github.com/Adam-Hubbs/r2slides
 BugReports: https://github.com/Adam-Hubbs/r2slides/issues
 Depends: 
-    R (>= 4.1.0)
+    R (>= 4.3.0)
 Imports:
     cli,
     gargle,
