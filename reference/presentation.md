@@ -66,6 +66,8 @@ An R6 class to represent and manipulate Google Slides presentations.
 
 - [`presentation$browse()`](#method-presentation-browse)
 
+- [`presentation$get_elements()`](#method-presentation-get_elements)
+
 - [`presentation$print()`](#method-presentation-print)
 
 ------------------------------------------------------------------------
@@ -252,7 +254,59 @@ Open the presentation in a browser
 
 #### Returns
 
-Self, invisibly (for method chaining)
+Self, invisibly (for method chaining) Get elements from the presentation
+
+------------------------------------------------------------------------
+
+### Method `get_elements()`
+
+Filter the elements you ahve constructed to return a list of elements
+
+#### Usage
+
+    presentation$get_elements(
+      modified_since = NULL,
+      modified_end = NULL,
+      created_since = NULL,
+      created_end = NULL,
+      element_type = NULL,
+      element_text = NULL,
+      show_deleted = FALSE
+    )
+
+#### Arguments
+
+- `modified_since`:
+
+  Optional. Only return elements modified since this time
+
+- `modified_end`:
+
+  Optional. Only return elements modified before this time
+
+- `created_since`:
+
+  Optional. Only return elements created since this time
+
+- `created_end`:
+
+  Optional. Only return elements created before this time
+
+- `element_type`:
+
+  Optional. Only return elements of this type
+
+- `element_text`:
+
+  Optional. Only return elements with this text
+
+- `show_deleted`:
+
+  Optional. Show deleted elements
+
+#### Returns
+
+List of elements
 
 ------------------------------------------------------------------------
 

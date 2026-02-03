@@ -81,6 +81,8 @@
   : Relative Position
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
+- [`slide_position()`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
+  : Slide Position Object
 - [`str_before()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
   [`str_after()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
   [`str_matches()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)
