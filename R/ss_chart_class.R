@@ -4,7 +4,6 @@
 #' @param sheet_id An integer referencing a sheet id
 #' @param call Optional. Call environment used in error messages.
 #' @param x An object of class `sht_id`
-#' @param ... Additional arguments from print
 #'
 #' @rdname new_sht_id
 #' @export
@@ -49,6 +48,7 @@ is_sht_id <- function(x) {
 #' Print a sht_id object
 #' 
 #' @param x The object to print
+#' @param ... Additional arguments
 #' 
 #' @export
 print.sht_id <- function(x, ...) {
