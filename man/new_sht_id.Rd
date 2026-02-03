@@ -3,14 +3,11 @@
 \name{new_sht_id}
 \alias{new_sht_id}
 \alias{is_sht_id}
-\alias{print.sht_id}
 \title{Sheet Id class}
 \usage{
 new_sht_id(gs4_sheet, sheet_id, call = rlang::caller_env())
 
 is_sht_id(x)
-
-\method{print}{sht_id}(x, ...)
 }
 \arguments{
 \item{gs4_sheet}{A googlesheets4 sheet id, or something coercible to one}

@@ -46,7 +46,10 @@ is_sht_id <- function(x) {
     rlang::is_string(x$sheet_id)
 }
 
-#' @rdname new_sht_id
+#' Print a sht_id object
+#' 
+#' @param x The object to print
+#' 
 #' @export
 print.sht_id <- function(x, ...) {
   cli::cli_text("sht_id:")
