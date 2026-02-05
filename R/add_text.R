@@ -151,6 +151,14 @@ add_text <- function(
     )
   })
 
+  # Update the ledger
+  presentation$add_to_ledger(
+    element_id = element_id,
+    slide_id = slide_obj$slide_id,
+    element_type = "text",
+    element_text = text
+  )
+
   return(invisible(slide_obj))
 }
 

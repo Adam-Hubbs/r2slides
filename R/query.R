@@ -88,11 +88,7 @@ query <- function(
   # Special handeling for "GET" methods until this github issue is fixed: https://github.com/r-lib/gargle/issues/292
   if (req$method == 'GET') {
     req <- gargle::request_build(
-      path = stringr::str_replace(
-        req$path,
-        stringr::fixed('{+presentationId}'),
-        req$params$presentationId
-      ),
+      path = add_path_params(req, "presentationId", "pageObjectId"),
       method = req$method,
       params = NULL,
       body = body,
@@ -116,4 +112,38 @@ query <- function(
     rsp <- gargle::request_make(req)
     rsp <- gargle::response_process(rsp, call = call)
   }
+}
+
+
+# Fixes gargle's path bugs for GET methods
+add_path_params <- function(req, ...) {
+  args <- rlang::list2(...)
+
+  # If no args specified, return path unchanged
+  if (length(args) == 0) {
+    return(req$path)
+  }
+
+  # Start with the original path
+  path <- req$path
+
+  # Replace each specified parameter in the path
+  for (arg in args) {
+    if (!is.null(req$params[[arg]]) && !is.na(req$params[[arg]])) {
+      pattern <- stringr::str_glue("{{{arg}}}") |> as.character()
+      plus_pattern <- stringr::str_glue("{{+{arg}}}") |> as.character()
+
+      path <- stringr::str_replace(
+        path,
+        stringr::fixed(pattern),
+        req$params[[arg]]
+      ) |>
+        stringr::str_replace(
+          stringr::fixed(plus_pattern),
+          req$params[[arg]]
+        )
+    }
+  }
+
+  return(path)
 }

@@ -48,3 +48,24 @@ in_to_pt <- function(x) {
   return(x * 72)
 }
 
+
+
+recursivly_replace <- function(x, what, with) {
+  if (length(what) != 1) {
+    cli::cli_abort("what must be a single value")
+  }
+  if (!is.character(what)) {
+    cli::cli_abort("what must be a character string")
+  }
+
+  purrr::modify_tree(
+    x,
+    post = function(node) {
+      if (is.list(node) && what %in% names(node)) {
+        purrr::assign_in(node, what, with)
+      } else {
+        node
+      }
+    }
+  )
+}

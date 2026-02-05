@@ -1,4 +1,3 @@
-
 #' @param n A numeric slide ID
 #' @rdname on_slide_id
 #' @export
@@ -28,6 +27,73 @@ on_newest_slide <- function() {
 }
 
 
+#' Slide Object
+#'
+#' An object representing a Google Slides slide/presentation combo
+#'
+#'
+#' @export
+slide <- S7::new_class(
+  "slide",
+  properties = list(
+    presentation = S7::new_property(validator = function(value) {
+      if (!is.presentation(value)) {
+        "presentation must be of class `presentation`"
+      }
+    }),
+
+    slide_id = S7::new_property(
+      class_character,
+      validator = function(value) {
+      if (length(value) != 1) {
+        "slide_id must be a single value"
+      }
+    }
+  ),
+
+    # Computed properties
+    slide_hash = S7::new_property(
+      S7::class_character,
+      getter = function(self) {
+        self@elements_raw |>
+          recursivly_replace('objectId', '') |>
+          rlang::hash()
+      }
+    ),
+
+    elements_raw = S7::new_property(
+      S7::class_character,
+      getter = function(self) {
+              query(
+                endpoint = "slides.presentations.pages.get",
+                params = list(presentationId = self@presentation$presentation_id,
+                              pageObjectId = self@slide_id),
+                base = "slides"
+              )
+                
+      }
+    )
+  ),
+  constructor = function(presentation, slide_id) {
+    S7::new_object(
+      S7::S7_object(),
+      presentation = presentation,
+      slide_id = slide_id
+    )
+  }
+)
+
+# Check that this works
+S7::method(`==`, list(slide, slide)) <- function(e1, e2) {
+    return(e1@slide_hash == e2@slide_hash)
+}
+
+S7::method(print, slide) <- function(x, ...) {
+  cli::cli_h2("Google Slides Slide Object")
+  cli::cli_text("Slide ID: {.val {x@slide_id}}")
+  cli::cli_text("Presentation ID: {.val {x@presentation$presentation_id}}")
+}
+
 #' Specify a slide by ID or URL
 #'
 #' Creates a slide reference object that can be used to target a specific slide
@@ -39,9 +105,7 @@ on_newest_slide <- function() {
 #'   - A string containing a numeric slide ID
 #'   - A full Google Slides URL
 #'
-#' @returns A list containing:
-#'   - `presentation_id`: The Google Slides presentation ID
-#'   - `slide_id`: The specific slide ID within that presentation
+#' @returns A slide object
 #'
 #' When a URL is provided, the function validates that the presentation ID
 #' extracted from the URL matches the currently registered presentation.
@@ -111,3 +175,4 @@ on_slide_id <- function(id) {
 #' @rdname on_slide_id
 #' @export
 on_slide_url <- on_slide_id
+

@@ -325,10 +325,10 @@ presentation <- R6::R6Class(
     },
 
     #' Get elements from the presentation
-    #' 
+    #'
     #' @description
     #' Filter the elements you ahve constructed to return a list of elements
-    #' 
+    #'
     #' @param modified_since Optional. Only return elements modified since this time
     #' @param modified_end Optional. Only return elements modified before this time
     #' @param created_since Optional. Only return elements created since this time
@@ -336,7 +336,7 @@ presentation <- R6::R6Class(
     #' @param element_type Optional. Only return elements of this type
     #' @param element_text Optional. Only return elements with this text
     #' @param show_deleted Optional. Show deleted elements
-    #' 
+    #'
     #' @return List of elements
     get_elements = function(
       modified_since = NULL,
@@ -390,6 +390,33 @@ presentation <- R6::R6Class(
 
       return(elements_rtn)
     },
+
+    #' @description
+    #' Add an element to the ledger
+    #' 
+    #' @param element_id Element ID
+    #' @param slide_id Slide ID
+    #' @param element_type Element type
+    #' @param element_text Element text
+    #' 
+    #' @return Self
+    add_to_ledger = function(element_id, slide_id, element_type, element_text) {
+      private$ledger <- dplyr::bind_rows(
+        private$ledger,
+        tibble::tibble_row(
+          element_id = element_id,
+          slide_id = slide_id,
+          element_type = element_type,
+          element_text = element_text,
+          time_created = Sys.time(),
+          time_updated = Sys.time(),
+          time_deleted = NA,
+          is_deleted = FALSE,
+          time_known_deletion = NA
+        )
+      )
+    },
+
 
     #' @description
     #' Print method for presentation objects
@@ -562,23 +589,6 @@ presentation <- R6::R6Class(
       NULL
     },
 
-    add_to_ledger = function(element_id, slide_id, element_type, element_text) {
-      private$ledger <- dplyr::bind_rows(
-        private$ledger,
-        tibble::tibble_row(
-          element_id = element_id,
-          slide_id = slide_id,
-          element_type = element_type,
-          element_text = element_text,
-          time_created = Sys.time(),
-          time_updated = Sys.time(),
-          time_deleted = NA,
-          is_deleted = FALSE,
-          time_known_deletion = NA
-        )
-      )
-    },
-
     # Populate object fields from API response
     populate_from_response = function(rsp) {
       self$title <- rsp$title
@@ -594,13 +604,27 @@ presentation <- R6::R6Class(
 
     # Set finalizer
     finalize = function() {
-      if (self$is_active_flag) {
+      if (private$is_active_flag) {
         self$set_not_active()
       }
     }
   )
 )
 
+
+#' is.presentation
+#' 
+#' @description 
+#' Check if an object is a presentation
+#' 
+#' @param x An object to check
+#' 
+#' @return `TRUE` if `x` is a `presentation`, `FALSE` otherwise
+#' 
+#' @export
+is.presentation <- function(x) {
+  inherits(x, "presentation")
+}
 
 #' Get the currently active presentation
 #'
@@ -616,7 +640,7 @@ get_active_presentation <- function() {
 
 active_presentation_exists <- function() {
   if (exists("active_presentation", envir = .r2slides_objects)) {
-    R6::is.R6(get("active_presentation", envir = .r2slides_objects))
+    is.presentation(get("active_presentation", envir = .r2slides_objects))
   } else {
     FALSE
   }

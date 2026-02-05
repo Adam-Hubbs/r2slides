@@ -44,6 +44,7 @@ An R6 class to represent and manipulate Google Slides presentations.
 \item \href{#method-presentation-get_url}{\code{presentation$get_url()}}
 \item \href{#method-presentation-browse}{\code{presentation$browse()}}
 \item \href{#method-presentation-get_elements}{\code{presentation$get_elements()}}
+\item \href{#method-presentation-add_to_ledger}{\code{presentation$add_to_ledger()}}
 \item \href{#method-presentation-print}{\code{presentation$print()}}
 }
 }
@@ -261,6 +262,32 @@ Filter the elements you ahve constructed to return a list of elements
 }
 \subsection{Returns}{
 List of elements
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-presentation-add_to_ledger"></a>}}
+\if{latex}{\out{\hypertarget{method-presentation-add_to_ledger}{}}}
+\subsection{Method \code{add_to_ledger()}}{
+Add an element to the ledger
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{presentation$add_to_ledger(element_id, slide_id, element_type, element_text)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{element_id}}{Element ID}
+
+\item{\code{slide_id}}{Slide ID}
+
+\item{\code{element_type}}{Element type}
+
+\item{\code{element_text}}{Element text}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Self
 }
 }
 \if{html}{\out{<hr>}}
