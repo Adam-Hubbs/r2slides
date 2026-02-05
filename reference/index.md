@@ -48,6 +48,8 @@
 - [`in_top_right()`](https://adam-hubbs.github.io/r2slides/reference/in_top_right.md)
   : Creates a slide_position object with defaults in the top right of
   the slide
+- [`is.presentation()`](https://adam-hubbs.github.io/r2slides/reference/is.presentation.md)
+  : is.presentation
 - [`new_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/new_chart_id.md)
   [`print(`*`<chart_id>`*`)`](https://adam-hubbs.github.io/r2slides/reference/new_chart_id.md)
   : Chart Id class
@@ -82,6 +84,8 @@
   : Relative Position
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
+- [`slide()`](https://adam-hubbs.github.io/r2slides/reference/slide.md)
+  : Slide Object
 - [`slide_position()`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
   : Slide Position Object
 - [`str_before()`](https://adam-hubbs.github.io/r2slides/reference/string-helpers.md)

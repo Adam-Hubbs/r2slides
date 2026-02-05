@@ -68,6 +68,8 @@ An R6 class to represent and manipulate Google Slides presentations.
 
 - [`presentation$get_elements()`](#method-presentation-get_elements)
 
+- [`presentation$add_to_ledger()`](#method-presentation-add_to_ledger)
+
 - [`presentation$print()`](#method-presentation-print)
 
 ------------------------------------------------------------------------
@@ -307,6 +309,38 @@ Filter the elements you ahve constructed to return a list of elements
 #### Returns
 
 List of elements
+
+------------------------------------------------------------------------
+
+### Method `add_to_ledger()`
+
+Add an element to the ledger
+
+#### Usage
+
+    presentation$add_to_ledger(element_id, slide_id, element_type, element_text)
+
+#### Arguments
+
+- `element_id`:
+
+  Element ID
+
+- `slide_id`:
+
+  Slide ID
+
+- `element_type`:
+
+  Element type
+
+- `element_text`:
+
+  Element text
+
+#### Returns
+
+Self
 
 ------------------------------------------------------------------------
 

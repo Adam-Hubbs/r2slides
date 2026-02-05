@@ -31,8 +31,7 @@ on_slide_url(id)
 
 ## Value
 
-A list containing: - \`presentation_id\`: The Google Slides presentation
-ID - \`slide_id\`: The specific slide ID within that presentation
+A slide object
 
 When a URL is provided, the function validates that the presentation ID
 extracted from the URL matches the currently registered presentation.
