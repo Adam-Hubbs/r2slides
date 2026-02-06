@@ -7,3 +7,13 @@ An object representing a Google Slides slide/presentation combo
 ``` r
 slide(presentation, slide_id)
 ```
+
+## Arguments
+
+- presentation:
+
+  A presentation object
+
+- slide_id:
+
+  A slide ID

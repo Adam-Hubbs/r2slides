@@ -66,6 +66,8 @@
   [`on_slide_id()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   [`on_slide_url()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   : Specify a slide by ID or URL
+- [`peek`](https://adam-hubbs.github.io/r2slides/reference/peek.md) :
+  Peek at a slide
 - [`presentation`](https://adam-hubbs.github.io/r2slides/reference/presentation.md)
   : R6 Class for Google Slides Presentations
 - [`print(`*`<sht_id>`*`)`](https://adam-hubbs.github.io/r2slides/reference/print.sht_id.md)
