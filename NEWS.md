@@ -1,7 +1,11 @@
-# Dev version
-* renamed query2 to query, added better debugging
-* Great refactoring
-* sht_id and chart_id classes
+# Version 0.0.9050
+## New Classes
+* Presentation R6 class for handeling presentation state
+* Slide object S7 class to represent slides
+* peek(slide) shows a thumbnail of the slide in the plots pane
+
+## Refactoring
+* Refactored and moved files around - internal facing
 
 # Version 0.0.9030
 ## Style Objects
