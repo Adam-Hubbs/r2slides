@@ -40,12 +40,12 @@ utils::globalVariables("properties")
 # client_json_path <- '/Users/adamhubbs/Y2 Analytics Dropbox/Adam Hubbs/y2_client.json'
 # client_json <- readLines(client_json_path)
 
-# #client_json <- jsonlite::fromJSON(client_json)
+# jsonlite::fromJSON(client_json)
 # .json_key <- gargle::secret_make_key()
-# # secret_json <- gargle::secret_encrypt_json(client_json, key = .json_key)
-# secret_write_rds(client_json, path = "client_json.rds", key = .json_key)
+# secret_json <- gargle::secret_encrypt_json(client_json, key = .json_key)
+# httr2::secret_write_rds(client_json, path = "client_json.rds", key = .json_key)
 
-# It looks like the pages discovery document resources are in the wrong spot. This extracts them out and puts those methods with the presentation methods
+#It looks like the pages discovery document resources are in the wrong spot. This extracts them out and puts those methods with the presentation methods
 # partialDD <- slidesDiscDoc |>
 #   pluck('resources') |>
 #   pluck('presentations')
@@ -54,11 +54,8 @@ utils::globalVariables("properties")
 # mthds_slides_pages <- get_raw_methods(partialDD)
 # mthds_slides <- c(mthds_slides, mthds_slides_pages)
 # mthds_sheets <- get_raw_methods(sheetsDiscDoc)
-# test_rsp <- get_responses
+
 
 # usethis::use_data(mthds_slides, mthds_sheets, .json_key, test_rsp, internal = TRUE, overwrite = TRUE)
 
-# rrrr <- getNamespace('r2slides')
-# unlockBinding("mthds_slides", rrrr)
-# rrrr$mthds_slides <- mthds_slides
 

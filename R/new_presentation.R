@@ -1,3 +1,9 @@
+#' @import R6 
+#' @import tibble 
+#' @import png 
+NULL
+
+
 #' Create a new Google Slides presentation
 #'
 #' @param id Optional. A single string. The Google Slides presentation ID.

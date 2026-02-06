@@ -25,7 +25,8 @@ Imports:
     dplyr,
     purrr,
     R6,
-    tibble
+    tibble,
+    png
 Suggests: 
     testthat (>= 3.0.0),
     vdiffr

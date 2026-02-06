@@ -6,6 +6,11 @@
 \usage{
 slide(presentation, slide_id)
 }
+\arguments{
+\item{presentation}{A presentation object}
+
+\item{slide_id}{A slide ID}
+}
 \description{
 An object representing a Google Slides slide/presentation combo
 }

@@ -30,7 +30,8 @@ on_newest_slide <- function() {
 #' Slide Object
 #'
 #' An object representing a Google Slides slide/presentation combo
-#'
+#' @param presentation A presentation object
+#' @param slide_id A slide ID
 #'
 #' @export
 slide <- S7::new_class(
@@ -45,11 +46,11 @@ slide <- S7::new_class(
     slide_id = S7::new_property(
       class_character,
       validator = function(value) {
-      if (length(value) != 1) {
-        "slide_id must be a single value"
+        if (length(value) != 1) {
+          "slide_id must be a single value"
+        }
       }
-    }
-  ),
+    ),
 
     # Computed properties
     slide_hash = S7::new_property(
@@ -57,6 +58,16 @@ slide <- S7::new_class(
       getter = function(self) {
         self@elements_raw |>
           recursivly_replace('objectId', '') |>
+          recursivly_replace('speakerNotesObjectId', '') |>
+          purrr::modify_tree(
+            leaf = function(leaf) {
+              if (is.numeric(leaf)) {
+                round(leaf, digits = 3)
+              } else {
+                leaf
+              }
+            }
+          ) |>
           rlang::hash()
       }
     ),
@@ -64,13 +75,14 @@ slide <- S7::new_class(
     elements_raw = S7::new_property(
       S7::class_character,
       getter = function(self) {
-              query(
-                endpoint = "slides.presentations.pages.get",
-                params = list(presentationId = self@presentation$presentation_id,
-                              pageObjectId = self@slide_id),
-                base = "slides"
-              )
-                
+        query(
+          endpoint = "slides.presentations.pages.get",
+          params = list(
+            presentationId = self@presentation$presentation_id,
+            pageObjectId = self@slide_id
+          ),
+          base = "slides"
+        )
       }
     )
   ),
@@ -85,7 +97,7 @@ slide <- S7::new_class(
 
 # Check that this works
 S7::method(`==`, list(slide, slide)) <- function(e1, e2) {
-    return(e1@slide_hash == e2@slide_hash)
+  return(e1@slide_hash == e2@slide_hash)
 }
 
 S7::method(print, slide) <- function(x, ...) {
