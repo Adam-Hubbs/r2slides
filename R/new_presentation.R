@@ -1,6 +1,6 @@
-#' @import R6 
-#' @import tibble 
-#' @import png 
+#' @import R6
+#' @import tibble
+#' @import png
 NULL
 
 
@@ -62,9 +62,6 @@ presentation <- R6::R6Class(
 
     #' @field presentation_id The Google Slides presentation ID
     presentation_id = NULL,
-
-    #' @field slides List of slide objects
-    slides = NULL,
 
     #' @field page_size Dimensions of slides (height and width in PTs)
     page_size = NULL,
@@ -215,52 +212,108 @@ presentation <- R6::R6Class(
     },
 
     #' @description
-    #' Get slide object(s) from the presentation
+    #' Get slide object from the presentation
     #'
-    #' @param index Optional index/indices of specific slides to return
-    #' @return List of slide objects, single slide object, or NULL
-    get_slide = function(index = NULL) {
-      if (is.null(self$slides) || length(self$slides) == 0) {
+    #' @param index Index of the slide to return (1-based)
+    #' @return A slide object
+    get_slide_by_index = function(index) {
+      if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
         cli::cli_alert_warning(
           "No slides available. Try calling $refresh() first."
         )
         return(NULL)
       }
 
-      # Return all slides if no index specified
-      # TODO: In the future, this should not be allowed. Error if missing index
+      # Require index
       if (is.null(index)) {
-        return(self$slides)
+        cli::cli_abort("{.arg index} is required")
       }
 
-      # Validate index
-      # TODO: Also validate index is integer
-      if (any(index < 1 | index > length(self$slides))) {
+      # Validate index is a single integer
+      if (length(index) != 1) {
+        cli::cli_abort("{.arg index} must be a single integer")
+      }
+
+      index <- suppressWarnings(as.integer(index))
+
+      if (is.na(index)) {
+        cli::cli_abort("{.arg index} must be a single integer")
+      }
+
+      # Validate index bounds
+      if (index < 1 || index > length(private$slide_ids)) {
         cli::cli_abort(
-          "Index out of bounds. Presentation has {length(self$slides)} slide{?s}."
+          "Index out of bounds. Presentation has {length(private$slide_ids)} slide{?s}."
         )
       }
 
-      # Return single slide or list of slides
-      # TODO: Validate and only return 1 slide at a time for Type stability. Consider a lower version similar to this and a higher level helper with type stability.
-      if (length(index) == 1) {
-        return(self$slides[[index]])
-      } else {
-        return(self$slides[index])
-      }
+      # Return slide object constructed with presentation reference and slide_id
+      slide(presentation = self, slide_id = private$slide_ids[[index]])
     },
 
+    #' @description
+    #' Get slide object from the presentation
+    #'
+    #' @param slide_id ID of the slide to return
+    #' @return A slide object
+    get_slide_by_id = function(slide_id) {
+       if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
+        cli::cli_alert_warning(
+          "No slides available. Try calling $refresh() first."
+        )
+        return(NULL)
+      }
+
+      # Require slide_id
+      if (is.null(slide_id)) {
+        cli::cli_abort("{.arg slide_id} is required")
+      }
+
+      # Validate slide_id is a single string
+      if (length(slide_id) != 1) {
+        cli::cli_abort("{.arg slide_id} must be a single string")
+      }
+
+      # validate character
+      if (!is.character(slide_id)) {
+        cli::cli_abort("{.arg slide_id} must be a single string")
+      }
+
+      # Check if slide_id exists
+      if (!slide_id %in% private$slide_ids) {
+        cli::cli_abort("Slide ID not found in this presentation")
+      }
+
+      # Return slide object constructed with presentation reference and slide_id
+      slide(presentation = self, slide_id = slide_id)
+    },
+      
+      
+    #' @description
+    #' Get the position of a slide in the presentation
+    #'
+    #' @param slide A slide object
+    #' @return Index of the slide
+    get_slide_index = function(slide) {
+      if (!is.slide(slide)) {
+        cli::cli_abort("{.arg slide} must be a slide object")
+      }
+
+      # Find the position of this slide's ID in the vector
+      index <- match(slide@slide_id, private$slide_ids)
+
+      if (is.na(index)) {
+        cli::cli_abort("Slide not found in this presentation")
+      }
+
+      index
+    },
     #' @description
     #' Get slide IDs from the presentation
     #'
     #' @return Character vector of slide object IDs
     get_slide_ids = function() {
-      if (is.null(self$slides) || length(self$slides) == 0) {
-        return(character(0))
-      }
-
-      # TODO: Use purrr
-      vapply(self$slides, function(slide) slide$objectId, character(1))
+      private$slide_ids %||% character(0)
     },
 
     #' @description
@@ -399,12 +452,12 @@ presentation <- R6::R6Class(
 
     #' @description
     #' Add an element to the ledger
-    #' 
+    #'
     #' @param element_id Element ID
     #' @param slide_id Slide ID
     #' @param element_type Element type
     #' @param element_text Element text
-    #' 
+    #'
     #' @return Self
     add_to_ledger = function(element_id, slide_id, element_type, element_text) {
       private$ledger <- dplyr::bind_rows(
@@ -422,7 +475,6 @@ presentation <- R6::R6Class(
         )
       )
     },
-
 
     #' @description
     #' Print method for presentation objects
@@ -455,6 +507,12 @@ presentation <- R6::R6Class(
     # Whether this presentation is currently active
     is_active_flag = FALSE,
 
+    # Raw data for the slides
+    slides = NULL,
+
+    # Slide ID's
+    slide_ids = NULL,
+
     # Create a new presentation via API
     create_new = function(title) {
       # Validate inputs
@@ -466,7 +524,7 @@ presentation <- R6::R6Class(
       create_body <- list(title = title)
 
       # Get rid of the FALSE when we have test_rsp
-      rsp <- if (FALSE & is_testing()) {
+      rsp <- if (is_testing()) {
         test_rsp
       } else {
         query(
@@ -487,7 +545,7 @@ presentation <- R6::R6Class(
     # Open an existing presentation
     open_existing = function(id) {
       # Determine what type of identifier we have
-      presentation_id <- private$resolve_id(id)
+      presentation_id <- resolve_presentation_id(id)
 
       # Fetch presentation data
       rsp <- query(
@@ -502,80 +560,6 @@ presentation <- R6::R6Class(
       cli::cli_alert_success("Opened presentation {.val {self$title}}")
 
       invisible(self)
-    },
-
-    # Resolve various ID formats to presentation_id
-    resolve_id = function(id) {
-      if (!is.character(id) || length(id) != 1) {
-        cli::cli_abort("{.arg id} must be a single string")
-      }
-
-      # Check if it's a URL
-      if (grepl("^https://docs\\.google\\.com/presentation", id)) {
-        id_pattern <- "https://docs\\.google\\.com/presentation/d/([a-zA-Z0-9_-]+)"
-        matches <- regmatches(id, regexec(id_pattern, id))[[1]]
-
-        if (length(matches) < 2 || is.na(matches[2])) {
-          cli::cli_abort("Could not extract presentation ID from URL")
-        }
-
-        id <- matches[2]
-      }
-
-      # Check if it looks like a presentation ID (alphanumeric with hyphens/underscores)
-      if (grepl("^[a-zA-Z0-9_-]+$", id)) {
-        # Try to fetch it directly - if it works, it's an ID
-
-        test_fetch <- tryCatch(
-          {
-            query(
-              endpoint = "slides.presentations.get",
-              params = list(presentationId = id),
-              base = "slides"
-            )
-            TRUE
-          },
-          error = function(e) {
-            FALSE
-          }
-        )
-        if (test_fetch) {
-          return(id)
-        }
-      }
-
-      if (exists(".auth", envir = .GlobalEnv)) {
-        if (inherits(.auth, "AuthState")) {
-          if (is.null(.auth$credentials)) {
-            r2slides_auth()
-          }
-        }
-      }
-
-      # Otherwise, treat it as a name and search Drive
-      drive_file <- googledrive::drive_find(
-        pattern = paste0(
-          "^",
-          gsub("([.|()\\^{}+$*?]|\\[|\\])", "\\\\\\1", id),
-          "$"
-        ),
-        type = "presentation",
-        n_max = 50
-      )
-
-      if (nrow(drive_file) == 0) {
-        cli::cli_abort("No presentation found with name {.val {id}}")
-      }
-
-      if (nrow(drive_file) > 1) {
-        cli::cli_abort(c(
-          "Multiple presentations found with name {.val {id}}",
-          "i" = "Use the presentation ID or URL for a unique identifier",
-          "i" = "Found {nrow(drive_file)} presentation{?s}"
-        ))
-      }
-
-      drive_file$id[1]
     },
 
     ledger = tibble::tibble(
@@ -602,10 +586,13 @@ presentation <- R6::R6Class(
       self$revision_id <- rsp$revisionId
       self$locale <- rsp$locale
       self$page_size <- rsp$pageSize
-      self$slides <- rsp$slides
+
       self$masters <- rsp$masters
       self$layouts <- rsp$layouts
       self$last_refreshed <- Sys.time()
+
+      private$slides <- rsp$slides
+      private$slide_ids <- purrr::map(private$slides, ~ .x$objectId)
     },
 
     # Set finalizer
@@ -619,14 +606,14 @@ presentation <- R6::R6Class(
 
 
 #' is.presentation
-#' 
-#' @description 
+#'
+#' @description
 #' Check if an object is a presentation
-#' 
+#'
 #' @param x An object to check
-#' 
+#'
 #' @return `TRUE` if `x` is a `presentation`, `FALSE` otherwise
-#' 
+#'
 #' @export
 is.presentation <- function(x) {
   inherits(x, "presentation")

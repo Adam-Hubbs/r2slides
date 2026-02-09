@@ -13,8 +13,6 @@ An R6 class to represent and manipulate Google Slides presentations.
 
 \item{\code{presentation_id}}{The Google Slides presentation ID}
 
-\item{\code{slides}}{List of slide objects}
-
 \item{\code{page_size}}{Dimensions of slides (height and width in PTs)}
 
 \item{\code{revision_id}}{The current revision ID from Google Drive}
@@ -36,7 +34,9 @@ An R6 class to represent and manipulate Google Slides presentations.
 \item \href{#method-presentation-refresh}{\code{presentation$refresh()}}
 \item \href{#method-presentation-delete}{\code{presentation$delete()}}
 \item \href{#method-presentation-copy}{\code{presentation$copy()}}
-\item \href{#method-presentation-get_slide}{\code{presentation$get_slide()}}
+\item \href{#method-presentation-get_slide_by_index}{\code{presentation$get_slide_by_index()}}
+\item \href{#method-presentation-get_slide_by_id}{\code{presentation$get_slide_by_id()}}
+\item \href{#method-presentation-get_slide_index}{\code{presentation$get_slide_index()}}
 \item \href{#method-presentation-get_slide_ids}{\code{presentation$get_slide_ids()}}
 \item \href{#method-presentation-set_active}{\code{presentation$set_active()}}
 \item \href{#method-presentation-set_not_active}{\code{presentation$set_not_active()}}
@@ -126,23 +126,63 @@ A new presentation object for the copy
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-presentation-get_slide"></a>}}
-\if{latex}{\out{\hypertarget{method-presentation-get_slide}{}}}
-\subsection{Method \code{get_slide()}}{
-Get slide object(s) from the presentation
+\if{html}{\out{<a id="method-presentation-get_slide_by_index"></a>}}
+\if{latex}{\out{\hypertarget{method-presentation-get_slide_by_index}{}}}
+\subsection{Method \code{get_slide_by_index()}}{
+Get slide object from the presentation
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide(index = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_by_index(index)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{index}}{Optional index/indices of specific slides to return}
+\item{\code{index}}{Index of the slide to return (1-based)}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-List of slide objects, single slide object, or NULL
+A slide object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-presentation-get_slide_by_id"></a>}}
+\if{latex}{\out{\hypertarget{method-presentation-get_slide_by_id}{}}}
+\subsection{Method \code{get_slide_by_id()}}{
+Get slide object from the presentation
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_by_id(slide_id)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{slide_id}}{ID of the slide to return}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A slide object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-presentation-get_slide_index"></a>}}
+\if{latex}{\out{\hypertarget{method-presentation-get_slide_index}{}}}
+\subsection{Method \code{get_slide_index()}}{
+Get the position of a slide in the presentation
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_index(slide)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{slide}}{A slide object}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Index of the slide
 }
 }
 \if{html}{\out{<hr>}}

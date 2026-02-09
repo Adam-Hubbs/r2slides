@@ -1,32 +1,3 @@
-#' @param n A numeric slide ID
-#' @rdname on_slide_id
-#' @export
-on_slide_number <- function(n) {
-  cli::cli_abort(c(
-    x = "This function is not yet implemented",
-    i = "Please use {.code on_slide_id()}"
-  ))
-}
-
-#' @rdname on_slide_id
-#' @export
-on_current_slide <- function() {
-  cli::cli_abort(c(
-    x = "This function is not yet implemented",
-    i = "Please use {.code on_slide_id()}"
-  ))
-}
-
-#' @rdname on_slide_id
-#' @export
-on_newest_slide <- function() {
-  cli::cli_abort(c(
-    x = "This function is not yet implemented",
-    i = "Please use {.code on_slide_id()}"
-  ))
-}
-
-
 #' Slide Object
 #'
 #' An object representing a Google Slides slide/presentation combo
@@ -106,85 +77,213 @@ S7::method(print, slide) <- function(x, ...) {
   cli::cli_text("Presentation ID: {.val {x@presentation$presentation_id}}")
 }
 
-#' Specify a slide by ID or URL
+#' Create a slide object
 #'
 #' Creates a slide reference object that can be used to target a specific slide
-#' in a Google Slides presentation. Accepts either a slide ID (numeric) or a
+#' in a Google Slides presentation. Accepts either a slide ID or a
 #' full Google Slides URL.
 #'
 #' @param id A slide identifier. Can be either:
 #'   - A numeric slide ID
-#'   - A string containing a numeric slide ID
+#'   - A string containing slide ID
 #'   - A full Google Slides URL
 #'
 #' @returns A slide object
 #'
-#' When a URL is provided, the function validates that the presentation ID
-#' extracted from the URL matches the currently registered presentation.
-#'
 #' @examples
 #' \dontrun{
-#' # Using a numeric slide ID
-#' slide_ref <- on_slide_id(6)
+#' # Using slide ID
+#' slide_ref <- on_slide_id('f82nannfsl_0')
 #'}
 #'
 #' @rdname on_slide_id
 #' @export
-on_slide_id <- function(id) {
-  # If numeric or looks like a numeric string, treat as slide_id
-  if (is.numeric(id) || (!grepl("^https?://", id) && !grepl("/", id))) {
-    pres <- get_active_presentation()
+on_slide_id <- function(id, ps) {
+  if (rlang::is_missing(ps)) { 
+      ps <- get_active_presentation()
+  }
 
-    slide_obj <- list(
-      presentation_id = pres$presentation_id,
-      slide_id = id
+  if (length(id) > 1 || is.null(id) || is.na(id)) {
+    cli::cli_abort("{.arg id} must be a single value")
+  }
+
+  ps$get_slide_by_id(slide_id = id)
+}
+
+#' @param url A URL pointing to a Google Slides slide
+#' @rdname on_slide_id
+#' @export
+on_slide_url <- function(url, ps) {
+  if (rlang::is_missing(ps)) { 
+      pres_id <- resolve_presentation_id(url)
+  } else {
+      pres_id <- ps$presentation_id
+  }
+  ps$get_slide_by_id(slide_id = resolve_slide_id(url, pres_id))
+}
+
+
+#' @param n A numeric slide ID
+#' @param ps A presentation object
+#' @rdname on_slide_id
+#' @export
+on_slide_number <- function(n, ps) {
+  if (rlang::is_missing(ps)) { 
+      ps <- get_active_presentation()
+  }
+  if(length(n) > 1 || is.null(n) || is.na(n) || !is.numeric(n)) {
+    cli::cli_abort("{.arg n} must be a single numeric value")
+  }
+  ps$get_slide_by_index(index = n)
+}
+
+#' @param slide A slide object
+#' @param ps A presentation object
+#' @param offset A position integer - the number of slides after the reference slide. Can be negative to return slides before the reference slide
+#' @rdname on_slide_id
+#' @export
+on_slide_after <- function(slide, offset = 1, ps) {
+  if (rlang::is_missing(ps)) { 
+      ps <- get_active_presentation()
+  }
+  
+  idx <- ps$get_slide_index(slide) + offset
+  ps$get_slide_by_index(idx)
+}
+
+
+resolve_presentation_id <- function(id) {
+  if (!is.character(id) || length(id) != 1) {
+    cli::cli_abort("{.arg id} must be a single string")
+  }
+
+  # Check if it's a URL
+  if (grepl("^https://docs\\.google\\.com/presentation", id)) {
+    id_pattern <- "https://docs\\.google\\.com/presentation/d/([a-zA-Z0-9_-]+)"
+    matches <- regmatches(id, regexec(id_pattern, id))[[1]]
+
+    if (length(matches) < 2 || is.na(matches[2])) {
+      cli::cli_abort("Could not extract presentation ID from URL")
+    }
+
+    id <- matches[2]
+  }
+
+  # Check if it looks like a presentation ID (alphanumeric with hyphens/underscores)
+  if (grepl("^[a-zA-Z0-9_-]+$", id)) {
+    # Try to fetch it directly - if it works, it's an ID
+
+    test_fetch <- tryCatch(
+      {
+        query(
+          endpoint = "slides.presentations.get",
+          params = list(presentationId = id),
+          base = "slides"
+        )
+        TRUE
+      },
+      error = function(e) {
+        FALSE
+      }
     )
-
-    return(slide_obj)
+    if (test_fetch) {
+      return(id)
+    }
   }
 
-  # Parse URL to extract presentation_id and slide_id
-
-  if (!grepl("docs\\.google\\.com/presentation", id)) {
-    cli::cli_abort("Invalid Google Slides URL format.")
+  if (exists(".auth", envir = .GlobalEnv)) {
+    if (inherits(.auth, "AuthState")) {
+      if (is.null(.auth$credentials)) {
+        r2slides_auth()
+      }
+    }
   }
 
-  # Extract presentation_id
-  presentation_match <- regmatches(id, regexec("/presentation/d/([^/]+)", id))
-  if (length(presentation_match[[1]]) < 2) {
-    cli::cli_abort("Could not extract presentation ID from URL.")
+  # Otherwise, treat it as a name and search Drive
+  drive_file <- googledrive::drive_find(
+    pattern = paste0(
+      "^",
+      gsub("([.|()\\^{}+$*?]|\\[|\\])", "\\\\\\1", id),
+      "$"
+    ),
+    type = "presentation",
+    n_max = 50
+  )
+
+  if (nrow(drive_file) == 0) {
+    cli::cli_abort("No presentation found with name {.val {id}}")
   }
-  url_presentation_id <- presentation_match[[1]][2]
 
-  # Extract slide_id from fragment (after #slide=id.)
-  slide_match <- regmatches(id, regexec("#slide=id\\.([^&/#]+)", id))
-  if (length(slide_match[[1]]) < 2) {
-    cli::cli_abort(
-      "Could not extract slide ID from URL. Make sure the URL includes '#slide=id.SLIDE_ID'"
-    )
-  }
-  url_slide_id <- slide_match[[1]][2]
-
-  cached_presentation_id <- get_active_presentation()$presentation_id
-
-  # Validate presentation_id matches
-  if (url_presentation_id != cached_presentation_id) {
+  if (nrow(drive_file) > 1) {
     cli::cli_abort(c(
-      "Presentation ID mismatch.",
-      "x" = "This slide belongs to a different presentation than the one you registered in R.",
-      "x" = "URL presentation ID: {url_presentation_id}",
-      "x" = "Cached presentation ID: {cached_presentation_id}",
-      "i" = "Register the new presentation in R with {.code register_presentation()}."
+      "Multiple presentations found with name {.val {id}}",
+      "i" = "Use the presentation ID or URL for a unique identifier",
+      "i" = "Found {nrow(drive_file)} presentation{?s}"
     ))
   }
 
-  return(list(
-    presentation_id = url_presentation_id,
-    slide_id = url_slide_id
-  ))
+  drive_file$id[1]
 }
 
-#' @rdname on_slide_id
-#' @export
-on_slide_url <- on_slide_id
+resolve_slide_id <- function(id, presentation_id) {
+  if (!is.character(id) || length(id) != 1) {
+    cli::cli_abort("{.arg id} must be a single string")
+  }
 
+  if (!is.character(presentation_id) || length(presentation_id) != 1) {
+    cli::cli_abort("{.arg presentation_id} must be a single string")
+  }
+
+  # Check if it's a URL
+  if (grepl("^https://docs\\.google\\.com/presentation", id)) {
+    # Pattern for slide URLs: .../d/{presentationId}/edit#slide=id.{slideId}
+    slide_pattern <- "https://docs\\.google\\.com/presentation/d/([a-zA-Z0-9_-]+)/edit#slide=id\\.([a-zA-Z0-9_-]+)"
+    matches <- regmatches(id, regexec(slide_pattern, id))[[1]]
+
+    if (length(matches) < 3 || is.na(matches[3])) {
+      cli::cli_abort("Could not extract slide ID from URL")
+    }
+
+    # Verify the presentation ID matches
+    if (matches[2] != presentation_id) {
+      cli::cli_abort("Slide URL belongs to a different presentation")
+    }
+
+    id <- matches[3]
+  }
+
+  # Check if it looks like a slide ID (alphanumeric with hyphens/underscores)
+  if (grepl("^[a-zA-Z0-9_-]+$", id)) {
+    # Verify slide exists in the presentation
+    rsp <- tryCatch(
+      {
+        query(
+          endpoint = "slides.presentations.pages.get",
+          params = list(
+            presentationId = presentation_id,
+            pageObjectId = id
+          ),
+          base = "slides"
+        )
+      },
+      error = function(e) {
+        cli::cli_abort("Slide {.val {id}} not found in presentation")
+      }
+    )
+
+    return(id)
+  }
+
+  cli::cli_abort("Invalid slide ID format: {.val {id}}")
+}
+
+
+#' Check if an object is a slide
+#'
+#' @param x An object to check
+#'
+#' @return TRUE if the object is a slide, FALSE otherwise
+#' @export
+is.slide <- function(x) {
+  inherits(x, "r2slides::slide")
+}
