@@ -228,19 +228,7 @@ S7::method(plot, slide_position) <- function(
     lwd = 2
   )
 
-  # Add semi-transparent "SLIDE" text in background
-  if (requireNamespace('scales', quietly = TRUE)) {
-    text(
-      slide_width / 2,
-      slide_height / 2,
-      "SLIDE",
-      cex = 6,
-      srt = tan(slide_height / slide_width) * 180 / pi,
-      col = scales::alpha("grey", 0.3),
-      font = 2, # Bold
-      adj = c(0.5, 0.5)
-    )
-  } else {
+  # Add "SLIDE" text in background
     text(
       slide_width / 2,
       slide_height / 2,
@@ -251,7 +239,7 @@ S7::method(plot, slide_position) <- function(
       font = 2, # Bold
       adj = c(0.5, 0.5)
     )
-  }
+  
   
 
   # Draw the position rectangle
