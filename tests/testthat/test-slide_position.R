@@ -1,7 +1,7 @@
 test_that("`slide_position` constructor creates valid objects with defaults", {
   pos <- slide_position(top = 1, left = 2, width = 3, height = 4)
 
-  expect_s3_class(pos, "slide_position")
+  expect_true(is.slide_position(pos))
   expect_equal(pos@top, 1)
   expect_equal(pos@left, 2)
   expect_equal(pos@width, 3)
@@ -24,101 +24,87 @@ test_that("`slide_position` constructor accepts custom slide_size", {
 })
 
 test_that("`slide_position` validates top property", {
-  expect_error(
-    slide_position(top = c(1, 2), left = 1, width = 1, height = 1),
-    "top must be a single value"
-  )
-  expect_error(
-    slide_position(top = -1, left = 1, width = 1, height = 1),
-    "top must be greater than or equal to 0"
-  )
+  expect_snapshot(error = TRUE, {
+    slide_position(top = c(1, 2), left = 1, width = 1, height = 1)
+  })
+  expect_snapshot(error = TRUE, {
+    slide_position(top = -1, left = 1, width = 1, height = 1)
+  })
 })
 
 test_that("`slide_position` validates left property", {
-  expect_error(
-    slide_position(top = 1, left = c(1, 2), width = 1, height = 1),
-    "left must be a single value"
-  )
-  expect_error(
-    slide_position(top = 1, left = -1, width = 1, height = 1),
-    "left must be greater than or equal to 0"
-  )
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = c(1, 2), width = 1, height = 1)
+  })
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = -1, width = 1, height = 1)
+  })
 })
 
 test_that("`slide_position` validates width property", {
-  expect_error(
-    slide_position(top = 1, left = 1, width = c(1, 2), height = 1),
-    "width must be a single value"
-  )
-  expect_error(
-    slide_position(top = 1, left = 1, width = 0, height = 1),
-    "width must be greater than 0"
-  )
-  expect_error(
-    slide_position(top = 1, left = 1, width = -1, height = 1),
-    "width must be greater than 0"
-  )
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = 1, width = c(1, 2), height = 1)
+  })
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = 1, width = 0, height = 1)
+  })
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = 1, width = -1, height = 1)
+  })
 })
 
 test_that("`slide_position` validates height property", {
-  expect_error(
-    slide_position(top = 1, left = 1, width = 1, height = c(1, 2)),
-    "height must be a single value"
-  )
-  expect_error(
-    slide_position(top = 1, left = 1, width = 1, height = 0),
-    "height must be greater than 0"
-  )
-  expect_error(
-    slide_position(top = 1, left = 1, width = 1, height = -1),
-    "height must be greater than 0"
-  )
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = 1, width = 1, height = c(1, 2))
+  })
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = 1, width = 1, height = 0)
+  })
+  expect_snapshot(error = TRUE, {
+    slide_position(top = 1, left = 1, width = 1, height = -1)
+  })
 })
 
 test_that("`slide_position` validates slide_width property", {
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 1,
       width = 1,
       height = 1,
       slide_size = c(5.625, c(10, 20))
-    ),
-    "slide_width must be a single value"
-  )
-  expect_error(
+    )
+  })
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 1,
       width = 1,
       height = 1,
       slide_size = c(5.625, 0)
-    ),
-    "slide_width must be greater than 0"
-  )
+    )
+  })
 })
 
 test_that("`slide_position` validates slide_height property", {
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 1,
       width = 1,
       height = 1,
       slide_size = c(c(5, 6), 10)
-    ),
-    "slide_height must be a single value"
-  )
-  expect_error(
+    )
+  })
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 1,
       width = 1,
       height = 1,
       slide_size = c(-1, 10)
-    ),
-    "slide_height must be greater than 0"
-  )
+    )
+  })
 })
 
 test_that("computed properties work correctly", {
@@ -133,20 +119,19 @@ test_that("computed properties work correctly", {
 })
 
 test_that("convert_slide_size requires slide_size_old when TRUE", {
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 2,
       width = 3,
       height = 4,
       convert_slide_size = TRUE
-    ),
-    "slide_size_old must be provided when convert_slide_size is TRUE"
-  )
+    )
+  })
 })
 
 test_that("convert_slide_size requires slide_size when TRUE", {
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 2,
@@ -155,13 +140,12 @@ test_that("convert_slide_size requires slide_size when TRUE", {
       convert_slide_size = TRUE,
       slide_size_old = c(5.625, 10),
       slide_size = NULL
-    ),
-    "slide_size must be provided when convert_slide_size is TRUE"
-  )
+    )
+  })
 })
 
 test_that("convert_slide_size validates slide_size_old format", {
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 2,
@@ -170,11 +154,10 @@ test_that("convert_slide_size validates slide_size_old format", {
       convert_slide_size = TRUE,
       slide_size_old = c(5.625, 10, 15),
       slide_size = c(7.5, 10)
-    ),
-    "slide_size_old must be a numeric vector of length 2"
-  )
+    )
+  })
 
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 2,
@@ -183,13 +166,12 @@ test_that("convert_slide_size validates slide_size_old format", {
       convert_slide_size = TRUE,
       slide_size_old = "not numeric",
       slide_size = c(7.5, 10)
-    ),
-    "slide_size_old must be a numeric vector of length 2"
-  )
+    )
+  })
 })
 
 test_that("convert_slide_size validates slide_size format", {
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 2,
@@ -198,11 +180,10 @@ test_that("convert_slide_size validates slide_size format", {
       convert_slide_size = TRUE,
       slide_size_old = c(5.625, 10),
       slide_size = c(7.5, 10, 15)
-    ),
-    "slide_size must be a numeric vector of length 2"
-  )
+    )
+  })
 
-  expect_error(
+  expect_snapshot(error = TRUE, {
     slide_position(
       top = 1,
       left = 2,
@@ -211,9 +192,8 @@ test_that("convert_slide_size validates slide_size format", {
       convert_slide_size = TRUE,
       slide_size_old = c(5.625, 10),
       slide_size = "not numeric"
-    ),
-    "slide_size must be a numeric vector of length 2"
-  )
+    )
+  })
 })
 
 
@@ -232,41 +212,41 @@ test_that("plot method creates correct visual output", {
   # Test default slide size
   vdiffr::expect_doppelganger(
     "slide_position_default",
-    function() plot(pos)
+    fig = function() plot(pos)
   )
 
   # Test custom slide size
   vdiffr::expect_doppelganger(
     "slide_position_custom_size",
-    function() plot(pos, slide_size = c(7.5, 10))
+    fig = function() plot(pos, slide_size = c(7.5, 10))
   )
 
   # Test position at origin
   pos_origin <- slide_position(top = 0, left = 0, width = 2, height = 2)
   vdiffr::expect_doppelganger(
     "slide_position_origin",
-    function() plot(pos_origin)
+    fig = function() plot(pos_origin)
   )
 
   # Test position filling most of slide
   pos_large <- slide_position(top = 0.5, left = 1, width = 8, height = 4)
   vdiffr::expect_doppelganger(
     "slide_position_large",
-    function() plot(pos_large)
+    fig = function() plot(pos_large)
   )
 
   # Test small position
   pos_small <- slide_position(top = 2, left = 4, width = 0.5, height = 0.5)
   vdiffr::expect_doppelganger(
     "slide_position_small",
-    function() plot(pos_small)
+    fig = function() plot(pos_small)
   )
 })
 
 
 test_that("convert method to list works", {
   pos <- slide_position(top = 1, left = 2, width = 3, height = 4)
-  result <- convert(pos, to = list)
+  result <- convert(pos, to = class_list)
 
   expect_type(result, "list")
   expect_equal(result$left, 2)
@@ -335,14 +315,9 @@ test_that("addition fails with incompatible slide sizes", {
     slide_size = c(7.5, 13.33)
   )
 
-  expect_error(
-    pos1 + pos2,
-    "Cannot add slide position objects"
-  )
-  expect_error(
-    pos1 + pos2,
-    "incompatible slide sizes"
-  )
+  expect_snapshot(error = TRUE, {
+    pos1 + pos2
+  })
 })
 
 test_that("mirror with Horizontal flip works correctly", {
@@ -395,10 +370,9 @@ test_that("mirror with default flip_axis argument works", {
 test_that("mirror validates flip_axis argument", {
   pos <- slide_position(top = 1, left = 2, width = 3, height = 4)
 
-  expect_error(
-    mirror(pos, flip_axis = "Invalid"),
-    "flip_axis"
-  )
+  expect_snapshot(error = TRUE, {
+    mirror(pos, flip_axis = "Invalid")
+  })
 })
 
 test_that("double mirror returns to original position", {

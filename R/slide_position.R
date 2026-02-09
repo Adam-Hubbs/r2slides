@@ -2,9 +2,9 @@
 NULL
 
 #' Slide Position Object
-#' 
+#'
 #' A system for working with Google Slides positions and sizes.
-#' 
+#'
 #' @param top The position in inches from the top of the slide
 #' @param left The position in inches from the left of the slide
 #' @param width The width of the object in inches
@@ -12,34 +12,34 @@ NULL
 #' @param convert_slide_size A logical. Optional. Converts the position and size to Google Slides from a PowerPoint (or custom) size if TRUE.
 #' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes.
 #' @param slide_size New Slide size specifications. Optional.
-#' 
+#'
 #' @export
 slide_position <- S7::new_class(
   "slide_position",
   properties = list(
     top = S7::new_property(S7::class_double, validator = function(value) {
       if (length(value) != 1) {
-        "top must be a single value"
+        return("top must be a single value")
       }
-      if (value < 0) "top must be greater than or equal to 0"
+      if (value < 0) return("top must be greater than or equal to 0")
     }),
     left = S7::new_property(S7::class_double, validator = function(value) {
       if (length(value) != 1) {
-        "left must be a single value"
+        return("left must be a single value")
       }
-      if (value < 0) "left must be greater than or equal to 0"
+      if (value < 0) return("left must be greater than or equal to 0")
     }),
     width = S7::new_property(S7::class_double, validator = function(value) {
       if (length(value) != 1) {
-        "width must be a single value"
+        return("width must be a single value")
       }
-      if (value <= 0) "width must be greater than 0"
+      if (value <= 0) return("width must be greater than 0")
     }),
     height = S7::new_property(S7::class_double, validator = function(value) {
       if (length(value) != 1) {
-        "height must be a single value"
+        return("height must be a single value")
       }
-      if (value <= 0) "height must be greater than 0"
+      if (value <= 0) return("height must be greater than 0")
     }),
 
     # Defaults for slide size
@@ -48,9 +48,9 @@ slide_position <- S7::new_class(
       default = 10,
       validator = function(value) {
         if (length(value) != 1) {
-          "slide_width must be a single value"
+          return("slide_width must be a single value")
         }
-        if (value <= 0) "slide_width must be greater than 0"
+        if (value <= 0) return("slide_width must be greater than 0")
       }
     ),
     slide_height = S7::new_property(
@@ -58,9 +58,9 @@ slide_position <- S7::new_class(
       default = 5.625,
       validator = function(value) {
         if (length(value) != 1) {
-          "slide_height must be a single value"
+          return("slide_height must be a single value")
         }
-        if (value <= 0) "slide_height must be greater than 0"
+        if (value <= 0) return("slide_height must be greater than 0")
       }
     ),
 
@@ -133,6 +133,10 @@ slide_position <- S7::new_class(
     }
 
     if (!is.null(slide_size)) {
+      if (length(slide_size) != 2) {
+        cli::cli_abort("slide_size must be a numeric vector of length 2")
+      }
+
       new_object(
         S7_object(),
         top = top,
@@ -608,7 +612,11 @@ in_qualtrics_title <- function(
 
 #' Transform a slide position object to create a new position
 #' @noRd
-process_transformation <- function(trans, param_name, call = rlang::caller_env()) {
+process_transformation <- function(
+  trans,
+  param_name,
+  call = rlang::caller_env()
+) {
   # If it's a scalar numeric, convert to a function that returns that value
   if (is.numeric(trans) && length(trans) == 1) {
     return(function(x) trans)
@@ -627,7 +635,7 @@ process_transformation <- function(trans, param_name, call = rlang::caller_env()
 }
 
 #' Relative Position
-#' 
+#'
 #' Takes a slide position object, applies transformations to its dimensions,
 #' and returns a new slide_position object. Transformations can be either
 #' functions or scalar numeric values. If a scalar is provided, it replaces
@@ -710,14 +718,14 @@ relative_position <- function(
 
 
 #' This function takes transformations for top, left, width, and height, and returns a function that applies those transformations to a slide_position object.
-#' 
+#'
 #' @param top_transformation A function to apply to the top value, or a scalar numeric to replace it
 #' @param left_transformation A function to apply to the left value, or a scalar numeric to replace it
 #' @param width_transformation A function to apply to the width value, or a scalar numeric to replace it
 #' @param height_transformation A function to apply to the height value, or a scalar numeric to replace it
-#' 
+#'
 #' @returns A function that applies those transformations to a slide_position object.
-#' 
+#'
 #' @export
 define_relative_transformation_function <- function(
   top_transformation = identity,
@@ -738,11 +746,11 @@ define_relative_transformation_function <- function(
 
 
 #' Testing function for how to use define_relative_transformation_function
-#' 
+#'
 #' @param position An object of class `r2slides::slide_position`
-#' 
+#'
 #' @returns An object of class `r2slides::slide_position`
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' data |>
@@ -754,7 +762,8 @@ define_relative_transformation_function <- function(
 chart_annotation_1 <- define_relative_transformation_function(
   top_transformation = \(x) x - 0.5,
   width_transformation = 0.5,
-  height_transformation = 0.25)
+  height_transformation = 0.25
+)
 
 
 #' Correct slide sizes
@@ -775,10 +784,10 @@ chart_annotation_1 <- define_relative_transformation_function(
 #' A numeric value of corrected position/size. Will error if `slide_size` is provided
 #' but is not a list.
 correct_slide_size <- function(
-    pos,
-    dim = c('width', 'height'),
-    slide_size = NULL,
-    call = rlang::caller_env()
+  pos,
+  dim = c('width', 'height'),
+  slide_size = NULL,
+  call = rlang::caller_env()
 ) {
   dim <- rlang::arg_match(dim)
 
@@ -799,4 +808,15 @@ correct_slide_size <- function(
 
     pos * (slide_size$y_height / slide_size$x_height)
   }
+}
+
+#' @description
+#' Check if an object is a slide_position object
+#'
+#' @param x An object to check
+#'
+#' @returns TRUE if the object is a slide_position, FALSE otherwise
+#' @export
+is.slide_position <- function(x) {
+  inherits(x, "r2slides::slide_position")
 }
