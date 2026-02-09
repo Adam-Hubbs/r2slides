@@ -1,46 +1,58 @@
-# Specify a slide by ID or URL
+# Create a slide object
 
 Creates a slide reference object that can be used to target a specific
-slide in a Google Slides presentation. Accepts either a slide ID
-(numeric) or a full Google Slides URL.
+slide in a Google Slides presentation. Accepts either a slide ID or a
+full Google Slides URL.
 
 ## Usage
 
 ``` r
-on_slide_number(n)
+on_slide_id(id, ps)
 
-on_current_slide()
+on_slide_url(url, ps)
 
-on_newest_slide()
+on_slide_number(n, ps)
 
-on_slide_id(id)
-
-on_slide_url(id)
+on_slide_after(slide, offset = 1, ps)
 ```
 
 ## Arguments
+
+- id:
+
+  A slide identifier. Can be either: - A numeric slide ID - A string
+  containing slide ID - A full Google Slides URL
+
+- ps:
+
+  A presentation object
+
+- url:
+
+  A URL pointing to a Google Slides slide
 
 - n:
 
   A numeric slide ID
 
-- id:
+- slide:
 
-  A slide identifier. Can be either: - A numeric slide ID - A string
-  containing a numeric slide ID - A full Google Slides URL
+  A slide object
+
+- offset:
+
+  A position integer - the number of slides after the reference slide.
+  Can be negative to return slides before the reference slide
 
 ## Value
 
 A slide object
 
-When a URL is provided, the function validates that the presentation ID
-extracted from the URL matches the currently registered presentation.
-
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
-# Using a numeric slide ID
-slide_ref <- on_slide_id(6)
+# Using slide ID
+slide_ref <- on_slide_id('f82nannfsl_0')
 } # }
 ```

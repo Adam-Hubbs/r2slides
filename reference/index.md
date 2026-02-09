@@ -50,6 +50,10 @@
   the slide
 - [`is.presentation()`](https://adam-hubbs.github.io/r2slides/reference/is.presentation.md)
   : is.presentation
+- [`is.slide()`](https://adam-hubbs.github.io/r2slides/reference/is.slide.md)
+  : Check if an object is a slide
+- [`is.slide_position()`](https://adam-hubbs.github.io/r2slides/reference/is.slide_position.md)
+  : Is slide_position
 - [`new_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/new_chart_id.md)
   [`print(`*`<chart_id>`*`)`](https://adam-hubbs.github.io/r2slides/reference/new_chart_id.md)
   : Chart Id class
@@ -60,12 +64,11 @@
   : Sheet Id class
 - [`new_slide()`](https://adam-hubbs.github.io/r2slides/reference/new_slide.md)
   : Create a new slide in a Google Slides presentation
-- [`on_slide_number()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
-  [`on_current_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
-  [`on_newest_slide()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
-  [`on_slide_id()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+- [`on_slide_id()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   [`on_slide_url()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
-  : Specify a slide by ID or URL
+  [`on_slide_number()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+  [`on_slide_after()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+  : Create a slide object
 - [`peek`](https://adam-hubbs.github.io/r2slides/reference/peek.md) :
   Peek at a slide
 - [`presentation`](https://adam-hubbs.github.io/r2slides/reference/presentation.md)

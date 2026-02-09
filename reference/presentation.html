@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9050</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9051</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,10 +54,6 @@
 <dd><p>The Google Slides presentation ID</p></dd>
 
 
-<dt><code>slides</code></dt>
-<dd><p>List of slide objects</p></dd>
-
-
 <dt><code>page_size</code></dt>
 <dd><p>Dimensions of slides (height and width in PTs)</p></dd>
 
@@ -94,7 +90,9 @@
 <li><p><a href="#method-presentation-refresh"><code>presentation$refresh()</code></a></p></li>
 <li><p><a href="#method-presentation-delete"><code>presentation$delete()</code></a></p></li>
 <li><p><a href="#method-presentation-copy"><code>presentation$copy()</code></a></p></li>
-<li><p><a href="#method-presentation-get_slide"><code>presentation$get_slide()</code></a></p></li>
+<li><p><a href="#method-presentation-get_slide_by_index"><code>presentation$get_slide_by_index()</code></a></p></li>
+<li><p><a href="#method-presentation-get_slide_by_id"><code>presentation$get_slide_by_id()</code></a></p></li>
+<li><p><a href="#method-presentation-get_slide_index"><code>presentation$get_slide_index()</code></a></p></li>
 <li><p><a href="#method-presentation-get_slide_ids"><code>presentation$get_slide_ids()</code></a></p></li>
 <li><p><a href="#method-presentation-set_active"><code>presentation$set_active()</code></a></p></li>
 <li><p><a href="#method-presentation-set_not_active"><code>presentation$set_not_active()</code></a></p></li>
@@ -184,95 +182,135 @@
 <p>A new presentation object for the copy</p>
 </div>
 
-</div><p></p><hr><a id="method-presentation-get_slide"></a><div class="section">
-<h3 id="method-get-slide-">Method <code>get_slide()</code><a class="anchor" aria-label="anchor" href="#method-get-slide-"></a></h3>
-<p>Get slide object(s) from the presentation</p><div class="section">
+</div><p></p><hr><a id="method-presentation-get_slide_by_index"></a><div class="section">
+<h3 id="method-get-slide-by-index-">Method <code>get_slide_by_index()</code><a class="anchor" aria-label="anchor" href="#method-get-slide-by-index-"></a></h3>
+<p>Get slide object from the presentation</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">get_slide</span><span class="op">(</span>index <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">get_slide_by_index</span><span class="op">(</span><span class="va">index</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>index</code></dt>
-<dd><p>Optional index/indices of specific slides to return</p></dd>
+<dd><p>Index of the slide to return (1-based)</p></dd>
 
 
 </dl><p></p></div>
 </div>
 <div class="section">
 <h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
-<p>List of slide objects, single slide object, or NULL</p>
+<p>A slide object</p>
+</div>
+
+</div><p></p><hr><a id="method-presentation-get_slide_by_id"></a><div class="section">
+<h3 id="method-get-slide-by-id-">Method <code>get_slide_by_id()</code><a class="anchor" aria-label="anchor" href="#method-get-slide-by-id-"></a></h3>
+<p>Get slide object from the presentation</p><div class="section">
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">get_slide_by_id</span><span class="op">(</span><span class="va">slide_id</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>slide_id</code></dt>
+<dd><p>ID of the slide to return</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
+<p>A slide object</p>
+</div>
+
+</div><p></p><hr><a id="method-presentation-get_slide_index"></a><div class="section">
+<h3 id="method-get-slide-index-">Method <code>get_slide_index()</code><a class="anchor" aria-label="anchor" href="#method-get-slide-index-"></a></h3>
+<p>Get the position of a slide in the presentation</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">get_slide_index</span><span class="op">(</span><span class="va">slide</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>slide</code></dt>
+<dd><p>A slide object</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
+<p>Index of the slide</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-get_slide_ids"></a><div class="section">
 <h3 id="method-get-slide-ids-">Method <code>get_slide_ids()</code><a class="anchor" aria-label="anchor" href="#method-get-slide-ids-"></a></h3>
 <p>Get slide IDs from the presentation</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">get_slide_ids</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
+<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
 <p>Character vector of slide object IDs</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-set_active"></a><div class="section">
 <h3 id="method-set-active-">Method <code>set_active()</code><a class="anchor" aria-label="anchor" href="#method-set-active-"></a></h3>
 <p>Set this presentation as the active one</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">set_active</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
 <p>Self, invisibly (for method chaining)</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-set_not_active"></a><div class="section">
 <h3 id="method-set-not-active-">Method <code>set_not_active()</code><a class="anchor" aria-label="anchor" href="#method-set-not-active-"></a></h3>
 <p>Set this presentation to not active</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">set_not_active</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
 <p>Self, invisibly (for method chaining)</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-is_active"></a><div class="section">
 <h3 id="method-is-active-">Method <code>is_active()</code><a class="anchor" aria-label="anchor" href="#method-is-active-"></a></h3>
 <p>Check if this is the active presentation</p><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">is_active</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p>Logical</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-get_url"></a><div class="section">
 <h3 id="method-get-url-">Method <code>get_url()</code><a class="anchor" aria-label="anchor" href="#method-get-url-"></a></h3>
 <p>Get the Google Slides URL for this presentation</p><div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
 <p>Character URL or NULL</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-browse"></a><div class="section">
 <h3 id="method-browse-">Method <code>browse()</code><a class="anchor" aria-label="anchor" href="#method-browse-"></a></h3>
 <p>Open the presentation in a browser</p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">browse</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
+<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
 <p>Self, invisibly (for method chaining)
 Get elements from the presentation</p>
 </div>
@@ -280,7 +318,7 @@ Get elements from the presentation</p>
 </div><p></p><hr><a id="method-presentation-get_elements"></a><div class="section">
 <h3 id="method-get-elements-">Method <code>get_elements()</code><a class="anchor" aria-label="anchor" href="#method-get-elements-"></a></h3>
 <p>Filter the elements you ahve constructed to return a list of elements</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">get_elements</span><span class="op">(</span></span>
 <span>  modified_since <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  modified_end <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -293,7 +331,7 @@ Get elements from the presentation</p>
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>modified_since</code></dt>
 <dd><p>Optional. Only return elements modified since this time</p></dd>
 
@@ -325,19 +363,19 @@ Get elements from the presentation</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
 <p>List of elements</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-add_to_ledger"></a><div class="section">
 <h3 id="method-add-to-ledger-">Method <code>add_to_ledger()</code><a class="anchor" aria-label="anchor" href="#method-add-to-ledger-"></a></h3>
 <p>Add an element to the ledger</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">add_to_ledger</span><span class="op">(</span><span class="va">element_id</span>, <span class="va">slide_id</span>, <span class="va">element_type</span>, <span class="va">element_text</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>element_id</code></dt>
 <dd><p>Element ID</p></dd>
 
@@ -357,19 +395,19 @@ Get elements from the presentation</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
 <p>Self</p>
 </div>
 
 </div><p></p><hr><a id="method-presentation-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print method for presentation objects</p><div class="section">
-<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">presentation</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Additional arguments (unused)</p></dd>
 

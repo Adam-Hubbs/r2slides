@@ -12,10 +12,6 @@ An R6 class to represent and manipulate Google Slides presentations.
 
   The Google Slides presentation ID
 
-- `slides`:
-
-  List of slide objects
-
 - `page_size`:
 
   Dimensions of slides (height and width in PTs)
@@ -52,7 +48,11 @@ An R6 class to represent and manipulate Google Slides presentations.
 
 - [`presentation$copy()`](#method-presentation-copy)
 
-- [`presentation$get_slide()`](#method-presentation-get_slide)
+- [`presentation$get_slide_by_index()`](#method-presentation-get_slide_by_index)
+
+- [`presentation$get_slide_by_id()`](#method-presentation-get_slide_by_id)
+
+- [`presentation$get_slide_index()`](#method-presentation-get_slide_index)
 
 - [`presentation$get_slide_ids()`](#method-presentation-get_slide_ids)
 
@@ -156,23 +156,63 @@ A new presentation object for the copy
 
 ------------------------------------------------------------------------
 
-### Method `get_slide()`
+### Method `get_slide_by_index()`
 
-Get slide object(s) from the presentation
+Get slide object from the presentation
 
 #### Usage
 
-    presentation$get_slide(index = NULL)
+    presentation$get_slide_by_index(index)
 
 #### Arguments
 
 - `index`:
 
-  Optional index/indices of specific slides to return
+  Index of the slide to return (1-based)
 
 #### Returns
 
-List of slide objects, single slide object, or NULL
+A slide object
+
+------------------------------------------------------------------------
+
+### Method `get_slide_by_id()`
+
+Get slide object from the presentation
+
+#### Usage
+
+    presentation$get_slide_by_id(slide_id)
+
+#### Arguments
+
+- `slide_id`:
+
+  ID of the slide to return
+
+#### Returns
+
+A slide object
+
+------------------------------------------------------------------------
+
+### Method `get_slide_index()`
+
+Get the position of a slide in the presentation
+
+#### Usage
+
+    presentation$get_slide_index(slide)
+
+#### Arguments
+
+- `slide`:
+
+  A slide object
+
+#### Returns
+
+Index of the slide
 
 ------------------------------------------------------------------------
 
