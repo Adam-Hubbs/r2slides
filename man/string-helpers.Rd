@@ -7,11 +7,21 @@
 \alias{str_matches}
 \title{String helper functions for text positioning}
 \usage{
-str_before(text, character, include_boundary = FALSE)
+str_before(
+  text,
+  character,
+  include_boundary = FALSE,
+  missing = c("error", "none", "all")
+)
 
-str_after(text, character, include_boundary = FALSE)
+str_after(
+  text,
+  character,
+  include_boundary = FALSE,
+  missing = c("error", "none", "all")
+)
 
-str_matches(text, pattern)
+str_matches(text, pattern, missing = c("error", "none", "all"))
 }
 \arguments{
 \item{text}{A character string to search in}
@@ -20,6 +30,8 @@ str_matches(text, pattern)
 
 \item{include_boundary}{A logical indicating whether to include the position of the boundary character}
 
+\item{missing}{A character string indicating how to handle missing positions. Options are "error", "none", or "all".}
+
 \item{pattern}{A regular expression pattern to search for}
 }
 \value{
@@ -27,8 +39,7 @@ str_matches(text, pattern)
   the position of the first occurrence of the character
 - `str_after()`: A numeric vector of length 2 containing the position of the first
   occurrence of the character and the end of the string
-- `str_matches()`: A matrix with start and end positions of the first match, or NA if
-  no match is found
+- `str_matches()`: A matrix with start and end positions of the first match
 }
 \description{
 Helper functions to extract position information for text styling and
