@@ -7,11 +7,21 @@ used with styling rules to format specific parts of text strings.
 ## Usage
 
 ``` r
-str_before(text, character, include_boundary = FALSE)
+str_before(
+  text,
+  character,
+  include_boundary = FALSE,
+  missing = c("error", "none", "all")
+)
 
-str_after(text, character, include_boundary = FALSE)
+str_after(
+  text,
+  character,
+  include_boundary = FALSE,
+  missing = c("error", "none", "all")
+)
 
-str_matches(text, pattern)
+str_matches(text, pattern, missing = c("error", "none", "all"))
 ```
 
 ## Arguments
@@ -29,6 +39,11 @@ str_matches(text, pattern)
   A logical indicating whether to include the position of the boundary
   character
 
+- missing:
+
+  A character string indicating how to handle missing positions. Options
+  are "error", "none", or "all".
+
 - pattern:
 
   A regular expression pattern to search for
@@ -40,7 +55,7 @@ position (1) and the position of the first occurrence of the character -
 \`str_after()\`: A numeric vector of length 2 containing the position of
 the first occurrence of the character and the end of the string -
 \`str_matches()\`: A matrix with start and end positions of the first
-match, or NA if no match is found
+match
 
 ## Examples
 
@@ -53,9 +68,7 @@ str_after("hello.world", ".")
 
 # Find pattern matches
 str_matches("hello.world", "ello")
-#>      start end
-#> [1,]     2   5
+#> [1] 2 5
 str_matches("test123", "\\d+")
-#>      start end
-#> [1,]     5   7
+#> [1] 5 7
 ```
