@@ -5,13 +5,21 @@ test_that("`str_before()` works correctly with single characters", {
   # With boundary
   expect_equal(str_before("hello.world", ".", include_boundary = TRUE), c(1, 6))
 
-  # At start of string
-  expect_equal(str_before(".hello", "."), c(1, 0))
-  expect_equal(str_before(".hello", ".", include_boundary = TRUE), c(1, 1))
+  # First character only
+    expect_equal(str_before(".hello", ".", include_boundary = TRUE), c(1, 1))
 
   # First occurrence only
   expect_equal(str_before("a.b.c.d", "."), c(1, 1))
 })
+
+test_that("`str_before()` missing parameter works correctly", {
+  # At start of string
+  expect_snapshot(error = TRUE, str_before(".hello", "."))
+  expect_equal(str_before(".hello", ".", missing = "none"), c(0, 0))
+  expect_equal(str_before(".hello", ".", missing = "all"), c(1, 6))
+
+})
+
 
 test_that("`str_before()` works correctly with multi-character strings", {
   expect_equal(str_before("hello--world", "--"), c(1, 5))
@@ -45,11 +53,18 @@ test_that("`str_after()` works correctly with single characters", {
   expect_equal(str_after("hello.world", ".", include_boundary = TRUE), c(6, 11))
 
   # At end of string
-  expect_equal(str_after("hello.", "."), c(7, 6))
   expect_equal(str_after("hello.", ".", include_boundary = TRUE), c(6, 6))
 
   # First occurrence only
   expect_equal(str_after("a.b.c.d", "."), c(3, 7))
+})
+
+test_that("`str_after()` missing parameter works correctly", {
+  # At end of string
+  expect_snapshot(error = TRUE, str_after("hello.", "."))
+  expect_equal(str_after("hello.", ".", missing = "none"), c(0, 0))
+  expect_equal(str_after("hello.", ".", missing = "all"), c(1, 6))
+
 })
 
 test_that("`str_after()` works correctly with multi-character strings", {

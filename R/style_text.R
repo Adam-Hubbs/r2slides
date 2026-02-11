@@ -496,9 +496,13 @@ create_styling_request <- function(
         selection_index <- NULL
       }
     } else if (is.numeric(f_output) && length(f_output) == 2) {
-      # Support for partial text selection with 1-based R indices
+      # If returning c(0, 0) (No match found) then return NULL so no styling request will be created
+      if (f_output[1] == 0 && f_output[2] == 0) {
+        selection_index <- NULL
+      } else {
       # Convert to 0-based indices for Google Slides API
       selection_index <- f_output
+      }
     }
     else {
       cli::cli_abort(

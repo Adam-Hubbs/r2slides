@@ -1,3 +1,12 @@
+# `str_before()` missing parameter works correctly
+
+    Code
+      str_before(".hello", ".")
+    Condition
+      Error in `str_before()`:
+      x Character "." found at beginning of text ".hello".
+      i Did you mean to use `include_boundary = TRUE`?
+
 # `str_before()` handles errors appropriately
 
     Code
@@ -49,6 +58,15 @@
     Condition
       Error in `str_before()`:
       ! Character "." not found in text 123
+
+# `str_after()` missing parameter works correctly
+
+    Code
+      str_after("hello.", ".")
+    Condition
+      Error in `str_after()`:
+      x Character "." found at end of text "hello.".
+      i Did you mean to use `include_boundary = TRUE`?
 
 # `str_after()` handles errors appropriately
 

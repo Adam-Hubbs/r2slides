@@ -36,19 +36,37 @@ str_before <- function(
 ) {
   missing <- rlang::arg_match(missing)
   location <- stringr::str_locate(text, stringr::coll(character))
+  is_match <- FALSE
 
-  if (is.null(text) | is.null(character)) {
+  if (is.null(text) || is.null(character)) {
     tmp <- NA
   } else if (include_boundary) {
     tmp <- c(1, location[[1, 2]])
   } else {
-    tmp <- c(1, location[[1, 1]] - 1)
+    if(is.na(location[[1, 1]])) {
+      # No match
+      tmp <- NA
+    } else if (location[[1, 1]] == 1) {
+      tmp <- NA # There is a match, but only at the very beginning.
+      is_match <- TRUE
+    } else {
+      tmp <- c(1, location[[1, 1]] - 1)
+    }
   }
   if (anyNA(tmp)) {
     if (missing == 'error') {
-      cli::cli_abort(
-        "Character {.val {character}} not found in text {.val {text}}"
-      )
+      if (is_match) {
+        cli::cli_abort(
+          c(
+            "x" = "Character {.val {character}} found at beginning of text {.val {text}}.",
+            "i" = "Did you mean to use {.code include_boundary = TRUE}?"
+          )
+        )
+      } else {
+        cli::cli_abort(
+          "Character {.val {character}} not found in text {.val {text}}"
+        )
+      }
     } else if (missing == 'none') {
       tmp <- c(0, 0)
     } else if (missing == 'all') {
@@ -68,20 +86,39 @@ str_after <- function(
 ) {
   missing <- rlang::arg_match(missing)
   location <- stringr::str_locate(text, stringr::coll(character))
+  is_match <- FALSE
 
-  if (is.null(text) | is.null(character)) {
+  if (is.null(text) || is.null(character)) {
     tmp <- NA
   } else if (include_boundary) {
     tmp <- c(location[[1, 1]], nchar(text))
   } else {
-    tmp <- c(location[[1, 2]] + 1, nchar(text))
+    
+    if(is.na(location[[1, 2]])) {
+      # No match
+      tmp <- NA
+    } else if (location[[1, 2]] == nchar(text)) {
+      tmp <- NA # There is a match, but only at the very end.
+      is_match <- TRUE
+    } else {
+      tmp <- c(location[[1, 2]] + 1, nchar(text))
+    }
   }
 
   if (anyNA(tmp)) {
     if (missing == 'error') {
-      cli::cli_abort(
-        "Character {.val {character}} not found in text {.val {text}}"
-      )
+      if (is_match) {
+        cli::cli_abort(
+          c(
+            "x" = "Character {.val {character}} found at end of text {.val {text}}.",
+            "i" = "Did you mean to use {.code include_boundary = TRUE}?"
+          )
+        )
+      } else {
+        cli::cli_abort(
+          "Character {.val {character}} not found in text {.val {text}}"
+        )
+      }
     } else if (missing == 'none') {
       tmp <- c(0, 0)
     } else if (missing == 'all') {
@@ -97,13 +134,13 @@ str_matches <- function(text, pattern, missing = c('error', 'none', 'all')) {
   missing <- rlang::arg_match(missing)
 
   location <- stringr::str_locate(text, pattern)
-  if (is.null(text) | is.null(pattern)) {
+  if (is.null(text) || is.null(pattern)) {
     tmp <- NA
   } else {
     tmp <- c(location[[1, 1]], location[[1, 2]])
   }
 
-  if (anyNA(tmp)) {
+  if (anyNA((tmp))) {
     if (missing == 'error') {
       cli::cli_abort(
         "Pattern {{pattern} .val} not found in text {{text} .val}"
