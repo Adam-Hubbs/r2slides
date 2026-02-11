@@ -71,7 +71,7 @@ query <- function(
     }
   )
 
-  if (!rlang::is_empty(req$body) & !is.null(body)) {
+  if (!rlang::is_empty(req$body) && !is.null(body)) {
     cli::cli_warn(
       c(
         x = "Internal Error: duplicate body",
@@ -106,7 +106,7 @@ query <- function(
     )
   }
 
-  if (is_testing() == TRUE | debug == TRUE) {
+  if (is_testing() || debug) {
     return(req)
   } else {
     rsp <- gargle::request_make(req)

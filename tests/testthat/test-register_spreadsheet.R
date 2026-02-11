@@ -13,7 +13,7 @@ test_that("create_spreadsheet_env_in_global creates environment with correct par
   create_spreadsheet_env_in_global()
   
   expect_true(exists("google_spreadsheet", envir = .GlobalEnv))
-  expect_true(is.environment(google_spreadsheet))
+  expect_type(google_spreadsheet, "environment")
   expect_identical(parent.env(google_spreadsheet), emptyenv())
   
   cleanup_test_env()

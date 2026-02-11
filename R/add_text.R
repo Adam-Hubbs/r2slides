@@ -115,7 +115,7 @@ add_text <- function(
 
   all_text_style_requests <- NULL
 
-  for (i in 1:length(text_style_request)) {
+  for (i in seq_along(text_style_request)) {
     all_text_style_requests <- c(
       all_text_style_requests,
       list(list(requests = text_style_request[i]))
@@ -233,12 +233,11 @@ add_text_multi <- function(
       # Convert to list if not already
       if (is.list(arg)) {
         return(arg)
-      } else if (inherits(arg, "r2slides::slide_position") | inherits(arg, "r2slides::text_style") | inherits(arg, "r2slides::style_rule") | is.function(arg) | rlang::is_quosure(arg)) {
+      } else if (inherits(arg, "r2slides::slide_position") || inherits(arg, "r2slides::text_style") || inherits(arg, "r2slides::style_rule") || is.function(arg) || rlang::is_quosure(arg)) {
         return(list(arg))
       } else {
         return(as.list(arg))
       }
-      return(as.list(arg))
     }
     return(list(arg))
   }

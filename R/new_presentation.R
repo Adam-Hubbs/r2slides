@@ -431,7 +431,7 @@ presentation <- R6::R6Class(
 
       if (!show_deleted) {
         ldgr <- ldgr |>
-          dplyr::filter(is_deleted == FALSE)
+          dplyr::filter_out(is_deleted)
       }
 
       if (nrow(ldgr) == 0) {

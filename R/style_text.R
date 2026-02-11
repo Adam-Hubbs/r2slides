@@ -25,7 +25,7 @@ validate_color <- function(value) {
   }
   if (length(value) == 3) {
     # Validate each value is length 1 numeric between 0 to 1.0
-    if (any(!is.numeric(value))) {
+    if (!all(is.numeric(value))) {
       "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
     }
     if (any(value < 0 | value > 1)) {
@@ -351,7 +351,7 @@ style_rule <- S7::new_class(
           #mismatch between number of selectors and number of styles
           TRUE
         } else {
-          if(self@num_selectors == 1 & rlang::quo_get_expr(self@selector[[1]]) == TRUE) {
+          if(self@num_selectors == 1 && rlang::quo_get_expr(self@selector[[1]])) {
             # If there is only one selector and it is TRUE (the default)
             TRUE
           } else {
@@ -490,7 +490,7 @@ create_styling_request <- function(
     )
 
     if (is.logical(f_output)) {
-      if (f_output == TRUE) {
+      if (f_output) {
         selection_index <- c(1, nchar(text))
       } else {
         selection_index <- NULL
