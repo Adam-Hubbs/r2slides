@@ -28,34 +28,31 @@ add_linked_chart <- function(
 
   #TODO Add validation for chart_obj and slide_obj
 
-  left <- position@left_emu
-  top <- position@top_emu
-  width <- position@width_emu
-  height <- position@height_emu
-
   # Define the request to add a linked chart
   add_linked_chart_request <- list(
     requests = list(
       list(
         createSheetsChart = list(
           elementProperties = list(
-            pageObjectId = slide_obj$slide_id,
+            pageObjectId = slide_obj@slide_id,
             size = list(
               width = list(
-                magnitude = width,
-                unit = "PT"
+                magnitude = position@width_emu,
+                unit = "EMU"
               ),
               height = list(
-                magnitude = height,
-                unit = "PT"
+                magnitude = position@height_emu,
+                unit = "EMU"
               )
             ),
             transform = list(
-              scaleX = 1.0,
-              scaleY = 1.0,
-              translateX = left,
-              translateY = top,
-              unit = "PT"
+              scaleX = position@scaleX,
+              scaleY = position@scaleY,
+              shearX = position@shearX,
+              shearY = position@shearY,
+              translateX = position@left_emu,
+              translateY = position@top_emu,
+              unit = "EMU"
             )
           ),
           spreadsheetId = chart_obj$spreadsheet_id,
@@ -69,7 +66,7 @@ add_linked_chart <- function(
   # Make the API request
   query(
     endpoint = 'slides.presentations.batchUpdate',
-    params = list(presentationId = slide_obj$presentation_id),
+    params = list(presentationId = slide_obj@presentation$presentation_id),
     body = add_linked_chart_request,
     base = 'slides',
     token = token,

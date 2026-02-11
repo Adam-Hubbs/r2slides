@@ -41,16 +41,11 @@ add_text <- function(
     )
   }
 
-  # Extract position values
-  left <- position@left_emu
-  top <- position@top_emu
-  width <- position@width_emu
-  height <- position@height_emu
 
   # Get current slide_id
-  slide_id <- slide_obj$slide_id
+  slide_id <- slide_obj@slide_id
 
-  params <- list(presentationId = slide_obj$presentation_id)
+  params <- list(presentationId = slide_obj@presentation$presentation_id)
 
   if (is.null(element_id)) {
     element_id <- paste0(
@@ -68,15 +63,23 @@ add_text <- function(
             elementProperties = list(
               pageObjectId = slide_id,
               size = list(
-                width = list(magnitude = width, unit = "PT"),
-                height = list(magnitude = height, unit = "PT")
+                width = list(
+                  magnitude = position@width_emu,
+                  unit = "EMU"
+                ),
+                height = list(
+                  magnitude = position@height_emu,
+                  unit = "EMU"
+                )
               ),
               transform = list(
-                scaleX = 1,
-                scaleY = 1,
-                translateX = left,
-                translateY = top,
-                unit = "PT"
+                scaleX = position@scaleX,
+                scaleY = position@scaleY,
+                shearX = position@shearX,
+                shearY = position@shearY,
+                translateX = position@left_emu,
+                translateY = position@top_emu,
+                unit = "EMU"
               )
             )
           )
@@ -152,9 +155,9 @@ add_text <- function(
   })
 
   # Update the ledger
-  presentation$add_to_ledger(
+  slide_obj@presentation$add_to_ledger(
     element_id = element_id,
-    slide_id = slide_obj$slide_id,
+    slide_id = slide_obj@slide_id,
     element_type = "text",
     element_text = text
   )

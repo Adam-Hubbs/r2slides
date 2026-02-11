@@ -5,9 +5,9 @@
 \alias{text_element}
 \title{Element Object}
 \usage{
-element(presentation, slide, element_id)
+element(presentation = NULL, slide = NULL, element_id = character(0))
 
-text_element(presentation, slide, element_id)
+text_element(presentation = NULL, slide = NULL, element_id = character(0))
 }
 \arguments{
 \item{presentation}{A presentation object}
