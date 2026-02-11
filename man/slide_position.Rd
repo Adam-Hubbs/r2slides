@@ -9,19 +9,22 @@ slide_position(
   left,
   width,
   height,
+  rotation = 0,
   convert_slide_size = FALSE,
   slide_size_old = NULL,
   slide_size = c(5.625, 10)
 )
 }
 \arguments{
-\item{top}{The position in inches from the top of the slide}
+\item{top}{The position in inches from the top of the slide (top-left corner before rotation)}
 
-\item{left}{The position in inches from the left of the slide}
+\item{left}{The position in inches from the left of the slide (top-left corner before rotation)}
 
-\item{width}{The width of the object in inches}
+\item{width}{The width of the object in inches (intrinsic width, before rotation)}
 
-\item{height}{The height of the object in inches}
+\item{height}{The height of the object in inches (intrinsic height, before rotation)}
+
+\item{rotation}{The rotation angle in degrees (default 0). Positive values rotate clockwise around the object's center.}
 
 \item{convert_slide_size}{A logical. Optional. Converts the position and size to Google Slides from a PowerPoint (or custom) size if TRUE.}
 
@@ -31,4 +34,12 @@ slide_position(
 }
 \description{
 A system for working with Google Slides positions and sizes.
+}
+\details{
+When rotation is applied, the object rotates around its center point. The `top`, `left`,
+`width`, and `height` properties describe the object's intrinsic dimensions before rotation.
+The rotation is applied as an affine transformation using the scaleX, scaleY, shearX, and
+shearY computed properties.
+
+To get the axis-aligned bounding box that contains the rotated object, use the `bounding_box()` function.
 }

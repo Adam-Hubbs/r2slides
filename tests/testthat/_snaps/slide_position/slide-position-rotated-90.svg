@@ -37,11 +37,12 @@
 <g clip-path='url(#cpOS45Nnw3MTAuMDR8NjEuMjZ8NTE0Ljc0)'>
 <rect x='47.47' y='125.64' width='625.07' height='351.60' style='stroke-width: 2.13; stroke: #4D4D4D; stroke-linecap: butt; stroke-linejoin: miter; fill: #F2F2F2;' />
 <text transform='translate(369.60,318.51) rotate(-29)' text-anchor='middle' style='font-size: 56.91px; font-weight: bold; fill: #CCCCCC; font-family: sans;' textLength='164.50px' lengthAdjust='spacingAndGlyphs'>SLIDE</text>
-<polygon points='47.47,125.64 172.48,125.64 172.48,250.65 47.47,250.65 ' style='stroke-width: 0.85; stroke: #3B82F6; stroke-linecap: butt; fill: #3B82F6; fill-opacity: 0.19;' />
-<line x1='47.47' y1='125.64' x2='172.48' y2='125.64' style='stroke-width: 3.20; stroke: #3B82F6; stroke-linecap: butt;' />
-<text x='109.97' y='116.07' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>2.00"</text>
-<text transform='translate(184.79,188.15) rotate(-90)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>2.00"</text>
-<text x='47.47' y='84.82' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='112.94px' lengthAdjust='spacingAndGlyphs'>Object 1: Top: 0.00  Left: 0.00</text>
+<polygon points='391.25,219.40 391.25,406.92 266.24,406.92 266.24,219.40 ' style='stroke-width: 0.85; stroke: #3B82F6; stroke-linecap: butt; fill: #3B82F6; fill-opacity: 0.19;' />
+<line x1='391.25' y1='219.40' x2='391.25' y2='406.92' style='stroke-width: 3.20; stroke: #3B82F6; stroke-linecap: butt;' />
+<text transform='translate(259.80,313.16) rotate(-90)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>3.00"</text>
+<text transform='translate(328.75,413.36) rotate(-180)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>2.00"</text>
+<text transform='translate(406.69,313.16) rotate(-90)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='12.91px' lengthAdjust='spacingAndGlyphs'>90°</text>
+<text x='47.47' y='84.82' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='167.13px' lengthAdjust='spacingAndGlyphs'>Object 1: Top: 2.00  Left: 3.00  Rotation: 90°</text>
 <line x1='47.47' y1='122.51' x2='47.47' y2='113.14' style='stroke-width: 1.07; stroke: #666666; stroke-linecap: butt;' />
 <text x='47.47' y='109.33' text-anchor='middle' style='font-size: 7.11px; fill: #4D4D4D; font-family: sans;' textLength='3.96px' lengthAdjust='spacingAndGlyphs'>0</text>
 <line x1='78.72' y1='122.51' x2='78.72' y2='117.51' style='stroke-width: 0.64; stroke: #666666; stroke-linecap: butt;' />

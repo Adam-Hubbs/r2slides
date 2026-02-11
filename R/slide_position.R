@@ -5,13 +5,22 @@ NULL
 #'
 #' A system for working with Google Slides positions and sizes.
 #'
-#' @param top The position in inches from the top of the slide
-#' @param left The position in inches from the left of the slide
-#' @param width The width of the object in inches
-#' @param height The height of the object in inches
+#' @param top The position in inches from the top of the slide (top-left corner before rotation)
+#' @param left The position in inches from the left of the slide (top-left corner before rotation)
+#' @param width The width of the object in inches (intrinsic width, before rotation)
+#' @param height The height of the object in inches (intrinsic height, before rotation)
+#' @param rotation The rotation angle in degrees (default 0). Positive values rotate clockwise around the object's center.
 #' @param convert_slide_size A logical. Optional. Converts the position and size to Google Slides from a PowerPoint (or custom) size if TRUE.
 #' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes.
 #' @param slide_size New Slide size specifications. Optional.
+#'
+#' @details
+#' When rotation is applied, the object rotates around its center point. The `top`, `left`,
+#' `width`, and `height` properties describe the object's intrinsic dimensions before rotation.
+#' The rotation is applied as an affine transformation using the scaleX, scaleY, shearX, and
+#' shearY computed properties.
+#'
+#' To get the axis-aligned bounding box that contains the rotated object, use the `bounding_box()` function.
 #'
 #' @export
 slide_position <- S7::new_class(
@@ -42,6 +51,17 @@ slide_position <- S7::new_class(
       if (value <= 0) return("height must be greater than 0")
     }),
 
+    # Rotation in degrees
+    rotation = S7::new_property(
+      S7::class_double,
+      default = 0,
+      validator = function(value) {
+        if (length(value) != 1) {
+          return("rotation must be a single value")
+        }
+      }
+    ),
+
     # Defaults for slide size
     slide_width = S7::new_property(
       S7::class_double,
@@ -64,24 +84,44 @@ slide_position <- S7::new_class(
       }
     ),
 
-    # Computed properties
+    # Computed properties - represent intrinsic (unrotated) bounds
     top_end = S7::new_property(S7::class_double, getter = function(self) {
       self@top + self@height
     }),
     left_end = S7::new_property(S7::class_double, getter = function(self) {
       self@left + self@width
     }),
-    top_pt = S7::new_property(S7::class_double, getter = function(self) {
-      self@top * 72
+    top_emu = S7::new_property(S7::class_double, getter = function(self) {
+      self@top * 914400
     }),
-    left_pt = S7::new_property(S7::class_double, getter = function(self) {
-      self@left * 72
+    left_emu = S7::new_property(S7::class_double, getter = function(self) {
+      self@left * 914400
     }),
-    width_pt = S7::new_property(S7::class_double, getter = function(self) {
-      self@width * 72
+    width_emu = S7::new_property(S7::class_double, getter = function(self) {
+      self@width * 914400
     }),
-    height_pt = S7::new_property(S7::class_double, getter = function(self) {
-      self@height * 72
+    height_emu = S7::new_property(S7::class_double, getter = function(self) {
+      self@height * 914400
+    }),
+
+    # Affine transform components (computed from rotation)
+    scaleX = S7::new_property(S7::class_double, getter = function(self) {
+      cos(self@rotation * pi / 180)
+    }),
+    scaleY = S7::new_property(S7::class_double, getter = function(self) {
+      cos(self@rotation * pi / 180)
+    }),
+    shearX = S7::new_property(S7::class_double, getter = function(self) {
+      -sin(self@rotation * pi / 180)
+    }),
+    shearY = S7::new_property(S7::class_double, getter = function(self) {
+      sin(self@rotation * pi / 180)
+    }),
+    translateX = S7::new_property(S7::class_double, getter = function(self) {
+      self@left
+    }),
+    translateY = S7::new_property(S7::class_double, getter = function(self) {
+      self@top
     })
   ),
   constructor = function(
@@ -89,6 +129,7 @@ slide_position <- S7::new_class(
     left,
     width,
     height,
+    rotation = 0,
     convert_slide_size = FALSE,
     slide_size_old = NULL,
     slide_size = c(5.625, 10)
@@ -143,6 +184,7 @@ slide_position <- S7::new_class(
         left = left,
         width = width,
         height = height,
+        rotation = rotation,
         slide_height = slide_size[1],
         slide_width = slide_size[2]
       )
@@ -152,12 +194,108 @@ slide_position <- S7::new_class(
         top = top,
         left = left,
         width = width,
-        height = height
+        height = height,
+        rotation = rotation
       )
     }
   }
 )
 
+
+#' Calculate Bounding Box for Slide Position Objects
+#'
+#' Returns the axis-aligned bounding box that contains one or more slide_position objects,
+#' accounting for rotation.
+#'
+#' @param ... One or more slide_position objects
+#'
+#' @return A slide_position object representing the bounding box (with rotation = 0)
+#'
+#' @details
+#' When objects are rotated, their actual occupied space extends beyond their intrinsic
+#' width and height. This function calculates the smallest axis-aligned rectangle that
+#' contains all provided objects, including any rotation.
+#'
+#' All objects must have the same slide_size (slide_width and slide_height).
+#'
+#' @export
+bounding_box <- function(...) {
+  objects <- list(...)
+
+  if (length(objects) == 0) {
+    cli::cli_abort("At least one slide_position object must be provided")
+  }
+
+  # Check all objects are slide_position
+  if (!all(sapply(objects, function(x) S7::S7_inherits(x, slide_position)))) {
+    cli::cli_abort("All arguments must be slide_position objects")
+  }
+
+  # Check all have same slide size
+  first_obj <- objects[[1]]
+  for (i in seq_along(objects)) {
+    obj <- objects[[i]]
+    if (
+      obj@slide_width != first_obj@slide_width ||
+        obj@slide_height != first_obj@slide_height
+    ) {
+      cli::cli_abort(c(
+        x = "All slide_position objects must have the same slide size",
+        i = "Object 1: {first_obj@slide_width} x {first_obj@slide_height}",
+        i = "Object {i}: {obj@slide_width} x {obj@slide_height}"
+      ))
+    }
+  }
+
+  # Calculate bounding box for each object
+  all_corners_x <- c()
+  all_corners_y <- c()
+
+  for (obj in objects) {
+    if (obj@rotation == 0) {
+      # No rotation - just use corners
+      all_corners_x <- c(all_corners_x, obj@left, obj@left_end)
+      all_corners_y <- c(all_corners_y, obj@top, obj@top_end)
+    } else {
+      # Calculate rotated corners
+      cx <- obj@left + obj@width / 2
+      cy <- obj@top + obj@height / 2
+
+      hw <- obj@width / 2
+      hh <- obj@height / 2
+
+      angle_rad <- obj@rotation * pi / 180
+      cos_a <- cos(angle_rad)
+      sin_a <- sin(angle_rad)
+
+      # Four corners (relative to center)
+      corners_x <- c(-hw, hw, hw, -hw)
+      corners_y <- c(-hh, -hh, hh, hh)
+
+      # Apply rotation and translation
+      rotated_x <- corners_x * cos_a - corners_y * sin_a + cx
+      rotated_y <- corners_x * sin_a + corners_y * cos_a + cy
+
+      all_corners_x <- c(all_corners_x, rotated_x)
+      all_corners_y <- c(all_corners_y, rotated_y)
+    }
+  }
+
+  # Find overall bounding box
+  min_x <- min(all_corners_x)
+  max_x <- max(all_corners_x)
+  min_y <- min(all_corners_y)
+  max_y <- max(all_corners_y)
+
+  slide_position(
+    top = min_y,
+    left = min_x,
+    width = max_x - min_x,
+    height = max_y - min_y,
+    rotation = 0,
+    slide_size = c(first_obj@slide_height, first_obj@slide_width)
+  )
+}
 
 # Register print method
 S7::method(print, slide_position) <- function(x, ...) {
@@ -180,216 +318,476 @@ S7::method(print, slide_position) <- function(x, ...) {
       "*" = "Height: {.val {x@height}}"
     )
   )
+
+  # Add rotation info if non-zero
+  if (x@rotation != 0) {
+    cli::cli_text("Rotation: {.val {x@rotation}}°")
+  }
+
   cli::cli_text("Left bounds: {.val {x@left}} -> {.val {x@left_end}}")
   cli::cli_text("Top bounds: {.val {x@top}} -> {.val {x@top_end}}")
+
+  if (x@rotation != 0) {
+    cli::cli_alert_info(
+      "Bounds shown are intrinsic (unrotated). Use {.code bounding_box()} for actual occupied space."
+    )
+  }
+
   cat("\n")
   cli::cli_text("Run {.code plot()} to plot the slide position.")
 
   invisible(x)
 }
 
-
 # Register plot method
 S7::method(plot, slide_position) <- function(
   x,
-  y = NULL,
   ...,
-  slide_size = c(5.625, 10)
+  slide_size = NULL,
+  colors = NULL
 ) {
-  # Extract slide dimensions (height, width)
+  # Check if ggplot2 is installed
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    cli::cli_abort(c(
+      "x" = "Package {.pkg ggplot2} is required to plot slide positions",
+      "i" = "Install it with: {.code install.packages('ggplot2')}"
+    ))
+  }
+
+  # Determine slide size
+  if (is.null(slide_size)) {
+    slide_size <- c(x@slide_height, x@slide_width)
+  }
   slide_height <- slide_size[1]
   slide_width <- slide_size[2]
 
-  # Set up plot margins to accommodate rulers and annotations
-  par(mar = c(2, 2, 2, 2))
+  # Combine all positions from ... argument
+  additional_positions <- list(...)
+  all_positions <- c(list(x), additional_positions)
 
-  # Create the main plot area - flip y-axis so top=0 is at the top
-  plot(
-    0,
-    0,
-    type = "n",
-    xlim = c(-1, slide_width + 1),
-    ylim = c(slide_height + 1, -1), # Flipped y-axis
-    xlab = "",
-    ylab = "",
-    main = "",
-    axes = FALSE,
-    asp = 1
+  # Filter to only slide_position objects
+  all_positions <- Filter(
+    function(obj) S7::S7_inherits(obj, slide_position),
+    all_positions
   )
 
-  # Draw the slide boundary rectangle
-  rect(
-    0,
-    0,
-    slide_width,
-    slide_height,
-    col = "white",
-    border = "black",
-    lwd = 2
-  )
+  if (length(all_positions) == 0) {
+    cli::cli_abort("At least one slide_position object must be provided")
+  }
 
-  # Add "SLIDE" text in background
-    text(
-      slide_width / 2,
-      slide_height / 2,
-      "SLIDE",
-      cex = 6,
-      srt = tan(slide_height / slide_width) * 180 / pi,
-      col = "grey",
-      font = 2, # Bold
-      adj = c(0.5, 0.5)
+  # Default colors
+  if (is.null(colors)) {
+    colors <- c(
+      "#3B82F6",
+      "#10B981",
+      "#F59E0B",
+      "#8B5CF6",
+      "#EC4899",
+      "#06B6D4",
+      "#84CC16",
+      "#F97316"
     )
-  
-  
+  }
 
-  # Draw the position rectangle
-  rect(
-    x@left,
-    x@top,
-    x@left_end,
-    x@top_end,
-    col = "lightblue",
-    border = "darkblue",
-    lwd = 2
-  )
+  # Ensure we have enough colors
+  if (length(all_positions) > length(colors)) {
+    colors <- rep(colors, length.out = length(all_positions))
+  }
 
-  # Add ruler marks on top (x-axis)
-  ruler_ticks <- seq(0, slide_width, by = 0.5)
-  for (tick in ruler_ticks) {
-    lines(c(tick, tick), c(-0.1, -0.2), col = "black")
-    if (tick %% 1 == 0) {
-      # Major ticks at whole numbers
-      lines(c(tick, tick), c(-0.1, -0.3), col = "black", lwd = 2)
-      text(tick, -0.5, tick, cex = 0.7, col = "black")
+  # Create data for rectangles
+  rect_data <- data.frame()
+  edge_data <- data.frame()
+  annotation_data <- data.frame()
+  info_data <- data.frame()
+
+  for (i in seq_along(all_positions)) {
+    pos <- all_positions[[i]]
+    color <- colors[i]
+
+    # Store info for display at top
+    info_data <- rbind(
+      info_data,
+      data.frame(
+        id = i,
+        top = pos@top,
+        left = pos@left,
+        rotation = pos@rotation,
+        color = color
+      )
+    )
+
+    if (pos@rotation == 0) {
+      # Simple rectangle
+      rect_data <- rbind(
+        rect_data,
+        data.frame(
+          id = i,
+          x = c(pos@left, pos@left_end, pos@left_end, pos@left),
+          y = c(pos@top, pos@top, pos@top_end, pos@top_end),
+          color = color,
+          is_rotated = FALSE
+        )
+      )
+
+      # Top edge (highlighted)
+      edge_data <- rbind(
+        edge_data,
+        data.frame(
+          id = i,
+          x = pos@left,
+          xend = pos@left_end,
+          y = pos@top,
+          yend = pos@top,
+          color = color
+        )
+      )
+
+      # Annotation positions (outside the shape)
+      # Width annotation - below the bottom edge
+      annotation_data <- rbind(
+        annotation_data,
+        data.frame(
+          id = i,
+          x = pos@left + pos@width / 2,
+          y = pos@top - 0.2,
+          label = sprintf("%.2f\"", pos@width),
+          angle = 0,
+          type = "width",
+          color = color
+        )
+      )
+
+      # Height annotation - to the right of the right edge
+      annotation_data <- rbind(
+        annotation_data,
+        data.frame(
+          id = i,
+          x = pos@left_end + 0.15,
+          y = pos@top + pos@height / 2,
+          label = sprintf("%.2f\"", pos@height),
+          angle = 90,
+          type = "height",
+          color = color
+        )
+      )
+
+      # Rotation annotation (if needed)
+      if (pos@rotation != 0) {
+        annotation_data <- rbind(
+          annotation_data,
+          data.frame(
+            id = i,
+            x = pos@left + pos@width / 2,
+            y = pos@top_end + 0.15,
+            label = sprintf("%g°", pos@rotation),
+            angle = 0,
+            type = "rotation",
+            color = color
+          )
+        )
+      }
+    } else {
+      # Rotated rectangle - calculate corners
+      cx <- pos@left + pos@width / 2
+      cy <- pos@top + pos@height / 2
+      hw <- pos@width / 2
+      hh <- pos@height / 2
+
+      angle_rad <- pos@rotation * pi / 180
+      cos_a <- cos(angle_rad)
+      sin_a <- sin(angle_rad)
+
+      # Four corners in order: top-left, top-right, bottom-right, bottom-left
+      corners_x <- c(-hw, hw, hw, -hw)
+      corners_y <- c(-hh, -hh, hh, hh)
+
+      # Apply rotation
+      rotated_x <- corners_x * cos_a - corners_y * sin_a + cx
+      rotated_y <- corners_x * sin_a + corners_y * cos_a + cy
+
+      rect_data <- rbind(
+        rect_data,
+        data.frame(
+          id = i,
+          x = rotated_x,
+          y = rotated_y,
+          color = color,
+          is_rotated = TRUE
+        )
+      )
+
+      # Top edge (from top-left to top-right, indices 1 to 2)
+      edge_data <- rbind(
+        edge_data,
+        data.frame(
+          id = i,
+          x = rotated_x[1],
+          xend = rotated_x[2],
+          y = rotated_y[1],
+          yend = rotated_y[2],
+          color = color
+        )
+      )
+
+      # Calculate positions for annotations along rotated axes
+      # Width annotation - below bottom edge
+      bottom_center_x <- mean(c(rotated_x[3], rotated_x[4]))
+      bottom_center_y <- mean(c(rotated_y[3], rotated_y[4]))
+      # Move outward perpendicular to bottom edge
+      perpendicular_x <- -sin_a * 0.15
+      perpendicular_y <- cos_a * 0.15
+
+      annotation_data <- rbind(
+        annotation_data,
+        data.frame(
+          id = i,
+          x = bottom_center_x + perpendicular_x,
+          y = bottom_center_y + perpendicular_y,
+          label = sprintf("%.2f\"", pos@width),
+          angle = pos@rotation,
+          type = "width",
+          color = color
+        )
+      )
+
+      # Height annotation - to the right of right edge
+      right_center_x <- mean(c(rotated_x[2], rotated_x[3]))
+      right_center_y <- mean(c(rotated_y[2], rotated_y[3]))
+      # Move outward perpendicular to right edge
+      perpendicular_x <- cos_a * 0.15
+      perpendicular_y <- sin_a * 0.15
+
+      annotation_data <- rbind(
+        annotation_data,
+        data.frame(
+          id = i,
+          x = right_center_x + perpendicular_x,
+          y = right_center_y + perpendicular_y,
+          label = sprintf("%.2f\"", pos@height),
+          angle = pos@rotation + 90,
+          type = "height",
+          color = color
+        )
+      )
+
+      # Rotation annotation - above top edge
+      top_center_x <- mean(c(rotated_x[1], rotated_x[2]))
+      top_center_y <- mean(c(rotated_y[1], rotated_y[2]))
+      perpendicular_x <- sin_a * 0.2
+      perpendicular_y <- -cos_a * 0.2
+
+      annotation_data <- rbind(
+        annotation_data,
+        data.frame(
+          id = i,
+          x = top_center_x + perpendicular_x,
+          y = top_center_y + perpendicular_y,
+          label = sprintf("%g°", pos@rotation),
+          angle = pos@rotation,
+          type = "rotation",
+          color = color
+        )
+      )
     }
   }
 
-  # Add ruler marks on left (y-axis)
-  ruler_ticks_y <- seq(0, slide_height, by = 0.5)
-  for (tick in ruler_ticks_y) {
-    lines(c(-0.1, -0.2), c(tick, tick), col = "black")
+  # Create the plot
+  p <- ggplot2::ggplot() +
+    # Slide background
+    ggplot2::annotate(
+      "rect",
+      xmin = 0,
+      xmax = slide_width,
+      ymin = 0,
+      ymax = slide_height,
+      fill = "gray95",
+      color = "gray30",
+      linewidth = 1
+    ) +
+    # "SLIDE" text
+    ggplot2::annotate(
+      "text",
+      x = slide_width / 2,
+      y = slide_height / 2,
+      label = "SLIDE",
+      size = 20,
+      color = "gray80",
+      fontface = "bold",
+      angle = atan(slide_height / slide_width) * 180 / pi
+    ) +
+    ggplot2::scale_y_reverse()
+
+  # Add rectangles
+  for (i in seq_along(all_positions)) {
+    pos_data <- rect_data[rect_data$id == i, ]
+    color <- unique(pos_data$color)
+
+    # Add filled polygon 
+    p <- p +
+      ggplot2::geom_polygon(
+        data = pos_data,
+        ggplot2::aes(x = x, y = y),
+        fill = paste0(color, "30"), # 30 = ~19% opacity in hex
+        color = color,
+        linewidth = 0.4
+      )
+  }
+
+  # Add highlighted top edges (thicker)
+  for (i in seq_along(all_positions)) {
+    edge <- edge_data[edge_data$id == i, ]
+    color <- unique(edge$color)
+
+    p <- p +
+      ggplot2::annotate(
+        "segment",
+        x = edge$x,
+        xend = edge$xend,
+        y = edge$y,
+        yend = edge$yend,
+        color = color,
+        linewidth = 1.5,
+        alpha = 1
+      )
+  }
+
+  # Add dimension annotations
+  p <- p +
+    ggplot2::geom_text(
+      data = annotation_data,
+      ggplot2::aes(x = x, y = y, label = label, angle = angle, color = color),
+      size = 3,
+      fontface = "bold",
+      family = "sans",
+      show.legend = FALSE
+    ) +
+    ggplot2::scale_color_identity()
+
+  # Add info labels at the top
+  info_y_start <- -0.7
+  for (i in seq_along(all_positions)) {
+    info <- info_data[i, ]
+    info_text <- sprintf(
+      "Object %d: Top: %.2f  Left: %.2f",
+      i,
+      info$top,
+      info$left
+    )
+    if (info$rotation != 0) {
+      info_text <- sprintf("%s  Rotation: %g°", info_text, info$rotation)
+    }
+
+    p <- p +
+      ggplot2::annotate(
+        "text",
+        x = 0,
+        y = info_y_start - (i - 1) * 0.27,
+        label = info_text,
+        size = 3,
+        color = info$color,
+        fontface = "bold",
+        hjust = 0,
+        family = "sans"
+      )
+  }
+
+  # Add ruler ticks
+  # Top ruler
+  tick_positions <- seq(0, slide_width, by = 0.5)
+  for (tick in tick_positions) {
+    tick_height <- if (tick %% 1 == 0) 0.15 else 0.08
+    p <- p +
+      ggplot2::annotate(
+        "segment",
+        x = tick,
+        xend = tick,
+        y = -0.05,
+        yend = -0.05 - tick_height,
+        color = "gray40",
+        linewidth = if (tick %% 1 == 0) 0.5 else 0.3
+      )
     if (tick %% 1 == 0) {
-      # Major ticks at whole numbers
-      lines(c(-0.1, -0.3), c(tick, tick), col = "black", lwd = 2)
-      text(-0.5, tick, tick, cex = 0.7, col = "black", srt = 90)
+      p <- p +
+        ggplot2::annotate(
+          "text",
+          x = tick,
+          y = -0.3,
+          label = tick,
+          size = 2.5,
+          color = "gray30"
+        )
     }
   }
 
-  # Add dimension annotations - just values, no labels - ALL BLUE
-  # Left position line
-  lines(
-    c(x@left, x@left),
-    c(slide_height + 0.15, slide_height + 0.35),
-    col = "blue",
-    lwd = 1.5
-  )
-  text(
-    x@left,
-    slide_height + 0.6,
-    glue::glue("{x@left}"),
-    cex = 0.8,
-    col = "blue",
-    srt = 90,
-    adj = c(1, 0.5)
-  )
+  # Left ruler
+  tick_positions_y <- seq(0, slide_height, by = 0.5)
+  for (tick in tick_positions_y) {
+    tick_width <- if (tick %% 1 == 0) 0.15 else 0.08
+    p <- p +
+      ggplot2::annotate(
+        "segment",
+        x = -0.05,
+        xend = -0.05 - tick_width,
+        y = tick,
+        yend = tick,
+        color = "gray40",
+        linewidth = if (tick %% 1 == 0) 0.5 else 0.3
+      )
+    if (tick %% 1 == 0) {
+      p <- p +
+        ggplot2::annotate(
+          "text",
+          x = -0.35,
+          y = tick,
+          label = tick,
+          size = 2.5,
+          color = "gray30",
+          angle = 90
+        )
+    }
+  }
 
-  # Left end position line
-  lines(
-    c(x@left_end, x@left_end),
-    c(slide_height + 0.15, slide_height + 0.35),
-    col = "blue",
-    lwd = 1.5
-  )
-  text(
-    x@left_end,
-    slide_height + 0.6,
-    glue::glue("{x@left_end}"),
-    cex = 0.8,
-    col = "blue",
-    srt = 90,
-    adj = c(1, 0.5)
-  )
+  # Styling - adjust y limits to accommodate info at top
+  info_space <- max(1, length(all_positions) * 0.28 + 0.75)
 
-  # Width annotation
-  arrows(
-    x@left,
-    slide_height + 0.25,
-    x@left_end,
-    slide_height + 0.25,
-    code = 3,
-    angle = 20,
-    length = 0.1,
-    col = "blue",
-    lwd = 1.5
-  )
-  text(
-    (x@left + x@left_end) / 2,
-    slide_height + 0.35,
-    glue::glue("{x@width}"),
-    cex = 0.8,
-    col = "blue",
-    adj = c(0.5, 1)
-  )
+  p <- p +
+    ggplot2::coord_fixed(
+      xlim = c(-0.6, slide_width + 0.6),
+      ylim = c(slide_height + 0.6, -info_space), # Extended for info
+      expand = FALSE
+    ) +
+    ggplot2::theme_void() +
+    ggplot2::theme(
+      plot.background = ggplot2::element_rect(fill = "white", color = NA),
+      plot.margin = ggplot2::margin(10, 10, 10, 10)
+    )
 
-  # Top position line - moved further left
-  lines(c(-0.6, -0.8), c(x@top, x@top), col = "blue", lwd = 1.5)
-  text(
-    -0.9, # Moved further left
-    x@top,
-    glue::glue("{x@top}"),
-    cex = 0.8,
-    col = "blue",
-    srt = 0,
-    adj = c(1, 0.5)
-  )
-
-  # Top end position line - moved further left
-  lines(c(-0.6, -0.8), c(x@top_end, x@top_end), col = "blue", lwd = 1.5)
-  text(
-    -0.9, # Moved further left
-    x@top_end,
-    glue::glue("{x@top_end}"),
-    cex = 0.8,
-    col = "blue",
-    srt = 0,
-    adj = c(1, 0.5)
-  )
-
-  # Height annotation - moved further left
-  arrows(
-    -0.7, # Moved further left
-    x@top,
-    -0.7, # Moved further left
-    x@top_end,
-    code = 3,
-    angle = 20,
-    length = 0.1,
-    col = "blue",
-    lwd = 1.5
-  )
-  text(
-    -0.8, # Moved further left
-    (x@top + x@top_end) / 2,
-    glue::glue("{x@height}"),
-    cex = 0.8,
-    col = "blue",
-    srt = 90,
-    adj = c(0.5, 0)
-  )
-
+  print(p)
   invisible(x)
 }
+
+
+
+
+
 
 S7::method(convert, list(slide_position, S7::class_list)) <- function(
   from,
   to
 ) {
-  list(
+  result <- list(
     left = from@left,
     top = from@top,
     width = from@width,
     height = from@height
   )
+
+  # Add rotation if non-zero
+  if (from@rotation != 0) {
+    result$rotation <- from@rotation
+  }
+
+  result
 }
 
 S7::method(`+`, list(slide_position, S7::class_numeric)) <- function(e1, e2) {
@@ -397,32 +795,16 @@ S7::method(`+`, list(slide_position, S7::class_numeric)) <- function(e1, e2) {
     top = e1@top,
     left = e1@left,
     width = e1@width + e2,
-    height = e1@height + e2
-  )
-}
-
-
-S7::method(`+`, list(slide_position, slide_position)) <- function(e1, e2) {
-  # Check for incompatible slide sizes
-  if (e1@slide_width != e2@slide_width || e1@slide_height != e2@slide_height) {
-    cli::cli_abort(c(
-      x = "Cannot add slide position objects",
-      i = "Slide position objects have incompatible slide sizes",
-      i = "Slide size 1: {e1@slide_width} x {e1@slide_height}",
-      i = "Slide size 2: {e2@slide_width} x {e2@slide_height}"
-    ))
-  }
-  slide_position(
-    top = min(e1@top, e2@top),
-    left = min(e1@left, e2@left),
-    width = max(e1@left_end, e2@left_end) - min(e1@left, e2@left),
-    height = max(e1@top_end, e2@top_end) - min(e1@top, e2@top),
+    height = e1@height + e2,
+    rotation = e1@rotation,
     slide_size = c(e1@slide_height, e1@slide_width)
   )
 }
 
-mirror <- new_generic('mirror', 'x', function(x, ...) {
-  S7_dispatch()
+
+
+mirror <- S7::new_generic('mirror', 'x', function(x, ...) {
+  S7::S7_dispatch()
 })
 
 S7::method(mirror, slide_position) <- function(
@@ -437,6 +819,7 @@ S7::method(mirror, slide_position) <- function(
       left = x@slide_width - x@left - x@width,
       width = x@width,
       height = x@height,
+      rotation = -x@rotation, 
       slide_size = c(x@slide_height, x@slide_width)
     )
   } else if (flip_axis == 'Vertical') {
@@ -445,6 +828,7 @@ S7::method(mirror, slide_position) <- function(
       left = x@left,
       width = x@width,
       height = x@height,
+      rotation = -x@rotation, 
       slide_size = c(x@slide_height, x@slide_width)
     )
   }

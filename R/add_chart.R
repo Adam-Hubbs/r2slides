@@ -28,10 +28,10 @@ add_linked_chart <- function(
 
   #TODO Add validation for chart_obj and slide_obj
 
-  left <- position@left_pt
-  top <- position@top_pt
-  width <- position@width_pt
-  height <- position@height_pt
+  left <- position@left_emu
+  top <- position@top_emu
+  width <- position@width_emu
+  height <- position@height_emu
 
   # Define the request to add a linked chart
   add_linked_chart_request <- list(

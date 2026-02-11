@@ -42,10 +42,10 @@ add_text <- function(
   }
 
   # Extract position values
-  left <- position@left_pt
-  top <- position@top_pt
-  width <- position@width_pt
-  height <- position@height_pt
+  left <- position@left_emu
+  top <- position@top_emu
+  width <- position@width_emu
+  height <- position@height_emu
 
   # Get current slide_id
   slide_id <- slide_obj$slide_id
