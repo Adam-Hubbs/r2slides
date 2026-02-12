@@ -41,8 +41,8 @@
 <line x1='306.65' y1='202.66' x2='439.24' y2='335.26' style='stroke-width: 3.20; stroke: #3B82F6; stroke-linecap: butt;' />
 <text transform='translate(279.99,366.06) rotate(-45)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>3.00"</text>
 <text transform='translate(403.75,384.01) rotate(-135)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>2.00"</text>
-<text transform='translate(383.86,262.20) rotate(-45)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='12.91px' lengthAdjust='spacingAndGlyphs'>45°</text>
-<text x='47.47' y='84.82' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='167.13px' lengthAdjust='spacingAndGlyphs'>Object 1: Top: 2.00  Left: 3.00  Rotation: 45°</text>
+<text transform='translate(383.86,262.20) rotate(-45)' text-anchor='middle' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='9.50px' lengthAdjust='spacingAndGlyphs'>45</text>
+<text x='47.47' y='84.82' style='font-size: 8.54px; font-weight: bold; fill: #3B82F6; font-family: sans;' textLength='163.71px' lengthAdjust='spacingAndGlyphs'>Object 1: Top: 2.00  Left: 3.00  Rotation: 45</text>
 <line x1='47.47' y1='122.51' x2='47.47' y2='113.14' style='stroke-width: 1.07; stroke: #666666; stroke-linecap: butt;' />
 <text x='47.47' y='109.33' text-anchor='middle' style='font-size: 7.11px; fill: #4D4D4D; font-family: sans;' textLength='3.96px' lengthAdjust='spacingAndGlyphs'>0</text>
 <line x1='78.72' y1='122.51' x2='78.72' y2='117.51' style='stroke-width: 0.64; stroke: #666666; stroke-linecap: butt;' />

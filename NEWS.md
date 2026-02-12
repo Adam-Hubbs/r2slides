@@ -1,3 +1,7 @@
+# Version 0.0.9055
+* Element Class
+* Increased test coverage from 7% to 30%ish
+
 # Version 0.0.9050
 ## New Classes
 * Presentation R6 class for handeling presentation state

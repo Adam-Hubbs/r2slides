@@ -321,7 +321,7 @@ S7::method(print, slide_position) <- function(x, ...) {
 
   # Add rotation info if non-zero
   if (x@rotation != 0) {
-    cli::cli_text("Rotation: {.val {x@rotation}}°")
+    cli::cli_text("Rotation: {.val {x@rotation}}")
   }
 
   cli::cli_text("Left bounds: {.val {x@left}} -> {.val {x@left_end}}")
@@ -479,7 +479,7 @@ S7::method(plot, slide_position) <- function(
             id = i,
             x = pos@left + pos@width / 2,
             y = pos@top_end + 0.15,
-            label = sprintf("%g°", pos@rotation),
+            label = sprintf("%g", pos@rotation),
             angle = 0,
             type = "rotation",
             color = color
@@ -582,7 +582,7 @@ S7::method(plot, slide_position) <- function(
           id = i,
           x = top_center_x + perpendicular_x,
           y = top_center_y + perpendicular_y,
-          label = sprintf("%g°", pos@rotation),
+          label = sprintf("%g", pos@rotation),
           angle = pos@rotation,
           type = "rotation",
           color = color
@@ -674,7 +674,7 @@ S7::method(plot, slide_position) <- function(
       info$left
     )
     if (info$rotation != 0) {
-      info_text <- sprintf("%s  Rotation: %g°", info_text, info$rotation)
+      info_text <- sprintf("%s  Rotation: %g", info_text, info$rotation)
     }
 
     p <- p +
