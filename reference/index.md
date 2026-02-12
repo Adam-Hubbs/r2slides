@@ -8,6 +8,8 @@
   : Add or update text in a Google Slides presentation
 - [`add_text_multi()`](https://adam-hubbs.github.io/r2slides/reference/add_text_multi.md)
   : Add or update text in a Google Slides presentation
+- [`bounding_box()`](https://adam-hubbs.github.io/r2slides/reference/bounding_box.md)
+  : Calculate Bounding Box for Slide Position Objects
 - [`chart_annotation_1()`](https://adam-hubbs.github.io/r2slides/reference/chart_annotation_1.md)
   : Testing function for how to use
   define_relative_transformation_function
@@ -21,8 +23,13 @@
   : This function takes transformations for top, left, width, and
   height, and returns a function that applies those transformations to a
   slide_position object.
+- [`element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  [`text_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  : Element Object
 - [`get_active_presentation()`](https://adam-hubbs.github.io/r2slides/reference/get_active_presentation.md)
   : Get the currently active presentation
+- [`get_all_elements()`](https://adam-hubbs.github.io/r2slides/reference/get_all_elements.md)
+  : Get all elements in a slide
 - [`get_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/get_chart_id.md)
   : Get chart_id from a Google Sheet
 - [`get_safe_length()`](https://adam-hubbs.github.io/r2slides/reference/get_safe_length.md)

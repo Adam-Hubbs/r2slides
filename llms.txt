@@ -5,9 +5,7 @@ coverage](https://codecov.io/gh/Adam-Hubbs/r2slides/graph/badge.svg)](https://ap
 [![R-CMD-check](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml)
 
 r2slides is a package designed to create and modify google slides
-presentations in R. This website housed the current documentation
-surrounding the functions. This package is currently in DEVELOPMENT and
-syntax will change frequently.
+presentations in R.
 
 # Package index
 
@@ -19,6 +17,8 @@ syntax will change frequently.
   : Add or update text in a Google Slides presentation
 - [`add_text_multi()`](https://adam-hubbs.github.io/r2slides/reference/add_text_multi.md)
   : Add or update text in a Google Slides presentation
+- [`bounding_box()`](https://adam-hubbs.github.io/r2slides/reference/bounding_box.md)
+  : Calculate Bounding Box for Slide Position Objects
 - [`chart_annotation_1()`](https://adam-hubbs.github.io/r2slides/reference/chart_annotation_1.md)
   : Testing function for how to use
   define_relative_transformation_function
@@ -32,8 +32,13 @@ syntax will change frequently.
   : This function takes transformations for top, left, width, and
   height, and returns a function that applies those transformations to a
   slide_position object.
+- [`element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  [`text_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  : Element Object
 - [`get_active_presentation()`](https://adam-hubbs.github.io/r2slides/reference/get_active_presentation.md)
   : Get the currently active presentation
+- [`get_all_elements()`](https://adam-hubbs.github.io/r2slides/reference/get_all_elements.md)
+  : Get all elements in a slide
 - [`get_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/get_chart_id.md)
   : Get chart_id from a Google Sheet
 - [`get_safe_length()`](https://adam-hubbs.github.io/r2slides/reference/get_safe_length.md)
@@ -115,3 +120,9 @@ syntax will change frequently.
 - [`write_gs()`](https://adam-hubbs.github.io/r2slides/reference/write_gs.md)
   : Writes data to a Google Sheet
 
+# Articles
+
+### All vignettes
+
+- [Presentations and
+  Slides](https://adam-hubbs.github.io/r2slides/articles/presentations-and-slides.md):
