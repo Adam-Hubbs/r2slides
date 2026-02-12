@@ -19,9 +19,6 @@ presentations in R.
   : Add or update text in a Google Slides presentation
 - [`bounding_box()`](https://adam-hubbs.github.io/r2slides/reference/bounding_box.md)
   : Calculate Bounding Box for Slide Position Objects
-- [`chart_annotation_1()`](https://adam-hubbs.github.io/r2slides/reference/chart_annotation_1.md)
-  : Testing function for how to use
-  define_relative_transformation_function
 - [`correct_slide_size()`](https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.md)
   : Correct slide sizes
 - [`create_spreadsheet_env_in_global()`](https://adam-hubbs.github.io/r2slides/reference/create_spreadsheet_env_in_global.md)
@@ -43,27 +40,9 @@ presentations in R.
   : Get chart_id from a Google Sheet
 - [`get_safe_length()`](https://adam-hubbs.github.io/r2slides/reference/get_safe_length.md)
   : Get the length of an argument
-- [`in_bottom_left()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_left.md)
-  : Creates a slide_position object with defaults in the bottom left of
-  the slide
-- [`in_bottom_middle()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_middle.md)
-  : Creates a slide_position object with defaults in the bottom middle
-  of the slide
-- [`in_bottom_right()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_right.md)
-  : Creates a slide_position object with defaults in the bottom right of
-  the slide
 - [`in_qualtrics_title()`](https://adam-hubbs.github.io/r2slides/reference/in_qualtrics_title.md)
   : Creates a slide_position object with defaults in the title of the
   slide
-- [`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/in_top_left.md)
-  : Creates a slide_position object with defaults in the top left of the
-  slide
-- [`in_top_middle()`](https://adam-hubbs.github.io/r2slides/reference/in_top_middle.md)
-  : Creates a slide_position object with defaults in the top middle of
-  the slide
-- [`in_top_right()`](https://adam-hubbs.github.io/r2slides/reference/in_top_right.md)
-  : Creates a slide_position object with defaults in the top right of
-  the slide
 - [`is.presentation()`](https://adam-hubbs.github.io/r2slides/reference/is.presentation.md)
   : is.presentation
 - [`is.slide()`](https://adam-hubbs.github.io/r2slides/reference/is.slide.md)
@@ -105,6 +84,14 @@ presentations in R.
   : Relative Position
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
+- [`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
+  [`in_top_middle()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
+  [`in_top_right()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
+  [`in_bottom_left()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
+  [`in_bottom_middle()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
+  [`in_bottom_right()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
+  : Creates a slide_position object with defaults in the top left of the
+  slide
 - [`slide()`](https://adam-hubbs.github.io/r2slides/reference/slide.md)
   : Slide Object
 - [`slide_position()`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)

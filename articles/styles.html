@@ -160,8 +160,6 @@
 </tr>
 </tbody>
 </table>
-<section class="level3"><h3 id="a-simple-example">A Simple Example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
-</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">title_style</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/text_style.html">text_style</a></span><span class="op">(</span></span>
 <span>  font_family <span class="op">=</span> <span class="st">"Roboto"</span>,</span>
@@ -170,7 +168,7 @@
 <span>  text_color  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This defines a reusable style object that can be applied to text in <code><a href="../reference/add_text.html">add_text()</a></code> or <code><a href="../reference/add_text_multi.html">add_text_multi()</a></code>. The main idea is styles are <em>objects</em> that are defined once and reused consistently across slides.</p>
-</section><section class="level3"><h3 id="composing-styles">Composing Styles<a class="anchor" aria-label="anchor" href="#composing-styles"></a>
+<section class="level3"><h3 id="composing-styles">Composing Styles<a class="anchor" aria-label="anchor" href="#composing-styles"></a>
 </h3>
 <p>Text styles can be combined using <code>+</code>. This allows you to define a base style and extend it in controlled ways.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -266,9 +264,10 @@
 <span></span>
 <span><span class="co"># Our styling rule object</span></span>
 <span><span class="va">change_style</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/style_rule.html">style_rule</a></span><span class="op">(</span> </span>
-<span>  when <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> \<span class="op">(</span><span class="op">)</span> <span class="va">stat_sig</span> <span class="op">==</span> <span class="cn">TRUE</span> <span class="op">&amp;</span> <span class="fu">str_detect</span><span class="op">(</span><span class="va">text</span>, <span class="st">'▲'</span><span class="op">)</span>, </span>
-<span>            \<span class="op">(</span><span class="op">)</span> <span class="va">stat_sig</span> <span class="op">==</span> <span class="cn">TRUE</span> <span class="op">&amp;</span> <span class="fu">str_detect</span><span class="op">(</span><span class="va">text</span>, <span class="st">'▼'</span><span class="op">)</span>, </span>
-<span>            \<span class="op">(</span><span class="op">)</span> <span class="va">stat_sig</span> <span class="op">==</span> <span class="cn">FALSE</span> <span class="op">)</span>, </span>
+<span>  when <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> </span>
+<span>    \<span class="op">(</span><span class="op">)</span> <span class="va">stat_sig</span> <span class="op">==</span> <span class="cn">TRUE</span> <span class="op">&amp;</span> <span class="fu">str_detect</span><span class="op">(</span><span class="va">text</span>, <span class="st">'▲'</span><span class="op">)</span>, </span>
+<span>    \<span class="op">(</span><span class="op">)</span> <span class="va">stat_sig</span> <span class="op">==</span> <span class="cn">TRUE</span> <span class="op">&amp;</span> <span class="fu">str_detect</span><span class="op">(</span><span class="va">text</span>, <span class="st">'▼'</span><span class="op">)</span>, </span>
+<span>    \<span class="op">(</span><span class="op">)</span> <span class="va">stat_sig</span> <span class="op">==</span> <span class="cn">FALSE</span> <span class="op">)</span>, </span>
 <span>  what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> </span>
 <span>    <span class="va">change_stat_sig_increase</span>, </span>
 <span>    <span class="va">change_stat_sig_decrease</span>, </span>
@@ -292,7 +291,7 @@
 <p>As you can see, the selection functions have access to both the text and the <code>stat_sig</code> variable that we passed in. This allows us to write complex conditional styling logic that depends on both the content of the text and external data. There is no limit to the amount of additional data you can pass in - they only need to be named. There also is no limit to the complexity or number of selection functions. You can use any R code you want inside them, and they will run in a clean environment that only has access to the text and the variables you pass in.</p>
 </section></section><section class="level2"><h2 id="putting-it-all-together">Putting it all Together<a class="anchor" aria-label="anchor" href="#putting-it-all-together"></a>
 </h2>
-<p>The styling system in r2slides allows you to define formatting rules once and apply them consistently across slides. Selection functions are evaluated in a data-aware environment, can target whole strings or substrings, and can incorporate arbitrary logic.</p>
+<p>The styling system in <code>r2slides</code> allows you to define formatting rules once and apply them consistently across slides. Selection functions are evaluated in a data-aware environment, can target whole strings or substrings, and can incorporate arbitrary logic.</p>
 <p>In practice, this makes it straightforward to:</p>
 <ul>
 <li>Encode statistical meaning visually</li>
@@ -302,10 +301,13 @@
 </ul>
 <p>The pattern remains the same:</p>
 <ul>
-<li>Define styles with text_style()</li>
+<li>Define styles with <code><a href="../reference/text_style.html">text_style()</a></code>
+</li>
 <li>Use <code>+</code> to compose complex styles. This allows you to define simple styles and build complex ones without repeating yourself. For example, you might have a <code>bold</code> style, or a <code>small-text</code> style. This approach will seem familiar to anyone who as used <a href="https://tailwindcss.com/" class="external-link">tailwind CSS</a> before.</li>
-<li>Attach logic with style_rule()</li>
-<li>Pass context explicitly through add_text() or add_text_multi()</li>
+<li>Attach logic with <code><a href="../reference/style_rule.html">style_rule()</a></code>
+</li>
+<li>Pass context explicitly through <code><a href="../reference/add_text.html">add_text()</a></code> or <code><a href="../reference/add_text_multi.html">add_text_multi()</a></code>
+</li>
 </ul></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);

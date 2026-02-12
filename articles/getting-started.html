@@ -79,13 +79,11 @@
 
 
     <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#| label: setup</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Adam-Hubbs/r2slides" class="external-link">r2slides</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Adam-Hubbs/r2slides" class="external-link">r2slides</a></span><span class="op">)</span></span></code></pre></div>
 <p>This article explains how to work with the two most common types of objects in r2slides: <code>presentation</code> and <code>slide</code>.</p>
 <p>The first step in any workflow with r2slides is to create a presentation object. This can be done with the <code><a href="../reference/new_presentation.html">new_presentation()</a></code> or <code><a href="../reference/register_presentation.html">register_presentation()</a></code> functions. <code><a href="../reference/new_presentation.html">new_presentation()</a></code> takes the name of a presentation you want to create anad creates it in your Google Drive. <code><a href="../reference/register_presentation.html">register_presentation()</a></code> takes a presentation ID, URL, name, or 1 row dribble object (see the excellent googledrive package) and registers it for use in r2slides.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#| label: create-presentation</span></span>
-<span><span class="va">presentation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/new_presentation.html">new_presentation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"My Presentation"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">presentation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/new_presentation.html">new_presentation</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"My Presentation"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">presentation2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/register_presentation.html">register_presentation</a></span><span class="op">(</span><span class="st">"Already existing presentation"</span><span class="op">)</span></span></code></pre></div>
 <div>
@@ -98,8 +96,7 @@
 </h3>
 <p>The Presentation class includes several helpful fields and methods. Here are a few that you are most likely to interact with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#| label: presentation-class</span></span>
-<span><span class="va">presentation</span><span class="op">$</span><span class="va">title</span> <span class="co"># Returns the title of the presentation</span></span>
+<code class="sourceCode R"><span><span class="va">presentation</span><span class="op">$</span><span class="va">title</span> <span class="co"># Returns the title of the presentation</span></span>
 <span><span class="va">presentation</span><span class="op">$</span><span class="va">last_refreshed</span> <span class="co"># Returns the last time the presentation was refreshed from Google Drive</span></span>
 <span><span class="va">presentation</span><span class="op">$</span><span class="fu">browse</span><span class="op">(</span><span class="op">)</span> <span class="co"># Opens the presentation in a browser</span></span>
 <span><span class="va">presentation</span><span class="op">$</span><span class="fu">refresh</span><span class="op">(</span><span class="op">)</span> <span class="co"># Refreshes the presentation from Google Drive to sync changes</span></span>
@@ -114,9 +111,8 @@
 <p>Slides are the backbones of r2slides. At its core, a slide object contains a reference to a presentation object and a unique identifier that points to the correct slide.</p>
 <p>There are a variety of slide selection helpers that can be used to create slide objects.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#| label: slide-selection-helpers</span></span>
-<span><span class="fu"><a href="../reference/on_slide_id.html">on_slide_url</a></span><span class="op">(</span><span class="st">"&lt;URL GOES HERE&gt;"</span><span class="op">)</span> <span class="co"># Creates a slide object from a URL</span></span>
-<span><span class="fu">on_sldie_id</span><span class="op">(</span><span class="st">"slide_id"</span><span class="op">)</span> <span class="co"># Creates a slide object from a slide ID</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/on_slide_id.html">on_slide_url</a></span><span class="op">(</span><span class="st">"&lt;URL GOES HERE&gt;"</span><span class="op">)</span> <span class="co"># Creates a slide object from a URL</span></span>
+<span><span class="fu"><a href="../reference/on_slide_id.html">on_slide_id</a></span><span class="op">(</span><span class="st">"slide_id"</span><span class="op">)</span> <span class="co"># Creates a slide object from a slide ID</span></span>
 <span><span class="fu"><a href="../reference/on_slide_id.html">on_slide_number</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># Creates a slide object that references the 2nd slide in a presentation</span></span>
 <span><span class="fu"><a href="../reference/on_slide_id.html">on_slide_after</a></span><span class="op">(</span><span class="va">slide</span><span class="op">)</span> <span class="co"># Creates a slide object that references the slide after the reference slide</span></span>
 <span><span class="fu"><a href="../reference/on_slide_id.html">on_slide_after</a></span><span class="op">(</span><span class="va">slide</span>, offset <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="co"># Creates a slide object that references the slide before the reference slide. Offset in the number of slides after the reference slide.</span></span></code></pre></div>

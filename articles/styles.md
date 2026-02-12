@@ -48,8 +48,6 @@ in points.
 | `baseline_offset` | Numeric  | Vertical offset in points                           |
 | `link`            | String   | URL for hyperlinked text                            |
 
-### A Simple Example
-
 ``` r
 title_style <- text_style(
   font_family = "Roboto",
@@ -216,9 +214,10 @@ change_no_stat_sig <- base_stat_sig_style +
 
 # Our styling rule object
 change_style <- style_rule( 
-  when = c( \() stat_sig == TRUE & str_detect(text, '▲'), 
-            \() stat_sig == TRUE & str_detect(text, '▼'), 
-            \() stat_sig == FALSE ), 
+  when = c( 
+    \() stat_sig == TRUE & str_detect(text, '▲'), 
+    \() stat_sig == TRUE & str_detect(text, '▼'), 
+    \() stat_sig == FALSE ), 
   what = c( 
     change_stat_sig_increase, 
     change_stat_sig_decrease, 
@@ -250,7 +249,7 @@ in.
 
 ## Putting it all Together
 
-The styling system in r2slides allows you to define formatting rules
+The styling system in `r2slides` allows you to define formatting rules
 once and apply them consistently across slides. Selection functions are
 evaluated in a data-aware environment, can target whole strings or
 substrings, and can incorporate arbitrary logic.
@@ -264,14 +263,19 @@ In practice, this makes it straightforward to:
 
 The pattern remains the same:
 
-- Define styles with text_style()
+- Define styles with
+  [`text_style()`](https://adam-hubbs.github.io/r2slides/reference/text_style.md)
 - Use `+` to compose complex styles. This allows you to define simple
   styles and build complex ones without repeating yourself. For example,
   you might have a `bold` style, or a `small-text` style. This approach
   will seem familiar to anyone who as used [tailwind
   CSS](https://tailwindcss.com/) before.
-- Attach logic with style_rule()
-- Pass context explicitly through add_text() or add_text_multi()
+- Attach logic with
+  [`style_rule()`](https://adam-hubbs.github.io/r2slides/reference/style_rule.md)
+- Pass context explicitly through
+  [`add_text()`](https://adam-hubbs.github.io/r2slides/reference/add_text.md)
+  or
+  [`add_text_multi()`](https://adam-hubbs.github.io/r2slides/reference/add_text_multi.md)
 
 ------------------------------------------------------------------------
 

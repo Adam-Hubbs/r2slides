@@ -12,9 +12,7 @@ The core abstraction is a `slide_position` object that captures location
 (top and left coordinates), size (width and height), rotation angle, and
 slide dimensions. All measurements are expressed in inches, which keeps
 the system intuitive and aligned with how designers typically think
-about slide layouts. Rather than relying on hidden layout rules or
-implicit positioning logic, `r2slides` makes every placement decision
-explicit and transformable.
+about slide layouts.
 
 This positioning system is designed around several key principles:
 positions are explicit geometric objects, transformations are functional
@@ -88,14 +86,12 @@ For when you want to understand the un-rotated bounding boxes, the
 function calculates the smallest axis-aligned rectangle that contains
 one or more rotated objects.
 
-## Built-In Layout Helpers
-
 `r2slides` provides a few convenient helpers for common positions.
 Functions like
-[`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/in_top_left.md),
-[`in_top_middle()`](https://adam-hubbs.github.io/r2slides/reference/in_top_middle.md),
+[`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md),
+[`in_top_middle()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md),
 and
-[`in_bottom_right()`](https://adam-hubbs.github.io/r2slides/reference/in_bottom_right.md)
+[`in_bottom_right()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
 return pre-configured `slide_position` objects sized appropriately for
 typical content placement. There is really nothing special about these
 functions or their positioning, they are just some defaults.
