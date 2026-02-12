@@ -5,3 +5,6 @@
 ^pkgdown$
 ^\.github$
 ^LICENSE\.md$
+^vignettes/articles/\.quarto$
+^vignettes/articles/*_files$
+^vignettes/articles$
