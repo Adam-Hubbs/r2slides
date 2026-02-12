@@ -1,0 +1,107 @@
+# Getting Started
+
+``` r
+#| label: setup
+library(r2slides)
+```
+
+This article explains how to work with the two most common types of
+objects in r2slides: `presentation` and `slide`.
+
+The first step in any workflow with r2slides is to create a presentation
+object. This can be done with the
+[`new_presentation()`](https://adam-hubbs.github.io/r2slides/reference/new_presentation.md)
+or
+[`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
+functions.
+[`new_presentation()`](https://adam-hubbs.github.io/r2slides/reference/new_presentation.md)
+takes the name of a presentation you want to create anad creates it in
+your Google Drive.
+[`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
+takes a presentation ID, URL, name, or 1 row dribble object (see the
+excellent googledrive package) and registers it for use in r2slides.
+
+``` r
+#| label: create-presentation
+presentation <- new_presentation(title = "My Presentation")
+
+presentation2 <- register_presentation("Already existing presentation")
+```
+
+> **Note**
+>
+> The first time you run a function that uses r2slides, the
+> authentication flow will start. It should take you to a browser and
+> have you authorize r2slides to access your Google Drive. See
+> `authentication` for more information.
+
+### Presentation Class
+
+The Presentation class includes several helpful fields and methods. Here
+are a few that you are most likely to interact with:
+
+``` r
+#| label: presentation-class
+presentation$title # Returns the title of the presentation
+presentation$last_refreshed # Returns the last time the presentation was refreshed from Google Drive
+presentation$browse() # Opens the presentation in a browser
+presentation$refresh() # Refreshes the presentation from Google Drive to sync changes
+presentaiton$get_url() # Returns the URL of the presentation
+presentation$copy() # Creates a copy of the presentation in Google Drive
+
+print(presentation) # Prints a summary of the presentation
+```
+
+Presentations are pretty unique objects that behave differently than
+most objects you are used to. This is becuase presentation objects are
+R6 objects that use reference semantics. This means that the object is
+*not* copied on modification. In other words, when you move, modify, or
+copy a r2slides::presentation object, the change is reflected everywhere
+that object is bound.
+
+The reference semantics enable some pretty cool behavior. You may have
+noticed in
+[`new_presentation()`](https://adam-hubbs.github.io/r2slides/reference/new_presentation.md)
+and
+[`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
+an argument called `set_active`. When this is TRUE (the default) the
+presentation object is set as the active presentation. This means for
+the most part you don’t have to specify presenation for anything, it
+will automatically grab the presentation object. You can always check if
+a presentation is active by calling `presentation$is_active` or
+`print(presentation)`. Alternatively, you can call
+[`get_active_presentation()`](https://adam-hubbs.github.io/r2slides/reference/get_active_presentation.md)
+to retrieve the current active presentation object.
+
+### Slide Class
+
+Slides are the backbones of r2slides. At its core, a slide object
+contains a reference to a presentation object and a unique identifier
+that points to the correct slide.
+
+There are a variety of slide selection helpers that can be used to
+create slide objects.
+
+``` r
+#| label: slide-selection-helpers
+on_slide_url("<URL GOES HERE>") # Creates a slide object from a URL
+on_sldie_id("slide_id") # Creates a slide object from a slide ID
+on_slide_number(2) # Creates a slide object that references the 2nd slide in a presentation
+on_slide_after(slide) # Creates a slide object that references the slide after the reference slide
+on_slide_after(slide, offset = -1) # Creates a slide object that references the slide before the reference slide. Offset in the number of slides after the reference slide.
+```
+
+While you can pass a presentation object to all of these functions (and
+you should if you are working with multiple presenations in the same R
+session), if you are editing only one presentaiton at a time, you can
+omit the presentation argument and it will default to the active
+presentation.
+
+Slide objects have a couple other goodies that you might find helpful.
+You can use the `==` operator to compare slides. This will return TRUE
+if the two slides are duplicated of each other (that is, every item on
+the slide is exactly equivelent). You can also use the
+[`print()`](https://rdrr.io/r/base/print.html) function to print a
+summary of the slide. In addition, slide objects have a few other fields
+that are only calculated when you access them. These are mainly used
+internally and are not intended for direct use.
