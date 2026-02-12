@@ -1,0 +1,208 @@
+---
+title: "Text Styling and Style Rules"
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+## Overview
+
+Text in slides is rarely just text. It carries emphasis, hierarchy, direction, statistical meaning, and brand identity. In **r2slides**, text styling is built around two composable ideas:
+
+-   A **text style** defines formatting properties.
+-   A **style rule** decides *when* and *where* to apply those styles.
+
+This declarative design provides a powerful and flexable way to control the appearance of text on slides. You describe what text should look like under certain conditions, and `r2slides` handles the implementation when you call `add_text()` or `add_text_multi()`. The approach taken by `r2slides` to seperate visual definitions from the logic of when to apply them makes styling code more maintainable and resusable.
+
+## Text Styles
+
+A text style is created with `text_style()`. It defines text appearance properties but does not apply them until it is passed to `add_text()` or `add_text_multi()`.
+
+Each argument corresponds to a visual property. Colors are currently specified as RGB vectors (values between 0 and 1)[^1]. Font size is in points.
+
+[^1]: Support for other color systems like hex codes, or the default basic colors is coming soon
+
+| Property | Type | Description |
+|------------------------|-------------------|------------------------------|
+| `text_color` | RGB list | Text color as `c(red, green, blue)` with values 0-1 |
+| `bg_color` | RGB list | Background color as `c(red, green, blue)` |
+| `font_size` | Numeric | Font size in points |
+| `font_family` | String | Font family name |
+| `bold` | Logical | Whether text is bold |
+| `italic` | Logical | Whether text is italic |
+| `underline` | Logical | Whether text is underlined |
+| `strikethrough` | Logical | Whether text has strikethrough |
+| `small_caps` | Logical | Whether text uses small capitals |
+| `baseline_offset` | Numeric | Vertical offset in points |
+| `link` | String | URL for hyperlinked text |
+
+### A Simple Example
+
+``` r
+title_style <- text_style(
+  font_family = "Roboto",
+  font_size   = 24,
+  bold        = TRUE,
+  text_color  = c(0, 0, 0)
+)
+```
+
+This defines a reusable style object that can be applied to text in `add_text()` or `add_text_multi()`. The main idea is styles are *objects* that are defined once and reused consistently across slides.
+
+### Composing Styles
+
+Text styles can be combined using `+`. This allows you to define a base style and extend it in controlled ways.
+
+``` r
+base_label <- text_style(
+  font_family = "Roboto",
+  font_size   = 12
+)
+
+bold <- text_style(bold = TRUE)
+
+highlight_label <- base_label +
+  bold +
+  text_style(
+    text_color = c(0.8, 0.2, 0.2)
+  )
+```
+
+The highllight_label style inherits everything from the base_label style, and the bold style. It does not matter if you add already completed styling objects together, or simply specify additional styles with `text_style()`. With the `+` operator, you cannot override styles, only add non-conflicting properties. This encourages a composable approach to styling where you build up styles from smaller pieces.[^2]
+
+[^2]: You can use the override_style() function to override styles. You specify the text_style objects, then the priority argument. Priority can be set to first, or last.
+
+Once you understand `text_style()`, the next question is: how do we apply styles conditionally?
+
+## Style Rules
+
+While text styles define *what* text should look like, style rules define *when* to apply those styles. The `style_rule()` function creates conditional styling logic.
+
+A style rule answers two questions:
+
+1.  Should this style apply?
+
+2.  If so, to which part of the text?
+
+The when argument contains one or more selection functions. The what argument contains the corresponding text styles.
+
+The `when` argument takes a list of functions that return either:
+
+-   `TRUE/FALSE` to apply the style to the entire text
+-   `c(START_INDEX, END_INDEX)` to apply the style to a specific substring
+
+### Conditional Styling to the Whole Text
+
+Let’s begin with a simple example. Suppose we want positive numbers to appear green and negative numbers red.
+
+``` r
+positive_style <- text_style(text_color = c(0.1, 0.6, 0.2))
+negative_style <- text_style(text_color = c(0.8, 0.2, 0.2))
+
+pos_neg_rule <- style_rule(
+  when = c(
+    \() value >= 0,
+    \() value < 0
+  ),
+  what = c(
+    positive_style,
+    negative_style
+  )
+)
+```
+
+Here the selection functions return TRUE or FALSE. When TRUE, the style applies to the entire string.
+
+### Partial Text Styling
+
+Style rules can apply styles to specific parts of text by returning index ranges:
+
+``` r
+estimate_style_rule <- style_rule(
+  when = list(
+    \() str_before(text, '±'),  # Returns c(start, end) indices
+    \() str_after(text, '±', include_boundary = TRUE)
+  ),
+  what = list(
+    text_style(bold = TRUE, font_size = 14),
+    text_style(bold = FALSE, font_size = 10)
+  )
+)
+```
+
+Here we apply different styling objects to different parts of the text. The first selection function finds the substring before "±" and applies a bold, larger font style. The second selection function finds the substring after and including "±" and applies a smaller, non-bold style.
+
+`r2slides` has three built-in string selection helpers that make it easy to target specific parts of text:
+
+-   `str_before()`
+-   `str_after()`
+-   `str_matches()`
+
+These functions return the start and end indices of the substring that matches the condition. You can specify whether to return the boundary character as part of the selection, or not, and choose what behavior to have when the character is not found. You can also write your own custom selection functions to target text in more complex ways.
+
+### Writing Custom Selection Functions
+
+When built-in helpers aren’t sufficient, you can write your own selector. Selection functions run inside a special data mask, so you can customize what values it has access too, and be confident it is not incorrectly picking something up from your global environment. The data mask provides access to `text` (the full text string) and whatever other variables you pass in the ... argument of `add_text()` or `add_text_multi()`.
+
+Let's try a bit more complex example based on the positive/negative example earlier. Suppose we want to style positive and negative numbers differently, but only if they are also statistically significant. We can write a custom selection function that checks if the text is positive or nagative and whether or not the result is significant:
+
+``` r
+# Base style
+base_stat_sig_style <- text_style(font_size = 4, font_family = 'Roboto', bold = TRUE)
+
+# Style for stat sig increase
+change_stat_sig_increase <- base_stat_sig_style + 
+  text_style(text_color = c(0.29, 0.53, 0.91))
+
+# Style for stat sig decrease
+change_stat_sig_decrease <- base_stat_sig_style + 
+  text_style(text_color = c(0.902, 0.569, 0.220))
+
+# Style for no statistical significance
+change_no_stat_sig <- base_stat_sig_style + 
+  text_style(text_color = c(0, 0, 0)) 
+
+# Our styling rule object
+change_style <- style_rule( 
+  when = c( \() stat_sig == TRUE & str_detect(text, '▲'), 
+            \() stat_sig == TRUE & str_detect(text, '▼'), 
+            \() stat_sig == FALSE ), 
+  what = c( 
+    change_stat_sig_increase, 
+    change_stat_sig_decrease, 
+    change_no_stat_sig))
+
+
+add_text(slide_obj = on_slide_number(2),
+         text = "▲5.4%", # Text to style
+         position = slide_position_3, # Where to put it
+         text_style = change_style, # How to style it
+         stat_sig = TRUE) # Any additional data we want our selection functions to have access to
+```
+
+This rule will:
+
+-   Apply **[blue]{style="color: rgb(74, 135, 232);"}** to text when ▲ is found and `stat_sig` is `TRUE`
+-   Apply **[orange]{style="color: rgb(230, 145, 56);"}** to text when ▼ is found and `stat_sig` is `TRUE`
+-   Apply **black** to text when `stat_sig` is `FALSE`
+
+As you can see, the selection functions have access to both the text and the `stat_sig` variable that we passed in. This allows us to write complex conditional styling logic that depends on both the content of the text and external data. There is no limit to the amount of additional data you can pass in - they only need to be named. There also is no limit to the complexity or number of selection functions. You can use any R code you want inside them, and they will run in a clean environment that only has access to the text and the variables you pass in.
+
+## Putting it all Together
+
+The styling system in r2slides allows you to define formatting rules once and apply them consistently across slides. Selection functions are evaluated in a data-aware environment, can target whole strings or substrings, and can incorporate arbitrary logic.
+
+In practice, this makes it straightforward to:
+
+- Encode statistical meaning visually
+- Highlight structured labels
+- Apply brand-consistent typography
+- Build reusable formatting libraries
+
+The pattern remains the same:
+
+- Define styles with text_style()
+- Use `+` to compose complex styles. This allows you to define simple styles and build complex ones without repeating yourself. For example, you might have a `bold` style, or a `small-text` style. This approach will seem familiar to anyone who as used [tailwind CSS](https://tailwindcss.com/) before.
+- Attach logic with style_rule()
+- Pass context explicitly through add_text() or add_text_multi()
