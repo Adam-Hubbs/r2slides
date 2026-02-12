@@ -2,9 +2,44 @@
 % Please edit documentation in R/slide_position.R
 \name{in_top_left}
 \alias{in_top_left}
+\alias{in_top_middle}
+\alias{in_top_right}
+\alias{in_bottom_left}
+\alias{in_bottom_middle}
+\alias{in_bottom_right}
 \title{Creates a slide_position object with defaults in the top left of the slide}
 \usage{
 in_top_left(
+  convert_slide_size = FALSE,
+  slide_size_old = NULL,
+  slide_size = c(5.625, 10)
+)
+
+in_top_middle(
+  convert_slide_size = FALSE,
+  slide_size_old = NULL,
+  slide_size = c(5.625, 10)
+)
+
+in_top_right(
+  convert_slide_size = FALSE,
+  slide_size_old = NULL,
+  slide_size = c(5.625, 10)
+)
+
+in_bottom_left(
+  convert_slide_size = FALSE,
+  slide_size_old = NULL,
+  slide_size = c(5.625, 10)
+)
+
+in_bottom_middle(
+  convert_slide_size = FALSE,
+  slide_size_old = NULL,
+  slide_size = c(5.625, 10)
+)
+
+in_bottom_right(
   convert_slide_size = FALSE,
   slide_size_old = NULL,
   slide_size = c(5.625, 10)

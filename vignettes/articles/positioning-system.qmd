@@ -16,7 +16,7 @@ library(r2slides)
 
 When building presentations programmatically, you need a robust system for controlling where objects appear on slides. The `r2slides` package provides exactly that through its positioning system, which treats every visual element—whether text, charts, or shapes—as a geometric object with explicit coordinates and dimensions.
 
-The core abstraction is a `slide_position` object that captures location (top and left coordinates), size (width and height), rotation angle, and slide dimensions. All measurements are expressed in inches, which keeps the system intuitive and aligned with how designers typically think about slide layouts. Rather than relying on hidden layout rules or implicit positioning logic, `r2slides` makes every placement decision explicit and transformable.
+The core abstraction is a `slide_position` object that captures location (top and left coordinates), size (width and height), rotation angle, and slide dimensions. All measurements are expressed in inches, which keeps the system intuitive and aligned with how designers typically think about slide layouts.
 
 This positioning system is designed around several key principles: positions are explicit geometric objects, transformations are functional and composable, and layout logic can be abstracted and reused. Instead of scattering numeric coordinates throughout your slide-building code, you define positions once and reuse or transform them declaratively, enabling scalable slide generation across many datasets and presentations.
 
@@ -60,8 +60,6 @@ rotated <- slide_position(
 ```
 
 This distinction between intrinsic dimensions and rotated footprint becomes important in advanced layouts. The positioning system handles rotation correctly through computed affine transform components (scaleX, scaleY, shearX, shearY), ensuring that rotated objects render properly. For when you want to understand the un-rotated bounding boxes, the `bounding_box()` function calculates the smallest axis-aligned rectangle that contains one or more rotated objects.
-
-## Built-In Layout Helpers
 
 `r2slides` provides a few convenient helpers for common positions. Functions like `in_top_left()`, `in_top_middle()`, and `in_bottom_right()` return pre-configured `slide_position` objects sized appropriately for typical content placement. There is really nothing special about these functions or their positioning, they are just some defaults.
 

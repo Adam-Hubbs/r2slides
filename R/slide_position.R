@@ -840,6 +840,7 @@ S7::method(mirror, slide_position) <- function(
 #' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
 #' @param slide_size New Slide size specifications. Optional.
 #'
+#' @rdname slide-position-helpers
 #' @export
 in_top_left <- function(
   convert_slide_size = FALSE,
@@ -858,11 +859,7 @@ in_top_left <- function(
 }
 
 
-#' Creates a slide_position object with defaults in the top middle of the slide
-#' @param convert_slide_size A logical. Optional.
-#' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
-#' @param slide_size New Slide size specifications. Optional.
-#'
+#' @rdname slide-position-helpers
 #' @export
 in_top_middle <- function(
   convert_slide_size = FALSE,
@@ -881,11 +878,7 @@ in_top_middle <- function(
 }
 
 
-#' Creates a slide_position object with defaults in the top right of the slide
-#' @param convert_slide_size A logical. Optional.
-#' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
-#' @param slide_size New Slide size specifications. Optional.
-#'
+#' @rdname slide-position-helpers
 #' @export
 in_top_right <- function(
   convert_slide_size = FALSE,
@@ -903,11 +896,7 @@ in_top_right <- function(
   )
 }
 
-#' Creates a slide_position object with defaults in the bottom left of the slide
-#' @param convert_slide_size A logical. Optional.
-#' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
-#' @param slide_size New Slide size specifications. Optional.
-#'
+#' @rdname slide-position-helpers
 #' @export
 in_bottom_left <- function(
   convert_slide_size = FALSE,
@@ -926,11 +915,7 @@ in_bottom_left <- function(
 }
 
 
-#' Creates a slide_position object with defaults in the bottom middle of the slide
-#' @param convert_slide_size A logical. Optional.
-#' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
-#' @param slide_size New Slide size specifications. Optional.
-#'
+#' @rdname slide-position-helpers
 #' @export
 in_bottom_middle <- function(
   convert_slide_size = FALSE,
@@ -949,11 +934,7 @@ in_bottom_middle <- function(
 }
 
 
-#' Creates a slide_position object with defaults in the bottom right of the slide
-#' @param convert_slide_size A logical. Optional.
-#' @param slide_size_old Old Slide size specifications. Optional. Used for conversion between powerpoint and google slides sizes
-#' @param slide_size New Slide size specifications. Optional.
-#'
+#' @rdname slide-position-helpers
 #' @export
 in_bottom_right <- function(
   convert_slide_size = FALSE,
@@ -1129,27 +1110,6 @@ define_relative_transformation_function <- function(
     )
   }
 }
-
-
-#' Testing function for how to use define_relative_transformation_function
-#'
-#' @param position An object of class `r2slides::slide_position`
-#'
-#' @returns An object of class `r2slides::slide_position`
-#'
-#' @examples
-#' \dontrun{
-#' data |>
-#'   write_gs("Sheet Name") |>
-#'   add_linked_chart(on_slide_url("URL Of Slide"), in_top_left()) |>
-#'   add_text("Title", in_top_left() |> chart_annotation_1())
-#' }
-#' @export
-chart_annotation_1 <- define_relative_transformation_function(
-  top_transformation = \(x) x - 0.5,
-  width_transformation = 0.5,
-  height_transformation = 0.25
-)
 
 
 #' Correct slide sizes
