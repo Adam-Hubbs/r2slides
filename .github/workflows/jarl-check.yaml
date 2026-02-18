@@ -23,7 +23,7 @@ jobs:
         with: 
           args: "--version"
           
-      - run: jarl check --fix --output-format github
+      - run: jarl check . --fix --output-format github
 
       - name: Suggest
         uses: reviewdog/action-suggester@v1
