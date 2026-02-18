@@ -97,6 +97,11 @@ if (nrow(r) > 1) {
   }
 }
   
+  
+  
+  
+  
+  
 # Check if the environment already exists in global when local is FALSE
 if (local == FALSE) {
   # Check if the environment already exists and ask to override
