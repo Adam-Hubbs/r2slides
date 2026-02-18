@@ -1,9 +1,7 @@
 # Workflow derived from https://github.com/posit-dev/setup-air/tree/main/examples
 
 on:
-  push:
-    branches: [main]
-  pull_request:
+  pull_request_target:
 
 name: jarl-check
 
@@ -13,6 +11,20 @@ jobs:
   jarl-check:
     name: jarl-check
     runs-on: ubuntu-latest
+
+    permissions:
+      # Required to push suggestion comments to the PR
+      pull-requests: write
+      
     steps:
       - uses: actions/checkout@v4
       - uses: etiennebacher/setup-jarl@v0.1.0
+      - run: jarl check --fix
+
+      - name: Suggest
+        uses: reviewdog/action-suggester@v1
+        with:
+          level: error
+          fail_level: error
+          tool_name: jarl
+          github-token: ${{ secrets.GITHUB_TOKEN }}
