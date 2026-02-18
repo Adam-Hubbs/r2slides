@@ -15,6 +15,13 @@ write_gs <- function(data, sheet) {
     )
   }
 
+  if(data == TRUE) {
+    # This will never run
+  }
+
+  list(list(list(a = 1, b = 2,
+  c = 3)))
+
   ss <- get("ss", envir = .GlobalEnv)
 
   # Get current sheet metadata
