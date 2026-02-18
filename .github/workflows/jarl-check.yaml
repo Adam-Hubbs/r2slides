@@ -15,11 +15,11 @@ jobs:
     permissions:
       # Required to push suggestion comments to the PR
       pull-requests: write
-      
+
     steps:
       - uses: actions/checkout@v4
       - uses: etiennebacher/setup-jarl@v0.1.0
-      - run: jarl check --fix
+      - run: jarl check --fix --output-format github
 
       - name: Suggest
         uses: reviewdog/action-suggester@v1
