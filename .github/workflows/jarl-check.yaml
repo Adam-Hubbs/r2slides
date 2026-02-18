@@ -21,8 +21,9 @@ jobs:
       - name: jarl-format
         uses: etiennebacher/setup-jarl@v0.1.0
         with: 
-          args: "--fix"
-          output-format: github
+          args: "--version"
+          
+      - run: jarl check --fix --output-format github
 
       - name: Suggest
         uses: reviewdog/action-suggester@v1
