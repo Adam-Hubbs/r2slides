@@ -96,7 +96,6 @@ if (nrow(r) > 1) {
     id <- r$id
   }
 }
-
   
 # Check if the environment already exists in global when local is FALSE
 if (local == FALSE) {
