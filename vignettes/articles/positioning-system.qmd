@@ -43,7 +43,7 @@ When you need to visualize what a position looks like during development, `slide
 plot(pos)
 ```
 
-This visual feedback can be faster than actually putting elements in the location on a slide.
+This visual feedback can be faster than actually putting elements in the location on a slide. The thicker line indicates which side is considered the 'top' of the position, which becomes important when you start applying rotations.
 
 ## Understanding Rotation
 
