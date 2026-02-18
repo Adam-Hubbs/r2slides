@@ -58,7 +58,9 @@ plot(pos)
 ![](positioning-system_files/figure-html/unnamed-chunk-3-1.png)
 
 This visual feedback can be faster than actually putting elements in the
-location on a slide.
+location on a slide. The thicker line indicates which side is considered
+the ‘top’ of the position, which becomes important when you start
+applying rotations.
 
 ## Understanding Rotation
 
