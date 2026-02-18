@@ -14,7 +14,7 @@
 #' @export
 new_slide <- function(
     presentation = get_active_presentation(),
-    layout = "BLANK",
+         layout = "BLANK",
     verbose = TRUE,
     master = NULL,
     ...
@@ -40,6 +40,7 @@ new_slide <- function(
             predefinedLayout = layout
           )
         )
+
       )
     )
   )
