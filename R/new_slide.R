@@ -40,7 +40,6 @@ new_slide <- function(
             predefinedLayout = layout
           )
         )
-
       )
     )
   )
