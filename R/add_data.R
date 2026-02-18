@@ -15,7 +15,7 @@ write_gs <- function(data, sheet) {
     )
   }
 
-  if(data == TRUE) {
+  if (data == TRUE) {
     # This will never run
   }
 
