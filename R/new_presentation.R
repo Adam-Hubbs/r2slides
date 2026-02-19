@@ -6,7 +6,6 @@ NULL
 
 #' Create a new Google Slides presentation
 #'
-#' @param id Optional. A single string. The Google Slides presentation ID.
 #' @param title Optional. A single string. The title of the presentation.
 #' @param set_active Optional. A logical value indicating whether to set the presentation as the active presentation.
 #'
@@ -14,11 +13,10 @@ NULL
 #'
 #' @export
 new_presentation <- function(
-  id = NULL,
   title = 'Untitled Presentation',
   set_active = TRUE
 ) {
-  presentation$new(id = id, title = title, set_active = TRUE)
+  presentation$new(title = title, set_active = TRUE)
 }
 
 
@@ -31,17 +29,15 @@ new_presentation <- function(
 #' the function presents you with a dribble (see the `googledrive` package) and ask which one you want.
 #'
 #' @param id Optional. A single string. The Google Slides presentation ID.
-#' @param title Optional. A single string. The title of the presentation.
 #' @param set_active Optional. A logical value indicating whether to set the presentation as the active presentation.
 #'
 #' @returns A Presentation object
 #' @export
 register_presentation <- function(
   id = NULL,
-  title = 'Untitled Presentation',
   set_active = TRUE
 ) {
-  presentation$new(id = id, title = title, set_active = TRUE)
+  presentation$new(id = id, set_active = TRUE)
 }
 
 #' R6 Class for Google Slides Presentations

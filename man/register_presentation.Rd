@@ -4,16 +4,10 @@
 \alias{register_presentation}
 \title{Register a Google Slides presentation}
 \usage{
-register_presentation(
-  id = NULL,
-  title = "Untitled Presentation",
-  set_active = TRUE
-)
+register_presentation(id = NULL, set_active = TRUE)
 }
 \arguments{
 \item{id}{Optional. A single string. The Google Slides presentation ID.}
-
-\item{title}{Optional. A single string. The title of the presentation.}
 
 \item{set_active}{Optional. A logical value indicating whether to set the presentation as the active presentation.}
 }
