@@ -155,7 +155,7 @@ get_chart_id <- function(
   response <- query(
     endpoint = 'sheets.spreadsheets.get',
     params = list(
-      spreadsheetId = spreadsheet_obj$spreadsheet_id,
+      spreadsheetId = spreadsheet_obj$gs4_sheet,
       includeGridData = FALSE
     ),
     base = 'sheets',
@@ -201,7 +201,7 @@ get_chart_id <- function(
     )
   } else {
     return(new_chart_id(
-      gs4_sheet = spreadsheet_obj$spreadsheet_id,
+      gs4_sheet = spreadsheet_obj$gs4_sheet,
       sheet_id = spreadsheet_obj$sheet_id,
       chart_id = matching_sheet[[1]]$charts[[1]]$chartId
     ))

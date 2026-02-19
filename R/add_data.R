@@ -59,6 +59,7 @@ write_gs <- function(data, sheet) {
   sheet_id <- ss_metadata_updated$sheets$id[
     ss_metadata_updated$sheets$name == sheet
   ]
+  sheet_id <- as.character(sheet_id)
 
   # Extract spreadsheet ID from ss object
   ss_id <- ss_metadata_updated$spreadsheet_id
