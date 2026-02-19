@@ -5,14 +5,10 @@ Create a new Google Slides presentation
 ## Usage
 
 ``` r
-new_presentation(id = NULL, title = "Untitled Presentation", set_active = TRUE)
+new_presentation(title = "Untitled Presentation", set_active = TRUE)
 ```
 
 ## Arguments
-
-- id:
-
-  Optional. A single string. The Google Slides presentation ID.
 
 - title:
 

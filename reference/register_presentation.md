@@ -10,11 +10,7 @@ package) and ask which one you want.
 ## Usage
 
 ``` r
-register_presentation(
-  id = NULL,
-  title = "Untitled Presentation",
-  set_active = TRUE
-)
+register_presentation(id = NULL, set_active = TRUE)
 ```
 
 ## Arguments
@@ -22,10 +18,6 @@ register_presentation(
 - id:
 
   Optional. A single string. The Google Slides presentation ID.
-
-- title:
-
-  Optional. A single string. The title of the presentation.
 
 - set_active:
 
