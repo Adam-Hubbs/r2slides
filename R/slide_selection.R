@@ -126,6 +126,7 @@ on_slide_url <- function(url, ps) {
         c("x" = "Active presentation ({.val {ps$presentation_id}}) is not the same presentation as ({.val {url}})",
         "i" = "Get the active presentation with {.code get_active_presentation()}")
       )
+      flush.console()
       confirmation <- readline(
         "Would you like to override the active presentation with the presentation that matches this presentation? (y/n): "
       )
@@ -260,19 +261,22 @@ resolve_slide_id <- function(id, presentation_id) {
   # Check if it's a URL
   if (grepl("^https://docs\\.google\\.com/presentation", id)) {
     # Pattern for slide URLs: .../d/{presentationId}/edit#slide=id.{slideId}
-    slide_pattern <- "https://docs\\.google\\.com/presentation/d/([a-zA-Z0-9_-]+)/edit#slide=id\\.([a-zA-Z0-9_-]+)"
+    slide_pattern <- "#slide=id\\.([a-zA-Z0-9_-]+)"
     matches <- regmatches(id, regexec(slide_pattern, id))[[1]]
 
-    if (length(matches) < 3 || is.na(matches[3])) {
+    print("Here are matches")
+    print(matches)
+    
+    if (length(matches) < 2 || is.na(matches[2])) {
       cli::cli_abort("Could not extract slide ID from URL")
     }
 
     # Verify the presentation ID matches
-    if (matches[2] != presentation_id) {
-      cli::cli_abort("Slide URL belongs to a different presentation")
-    }
+    # if (matches[2] != presentation_id) {
+    #   cli::cli_abort("Slide URL belongs to a different presentation")
+    # }
 
-    id <- matches[3]
+    id <- matches[2]
   }
 
   # Check if it looks like a slide ID (alphanumeric with hyphens/underscores)
