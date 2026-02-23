@@ -88,7 +88,12 @@ query <- function(
   # Special handeling for "GET" methods until this github issue is fixed: https://github.com/r-lib/gargle/issues/292
   if (req$method == 'GET') {
     req <- gargle::request_build(
-      path = add_path_params(req, "presentationId", "pageObjectId"),
+      path = add_path_params(
+        req,
+        "presentationId",
+        "pageObjectId",
+        "spreadsheetId"
+      ),
       method = req$method,
       params = NULL,
       body = body,
