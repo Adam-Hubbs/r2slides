@@ -99,8 +99,8 @@ S7::method(print, slide) <- function(x, ...) {
 #' @rdname on_slide_id
 #' @export
 on_slide_id <- function(id, ps) {
-  if (rlang::is_missing(ps)) { 
-      ps <- get_active_presentation()
+  if (rlang::is_missing(ps)) {
+    ps <- get_active_presentation()
   }
 
   if (length(id) > 1 || is.null(id) || is.na(id)) {
@@ -114,10 +114,33 @@ on_slide_id <- function(id, ps) {
 #' @rdname on_slide_id
 #' @export
 on_slide_url <- function(url, ps) {
-  if (rlang::is_missing(ps)) { 
-      pres_id <- resolve_presentation_id(url)
+  if (rlang::is_missing(ps)) {
+    pres_id <- resolve_presentation_id(url)
   } else {
-      pres_id <- ps$presentation_id
+    pres_id <- ps$presentation_id
+  }
+  if (active_presentation_exists()) {
+    ps <- get_active_presentation()
+    if (ps$presentation_id != pres_id) {
+      cli::cli_warn(
+        c("x" = "Active presentation ({.val {ps$presentation_id}}) is not the same presentation as ({.val {url}})",
+        "i" = "Get the active presentation with {.code get_active_presentation()}")
+      )
+      confirmation <- readline(
+        "Would you like to override the active presentation with the presentation that matches this presentation? (y/n): "
+      )
+      if (tolower(confirmation) != "y") {
+        cli::cli_alert_info(
+          "Did not override the active presentation."
+        )
+      } else {
+        register_presentation(pres_id)
+        ps <- get_active_presentation()
+      }
+    }
+  } else {
+    register_presentation(pres_id)
+    ps <- get_active_presentation()
   }
   ps$get_slide_by_id(slide_id = resolve_slide_id(url, pres_id))
 }
@@ -128,10 +151,10 @@ on_slide_url <- function(url, ps) {
 #' @rdname on_slide_id
 #' @export
 on_slide_number <- function(n, ps) {
-  if (rlang::is_missing(ps)) { 
-      ps <- get_active_presentation()
+  if (rlang::is_missing(ps)) {
+    ps <- get_active_presentation()
   }
-  if(length(n) > 1 || is.null(n) || is.na(n) || !is.numeric(n)) {
+  if (length(n) > 1 || is.null(n) || is.na(n) || !is.numeric(n)) {
     cli::cli_abort("{.arg n} must be a single numeric value")
   }
   ps$get_slide_by_index(index = n)
@@ -143,10 +166,10 @@ on_slide_number <- function(n, ps) {
 #' @rdname on_slide_id
 #' @export
 on_slide_after <- function(slide, offset = 1, ps) {
-  if (rlang::is_missing(ps)) { 
-      ps <- get_active_presentation()
+  if (rlang::is_missing(ps)) {
+    ps <- get_active_presentation()
   }
-  
+
   idx <- ps$get_slide_index(slide) + offset
   ps$get_slide_by_index(idx)
 }
