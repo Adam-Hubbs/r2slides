@@ -264,9 +264,6 @@ resolve_slide_id <- function(id, presentation_id) {
     slide_pattern <- "#slide=id\\.([a-zA-Z0-9_-]+)"
     matches <- regmatches(id, regexec(slide_pattern, id))[[1]]
 
-    print("Here are matches")
-    print(matches)
-    
     if (length(matches) < 2 || is.na(matches[2])) {
       cli::cli_abort("Could not extract slide ID from URL")
     }
