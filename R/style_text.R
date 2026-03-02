@@ -461,7 +461,7 @@ create_styling_request <- function(
         error_msg <- conditionMessage(error)
 
         # Get the selector function expression for the error message
-        selector_expr <- rlang::quo_get_expr(style_rule@selector[[rule]])
+        selector_expr <- rlang::quo_get_expr(style_rule@selector[[rule]])[[3]]
 
         # Check if this is an "object not found" error
         if (grepl("^object '.+' not found$", error_msg)) {
@@ -479,8 +479,7 @@ create_styling_request <- function(
           # For other errors, re-throw with context
           cli::cli_abort(
             c(
-              "x" = "Error evaluating selector function {.code {selector_expr}}.",
-              "i" = error_msg
+              "x" = "Error evaluating selector function {.code {selector_expr}}."
             ),
             parent = error,
             call = call
@@ -490,6 +489,13 @@ create_styling_request <- function(
     )
 
     if (is.logical(f_output)) {
+      if (is.na(f_output)) {
+        cli::cli_warn(
+          c(
+            "i" = "Selector function returned {.code NA}. Not preforming any styling."
+        ))
+        selection_index <- NULL
+      }
       if (f_output) {
         selection_index <- c(1, nchar(text))
       } else {
