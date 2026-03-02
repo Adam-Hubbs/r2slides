@@ -126,7 +126,7 @@ on_slide_url <- function(url, ps) {
         c("x" = "Active presentation ({.val {ps$presentation_id}}) is not the same presentation as ({.val {url}})",
         "i" = "Get the active presentation with {.code get_active_presentation()}")
       )
-      flush.console()
+      utils::flush.console()
       confirmation <- readline(
         "Would you like to override the active presentation with the presentation that matches this presentation? (y/n): "
       )
