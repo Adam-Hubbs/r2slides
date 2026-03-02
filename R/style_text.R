@@ -461,7 +461,7 @@ create_styling_request <- function(
         error_msg <- conditionMessage(error)
 
         # Get the selector function expression for the error message
-        selector_expr <- rlang::quo_get_expr(style_rule@selector[[rule]])[[3]]
+        selector_expr <- rlang::quo_get_expr(style_rule@selector[[rule]])[3]
 
         # Check if this is an "object not found" error
         if (grepl("^object '.+' not found$", error_msg)) {
