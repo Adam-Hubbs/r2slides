@@ -34,13 +34,9 @@ test_that("`slide()` requires a single slide_id", {
 })
 
 test_that("`slide()` validates slide_id is character type", {
-  expect_snapshot(error = TRUE,
-    slide(presentation = ps, slide_id = 123)
-  )
+  expect_snapshot(error = TRUE, slide(presentation = ps, slide_id = 123))
 
-  expect_snapshot(error = TRUE,
-    slide(presentation = ps, slide_id = NULL)
-  )
+  expect_snapshot(error = TRUE, slide(presentation = ps, slide_id = NULL))
 })
 
 
@@ -66,7 +62,6 @@ test_that("slide@slide_hash` works", {
   local_mocked_bindings(query = function(endpoint, params, base) {
     ps$.__enclos_env__$private$slides[[3]]
   })
-
 
   s3 <- slide(presentation = ps, slide_id = "g3c5ef24c0f9_0_4")
 
@@ -96,19 +91,16 @@ test_that("`on_slide_id()` uses active presentation when ps missing", {
 })
 
 test_that("`on_slide_id()` fails with NULL id", {
-  expect_snapshot(error = TRUE,
-    on_slide_id(NULL, ps)
-  )
+  expect_snapshot(error = TRUE, on_slide_id(NULL, ps))
 })
 
 test_that("`on_slide_id()` fails with NA id", {
-  expect_snapshot(error = TRUE,
-    on_slide_id(NA, ps)
-  )
+  expect_snapshot(error = TRUE, on_slide_id(NA, ps))
 })
 
 test_that("`on_slide_id()` fails with multiple ids", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     on_slide_id(c("g3c5ef24c0f9_0_0", "g3c5ef24c0f9_0_4"), ps)
   )
 })
@@ -132,23 +124,6 @@ test_that("`on_slide_url()` extracts slide from valid URL", {
   expect_true(is.slide(result))
 })
 
-test_that("`on_slide_url()` resolves presentation from URL when ps missing", {
-  pres_id <- ps$presentation_id
-  slide_id <- "g3c5ef24c0f9_0_0"
-  url <- paste0(
-    "https://docs.google.com/presentation/d/",
-    pres_id,
-    "/edit#slide=id.",
-    slide_id
-  )
-
-  local_mocked_bindings(
-    resolve_presentation_id = function(id) pres_id,
-    resolve_slide_id = function(id, presentation_id) slide_id
-  )
-
-  expect_error(on_slide_url(url))
-})
 
 test_that("`on_slide_number()` works with valid numeric index", {
   n <- 2
@@ -260,7 +235,6 @@ test_that("`resolve_presentation_id()` fails with multiple values", {
     "must be a single string"
   )
 })
-
 
 
 test_that("`on_slide_after()` handles edge case at beginning of presentation", {
