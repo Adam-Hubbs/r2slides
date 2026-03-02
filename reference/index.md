@@ -10,6 +10,8 @@
   : Add or update text in a Google Slides presentation
 - [`bounding_box()`](https://adam-hubbs.github.io/r2slides/reference/bounding_box.md)
   : Calculate Bounding Box for Slide Position Objects
+- [`combine_style()`](https://adam-hubbs.github.io/r2slides/reference/combine_style.md)
+  : Combine Text Styles
 - [`correct_slide_size()`](https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.md)
   : Correct slide sizes
 - [`create_spreadsheet_env_in_global()`](https://adam-hubbs.github.io/r2slides/reference/create_spreadsheet_env_in_global.md)
