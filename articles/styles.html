@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9061</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9062</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,7 +184,7 @@
 <span>  <span class="fu"><a href="../reference/text_style.html">text_style</a></span><span class="op">(</span></span>
 <span>    text_color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>The highllight_label style inherits everything from the base_label style, and the bold style. It does not matter if you add already completed styling objects together, or simply specify additional styles with <code><a href="../reference/text_style.html">text_style()</a></code>. With the <code>+</code> operator, you cannot override styles, only add non-conflicting properties. This encourages a composable approach to styling where you build up styles from smaller pieces.<a class="footnote-ref" role="doc-noteref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;You can use the override_style() function to override styles. You specify the text_style objects, then the priority argument. Priority can be set to first, or last.&lt;/p&gt;"><sup>2</sup></a></p>
+<p>The highllight_label style inherits everything from the base_label style, and the bold style. It does not matter if you add already completed styling objects together, or simply specify additional styles with <code><a href="../reference/text_style.html">text_style()</a></code>. With the <code>+</code> operator, you cannot override styles, only add non-conflicting properties. This encourages a composable approach to styling where you build up styles from smaller pieces.<a class="footnote-ref" role="doc-noteref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;You can use the combine_style() function to override styles. You specify the text_style objects, then the priority argument. Priority can be set to first, last, or ‘error’ to match the behavior of &lt;code&gt;+&lt;/code&gt;.&lt;/p&gt;"><sup>2</sup></a></p>
 <p>Once you understand <code><a href="../reference/text_style.html">text_style()</a></code>, the next question is: how do we apply styles conditionally?</p>
 </section></section><section class="level2"><h2 id="style-rules">Style Rules<a class="anchor" aria-label="anchor" href="#style-rules"></a>
 </h2>

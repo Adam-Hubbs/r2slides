@@ -282,6 +282,6 @@ The pattern remains the same:
 1.  Support for other color systems like hex codes, or the default basic
     colors is coming soon
 
-2.  You can use the override_style() function to override styles. You
+2.  You can use the combine_style() function to override styles. You
     specify the text_style objects, then the priority argument. Priority
-    can be set to first, or last.
+    can be set to first, last, or ‘error’ to match the behavior of `+`.
