@@ -72,7 +72,7 @@ highlight_label <- base_label +
 
 The highllight_label style inherits everything from the base_label style, and the bold style. It does not matter if you add already completed styling objects together, or simply specify additional styles with `text_style()`. With the `+` operator, you cannot override styles, only add non-conflicting properties. This encourages a composable approach to styling where you build up styles from smaller pieces.[^2]
 
-[^2]: You can use the override_style() function to override styles. You specify the text_style objects, then the priority argument. Priority can be set to first, or last.
+[^2]: You can use the combine_style() function to override styles. You specify the text_style objects, then the priority argument. Priority can be set to first, last, or 'error' to match the behavior of `+`.
 
 Once you understand `text_style()`, the next question is: how do we apply styles conditionally?
 

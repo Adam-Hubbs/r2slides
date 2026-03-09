@@ -110,6 +110,8 @@ presentation <- R6::R6Class(
               "Registration canceled, returning presentation without setting as active."
             )
             return(invisible(self))
+          } else {
+            self$set_active()
           }
         } else {
           self$set_active()
@@ -253,7 +255,7 @@ presentation <- R6::R6Class(
     #' @param slide_id ID of the slide to return
     #' @return A slide object
     get_slide_by_id = function(slide_id) {
-       if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
+      if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
         cli::cli_alert_warning(
           "No slides available. Try calling $refresh() first."
         )
@@ -283,8 +285,7 @@ presentation <- R6::R6Class(
       # Return slide object constructed with presentation reference and slide_id
       slide(presentation = self, slide_id = slide_id)
     },
-      
-      
+
     #' @description
     #' Get the position of a slide in the presentation
     #'
@@ -319,7 +320,8 @@ presentation <- R6::R6Class(
     set_active = function() {
       # Deactivate any currently active presentation
       if (active_presentation_exists()) {
-        if (!identical(get_active_presentation(), self)) {
+        active <- get_active_presentation()
+        if (!identical(active, self)) {
           active$set_not_active()
         }
       }
