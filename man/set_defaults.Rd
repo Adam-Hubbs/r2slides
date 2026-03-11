@@ -11,7 +11,7 @@ set_defaults(
 )
 }
 \arguments{
-\item{args}{A named list of style arguments. If you provide a value, it will not be overrided.}
+\item{args}{A named list of style arguments. If you provide a value, it will not be overridden.}
 
 \item{type}{One of `"title"`, `"commentary"`, or `"footer"`.}
 
@@ -19,7 +19,7 @@ set_defaults(
 }
 \value{
 A list of style arguments with defaults applied based on the `type` and
-`report_style`. User supplied values will propogate.
+`report_style`. User supplied values will propagate.
 }
 \description{
 This function provides a way to set defaults for all sorts of uses within the themes we

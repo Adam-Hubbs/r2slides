@@ -50,7 +50,7 @@ in_to_emu <- function(x) {
 
 
 
-recursivly_replace <- function(x, what, with) {
+recursively_replace <- function(x, what, with) {
   if (length(what) != 1) {
     cli::cli_abort("what must be a single value")
   }

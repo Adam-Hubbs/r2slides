@@ -19,7 +19,7 @@ create_styling_request(
 
 \item{element_id}{A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.}
 
-\item{...}{Data to be avaiable in the data mask where the selector function will be executed. Must be named.}
+\item{...}{Data to be available in the data mask where the selector function will be executed. Must be named.}
 
 \item{call}{Optional. Call environment used in error messages.}
 }

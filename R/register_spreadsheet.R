@@ -99,14 +99,14 @@ if (nrow(r) > 1) {
 
   
 # Check if the environment already exists in global when local is FALSE
-if (local == FALSE) {
+if (!local) {
   # Check if the environment already exists and ask to override
   if (exists("google_spreadsheet", envir = .GlobalEnv)) {
     cli::cli_alert_warning(
       "A spreadsheet is already registered in the global environment."
     )
 
-     # Wrap this around logic on only sucsessful finds (see notes above)
+     # Wrap this around logic on only successful finds (see notes above)
     confirmation <- readline("Do you want to override it? (y/n): ")
     if (tolower(confirmation) != "y") {
       cli::cli_alert_info("Registration canceled.")

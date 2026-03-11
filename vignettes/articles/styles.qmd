@@ -13,7 +13,7 @@ Text in slides is rarely just text. It carries emphasis, hierarchy, direction, s
 -   A **text style** defines formatting properties.
 -   A **style rule** decides *when* and *where* to apply those styles.
 
-This declarative design provides a powerful and flexable way to control the appearance of text on slides. You describe what text should look like under certain conditions, and `r2slides` handles the implementation when you call `add_text()` or `add_text_multi()`. The approach taken by `r2slides` to seperate visual definitions from the logic of when to apply them makes styling code more maintainable and resusable.
+This declarative design provides a powerful and flexable way to control the appearance of text on slides. You describe what text should look like under certain conditions, and `r2slides` handles the implementation when you call `add_text()` or `add_text_multi()`. The approach taken by `r2slides` to separate visual definitions from the logic of when to apply them makes styling code more maintainable and resusable.
 
 ## Text Styles
 
@@ -146,7 +146,7 @@ These functions return the start and end indices of the substring that matches t
 
 When built-in helpers aren’t sufficient, you can write your own selector. Selection functions run inside a special data mask, so you can customize what values it has access too, and be confident it is not incorrectly picking something up from your global environment. The data mask provides access to `text` (the full text string) and whatever other variables you pass in the ... argument of `add_text()` or `add_text_multi()`.
 
-Let's try a bit more complex example based on the positive/negative example earlier. Suppose we want to style positive and negative numbers differently, but only if they are also statistically significant. We can write a custom selection function that checks if the text is positive or nagative and whether or not the result is significant:
+Let's try a bit more complex example based on the positive/negative example earlier. Suppose we want to style positive and negative numbers differently, but only if they are also statistically significant. We can write a custom selection function that checks if the text is positive or negative and whether or not the result is significant:
 
 ``` r
 # Base style

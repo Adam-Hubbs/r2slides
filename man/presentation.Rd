@@ -268,7 +268,7 @@ Get elements from the presentation
 \if{html}{\out{<a id="method-presentation-get_elements"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_elements}{}}}
 \subsection{Method \code{get_elements()}}{
-Filter the elements you ahve constructed to return a list of elements
+Filter the elements you have constructed to return a list of elements
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{presentation$get_elements(
   modified_since = NULL,

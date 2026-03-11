@@ -194,7 +194,7 @@ test_that("query errors on wrong parameters", {
 
   test_params <- list(
     presentationId = "test123",
-    wrong_param = "This test paremeter is not supported by this endpoint"
+    wrong_param = "This test parameter is not supported by this endpoint"
   )
 
   expect_error(

@@ -1,4 +1,4 @@
-### r2slides
+# r2slides
 
 [![Codecov test coverage](https://codecov.io/gh/Adam-Hubbs/r2slides/graph/badge.svg)](https://app.codecov.io/gh/Adam-Hubbs/r2slides) [![R-CMD-check](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml)
 
@@ -8,8 +8,7 @@ To install r2slides, run `pak::pkg_install('Adam-Hubbs/r2slides)`
 
 To get a more in depth understanding of the main systems in r2slides, look at the articles on the website.
 
-
-### Example Workflow
+## Example Workflow
 
 ```r
 chart_data |>

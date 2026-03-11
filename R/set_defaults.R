@@ -5,13 +5,13 @@
 #' established at y2. One can create a new style easily and in one place, and it will update
 #' the defaults across all r2slides functions.
 #'
-#' @param args A named list of style arguments. If you provide a value, it will not be overrided.
+#' @param args A named list of style arguments. If you provide a value, it will not be overridden.
 #' @param type One of `"title"`, `"commentary"`, or `"footer"`.
 #' @param report_style One of `"qualtrics"`, `"municipal"`, or `"y2"`.
 #'
 #' @returns
 #' A list of style arguments with defaults applied based on the `type` and
-#' `report_style`. User supplied values will propogate.
+#' `report_style`. User supplied values will propagate.
 #'
 #' @export
 set_defaults <- function(

@@ -7,7 +7,7 @@
 #' @param text_style Optional. A list of text styling properties.
 #' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
-#' @param debug Optional. A logical indicating whether to return hte request objects, or evaluate them. Default: FALSE.
+#' @param debug Optional. A logical indicating whether to return the request objects, or evaluate them. Default: FALSE.
 #' @param ... Additional values available to style_rule objects.
 #'
 #' @returns The Google Slides slide object (invisibly).
@@ -347,7 +347,7 @@ get_safe_length <- function(arg) {
 
         cli::cli_abort(
           c(
-            "x" = "A realtive slide position function call was passed to the position argument. Please pass the name of the function, or a {.cls r2slides::slide_position} object instead.",
+            "x" = "A relative slide position function call was passed to the position argument. Please pass the name of the function, or a {.cls r2slides::slide_position} object instead.",
             "i" = "  - {.strong Good}: position = {func_name}",
             "i" = "  - {.strong Bad}: position = {func_name}()"
           ),

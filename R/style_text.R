@@ -455,7 +455,7 @@ style_rule <- S7::new_class(
 #' @param style_rule A style_rule object
 #' @param text A character string of text
 #' @param element_id A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.
-#' @param ... Data to be avaiable in the data mask where the selector function will be executed. Must be named.
+#' @param ... Data to be available in the data mask where the selector function will be executed. Must be named.
 #' @param call Optional. Call environment used in error messages.
 #'
 #' @returns A list of Google Slides styling requests
@@ -484,7 +484,7 @@ create_styling_request <- function(
   #dm <- rlang::as_data_mask(c(list(text = text), extra_vars))
   dm <- c(text = text, extra_vars)
 
-  # Do any of the selector functions evaluate to true or any non-zero indecies?
+  # Do any of the selector functions evaluate to true or any non-zero indices?
   when_true <- FALSE
 
   for (rule in 1:style_rule@num_selectors) {

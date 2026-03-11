@@ -384,7 +384,7 @@ presentation <- R6::R6Class(
     #' Get elements from the presentation
     #'
     #' @description
-    #' Filter the elements you ahve constructed to return a list of elements
+    #' Filter the elements you have constructed to return a list of elements
     #'
     #' @param modified_since Optional. Only return elements modified since this time
     #' @param modified_end Optional. Only return elements modified before this time

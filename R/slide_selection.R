@@ -28,8 +28,8 @@ slide <- S7::new_class(
       S7::class_character,
       getter = function(self) {
         self@elements_raw |>
-          recursivly_replace('objectId', '') |>
-          recursivly_replace('speakerNotesObjectId', '') |>
+          recursively_replace('objectId', '') |>
+          recursively_replace('speakerNotesObjectId', '') |>
           purrr::modify_tree(
             leaf = function(leaf) {
               if (is.numeric(leaf)) {
