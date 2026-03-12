@@ -111,7 +111,7 @@ query <- function(
     )
   }
 
-  if (is_testing() || debug) {
+  if (debug) {
     return(req)
   } else {
     rsp <- gargle::request_make(req)

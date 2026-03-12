@@ -8,7 +8,7 @@
 slide <- S7::new_class(
   "slide",
   properties = list(
-    presentation = S7::new_property(validator = function(value) {
+    presentation = S7::new_property(setter = NULL, validator = function(value) {
       if (!is.presentation(value)) {
         "presentation must be of class `presentation`"
       }
@@ -16,6 +16,7 @@ slide <- S7::new_class(
 
     slide_id = S7::new_property(
       class_character,
+      setter = NULL,
       validator = function(value) {
         if (length(value) != 1) {
           "slide_id must be a single value"
@@ -57,6 +58,15 @@ slide <- S7::new_class(
       }
     )
   ),
+
+  validator = function(self) {
+    if (!self@slide_id %in% unlist(self@presentation$get_slide_ids())) {
+      glue::glue(
+        "Slide '{self@slide_id}' does not exist in presentation '{self@presentation$title}'."
+      )
+    }
+  },
+
   constructor = function(presentation, slide_id) {
     S7::new_object(
       S7::S7_object(),
@@ -116,34 +126,39 @@ on_slide_id <- function(id, ps) {
 on_slide_url <- function(url, ps) {
   if (rlang::is_missing(ps)) {
     pres_id <- resolve_presentation_id(url)
-  } else {
-    pres_id <- ps$presentation_id
-  }
-  if (active_presentation_exists()) {
-    ps <- get_active_presentation()
-    if (ps$presentation_id != pres_id) {
-      cli::cli_warn(
-        c("x" = "Active presentation ({.val {ps$presentation_id}}) is not the same presentation as ({.val {url}})",
-        "i" = "Get the active presentation with {.code get_active_presentation()}")
-      )
-      utils::flush.console()
-      confirmation <- readline(
-        "Would you like to override the active presentation with the presentation that matches this presentation? (y/n): "
-      )
-      if (tolower(confirmation) != "y") {
-        cli::cli_alert_info(
-          "Did not override the active presentation."
+
+    if (active_presentation_exists()) {
+      ps <- get_active_presentation()
+      if (ps$presentation_id != pres_id) {
+        cli::cli_warn(c(
+          "x" = "Active presentation ({.val {ps$presentation_id}}) does not match the URL ({.val {pres_id}})",
+          "i" = "Get the active presentation with {.code get_active_presentation()}"
+        ))
+        utils::flush.console()
+        confirmation <- readline(
+          "Would you like to override the active presentation with the presentation that matches this URL? (y/n): "
         )
-      } else {
-        register_presentation(pres_id)
-        ps <- get_active_presentation()
+        if (tolower(confirmation) == "y") {
+          register_presentation(pres_id)
+          ps <- get_active_presentation()
+        }
       }
+    } else {
+      register_presentation(pres_id)
+      ps <- get_active_presentation()
     }
   } else {
-    register_presentation(pres_id)
-    ps <- get_active_presentation()
+    if (active_presentation_exists()) {
+      active <- get_active_presentation()
+      if (active$presentation_id != ps$presentation_id) {
+        cli::cli_warn(c(
+          "x" = "The active presentation ({.val {active$presentation_id}}) is not the presentation passed to {.fn on_slide_url}",
+          "i" = "Set the correct active presentation with {.code register_presentation()}"
+        ))
+      }
+    }
   }
-  ps$get_slide_by_id(slide_id = resolve_slide_id(url, pres_id))
+  ps$get_slide_by_id(slide_id = resolve_slide_id(url, ps$presentation_id))
 }
 
 

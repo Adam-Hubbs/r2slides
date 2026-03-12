@@ -31,3 +31,24 @@ default_footer_args <- list(
 )
 
 test_token <- list("Test Token")
+
+
+vcr::vcr_configure(
+  dir = vcr::vcr_test_path("fixtures"),
+  # Scrub the OAuth Bearer token before cassettes are written
+  filter_request_headers = list(Authorization = "Bearer <<OAUTH_TOKEN>>"),
+  filter_response_headers = list(
+    "x-goog-authenticated-user-email" = "<<USER_EMAIL>>"
+  )
+)
+
+# Snapshot transformer — replaces the last_refreshed timestamp printed by
+# presentation$print() so snapshots are not invalidated by the wall-clock value.
+# Format is set in presentation$print(): "%Y-%m-%d %H:%M:%S"
+scrub_last_refreshed <- function(lines) {
+  gsub(
+    pattern = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
+    replacement = "<<Last Refreshed Value>>",
+    x = lines
+  )
+}

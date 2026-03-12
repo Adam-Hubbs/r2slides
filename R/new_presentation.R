@@ -16,7 +16,7 @@ new_presentation <- function(
   title = 'Untitled Presentation',
   set_active = TRUE
 ) {
-  presentation$new(title = title, set_active = TRUE)
+  presentation$new(title = title, set_active = set_active)
 }
 
 
@@ -37,7 +37,7 @@ register_presentation <- function(
   id = NULL,
   set_active = TRUE
 ) {
-  presentation$new(id = id, set_active = TRUE)
+  presentation$new(id = id, set_active = set_active)
 }
 
 #' R6 Class for Google Slides Presentations
@@ -102,9 +102,13 @@ presentation <- R6::R6Class(
       if (set_active) {
         if (active_presentation_exists()) {
           # Ask for confirmation
-          confirmation <- readline(
-            "An active presentation is already registered. Do you want to override it? (y/n): "
-          )
+          if (is_testing()) {
+            confirmation <- "y"
+          } else {
+            confirmation <- readline(
+              "An active presentation is already registered. Do you want to override it? (y/n): "
+            )
+          }
           if (tolower(confirmation) != "y") {
             cli::cli_alert_info(
               "Registration canceled, returning presentation without setting as active."
@@ -404,48 +408,43 @@ presentation <- R6::R6Class(
       element_text = NULL,
       show_deleted = FALSE
     ) {
-      modify_since <- modified_since %|% "1970-01-01T00:00:00.000Z"
-      modify_end <- modified_end %|% Sys.time()
-      create_since <- created_since %|% "1970-01-01T00:00:00.000Z"
-      create_end <- created_end %|% Sys.time()
+      modify_since <- modified_since %||% as.POSIXct("1970-01-01", tz = "UTC")
+      modify_end <- modified_end %||% Sys.time()
+      create_since <- created_since %||% as.POSIXct("1970-01-01", tz = "UTC")
+      create_end <- created_end %||% Sys.time()
 
       ldgr <- private$ledger |>
         dplyr::filter(
-          time_updated > modified_since,
-          time_updated < modified_end,
-          time_created > created_since,
-          time_created < created_end
+          .data[["time_updated"]] > modify_since,
+          .data[["time_updated"]] < modify_end,
+          .data[["time_created"]] > create_since,
+          .data[["time_created"]] < create_end
         )
 
-      if (!null(element_type)) {
+      if (!is.null(element_type)) {
         ldgr <- ldgr |>
-          dplyr::filter(element_type == element_type)
+          dplyr::filter(.data[["element_type"]] == .env[["element_type"]])
       }
 
-      if (!null(element_text)) {
+      if (!is.null(element_text)) {
         ldgr <- ldgr |>
-          dplyr::filter(element_text == element_text)
+          dplyr::filter(.data[["element_text"]] == .env[["element_text"]])
       }
 
       if (!show_deleted) {
         ldgr <- ldgr |>
-          dplyr::filter_out(is_deleted)
+          dplyr::filter(!is_deleted)
       }
 
       if (nrow(ldgr) == 0) {
         return(NULL)
       }
 
-      element_ids <- ldgr$element_id
-      slide_ids <- ldgr$slide_id
-
-      elements_rtn <- list(
-        element_id = element_ids,
-        slide_id = slide_ids
+      list(
+        element_id = ldgr$element_id,
+        slide_id = ldgr$slide_id
       ) |>
-        transpose()
-
-      return(elements_rtn)
+        purrr::transpose()
     },
 
     #' @description
@@ -522,15 +521,11 @@ presentation <- R6::R6Class(
       create_body <- list(title = title)
 
       # Get rid of the FALSE when we have test_rsp
-      rsp <- if (is_testing()) {
-        test_rsp
-      } else {
-        query(
-          endpoint = "slides.presentations.create",
-          body = create_body,
-          base = "slides"
-        )
-      }
+      rsp <- query(
+        endpoint = "slides.presentations.create",
+        body = create_body,
+        base = "slides"
+      )
 
       # Populate fields from response
       private$populate_from_response(rsp)
