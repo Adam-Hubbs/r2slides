@@ -3,41 +3,7 @@ http_interactions:
     method: POST
     uri: https://oauth2.googleapis.com/token
     body:
-      string: refresh_token=<<refresh_token>>&client_id=<<client_id>>&client_secret=<<client_secret>>&grant_type=refresh_token
-  response:
-    status: 200
-    headers:
-      alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      cache-control: no-cache, no-store, max-age=0, must-revalidate
-      content-encoding: gzip
-      content-length: '1009'
-      content-type: application/json; charset=utf-8
-      date: Thu, 12 Mar 2026 18:44:05 GMT
-      expires: Mon, 01 Jan 1990 00:00:00 GMT
-      pragma: no-cache
-      server: scaffolding on HTTPServer2
-      vary:
-      - Origin
-      - X-Origin
-      - Referer
-      x-content-type-options: nosniff
-      x-frame-options: SAMEORIGIN
-      x-xss-protection: '0'
-    body:
-      string: |-
-        {
-          "access_token": "<<access_token>>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/userinfo.email openid",
-          "token_type": "Bearer",
-          "id_token": "<<id_token>>"
-        }
-  recorded_at: 2026-03-12 18:44:05
-- request:
-    method: POST
-    uri: https://oauth2.googleapis.com/token
-    body:
-      string: refresh_token=<<refresh_token>>&client_id=<<client_id>>&client_secret=<<client_secret>>&grant_type=refresh_token
+      string: refresh_token=vcr_fake_refresh_token&client_id=vcr_fake_client_id&client_secret=vcr_fake_client_secret&grant_type=refresh_token
   response:
     status: 200
     headers:
@@ -46,7 +12,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '1010'
       content-type: application/json; charset=utf-8
-      date: Thu, 12 Mar 2026 18:44:05 GMT
+      date: Thu, 12 Mar 2026 19:57:27 GMT
       expires: Mon, 01 Jan 1990 00:00:00 GMT
       pragma: no-cache
       server: scaffolding on HTTPServer2
@@ -60,28 +26,62 @@ http_interactions:
     body:
       string: |-
         {
-          "access_token": "<<access_token>>",
+          "access_token": "ya29.A0ARrdaM_vcr_fake_access_token",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/drive",
+          "scope": "https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
-          "id_token": "<<id_token>>"
+          "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJzdWIiOiIxMjM0NTY3ODkiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzAwMDAwMDAwLCJleHAiOjk5OTk5OTk5OTl9.eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHg"
         }
-  recorded_at: 2026-03-12 18:44:05
+  recorded_at: 2026-03-12 19:57:27
+- request:
+    method: POST
+    uri: https://oauth2.googleapis.com/token
+    body:
+      string: refresh_token=vcr_fake_refresh_token&client_id=vcr_fake_client_id&client_secret=vcr_fake_client_secret&grant_type=refresh_token
+  response:
+    status: 200
+    headers:
+      alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      content-encoding: gzip
+      content-length: '1011'
+      content-type: application/json; charset=utf-8
+      date: Thu, 12 Mar 2026 19:57:27 GMT
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      pragma: no-cache
+      server: scaffolding on HTTPServer2
+      vary:
+      - Origin
+      - X-Origin
+      - Referer
+      x-content-type-options: nosniff
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: '0'
+    body:
+      string: |-
+        {
+          "access_token": "ya29.A0ARrdaM_vcr_fake_access_token",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets openid https://www.googleapis.com/auth/userinfo.email",
+          "token_type": "Bearer",
+          "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJzdWIiOiIxMjM0NTY3ODkiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzAwMDAwMDAwLCJleHAiOjk5OTk5OTk5OTl9.eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHg"
+        }
+  recorded_at: 2026-03-12 19:57:27
 - request:
     method: GET
     uri: https://www.googleapis.com/drive/v3/files?orderBy=recency+desc&q=%28trashed+%3D+false%29+and+%28mimeType+%3D+%27application%2Fvnd.google-apps.presentation%27%29&supportsAllDrives=TRUE&fields=%2A
   response:
     status: 200
     headers:
-      pragma: no-cache
-      cache-control: no-cache, no-store, max-age=0, must-revalidate
       vary: Origin, X-Origin
+      date: Thu, 12 Mar 2026 19:57:27 GMT
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
       expires: Mon, 01 Jan 1990 00:00:00 GMT
-      date: Thu, 12 Mar 2026 18:44:05 GMT
       content-type: application/json; charset=UTF-8
       content-encoding: gzip
       server: ESF
-      content-length: '23070'
+      content-length: '24019'
       x-xss-protection: '0'
       x-frame-options: SAMEORIGIN
       x-content-type-options: nosniff
@@ -197,7 +197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/13GgHXpKgr-MVhPmhdYcV0vom0u2aNX84P8A_v2gtXWw/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOXvhnrY9TuqL1n2VU8B7Kkqoza-uMJlO365jIVomwVDcWz6qd9gieAn0YpQvso5Jkt1cRZGJ0xGzk4LZG0TSylNI8pnhWiWn1jPWa2TwTRXYYyZAzZ3D4HDWJw8ulv=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPo35z4A2uFM1_kXiaWsyE57-FPyhDQLeAuoIXvKjCgYMZClcNB_OTFo_PwCG22_D0RxQaZbaFjoLIlhQiv-rNcfb7PUetto7TwHT6kPhe3uNOYYh9XY5Qmprw_bocL=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:29:08.791Z",
@@ -322,7 +322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1AVBVSur4LErcmZpMl_8et00X5X5q6gQImw9b8-NRWP8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMhutI_obzzWstlXom--yPKiYkzEYQ7QSwwV0vmPA5t8-YDbpp9Fl33rTTcmd7p4O3vkY6wPp1QvcTYBa1jEBSii8EWs6J3ca0x6TAdI4L1CjUqUx-IV4JSfYojWmIa=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMXUiTfF-mMrNapTHdtxJMLQ9H7wCWfKIaqMxTIuDg6JiHv3ReHJ3ccK6U7ejdaJjOiCky3-Rn7pPDV4mie8LDvIIU2QClrwnyIYmoRFMQ3gZW8yjkk12WrdSGlutv0=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:29:08.791Z",
@@ -443,11 +443,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1cRwaK83R4EATEni-3EIjJfO62AzhSrIPq1HwTINSJc0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOoFVVL8it4Ws14-3D6fWc-LxfLFr9eAWiPtq184iOHsgnDqx592PrXvSuS1l7REjJ85PJSo8r1q94au-3cFt36Iqp33g5jBZUYqzBW6HTc97sPu5n8Hf6jwRc2EECd=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:42:15.783Z",
               "createdTime": "2026-03-12T18:42:15.783Z",
@@ -459,8 +460,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -567,11 +568,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1AiwUYycQaUMO-LdEpD36PyLgxGLZ9-sJ3bHeT37V-WQ/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPysNyZKrw39fG-JHM-3d_IVjdUFpU9Ka2xCKHaB9bXaunr6owTyom-P4MONeT-evhJdmm-DnyWDvPqGxN6Lz_6ltt7-syoYD0UUvk07rpAzWlF3Fcha-VwVgBj5jKp=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:42:00.932Z",
               "createdTime": "2026-03-12T18:42:00.932Z",
@@ -583,8 +585,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -691,11 +693,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1N78Z7boPD7fXorA8dbbG9ukc1U-ueCibG4C5Q9ndtAg/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOVWqPk5ue3VO8SA6J9C7TX3A2Aeif07tZIPP1_mHW9MzMrsLMYCE6QehF2XEj7CTAriZmw0ZFj4AKMHZlorW4aawiiwOEU4ZrNx4DrWzv9eX46nPYtQa4267MVkvx2=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:41:58.521Z",
               "createdTime": "2026-03-12T18:41:58.521Z",
@@ -707,8 +710,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -815,11 +818,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1EcxRgtfA5gLlmfOVllDxojsvCFtKKwGuNu8cHJTcKo8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNFuKsZsyGlW1RHxSX_YwcTx5tXTsUZVJ-g9ar-rQ1bAVvdiEfOKIQsu11DF8fmhQ_hcJyq8qbixotByQOehfA9yf-4h2g41Vaxfvgn19CDGNfSKthNiBQO9n6EfH89=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:41:19.595Z",
               "createdTime": "2026-03-12T18:41:19.595Z",
@@ -831,8 +835,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -939,11 +943,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1AhnTegs497nEvNeUWITlIV9FC4rAOjRHuGgVrmtt1U8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNDAC2yoFnl--kz32vFX6mSuAyNFQ8kkZzxrPTNmfehw9s1nZ6oRW9xmdclm4_fh_2HvBHuJfsrDYVQVFuqY6YdrJUQxLC96WUpy7XW-n5BHgJkeOPpf3hVg2BE_jqg=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:41:18.714Z",
               "createdTime": "2026-03-12T18:41:18.714Z",
@@ -955,8 +960,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -1063,11 +1068,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1C7BOqWXp0xWrKU5mVTw-XE0PTxh0hAudtqWEvpULh_E/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPzpPwEL-YYVHHuX09h5g_Cu05NM4yh7toHbbFmDgrpSf6NAt-htrOoZRUqWLKyJ3HbvqTErt76etG3gjZr4HouV-pignOhKzcmpNR16XJ8wJ8mc4QrLzDOXSSBAzKh=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:41:16.348Z",
               "createdTime": "2026-03-12T18:41:16.348Z",
@@ -1079,8 +1085,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -1187,11 +1193,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1yxj0xictpPkx-cvSXRt-ODLO6UW_xtAXMSp5JK71ORE/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM9i-wG7yYqNBndiWWJvAH0rfXfAbGIf2n2GuCdRGmAd7yNTyvnb42PMxCVIScrz8IIwwKDjWOosl3XjdaNkIC83DafYy51xMNb8gfLbujTWLiMq4-iCEv6mpQ74Vjh=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:41:10.622Z",
               "createdTime": "2026-03-12T18:41:10.622Z",
@@ -1203,8 +1210,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -1311,11 +1318,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1-HHUnQQU1I3mh1UBhN8gX8uRVN4TFcunMz9x8Hz5tx0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP3sjQ5I5l9WJj5pZcQbefWwEmQh9vzldZRryml_RORrdHv_j8k0FHMv_WlkLHjFbRbtKyN9DbgGPwZ3Eifz30KnINT_K6oJGdoHAF8QuboS-ZNZy2qejqbMujcv45c=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:41:08.130Z",
               "createdTime": "2026-03-12T18:41:08.130Z",
@@ -1327,8 +1335,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -1435,11 +1443,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/1_qvKe0rf4sPPh7youQD-UzzfB5AgS0YztF_OPOeUscs/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOppSwhF1Ow6rxgykSJ1sqPuUOg0Pzw_hbGXuDSsKXEyfxVS33jml1niOr0574zUlicZOnvmijOrPsitFRX7VqnkYhdf8ZvbCxacWzfGodWP029zx24k6nzzOk5e3Yt=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:38:41.702Z",
               "createdTime": "2026-03-12T18:38:41.702Z",
@@ -1451,8 +1460,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -1559,11 +1568,12 @@ http_interactions:
               "starred": false,
               "trashed": false,
               "explicitlyTrashed": false,
-              "version": "1",
+              "version": "3",
               "webViewLink": "https://docs.google.com/presentation/d/19Z_7D8sxt4v27qYheFbuBIo0kKHw3j70oqE8b-ksGEk/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
-              "hasThumbnail": false,
-              "thumbnailVersion": "0",
+              "hasThumbnail": true,
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN4H0fbCowBFmdGbjsxV8iRN4C8WLhUV9Y_mJ8QI2u4LAwrO-7zB24GYBVVVdvMQ0YMus65hQvT_GP04x2m4taZLpVdx1uQS-KscEPBIxmTRbVP78bL-KsoQFSyP6bA=s220",
+              "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:37:17.690Z",
               "createdTime": "2026-03-12T18:37:17.690Z",
@@ -1575,8 +1585,8 @@ http_interactions:
               "viewersCanCopyContent": true,
               "copyRequiresWriterPermission": false,
               "writersCanShare": true,
-              "size": "1",
-              "quotaBytesUsed": "1",
+              "size": "3664",
+              "quotaBytesUsed": "3664",
               "isAppAuthorized": true,
               "inheritedPermissionsDisabled": false
             },
@@ -1687,7 +1697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1CCR5cdD6bhuQ6Et_GmFqQ5WbRFwkFjcXRHkcbZgfBFs/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMwydOheqttmnV8qt92uRi2zTOZBMBxj1LVRhGz5W3Cd8LooxFrxpEZ3yuIW1sRSGrL_pgvwtLfGMqywl3v6xw9sYmKKCTyZ08qatPNsyWPxcRfNqMWq2xwkJDIEDcq=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO5LkO6cyQAbv9SrDhOcItc7ag22klvkrpvhcIAIihgOelpvRtGTf-XWoS1QO_KV5Dv4SQEpwtSPI7Z1nUK4wvxFN7lCW1ij-T1o6g5ArD5fjxtVZcCeZWym81Wn4zI=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:33:00.334Z",
@@ -1812,7 +1822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1HigSBiu4zCopUPt6VeFbN7_iqf25mgVUp72Eo2VnsfU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOadxJIQEX1sKgHexllJJL1wydUoLXKDlBaLhIlSIf-RHd7j8iFMAnktT4W523t77pYP6vtXfpsBkO7P9BlKoOyBMJPfEGOcxYLb4THqMorSPEqM_w8jzaVfePFqvg0=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNWzLtBFtkkET6FefKvzs-_BzCOWZfpvkmfxNThizHbEbuIgvNTCsVOysDLW-4KSWoemkygKOylfU03IOuQv6msq5ZHWrTtxZqn2af1toW-yZXGm1vFf0KSfH2ihAB2=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:32:59.488Z",
@@ -1937,7 +1947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1QWcY2c3lrPAD802Mez0ca1OPQGUkTSI--XA4iwWRC8Y/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOw_tGiNt0oS-Kad9V9983_UcXYsR5eTTOdtS49l8wK4CaFKW1jA1y1IYL7vQ-hMqqPy9MAYNjij92m2jHb72LizmJAvKnI5ynH5_cSBfPi0WZWDLrIQVVfVlhPzwkV=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPSpdgEA6kg9LUOF8Rj1ZSA1p8OKlpDPJ52T-Z4Eapxbqki0HouJIfED6mUak5KuyqkRKQCqacMZ8-nHytAuE4Pv9HebiJ7JJ__N7ftFNc4nNW9nh1DOhzivJcxUmk-=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:32:56.761Z",
@@ -2062,7 +2072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/11ZJyZeG4cPKv_k04N-DDg_40Ohb2A1yVwmrN28u6YQU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMFIJan6CdFPR1p2dOZN9Yd_09gyC8dIWG09QKg-gJ-g5nTOBib6XgON54wtppWn3icqFRtNwCxKbUCAOFysFjHk3UAr-spEF-wg5nQxsZTxqEXtHRiZkuuZqk1aMNR=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPt1rK0gr4xNfa6T-dkCWGc8Ln4LPK0lLDuktWuEmYTrCilPzrgpAjazQ8KKwgYqpQrf1xR2PxE3Yp5PGjnsuUyclO1wlldx9kf5LnWTXweSXoSU_S9ZwQxZGMEfqyE=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:32:50.807Z",
@@ -2187,7 +2197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1rdNMwFWCawdW0avaG17kmJh_--zkAvq8o355Da6HRa8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP6CO9g7_g-6FTKE4G6KU5cPT9PguwCtzziP3qydmItBF2-sVt6w7mJ7S1VBjgdM0KgMjLK1vWjwveYWm4H82DhPMQQ30l9lwTP1lCx_KEJ6P4r5Ujz0ogMjP0qsLLb=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPTB2vgHFX9clHp-6A6lNCAjUhHnh-XDFFnlgZAKwPhuMf35sJMRxwqyHhVcqOtyKXTf5ENk6hPVPwJ9fUbyuJaaeC303X_pDz4FypXqg6EkiiDyy1JiOrR2zhyyI6V=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:32:47.927Z",
@@ -2312,7 +2322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1PKn2TGzCwxV-om9GnwBbn1toA0-FggMXeWCEok67_dE/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPjpTWnMlMxFhMYdnilg6rigbo-1MKgMT40MpJ-sDjuiW2zb_HkxoomlgZWOrkAO-QqwsOg76gbmWgmkwXaagkP0A-o7WmlGdra_9mWRJnecD5GGTiyz_B7NQy6AV1i=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMn8PcFF71-dPizAf4E0dbj5U9K0d4vIijHznFzJZ-JgdVZQ5GjwLSv93GFr3oQsiY3vp_sbkmxssdn7hBwpGMDx-sL9q0e9amOVByeCGU02i8GqwgcLCPktIMDdELR=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T18:32:44.601Z",
@@ -2437,7 +2447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1lvpSHoW0AvgyT5CjHFfCz73sLmdayZRXwzjtXpVm32o/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO46NEdPH9SYEMfum1SUoK9CKLyydGE9MQN48_crx8yO5pF-t7MpYwN4wLMIfkPPI66TY4i3GLxUw_oUJsGLsXu23b3O_wRIE8Bjgn1B7WRAaD4jst9RYyskL-POIZg=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOeo1JjFXy02sC6fpd7cJN_GB9NCTO7hy0tx4UhAiF14kKnejqkBbLUN85-Ey7WTj3h68xveP4cAEUpZVtfSyVQkxOyLc1zXmNlAhu3X0RmP2jDzSC6k8A5vTsgpM-3=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:53:11.438Z",
@@ -2562,7 +2572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1bw0yjr2P9nKStTuQoRUr8CX-fMBPdA9rwBKMlSCn8XI/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNKrcFCHwG35o-8e-_sWFhWfhpo_3u-vuqUTZD5k-nDOEzabaKtb7L9c7H5kBiBQVu92pX7z4_Lh_Con0moTwy2eAz0qWaWiQqAL31jF4xiCuRkC5QUToZWzUUaf-E_=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPiXqatBuhv93EpCOyP6GnFDwg4LViZj3TEEhJj0CRltR4K-_h63lDrCbnA7g28jHOCxR1-4TgdefPGnNp55Sj5_Xv5vcF91LA5wkeuhLxGACz5ul148GSeS03AGglB=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:52:10.239Z",
@@ -2687,7 +2697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1B_B7Ld-dS1-xoqHIUKkza2_OxyldsXOa6fjoHvlGfPo/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM2d1L6hjdMGy3Z99bIXF68J8hT3p_I5gLb9sy0if3CapblXYsOdV51B_Za_tKliR4xDaiY2A02HaqCED-yQ2S0zL9OfhN_0uiFUCYDAwJmmg3To1UHIKIvVFuDrL0L=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNJox0mZRKYAmwtQ1e3nKv57arR7UB-mLGfBuHJ4tHr9SdwsV5Eic8jwQgrQDniTZ3fiszxwRElQI6NLla6ZQJSOEGwKi5IaUeYV-djeej6KcA_TOYPpAEWhx2vdwxl=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:51:46.221Z",
@@ -2812,7 +2822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1xOQuUVOYWed1v_Lpdn8Bs1Xa8dj7wtBKOx0mqSXXZic/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMH9B9jxLf3j7MjBBYaC1hS2-MJrdlgMo1dfBukTX76YswgXd_SOjoAf60YrqHd4FhfU8ahQopCv2vf2goOdCEGXUXnhdgNj6-OdHi4R5YOZXElBluB-ZmvBLySCZtW=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM0IfRZJ4_IC0LzsRsWsieVMN9UlGY7tZE99ozrGgJv55Ico5gRf79OnbH_B_hTRHcT6IslcjXO6FoPBxTEFm_LKOQ5sUN4bmNr31yRewxWVebvkonBafpqgdYEmcZi=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:42:28.210Z",
@@ -2937,7 +2947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/19lcQvFuFLKoqyyYZJJUE6G2P12Y477nVpgj8vghDkjw/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPwwhoMSF4ecUPwe5LG0m7Vqc1GDYOjTzF5lcO22wI2L_euwyhLW9aEa49IRuSne88Eb4qt3aj9YhQaSUIWMPaCQhjLT9LcRl6G1vxInJaakJrx8CDf12WfKpdkUDDw=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNXwg235stKYQzlvV1jJsjOuOEr4RY6iqZtVfTWfJClCDxbg1IUItQ0uasFcpNaaeDf7FJQJzkMgiGllMBDfxqvOYHsCWAyXNu7ZrawkJrMe9jK3-cbJIrBxvGiCcXP=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:41:31.198Z",
@@ -3062,7 +3072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1h3kqEZIzU7-UkaBIYWRuPKihoBKo_5xZ-jklU04K_Ak/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBONenm-jom4Nf9a3-kUa974f1AUpMc46vA_4gNqH8uIeYuCwLO8vAPhib_h3k0EDaBoHqTwPAQCFOfmJJvtWRPm6ktui2emmQJMFdHTzpe2UJs1TgsMDphCPkTYpVzY=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM4XCQzg1LJuxIMxiaEGrkgICdQ9YIszrNCHvie_-QfOKzvOyiJ-8aiDzusX2E7fYr0BL0lX8Evr2XtCKw9zCyQmMBCfcNDxuDsC80BfDNgZwhA7cK0lyT2XB6xH22_=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:39:12.441Z",
@@ -3187,7 +3197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1LWv8dd4DbkWNKDmGKACDToQuWcHCkB1gAd-4lqRYmdg/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMAU_OX2IFzxZoaXeX27lnrlNwtT25a4PZnyI8pYKc73-UVJVC8tRE_ocm0eK-lWKYuk5QNDwFmJ5lnxCRwfRnHUKcxFWNLw0aqIISJFomiRzWp5ymCf1ylDqDYm6oI=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMan6Q1-yCebARRoqcMDzX4gFRkTwWhkPg5RiTLfzit1EFad0SR_JFGGc86luaAvb0T5m758YFsp7H3TubwzEidMJkJQxlGc6RKfVeRTe2OQ774NUg6IYAfS7XZpabM=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:38:24.749Z",
@@ -3312,7 +3322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1lyUkO1WaH4zhMkaQcFZr7jnDjUrswPliC-KuFrNuyRM/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN7kMdVUPSfruj8RNmixg_RnH13245hE7X858EXgsP7z4-98xS4V_PFufg6jqpYERx1vVGfEihXBVqgyVeZ24el3Wd_CUfo8CGpb_1GP5eV5AGTFFh-OyI30aVfnbFk=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNfj4KOZWjnePNygGaVMrod70M-sk5SLKYRAmQPdDor0MpIcf5DDcl3-2c5gDY5PwsR97svanxgi4Pygq5C9MQnormPOPR8dkuj5gdywDpzul7ak_WZv5LTEkmsJPeX=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:39.979Z",
@@ -3437,7 +3447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1rH7mYJUHD_7xwFfXQ_MbS1cekKnlws7agjJnayT-FIM/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPNDSgRTdJZi63lOFksHGZRQ1wArKO_SHvTr39_HbLaZEsjDoZ2HGGuUNDG78cVeAtm3NeUcssM9MjuXU94JuaIY13td_EXBAOWj2Ga1SOzPIFAbmi3ghjWUTpTBsvT=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP5ge1n_lYOnOK40LF1zatWCvioXdIzt9hm5NJH24qlGY4yimC8dncu4u7gxU8i4CSsjGbRLVnsu34vwKMv4g51G5-ugnSGK2BB4K1EDAFi7wFQoUtwxuAe7IIcgFw_=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:37.304Z",
@@ -3562,7 +3572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1xQ3s_0RBycVTZ_D4pdbfmjhBB4zHzPJlgdnEQVc-c_Q/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMBY0mnBmA9UARNDj88i5QlJFeHa0f0PXmlhObbAhV553lsNqYeCR6186w6qdeU9WYk-mo15KdXdc56cuKzzqxdzL0MIp8FI-HRMFwoyU8aHqsSqI_1hiipW_f8dZVL=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMbNDWlZHFAJxqvAr-IUdAR7Sh6Fiq87dxjX_Bt-BQQpZEmrDVS8eotqlKMRLFPVHApRvu40BWQhRhMzorJzcLByjNBXa5awIunBdQHEyjTTZWkkG4d-YQzTZpfutfm=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:33.165Z",
@@ -3687,7 +3697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1tquK_fzjdZOw2rqLXUtl30n64yQZCyw_-EfIyfnm_RU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOTS-9uwidGdiZRku35-e_LzE7GAhY-GWhCZwwhmmeZ4kg7WDGYY2k3PMH5VLEP3hFSRiyMDUa3A9X2PuUNQVVt5S2QM5MB-_O30abW_ZvqiAnGeW_1Bu51XTnzMJF8=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNIzpIwz2X6FENBQSEPuOT5nEK9Y34TtsZOhr5lpV8ZkGXe6m9J9STz3fQPNfiHfv_n24fVE359vnVwuWt8y1JsmKwxSJl4PiD98LgfRUvOZaptM_cU-hcqGEpXCiGo=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:28.959Z",
@@ -3812,7 +3822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1BZ1QYzL1zD3rzj0AbBQU6K8TZGtogY2W9sMy1F11T8Y/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNe5muhNne5KPX4qul6ScvOzN56nibudQyI6u7iDZuLbq3fpDea2DQ6irKTab4nN1Th9paSwq3fWsr_YlCqVKckU6a_Z_Fqb-srkJT6bdCR0j9FUstnRnqnJgT5FMo4=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPCWLtUlHVzcXIqKGR5ts4DZ6rehgfsdzZEI24Oy_AFOMadyiGoys6nGgvakh8-6nNFseF9gV4OI9DcOFKXsHfq9qzZ-E1bSqavrhR0AmDPPVsjqfawUC9aXQc_Afv6=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:24.946Z",
@@ -3937,7 +3947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1WPWLftFCHOGfPAKz2ZKmZrzOiPjtSxJCwtGQrGArLmw/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPPTEGKzzfNKkFBxVlb5QCo5irbct-8lw68lYXXTKiMyYONBsMafUekI4XalT1c36S5KfgxyayhsKzQqtTCoaD1M2-jgsDlFCt4baQ-18Xxk6KCY5Bp-iK0XOfznRUY=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNp8_RbSEHKaPEYbdbVV-2AaQ7HpyggMO3M3x-PNdtBMdlhhk-MvAkclM1JdPdxGdtl4g9elbqnu4z24DJ7MAzC3scB4JD8ISGXvH3L4zDuqGNoxQMlFhCkBMiciVMN=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:21.237Z",
@@ -4062,7 +4072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/17Fb-Qu2tu-CifzmuEdvcoY8yYhzvzT6Cta9Jl-qkfmE/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN6E468y-IKKFJBsn6yrUmr7HwIrxwjsaqpnggqPQn2OiXrYR2eJyyC7sdIpGYxXz423Nc1han8X7haHaf3-kbhiquCpAZCXOQvKvoSXa8dW22xxY6sIOf_OaPKmtyY=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM2i0PWEOx9gAUN7uDiT6isoF1qlyELgN60CPwkMcMKmmBxVVBz4x0AK7QC1rmJVTJG0q4-pDRuL7rVb2WoYd2V2Hf_GJKJurdf2TPjQHJws1jbh0hGvsEElyMaOhiO=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:17.386Z",
@@ -4187,7 +4197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/16-PzuH5zzbhRgI_C-FcDtlep0XqRADqYtjA7y4KUHT8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOp1fD5Gv5YwKascw_zO-hnUTtHshYlVDkEEOJLognhMp1Wtgt_oJqbWPuhAxC8RY7c0WeGNlsyeqsLYEZfUTJMncNtKHWF7iXwcLsY_yryf9Z1nvd34Uc329zIQHRf=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPlKC0octZIiS0swjcjz5cb5lxt44l0lW6IocibnaGss5ab45e_6LjKHnCpfZYhqBTs3oRb066QbHcvxKPqhDjAZXsI7U8c2H5jNq3tUOWw9A4jguZS2H4OYX_FhmbN=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:13.597Z",
@@ -4312,7 +4322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1lDl-vR1IFkrp-KbVOA4LZsHoPNCiKccQlSQdGDAKLEc/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPKq3imJ7vQpuUUYKEcvketNILMjzVp1SBDr-NWFFttaq0udPtg1EEZCLxXZ_i6td4TxxyOCgsYjpU8_J8U1iOVvoL1Z2WA9jZ4NyhE2Q_h_mldfEQu5R6a-tTyr-yT=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNRjSZqala4_xRrwrGLWq2pbHA5nG8bhMWQ8n2zgcNN54sqg6Dacdl2iyQQOSiZY7ZHcwKL1Ez0RKndryWd_Kuepzf9MlALMJ2m2-nm6q4rDfe2UaZdrco7xDg5RDaM=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:09.740Z",
@@ -4437,7 +4447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1xsvd5oJdCNWZtkGb9O5E-BHOGBJQDe0AI0OZ82pm-F0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOX31gv39xMuUhQL_S21NMwcJLpTty-0GIirXXI9dVDas01UjYRdW-QDgB71rNtH-bzGYbpqp1p5jr6DpIiFzztyexlsIVTjuFdOGKtoajrk9nBk7TV6UT8kPJXKo7Q=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPvDSdOfXSRYXQ5_ojxcQUVLrHJYwWRxvlp49SJ13UokXFLNO0l1aeQUSoJlP1i5xE4-hdqTUWQZa6IO2KRHaZ1Bujk9pr_AqcSZbwNavhcsH3BNd2FYXRW8fBWpwbH=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:06.224Z",
@@ -4562,7 +4572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1WWP-pOFF3-Nn4aCwCQMphBgio2la9LVWjFcaMscRbGk/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPEJkr4DG4oP9EDgVWDeauZ7x9kY-FdDbHivMhzijBNwRb2wWJunv3ODA7-Rb1gBWUJxCssjhsAj21BWf0LBJT4w4a5gXzPSUyoyc3JSLWMfs35s-JhHAjQUD61lqTF=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNqX11Kxg08mcHQtfj2Tgc971F3Wzjm2C1nFXL8LNB42Ugm_oBE3mT2C48j5L1Kjhv21sApb1-HkQY9trVM8-soSGz9UL6gL3RBrq7tG5bXA_nRj5eLHKZAN1QzQDv7=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:37:01.997Z",
@@ -4687,7 +4697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1xVcvpw82CZB0N_csqrZ5_t0C3EPeGjq8riuaq3SHXQo/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMohwFktCpDg6bUXRun1dZTfgSo6YihPS3v7Hl4A1BiZM2dGdxnI0K6i-8nJXQtjbZY6xDC2eccE3gRl-aKvla0tnIQ3bV5OsnqsaLePTd6xfMdagogI8GtN19HURGG=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOEvBl2pul5SggpPSFeta6WdKsCsiZ-znxzPiempeu3VEZuYwLR1xN9GgRHuQgvVtpH0NFtKWppyQiN2rv7lJ-EVSsGnlJ8BPfB5SbL8W4nHF8cpBIoQ3WhAjJBnS9M=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:58.133Z",
@@ -4812,7 +4822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1ii2JeIqWHbVzT_RxYcvaZwObtF0lTgGFMEaI9fmrErw/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPK3OXuOT50gCjFDjWgSSriq_X5ZyAlROCXUUw83b9zmb3iUn4F6QplBxx7zJL2bS-vfk-rZG6poN6Epvj1Gmw0UgsiSJ5oYpYXW43Crexg3EVARvjbH4SHMggHOGZw=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNBpf4MMwc30ypqPrjiQ9a6eLuP20mTBL3yiDoIPT6U6D74eufb_UmxnKA07Dd9-GR_O9OD5yijYzLHyAmxeITA49oItsKYUf_n7xj_TcUvwv7yiEJnLoW38SdUYhHa=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:54.109Z",
@@ -4937,7 +4947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/17nSQSk-w3aQiBcuhYaZAy60gaJDWekpEs51qpYtsghU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOQgdiJbCefU_-dTozawKKNQkKAnCu-KnwmRjb1lFga-QsGG06DBH0xSu8_WtGU4ClYSc1ppR1nb27GF3SZHBQaIwgBZwQeLdsQWo2R-mJNpkgHJuedpZZIUPcZC9eN=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNoCaVYreQqsucED6pp0zcL_8FBDiwWFkUXR0EACxGFSz1t1w9wVikSy1spkufEyNBkqQOiTj3IhqoT4G8XlwrP4w_kosPE3HmTSgDv2QmDglyoft7YQWOXS8ZLHpBB=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:50.210Z",
@@ -5062,7 +5072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1hXp1t5nmAnWC0cfp21hh0oylrjGvWyHZbbOVZctFu5I/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMkGV8fEji-LzSP0V9TwSbUGeOatwbDTyibE_NTKdFQVQ-YVU1AzE88sCaJt6NMquq80lQPYaNqNiIIXtLZ7V-4SLd9A65nBZFZwh8MSeDm3pj6st3d0wsU5SWyyMVb=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN5MOsXxNWW3E5En7pe1hmhu4wwEzqGT59l_oZJpqdZInXc1nJT4ZXXU9pvvPbeZa9ZlxhcKhP1PraBNYpuEU1vG28pTlUNfeZSMSfUhxlS0WEpCqz9kEwvgDgwi0Va=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:46.217Z",
@@ -5187,7 +5197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1ulZVgEJYT-Ud_J83C31kDMp3AfgUGxpMr6sqM0jyoM0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPPrNelnjWweCibpwo2ZGNO1MJPrnyXjCRXqMkYljehT4D3wkLRdP5cgHJOuWBn6HxI5oboP_4-gi_48yNdQ9UixaqdVd5FxeHp1k5-iWNRafmSU-DNlbA5xhrg0Lcv=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOkkAy7-DR9drOgl2m-BmSh5FT0sZB4Pk6vG2CL0x0uU6ooeYOiQhC8J02xhdCtJNU6lAN9aIFN-nXkzzqt_ewmoAHTuzITTsXUacpfOjrMdODst6YpmQSmaIFCItDe=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:42.345Z",
@@ -5312,7 +5322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1np-VMihZZuksUe6gt9mZt5HCKc5tLWkbBRvCCO5oxPc/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP6FhPFHCrKekPOrFd3crBl93z8FkUWHuhTyQrqizeQjSXpQCdBDdBjb-PUoCX0_IRsJiYWDU67xO1iPpjHV1b4yM2zKS6vV2uWlwQ-vPO_hkttGk-xZz6npBysC8G3=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPAUMeyVo_tayYQO5PVdDYvVWqeBoC-N_77jMeeR_5gO0W_WkFNcC7hEBAkgATwW0qsC0jDHPYXRwAUsSw6-ypkef5OQ2yAwQE_4v8JM9aszMIyGS9vvUnspmtOpR46=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:37.360Z",
@@ -5437,7 +5447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1_Cr18AXWg6x2rlIMtJKxG5rFUD8VzaYXGvB2CWQkmFY/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOEZUmOV4eYfLX9RMVQnarXZHkV2_vCtOCFly207gcMMxpknVQVLGB5-UPjxEM5vEsErfd1HclVmFVo8fXZsnaV6FiEvSZgspepBYCI0jwxUbmbeyz6kZoKGg0CZtpD=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMCPqUcV-rQKfide9iVQb-vII8RzPGh2fNY0YudAyogyXiqCX2c10V8iQJ-5bQM78ZK-u5K9kftHCJ0C22RgUXfZMbZB_pQM5QJg0v1h7GhmMJ8bsySf0sKrhBhmqYq=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:30.795Z",
@@ -5562,7 +5572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1-QAMqPl47Kd0fO8jRo_VpdH75muPTun04fKN9ZKQtIo/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOm9-0fhc9wAyk58ib1L7ZdgbvyJocEAMs9ixU7CT_2ib1wN1KQ5agg9Oxegz3At0_YPybPxvv2aZBb_t3FJjKXrxK7AjXf9R-nw22IQbHh14Vi71qzVrSLO2kqb7fQ=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMqsScNpUHcGJtEVPY3gu4jmrl6MK-sX4IEJHHQ7MPDMHb6qqHDo3VaANwfhbALPEppnL6zH1y1DINZPgVhydJSuzUtPH5-6utBefP6H7sXbe1qYhS0e1npL70k75uY=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:26.304Z",
@@ -5687,7 +5697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/10aFlWxvtW1NlF114g65552U3vVVtetauBwYKqcoQkK8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNEMWStWZwEe0_eug7Rl-518p-jC-g7jd0Ny2TSLvUZ4-7w8qkWHJmlv483HlCsTejjTorLSCUtFmMhAy5Wsqwm5Z3PXctjkyMC2VQMhbExzHyRweSZjgQnQ6MRAlP2=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPdCZDTFMvDUK0bvfdI-C6sXDnvi6gqJSn8sFOPPOdr_W4MNfzENHtNJV0BgGBFYb6RK356uIpv5TV_6QYoRh8ScdLwQyY9Xklz6_roIkkPHfw7SqM_YsTxuGjGNuqz=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:21.940Z",
@@ -5812,7 +5822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/14eB2jMfGu5Ydgnl0-JVTh228NbLvdX2ZcPvdtDnnDqI/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM_4NCwGlaedE_s3y0XM1T7GDnFieJl_KsttZrxVtq6Y_to7u2ZFaswrp_qpA6tXz_IqYjQnCxqLAXFuOz9wp7Zm11urkEIki8_T-k2krNtGnKXmTIQVht4sEUc8hRp=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPvtgof61bF-9WbQJFw63tFBj7CmTi5cf_zzlRhlVgF3hyrx4baSeD0_0W4wdyRcuOPx3zBcT9BgonSnkXhgk4e9Ek4FSlWtEmhPFtKln_-P3MSNxYuIjmLXIPAbS3N=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:17.098Z",
@@ -5937,7 +5947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1Ls2hrVKfXMdGjfIge8qgt5xmqR4QmXvkTq1P5329h_0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMbySCxN5eG9u0Nb2h1qXP7eCXQltUaN5_6O8kpAUBx_WEbro9Q31Zot5Len1r8dEV9a2S_96QjHiXoG-Bd4Zi42wW-5TUk2wWvqcEeLCBZ7W4CzDO4H6MLWAc9liju=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPoCXH5H8gpLbffo9Za0TLHAwS3VI7bJxzP24URqd9rmfr6WpyszZDsa9BW3mOWwB4YoFonuGX1MnnNJLQ2cUgYjG1pHvPNlHT_-PULNQFWaqRKNwsdRkXTxYOs2C-X=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:12.019Z",
@@ -6062,7 +6072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1bjQDrJ2_qbD4uQyUo_9vVeljgcaDCrr7xJfFQ4QfGPQ/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNqGSRM30rJVYrrm0Bzc_ag_NYytKXnpzneTcYLROX1wRwokH5f83LSx1FkLPP9luha3rPyKNPbMD5ZCvzcERnYYfMsMMbFi1sHjj6QgCyVJMIWtJS59QCHsrkCq4VQ=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPEwDgFsxHMAPHMDJKE8R1N2gE6u5ryNdnhxv3_bjbBACSDOcscKfpybDAoHRWWRPiJ2-CbbjZ9C7-rgKtC8Y2hhkuHtrqcWMiraAZOVz9iwJl_SwLLxNaa9-IluDs5=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:07.295Z",
@@ -6187,7 +6197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1vIVIMd5gs26367NbEuDFKfTphuaFRX1WTIxA2s95c38/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPgOjWQbX9Qhh6cVTP3jaZl3GV_7wdLziUMEwyAe6mEMiNRdqEDvqVU_Psa936iAUd9VOM-HaKd5fLaZgyT4zxqnir8GdwK09DnHRWZ9NBV96oajyUwsLWvHRgdXlFm=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO-eW_mkeJVWu9SGPjqArVpzmGPptWh7isBriO_w2WZjCeYUUxiWz1VxmtNFpN82Lav3iyR9JoLAq-IahOy3kWJuyUcC0LzIcslx4X72GiF3oCv2tFni4AOmkvanF7f=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:36:03.573Z",
@@ -6312,7 +6322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1_m9GE_CGpeaA_mWYPPPOUUr6xc4uVGn1l1bm8x6pcug/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOUqJFdXrfAIvGQV4TMBoTVD12XPbt9ld5_Ynghj5C1ldNTAkhdSdn6S8QyZZXOMqnWjaT_3RWXnAvfztPs3TukZ47id_Rz12-psElc9zOme59_B3RUKXuLcvpCyKqK=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOM2LtrvXdrUZ1-NHXUxNSH9jgr34TsnhMbuw2-ufaQpwxDy_4JmIfNYqSJ9Z33715l4-_gaWsizQhJcnejdr3es9gzseDSw_yOFN2Y7wP7HcTzWMoS8MxtqMQ2nZps=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:35:59.084Z",
@@ -6437,7 +6447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1OezuRY2Mv8mzCRgqeSa49QTNAEkCcZhyuGZkN8nglJs/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN-JXVPUb8zLJGzdFHLOPKYHeyZNeT-1XLEWwkQ5QDaGAwPT--6HHjtaqWpuB6bZGgnsl1MduSsExHol46a1WoSYQk3LYYgpvJZEHgC7W48PlBJZnjMa7gqLWiLUKw8=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP91SrAbwDqXgwo4kD8dWEa0SE2QxygcE38exglPb0jCi643kaPaTRqrixZDuUbOwFKPTN7M1T9YVy-kmc5iB-1uLjsu_qIHDwJEvPVfCekFPOIB_0PHluajszPAbrz=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:35:51.244Z",
@@ -6562,7 +6572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1vemPawY7h_amlsBQZpyNpfiXAsHLVud9TY7srh4Auys/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMagqz1OVG7bWQ7LPTmG9si-TYn-naDdGmMGYMK2UotYUS4Dhe9Esv32GVbIz-UJMjwQ9FWCgZ0QOgQ_f9xzFkEUuozqJj5c2Dc_IP91ku_D1OeMN0kAOwIIFj5MXW0=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPPDUC8hk6DcjlFzSAUWWPE4g5xKUBtYTvzmsNmB4mai9YpqGNAb6rqsnAOWFfoOweXbfGMlvgRo4GtvsMZtNf5rv4sArhtwS8s7K34LCZ4IUR-4IVOB1cxqMEFGK1a=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:35:44.219Z",
@@ -6687,7 +6697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1bT5eBiMt1PXcVApTEUWz2cEi820ARpo4NgADGnkF9fE/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM7xma9QUVFB6vAa6BEBSQqVpnaHtdmGejrqMjWZZT5dYFMPBU7qx6I33P3O_lzdh79A4hMbhcc6QdIj27zB9UCJoVJ0AqwP6RYpBzKxbs965Ukg6pVDkpsbMLXZ5eb=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMTKLiYQpnHBO_vbBU8_msiGbSbNB-5dACWequTdhuWnCpyTGH5zsJ5WgBct5ZvG1WGOO2YVPIT3acMRh4CxAPHjEnMEcNDtxM3dt2flkaFNkt3l1yMKiePPCsdbMrI=s220",
               "thumbnailVersion": "2",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:29:08.791Z",
@@ -6812,7 +6822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1AnhQuMh1KxX8OMzdbUTIPWjMr7ucSq3CeW_CXOJ6Bkk/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBND-D37rqXKEfzfZdlK99SHKnN4CKBxmssT3Cs_IczWxUWBGS0OE-PLFZdUbIMrFd9mBMbOtWO4Vzbvil8YbyPudiRLNMmLxtrNXVvzq69r2YfeZoe-DH2qrLvXGK7U=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPgy8iFI4ACD4dLOQOQwSGgFoa_y-7jsveKbqyKjl5mpeVKZ3MKACoYAEa8pJFNd-SUiwN4-iYIGI-m-cbssksJqLMdu2ibcm1CZAqPa7z25EZRWqKYItx5Hnsbix0r=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:24:40.637Z",
@@ -6937,7 +6947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1UVeshpNn7340xSRKgfyr8qcPhCgdgcX5MDZDilhQgzA/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNJoKsva7kyCVhsxcDLL2vHAj5cbhOyZbaJ1nNgyC8zfgKC_kT7pf22eXyOyH28gMUrBXa6VUGongP7fIpQNcERVJ5TFK3A3S-WI33MOQehXqa1AFScSejMAPolfoFH=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPtdgQPEb39htxL4ShLvb9phJfBdl7jIIlUC8A7ZljbvK7jG2jVEktguPLryfe-dyhU2kyVrnaSRMhvYB7DBVWOtjoqY_05nG7PosSRwyo5Gt-vV50vAKugqtJABsQ9=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:24:03.329Z",
@@ -7062,7 +7072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/18J4kftA2W7NfO0qUNkUpn8ZFFwKka7nSTCkZd28d7kM/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPwD5rRbmE33U2mzF5xWAoYNSuriE33aa59rMITMjVRev1U_lEUaWHQoK3sgTP3bm3jLDj3sLeWWqZ5tEPJ1Qrz67gX5UKdewBzNW36cpRglxHr2X49J--_GV9xU2Hf=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOBQRAVpEl_Y2Ch0cTPqR2I4-2-UY4haasELCqVoZKrOoyAdESRb714qWFTvAnNQoWrJSO64IpmWzKFNpQAYiLywQCmYkwGeSYqMsM8ZVMdLSgl3HcKUKX7M50pP0gH=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:24:00.118Z",
@@ -7187,7 +7197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1-rUgWA_gEzVXpWa01DjmHQJqn0BnJZw1rhKG_OCfC0s/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOtDF33jKKwKmzdqTylV-GfUhkMl3bEozt6Mj6LdiNrZLmChAHuPHI5I8lQNuifzYaQvBtHDPfdpzBALN7dpTbQQIl3MmlKZ2D5Gf6vUZa8Q6Sj1ZnV9LvCyiKxMJx9=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOhSGWxU5YRVK-T5S9syKMM263DtyTvKYedtt7GuxfUN-TUdWGANRzRXzk3Lq66G1Zd6t7EjbXDbIYLmM0hcQ8B7GdGlw56H0uwDqkhGMaodpXkUNFeI3bzYRvHMQZ2=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:17:54.405Z",
@@ -7312,7 +7322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1BbYP7nUogysDInNRMksqTzGZ4ftVo40SSVW_ojCjGpc/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP1BeFvhDB1p015umuSQSvZTUifeQApOXow_IgrBW0jnM_QCoemfQgOMr8r-ykRKYelsEO7rK9PTuD1pg2eQFrpxm-eVUdOwFAE_zeX-sxtCgB3I89BVGP--AkLvIuV=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPyG3g-B0kkh8Z2EE6__Nyu21qsYmbYODzBdYyh_AnUQa7JTJkmNXIuA_4ea3T22WZwH0TZOewMLgaWzoZ93O8ehR0TObBYHA7RhXvcqHu0N2vV6dvaZ6sS54iiNmnz=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:15:34.281Z",
@@ -7437,7 +7447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1LQd2HDYNtogEoWZ45dICO9Fsxws1--BiSY-MfqX4qNA/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMBx7xO7PejMr3b01PNyB5K0ikMjpNdsJANqMmi6sZ2FmgNjGfF1GZrnAVkvuanI_SHmkQbE0cfDITs3ZIMcMIJWMySN0qkDQVGogz63q37Jw838nCeuF_e6w9D89-V=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO3Vtrmr5RIE-sZY0IuOxf4tu3WGSE0evXUm29WU_MHVGmkDVyxF7R7Ds-q2G-OhGZkdAY1dqnN5SKTq7ccg1kjcbTGc6LTdIzJpawgkKFGh3u3lYnpiyFH8hXx4sF3=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:15:16.474Z",
@@ -7562,7 +7572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1kBOQT2D2fKF-cv1OwQLl6htHbEgzKyrQj19C8KBsJ9E/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMKDSS3IznvGEP26OCZKSqI47kCjKcDz7-hjZG3qmaOHbMGzwyN52x_hnN9YiKsk4oG-JcWv7JvtaQ5uGyd3Yb3tVva7X9SmfQyg7vfye2ZMfnjCAH78BfIohcumReo=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNrq6sDfXkzaBAWv_cDdgHFZFwZ1rxNyCYdGo2sohu_z0YkSaWukRWhVUVJlS3RtvPOH2VM91UKdyNdze5qFwsIhs3zwQCcB9N-E6jAU7cjUwKhaNkC1BozDv1ksqKO=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:13:09.230Z",
@@ -7687,7 +7697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1etZMQpsb7ZHl6TGujeCnZDTF3_x6PV36Grne1wbs7D8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPkvdEEbxqVJ8GMO7D_-nT_kcRyyqWEk7LDRVG8El5YedGgGkP-g0nbCj37atKty6TXPjraRmQpanrivTGMXva3YEXWA3L8zM3dE3CvjXUbc3GWr6sUTD_Montp4Y_x=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO0HL62tJMcUHQ6bItzqUOPkEDUouKgOyB1OCw_0g60QEoqnGIR7ILkxcYqj9BatJZ-ig1DwnCBZPvuX8gZc52FIitQMFCwV8AOIMXPEb1U9IN9V-8EGh_5-jHPUghi=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:12:32.440Z",
@@ -7812,7 +7822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1AQkcg9hDRKD5QTjCfJRGqQLR-5Hi7v3mSvw4J1TsYb0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNjfopZinRx1bGA4sGWZ-Mo82x5tuC-V8hXJfXnHtX7k1IGbqpfhiqZiiytdYsP3OVaEZbCCzsdQB6Usnvc3NdCS8hv84A5zmqQ2YySlddG7bTsqp6AaAEJodnBpG8Z=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM1d2FI-XSpcjM9F2a6-21AEIkfzb79pdziVoPsDRsMzLavoEy2QMzM9fKYDZIklrUJj7sxBgIxcthN_TM76cZk93m9XzdfBUodscS8AxVBl1pqqa9DuKfuko3ZYtly=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:12:28.617Z",
@@ -7937,7 +7947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1GAwCnWa1UPSX1MNGa7THHD0O0XhiP0mJBDkTrm4Wrr8/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOJ2owbNMMouR4GEM4Ad2dyFeHC4X1McIQfMSi3n4DMQDv6xJdHa7VhhPCJgB6X5Kdzo9ucYZOU5yRbslyn994yYaHh-IV8aamK9Bjc_wKcZijoYCwG8ToJmcfPHylM=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMfOrTHjZGu5gAfmSxeb_QKrzcPJ8r3MsZ2oxKSlQ1hj-HIerBL6pKPeTD_lfS82IIvDBPrxP4NiK0MIz10No4tOJvRkVluvV7NVV2CsFDBEgI08MWbKvRGx8J2m-bE=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:11:17.297Z",
@@ -8062,7 +8072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1uneJL1bQv4c_69e7kHj-WdRUIjpXPT8nVVw_pfy92hQ/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO54WYxNg1KnmqdELyuIC7En1qX7QQm6h6HK9V9tpMonG7s_C0nMPqQDJIVKftjLrnkcuEhkVnwE4CjrFdL1jp10aQAZJMGa72fZQvFoNXdUFUM9GOp_HBL6Ju3Wu4c=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMNJCSe3Hl7-BXcG_l5hU51Ps8vMqfNuzPu-9RMKSpwNgmZEpWXJiNZUzbbdSTAEKKBiS2nTl0DEYdXm8VxUCpkncz-AF8hZuHtWrWFo6hJf2Jnx3hyvZkBvp21C57E=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:11:13.546Z",
@@ -8187,7 +8197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1VzAiSA2IWDER0TZz5D3Wrsn5mfEJWES1rq7UdqsUPiw/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMz8VNIHVNNykTg-6hhjLmeNa2srWja0jNwEYeABSl-OIbmQ776xDo2VJEz7qT917ULq5I7QhCM4ZGP_hQp49O4MPNOj8CSaFHrIm7EnFZSQoscs8BkJs1dx6sM-Br1=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMf_xhbmTujeRT6d0KGtcVjVPxNv9530IfZletYrKHr4_jCXn159xvDaTZjNudCfaBN4au_06ct_KjU10fpwsi68FuhFVZ-v1DQsmh_khfizDfLIxfnDoyMLIkIxRy1=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:11:06.376Z",
@@ -8312,7 +8322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1xtkczaHyXMp7cKKZnup_Z0JhynBiQ49Ry8iWoMWa6BM/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOIeXQELQQpb-4oXfK6DOJzeY7BnzH3Jb_OI_rhdxVP9qeDHsNMQ0NldartuHCpriae0UCMEoywpcsczE_NkWyAOIJAEn5vh7ZmTKlBWTjDtMATBwvnSCFcwk4YpXMQ=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNbFpInnHLOp4tsKgGQoKgLoRw0KFzl7SrAIc3O_GRehU3I9Vi0iYV4dZK6kPC9kvYa1RNcIsV2_Hp260a0CMOn4-TS55PR1POK2Wt_qQtUljcmKFBsBnAYNwlFemif=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:56.652Z",
@@ -8437,7 +8447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1bFETMrhYR1JlmJaLDxPPUEdluEVRCR4wthSjgpeokDI/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNxG3ZR_h7E-tBEJGQDK7_jthDbCg-hbLuNgNw4yur9OO8IRBkXrgKrBxWgDR8Y-R-mWUHgM82d9vxj2hbwv2QCBWnapoT1mLFG8exexus8tt-3NQ6KfrwFhtFdZJH2=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOp-kjCoiuHd_uCNZh84pbloUb037PnLheGJDeE43uajXSkVjjGy09d47d34vfX_GHCdOvmhUhF0QDG9l2NdfzXhuXO1HQLxiKCKYzxGoHCUgwIv8VfRc3iEJDLlm0o=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:52.416Z",
@@ -8562,7 +8572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1yYF6EgpcLJwDJeaxhNBugksdst26G-dUA5yse_cuIvU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN3blXzW61gMt87-WP63OLbigkcEcAdgXUQO9NngKftKjzh2ZN7WKBWw7oaaDE7Sx719TPJn8awkyhcYXtwM4T0B9nbhHzZBT3_AQ6-fvHSlYlpo0ECNrxH19YyO4j9=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO8lN3NfpI4gec6412Og7bALWW1Pgt5G0io6MQC9Z0825x2C7xnAIoBZ7AQieke_N7ICUZ0kucHK3Fl_pQ6B_wUQj0Wqs_y_P2pXGufvgjp6JXrYdWoEGR1Xy_HBOZe=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:43.845Z",
@@ -8687,7 +8697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1dlwLYO_V2p2sTO7TtBd1q2ZUR80sCImFOM-xtQwO4mo/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPX7w0uj0IOFjQRKFPxxbqSHaFrkg9Prx6FERq6Rw3whhHRoOesOzQiw8LGdoL0ePqXPkDC9rT3S6VF_OAj5RRLQ6omlzU-srI3jvpvQOZlTol4uDS6WcYJ3wyhJHLs=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBONoLFvnlrLbevFdUdoT4OPmp9OEwpELKWq4D2jmg2G2e09a4BfAYETiIAGxtTzkvpkwu3D4x0HgJ3tuq0muw84RnX_-BrRJ4KVwB-FVYPxc1g9pah3GNtV-6rzIsmq=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:40.962Z",
@@ -8812,7 +8822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/15IdOg9jGySgI6HtcqL-oMKom8UuJI3CeofnvQY1DZyk/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN8gRbM0cNwPKHi6LhS0h8hygimam54HjCZH2qGLgOPU_UREmftW5RPowHIRJIHu5VXuaOg9FaZBzG7WR4gPD7fmmuZkoVYFVQW3d336Rc2SbTrkjaHnmItn-0PWSpl=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM_Lp4I3KrYUJE70x9fLvC54QCXmbDDPee8DS2PMQlZpdwyp1FN7P60qGDrEPr3C9ouIPK00F74vohC2ddcMAWy923PKKQ8_pJ0cLtAQaiTGZYGuAcfnkhu35q-vJ-n=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:38.248Z",
@@ -8937,7 +8947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1BmdqCVwZlP7Fw_YEkrJVjQe1QeUFLU3o1v3FJ9yK3y0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNLu2TvfKE8onAD5lFzblYjlO9HknsVndhgl84EHO9Gzgv4kJ7Q2a1SEK5_8Yq3PLw_4zeyl2uVCQYW0U29tYXg3oHCqUgUh3YsNMU6rRTiy3IaxPhCgfV_N4eFieb9=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMTbNj7gzxwjFzP18QQ3bmhbc0XzIKqKKYjkjdrQNrHeqjr3mTVXhVcPTWvy7X5bCN6qYfScVSG9zEIgdILASibhy_seVnFR-Va-FP60tzHYogZGcy6IiFqvDlBCNeA=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:32.384Z",
@@ -9062,7 +9072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1uFT9fzQsh5g2wSOU4MlDfOUKvCC-qnyiVDnghT_5smk/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPil0GMk5fpDPqNnMoLw7w6t4k7ON5-08x2MzLHzi1LNSzuxsMJulGCyZJoKjkl5IwTZahsngqa4Teta91hur-JEfM-bzKBH-_KGw3Nf5xE3OXe850qGqtUxcNgOKen=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNCQaDHyrJPxFOpNjoW1JS1Rz2JvP3VQHLPAdEicfxppKeb_qA-kFO-VnIs9noBsebu-1fxhAUcVhbM-JYNLpH7Pp8SIXQY7vrTCUNqxOCR4o_iCrjXdrQuRAwh44zT=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:25.685Z",
@@ -9187,7 +9197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1_i7QTzaHs55sjP5Eo4yISe4qYzG2dzPvx6KGDLYMbt0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPthJJq9rTl1CTtd_gcfoKjQt6dLAsOCxdLZPuN2Gr-ulANC9FrwhmaHtD-ckhDmSL9BRuNunZ6f2qKKBnGC8n5fxkMcg2fJ6625b80q9f9jeVrt9vU_TOiBiSMORSg=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPITvVZy18kh5xYWWqRCVRqeDuele9sOkBOr5MFEP3Y4XMZTdc06rEaO7j6MZmB4bMS-Wmb41nEnC6BgqwJyiY_rjTirOiLYWiqHAt5FJ_bb3m4RWuRYUk1gt9Hbwv4=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:21.180Z",
@@ -9312,7 +9322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1B7We7eeDufNXr9cpduCtGRTfumfPvJufgl6DgHcuCGM/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNirSbiopMGwJKVC5TLa_Cwc5HI1GF2UQJ7l_-UjATXr_yxfsWWQ8npNfgU8RRFxG-7t0BriWXxzL-wK4MnNlFvDlK3U8mcu8K-u3GzzZt9Vsruvi6XwO4lC21AincV=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOuEx31kEFMTArfFI5Wpirk_C9Kc1tVvGKJSLl8qpJEuZHJZfSmyfzSznkr7dfJrBLOW-ZBUuJhGSx_qLfZAaCvNoBB7NsVeMxl1IwqknBxL1IM0jGadS3fUyGOGTCt=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:17.477Z",
@@ -9437,7 +9447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/17lyBHj0exodoR_s4vjyLsTTufY9pkIUVPocA4Kt80G0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPG6HPIrYf7dEG0tEp2CacX4EMPwQms0lHljfiZQXILWk-B12Ju-JTHC7IS8q6LMEoFrESUJ1ya3xYvHXOdR43IwhvYrd5ZZXzSNLEwvg0OTOgHGq3koxvD0b8qqNrv=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMwMG-h1gwAu1VEAFlon_LPNc8TH3RNLFeuCHvPcg4RF3c8-I55K0k8zRch_JxB-Tbi-5jz7MMZSShnR-6RU5uDftdn3w4f3tQv2m_K4JVKG-D5-tZC5HqR2nMHXNQ5=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-11T23:55:14.028Z",
@@ -9562,7 +9572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1g-LBmeKEdUuBhxggUcoCN1odPDm1bhf6AVaUfR2vtkY/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOUcit2ZuhAH0LRTBByIFIs5_vH9wCrBUTteIFYRfWcvRbXEemUuAcGI_x6mL0jhu1LVGT31Bb6oJ49fn0PAMPAjNnbif2GwvWhlj9fYuBM1r3HsWsWcRWEAe-fAIAP=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMr3JpXgUHqYxKoDf4GObT4FZHsru1aDH1iE1O7AoBRA2SqN6rUISsiq0aw4m5i38aT9jaOAjjY7lEGkmAk1vV6_wYvCzCl3wmBH0O8JOFqM1C8ZmOru7c6cmJKweYl=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:10.249Z",
@@ -9687,7 +9697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/10Al2gnC87bU6LfjrlfKJuiUqFxz_Y4vS2Lfa5--oMbU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNYaJRDfA7VXzHBr-90kvcyYPu4B06HjP9A3dw1k5Vg_svPHEa58QlWBelYyoCmf6Mf4vSGejDTthCpsbtfmEwaSxZH8fV4546y6mCpzgNU6DgTCBG9mzMFOFrsl8Ed=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN8TRcVhdTat1kgqEMr0tNeKdl93mzZI0uM8dK0g_1kGCXVSpBI1a8HILMwQnsD3009IryJqhP0bcHnjZg95JkW1q277ZWNYweKutNMfyY9YEycdf1pXExEjRYkGzym=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-11T23:55:14.028Z",
@@ -9812,7 +9822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/102eqjQqAuEDHV5_5ilfGrMhfEQdYvdvm85wVt_F89nY/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOkYr9MBeMdeMqzTMQdM3CXbbs0bPGqvFTIBICInDGXyNJxMnCSVhGEFJfDwGu9xVXcyGLk49nLCwSQXfimckUIM1WPIr8EgDJh6G46CEd8b8aY264-BU847Ns7XXk-=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNo3GKbBHcyVXpFbxauVIA0vq2vzIvOd7GIn0o7JeieIMnuDdBF9_BlgkyZ1Rd9g9fjKM1LWqUBw-_irD5s_ILuEnFKFrJ5qSAwqvLbdmJ1mMoDvWAxfUhZF9YkL6et=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:10:02.247Z",
@@ -9937,7 +9947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1gg0o3MYQOLK2yAwMKsannKU8v2DOs7gPv3Svl_6rzF0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPhW5X_Y4Jkn7l7-d8TuozS5M1YrFZuVa5W0GvbgFiOq_6mCAHSXFZaBeXP_Lph0z1DVOr4oyu6ksxrmT6Pp14WiM4AjwgkjVtNmK2gKx4p7K7_gpeeQrcQ6DU1jYta=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO598_v5NFQIF-MfiPVcIX4LsSitRE8Fausj4c25te4B28yPo9z5SPqduagfI1Z3BNV_MX6wSQ4Wwkvx03daqgqUmfFU0SDGWjvPDtqEyL7COr5vRHEZgE8CJCWt5cA=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:59.768Z",
@@ -10062,7 +10072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1qbQ9RRA4LojFNVnhAc6nPhS3mv8-c2DmA7HvgpctehY/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPxvMuskcopmYCl312aFd4w6cxVL6Aq3pHqyEkyr1-o5wDTPUEfHE8RXe3kHaNsviZu1nOfrVAy1XelUBfdNd51pLWnid16dUjEREbxYJd7zo9UEuIQVEjqhkGsV3A0=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBODqgR_Co5r3xGYHy_uIQjo_esm9-pouVwTRtbf3YmusxWgh8RYI6v18SDKaszgaffRdVHmVoZq8ZmfDRvo3xTR7HbOnTVMqicuBNRuWp8HARQghW_RXRPpdeeT0tpV=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:58.948Z",
@@ -10187,7 +10197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1VIov9gcAiw-jVRPm5JnQ4W3ixBmkQzFamRGj_KPLiWE/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN9hPlw2AaWBo1pKq56dHb9oubejhNTDffcuQYB41RX88nRHPCTldeIug4_TFRSiS5ESTWSYE28xKmFrO77UWCd8r-L5VruadntUSoIjY4olpt0CnYTLi-VKcHh0syl=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOoqMlvLEqfDGbIQNj7aaKiXEsgqxKxRSv8Om7xqbfpiWAE-LKrCgpL1Yc8R4C2D18owVa_kcS7ltUSmBje0DbNNN2EF5zTqmAs0y-jE0i6chQV6HZdBE3MLx_xmTUS=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:55.282Z",
@@ -10312,7 +10322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1IsSqm_spi5GxTKLDysza5DR28w9PBh6U5P6NakilhGk/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNCKfsvbPKIHP8FVHmos3FqS8hmEZTwECT6o8htDGvJww2sE81Lm056xS9TnVR9QL4KurQFGIRZRQjVyOzQms92MJbVn6QzlQHtEyMxyBy0ZGGOSRXbu5j5WXKs5hfH=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMe5sRTjd8oe2u_dUWpd8SSU8oiE0jM6E80hV8NN8giUMKl4uOJDhUnC-EREm2Gb679URizdxvog7RfZDFAYix1V-fRe3npucb08ih5iH6BxZz18FJiNPdgs4fTO7Iu=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:51.459Z",
@@ -10437,7 +10447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1gE2Vrcrow8MKCpgGz5NcXRDkhxiRtx6ZcubVstx_udU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMx9II6pTzbcMngRbe8z1_OrT5wV8YjX9KNEmT3uWmlgEgEwemg2suFz7QGMgt_N5VFbNH69ZAspdvKJYBc31T52m0kN4ErFLBArCGsqusMlxQmP6dYW_mJW_zlP3j_=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPav2AB_nU8PWviAHcIRggLWLRFzZfY-pw3mslZ76zcZzvVNqU-ab0YmVzhqJ4cRZHbTVQJYOJA33GKU_K-8IeMbhk-HpETJssaHTVeHKbmStV9ioSGnZFBRQ1E46EI=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:47.821Z",
@@ -10562,7 +10572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1VOKvbleK8KBUOdD3xBlA4SGIzLeBEWjveGFxPYFUnJM/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPZgcoi-2Y2wle9hwGS-VVavHKTnO7GT3Hp0oookQ_tXyRfvrAljkYORDx_-dKs3n1vNMEBpF_d8jJhJVQ05ACQphDIRHh-wtIb0lyLGkuv-nrTAFABYMjIZ-Ncr5Ix=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNK67ISzlLyrN2fxkvkzgIzj5MZwSI3muDvA0086BBy18Lj7INbX6Qv_QKyX2icmU2qRtj7XICElayk49MeqmK9G48FdXJQF_IivjFiQemQe5SGtu9xZeDevquwgxBM=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:44.110Z",
@@ -10687,7 +10697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1pjna0hC0GUWv5nFefDUM5SmIGLWcPbMDlkC_R42m-pw/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPOAXQ23jHvBpIAmBXwC3V6kXYEyBtyAFmgjfAU7H9d26Knu9EYlEXveuGcHk3xtsVtjszb8YWjYtHLsDgzZ3Ms3bDx2DY3RjH9my1cgERmpubf4yvsAPwU8iPpqlvD=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPg290Ne0w_0AbYPCcRpYKnXCTQHxmDoGwc-CpXc3TiX1AiGmB2PH5VCaa1USKFrZQl0DtrsABtLQjkVTE6xTRKrS-y1x_XGt81LnVeRL2u_WeXHSE74m35ibA2Y_38=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:40.633Z",
@@ -10812,7 +10822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1Hkd1DjEnMg-a1rX0yneTVhl-kFaIJ3fQz9opPPaMRIw/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPAotLasRQegfE0yu4DyGsaKX9Ft4g-m4UY-gdIGXK778S3tkddlvDpp9mDq7k-M0b0AX8EnX2ue7IEeTA7a7yd-LMK4W1TpB1_Pu9D6i96RCZAWdFNWUL_-O5WuZ_I=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMb8eomE8UND99tXq3M9zjk-LtebxACwGj-MmrL-QanrXq0jjUchUOzvPvt0N2stOVW7J78cKUKd7HKPBZJSSkZRYNmzHcqkxgPvMsCiYbD3hiLwxe9VWkSVyKbtbbi=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:38.187Z",
@@ -10937,7 +10947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/19V8nVITPAq1otJASE6-ouyDVNFt2K_idOBp6dbeYl1s/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNnOlzPwdh8jk31XUsvl_SOguqMjdis84rvV6w_z3ApmeSDbCVvLOzSzGeMRdwuH0MYds2SZs7xROojBpWAvUbe3QeI9tUfNgz6H-2Rxceg9upPOzkUBS36nzI1eMXn=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBM66AzcDu8RYcvnaAVV2Vr5SpMAAGgfLwoW289yhASBzr0H3M6oFaB1lpMWWsu6gIdCNDdD33p0mADhpYlz_FcbW8jxRv9Wvnm2R_Lvk2fgj7H44ayKmYP6NAFGAwVD=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:37.313Z",
@@ -11062,7 +11072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1CyOkoU5Ww_NONv7chNSKkWsgISMwgnkPBYoNUyxRqss/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPtMwktxYa1TWlvr_E2uWvleKduCXcK1szLTsuirJOybJFeirQWNOHc9SXZ6LfGOpjpIezJlUwIg6J15tLdtTV_py_NNI4pP435ajf76bKvRSOo_-NST-8YNacxvju3=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOI5IBnrlPS9ur-ArpbeVO0LhDPNxF4hID2ly7MsFwyPYE64aIWBTp1aKF76OEv79w-cSKRzUr67gMKG7T-xDnXtqcODxuBrT25UlJsB6RujDEh55H6UcCaFW3lWWe0=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:34.731Z",
@@ -11187,7 +11197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1CoDEKua1qHaywm9kUXRsJ4bqNHeTreGrAb20ZyPVZq4/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMqPFAk5IK5EN4gJI8uCR7CTEXDLiUnygXfOjflxsOAtYjS-hW7bZW2Vqskl5DQEP7LjDpckT4AiDpXq4MhUCMLQ5YOaN-xZiQMFsUSDmW-1fwaPQMJTWyM5RH4kfjy=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP-ZgSgT2QWqqiJCJ5vyUJAFTyPqRm4F1fxQ6CUKD0zAcktxaxNTDu90OcYJwc9TbtWWf2KmOVf1NGON9dcxrxG3DYw58D6974Hhtn6jbFwSRZ1Av94jR3LUKDMv7gu=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:33.880Z",
@@ -11312,7 +11322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1DHPHadikrfSZvRZZt8DkRwn1ECfsJ3wKcEZPJF3se6E/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNdRU04QPgocsTDT48YoKcFuooGZ1Q145tHO_bWsp-1AXGOvctO60T8Lu8LC8Tf_YAX3AY_76luB-2ioVjVzjvweiTlbX0Kim-6K4ilEg-kmCSNM0UmHiAKdqUcyAxg=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPeWLObkuyNNqiP5Bvu0VW6PDuo6oEH6kTr6rkRQMrUf1atrnuCN8ayI1F5SJFJMP4zW4anRYCx555gpZrElsh4c9TGJZvuEKh1tBR1YElx91DAu9Nw9yBX0sJiObIR=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:30.128Z",
@@ -11437,7 +11447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1vAHFO8y-O1ZyX0ytLdXqlDLSI59_qnG6uItmQU74Z70/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOy-vt2Ve8dirAknqcQbeAJABrXzs4iRC4jC4-G3PCAmkr0-_8aH2cYRnAaSvZ6fGsHyUaoJ0Bt_8B_3N0KhqC3pKuqwo9IWyYZJwPkIQL6vhYGVVs46f34LHiVfGgN=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOVrECGZ9cZz7WXfs_ar99_TteDNOzo0437jsV2MtVb3SbQ4AVKnU4rnfQw_EJ52WoWsDnCyk_YZRLS9GOENBn_LO-d3ANBhO0-pJ_k0VgkUnZxpQshGgI2z1U7E7gj=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:26.416Z",
@@ -11562,7 +11572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1UiDQjuAplYEhRtENTV4sUu6i-GQY_AqKekOsL_PMleg/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMkDNprzIY34nMlv9yRv9nGJuheCXDTZ_aTnTq0XNp5Dz-bAGJGcIYcZjNvss00EvvQTIAq82ziTUdL5BZwheEMMbVJpocEQ6AZBUpZjJ4JvHP4F8YvF_dOR6Xy1mRQ=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPvUJuVp1OgMi78aSbHvl8vvCn6d9btODphTxedg8rayis_m9UCU_Qjh47YZRIWixw0xcAlvgzznZ3FZJmaKMrsKzjYxKdpODGGYfZ4E5__Gf2HObBUyNGH9gsfThCF=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:22.298Z",
@@ -11687,7 +11697,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/13snhVC1_ZcbwVQb2mwNaeAbPKxkq3Oj027JnsrGYHe0/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO54B6jdhm63O6CH8MFaN4X_szjGWyfazPtjOh03kF11n7Kz_wf2pEBFQKaPj84qHbaM7WsVLLXhS06XoE20Rf5wUeG6zcHQn5DddxUkWUHLv7jt1UAykMJ1jy0DdUG=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPMr-3HiIX4TK9PNCFjith_DdOuebFTABhqlphR511DGFdmLtqHqNideJlBEr9dntBH-4OeF7cshGJRm0xHSkbRTogTi8h94r2HDtO7UQFnpmk3eHKiai2lmXo37sTI=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:18.418Z",
@@ -11812,7 +11822,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1L_N5vh84FKYR-wFnJxx5tXH8FyCKEr5HGYCqhPzUifs/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPUKsHPY4YtqTZoYcZnWa38oiiosFs6UFy6j3Feg5Oo8beDYNtAKccdTyFoKbSQ2i--1IrxGEI_mt0FamKdfJkyDO9A-_sLJvpFe9DNikxq0jceKiB3D6aXn_nA-Bq6=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOciWK5UA82tcA7yCw7mMNUE4HeXbNRb8YWlMpXGgvMMehq5TwKbL55mAA_ybukYQjQ-o94Ve5-ufJqwUWtgY51iFpQY4BqJLMqFCRMiydBkGVOe4IWSL9MS9GLU0wx=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:14.253Z",
@@ -11937,7 +11947,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1p75iYx32RKCFASD63Cpx8Csk-XX0VbyLFtGl2TzYyxc/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBP9B97n5M0NULG-HWVIU8iDQZgSqMT7j-Xawy8wF3Ro90fcnJfnIqz9YenLVcy7Kt9HjJxhx4CylSPnmSUvyGWInZ2_ow5ELOYM6GswGwjarL3_XYJDGxeW_VmVqHBV=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO3NvdjFs8AWIBR3bRav9zy7IWkTORC0-gsbPcbdIQuC8fibb-ul8ZT-0lQEQLnNdvZxXgtQBrZCr8nYiGLnlFS4ZYWMVrcZUd8Erw--Yyq0g8c99_P2Lx_doZjZksV=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:10.156Z",
@@ -12062,7 +12072,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/14YxQTPo6IyHiPBwgUoCShhZRM-R5NUImqGhNLrSZwQU/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMj1rqDwHNywqv0Q-V4FgN5QTCzEvb3QN_gKTBJv5FllQ8uPI6osH2YDtbBWqdzMbLLYwPxQUqxAFdsLoxkGl-Y4qnuyu8vQEAMV8BCO0s67rAgG29tXfdqpzGnf0kZ=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMBQLIvpxjvzTrKmf3uwQSqRRSReXMhriCh9LD3gAwg_GSLeMCQrTUyFMMsfooTfmA7sqNyt9rcG6IN8ePdEFnZ1sNe66QcWpybMqwS-YQYJ9NEcFnwhnGNSbtQdc4a=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:09:01.091Z",
@@ -12187,7 +12197,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1pcWtjmGF9FRWCrScLKA74t4ctacPCpnF31RfdUtaZwY/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBODjc7uqsu4Z78DibdV76cOvYt1iP8CjsXzatlXmAUDnMErm_xBiGjk6VsIJRTRQoCTly9VPd-vjwrquGzbsOGwzrIz2TCiR0FdRkrTygCYoZKpA0jTlOlvEJBkUBAy=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPcveMPn2F_15wlgmdo0ktCmiSDZY9Z_3VCaxnu38oY9buNISUF56zyro4-fYzU9B3gw1JUPznBT3lKqRJm7fXtrWoJ_3uTJ1-tbaycBzRRxNPMpy7tS2YS-YFkDBZf=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:08:57.209Z",
@@ -12312,7 +12322,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1bqU9ryPXWA96yOhq9-a0OCOCVPVRIxST7bOK7ziLwdg/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNGnNa34m6SWi-xZHsGjkChuLLJ0I7p_9hm5wW_aq6-23Oo4pChCUVJChkQpa8XQRLA_-NX62H9y6AMxlWR32mz3mdkuLFDMZaa31WsVYYu6r5cVtSzukj2C9eBFhLd=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNyFhx-jBwGj1poqMKcKD2iJtB6xaVX3pUimT_DDKYzcrtec2nQVEJN72Kb6ZLdcDUzIzMKR8MUryOMRpLxbycwezC0tK0HmfPxU2R50nEASnjQ9YclcOUSZuu7Taot=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:08:51.869Z",
@@ -12437,7 +12447,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1XgG_8Tprf7ZXf-cfIWhEqYnqFDJ5PSF5p5AaYDSoPME/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBO8j-IkU9CWzXd3gTwxqicWc0wz2_WE0OvvzSSaz6fuVgB3RthrzdT_yH78CVy3wJDVVRFumZCDOP2ecy4c6W2u4D2f5wL6yj2b8hm3Us-uFWU6YQC-cao5wyaxLV7o=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMgz2kqauLUgencRbYjOk1lEbvbZv7Pj0rw9u0sDIftaJag9qrO8X1gRhgI44zKx6ka0e72wf2VDsQA7iPs3V6RcsGSPQylR-LivBR9jR8mBdmtvk9-sKudz1F6BNm_=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:08:40.921Z",
@@ -12562,7 +12572,7 @@ http_interactions:
               "webViewLink": "https://docs.google.com/presentation/d/1xvXoRZtedGd8ut9kQkm_Mz4aWSsP9N2K0vBLjS-CucA/edit?usp=drivesdk",
               "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.presentation",
               "hasThumbnail": true,
-              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOsiIS2WO5ltNVPRvYpmGf7P-otT--4AfiiYuVCgXUhWDukV54L_jCbWLXqxoI9D0pkTmlVhY21fpPDsvrD68FsAYZ3hpH4VrL6Dk5reIwo7zG-hTr7hI9uHkE2c_bN=s220",
+              "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPb7EmKVNs2DU9I0zTm5fBEOr1dpU1B-KAsYpxpm1d0n7GtrShbg7jGBehiDZBWZSwD-ix20YKMFBmJAThwGJZxE9dwr0AVOg0RaE8RgWSEIZGCeyUQEDg40hYFwT3d=s220",
               "thumbnailVersion": "1",
               "viewedByMe": true,
               "viewedByMeTime": "2026-03-12T01:08:37.236Z",
@@ -12582,10 +12592,10 @@ http_interactions:
             }
           ],
           "kind": "drive#fileList",
-          "nextPageToken": "~!!~AI9FV7TbDcfCvYrSmh6MQrKuInOgyV4zIstyudoGd7Z2rON5pFEcqyVF43abm6lYiqAy69LDdBqqSQj30CB0Kdh7xSNrw9RJ5MPqmLJdnhhc0fQCD2x87-4XOBKwgqardjk3BtdsxL9FlmdblLYEyfHoiaZ4_b0KHaKTi0YMK87DuGS9OtLWssJ2IlNQl0mWx_A8UiBPqF8Sn2whf0euuywNqCNOTiJZyuyDkRxgdbwCauJdUmb0DyzbOkzYZZuturMEFl7yDlHWaReV6l-E6MtNhASjJGthCg==",
+          "nextPageToken": "~!!~AI9FV7TbDcfCvYrSmh6MQrKuInOgyV4zIstyudoGd7Z2rON5pFEcqyVF43abm6lYiqAy69LDdBqqSQj30CB0Kdh7xSNrw9RJ5MPqmLJdnhhc0fQCD2x87-4XOBKwgqardjk3BtdsxL9FlmdblLYEyfHoiaZ4_b0KHaKTi0YMK87DuGS9OtLWssJ2IlNQl0mWx_A8UiBPqF8Sn2whf0euuywNqCNOAzSNRirIV4XweOV-tmW9hwpQ6ApQ8WPDlOMWuEAmbwhk9GWjPXvF0KGEgqDImr8eHRDcaA==",
           "incompleteSearch": false
         }
-  recorded_at: 2026-03-12 18:44:05
+  recorded_at: 2026-03-12 19:57:27
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1bT5eBiMt1PXcVApTEUWz2cEi820ARpo4NgADGnkF9fE
@@ -12596,7 +12606,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '11039'
       content-type: application/json; charset=UTF-8
-      date: Thu, 12 Mar 2026 18:44:05 GMT
+      date: Thu, 12 Mar 2026 19:57:28 GMT
       server: ESF
       vary:
       - Origin
@@ -23237,7 +23247,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-03-12 18:44:06
+  recorded_at: 2026-03-12 19:57:28
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1bT5eBiMt1PXcVApTEUWz2cEi820ARpo4NgADGnkF9fE
@@ -23248,7 +23258,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '11039'
       content-type: application/json; charset=UTF-8
-      date: Thu, 12 Mar 2026 18:44:06 GMT
+      date: Thu, 12 Mar 2026 19:57:28 GMT
       server: ESF
       vary:
       - Origin
@@ -33889,5 +33899,5 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-03-12 18:44:06
+  recorded_at: 2026-03-12 19:57:28
 recorded_with: VCR-vcr/2.1.0

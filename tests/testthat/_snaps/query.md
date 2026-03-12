@@ -1,7 +1,7 @@
 # query errors on unrecognized endpoints
 
     Code
-      query(endpoint = "nonexistent.endpoint", token = test_token)
+      query(endpoint = "nonexistent.endpoint")
     Condition
       Error:
       x Endpoint not recognized:
@@ -13,8 +13,7 @@
 # query errors on missing required parameters
 
     Code
-      query(endpoint = "slides.presentations.batchUpdate", token = test_token, body = list(
-        requests = list()))
+      query(endpoint = "slides.presentations.batchUpdate", body = list(requests = list()))
     Condition
       Error:
       x Missing or malformed argument:
@@ -27,8 +26,7 @@
 
     Code
       query(endpoint = "slides.presentations.batchUpdate", params = list(
-        presentationId = "test123"), body = list(requests = list()), base = "sheets",
-      token = test_token)
+        presentationId = "test123"), body = list(requests = list()), base = "sheets")
     Condition
       Error:
       x Endpoint not recognized:
@@ -41,7 +39,7 @@
 
     Code
       query(endpoint = "slides.presentations.batchUpdate", params = test_params,
-        body = test_body, base = "slides", token = test_token)
+        body = test_body, base = "slides")
     Condition
       Error:
       x Missing or malformed argument:

@@ -1,6 +1,6 @@
 test_that("query errors on unrecognized endpoints", {
   expect_snapshot(error = TRUE,
-    query(endpoint = "nonexistent.endpoint", token = test_token)
+    query(endpoint = "nonexistent.endpoint")
   )
 })
 
@@ -15,7 +15,6 @@ test_that("query errors on missing required parameters", {
   expect_snapshot(error= TRUE,
     query(
       endpoint = "slides.presentations.batchUpdate",
-      token = test_token,
       body = list(requests = list())
     ))
 })
@@ -33,8 +32,7 @@ test_that("query errors when passed a base that conflicts with the endpoint", {
       endpoint = "slides.presentations.batchUpdate",
       params = list(presentationId = "test123"),
       body = list(requests = list()),
-      base = "sheets",
-      token = test_token
+      base = "sheets"
     ))
 })
 
@@ -66,8 +64,7 @@ test_that("query errors on wrong parameters", {
       endpoint = "slides.presentations.batchUpdate",
       params = test_params,
       body = test_body,
-      base = "slides",
-      token = test_token
+      base = "slides"
     )
   )
 })
