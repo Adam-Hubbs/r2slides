@@ -39,6 +39,13 @@ vcr::vcr_configure(
   filter_request_headers = list(Authorization = "Bearer <<OAUTH_TOKEN>>"),
   filter_response_headers = list(
     "x-goog-authenticated-user-email" = "<<USER_EMAIL>>"
+  ),
+  filter_sensitive_data_regex = list(
+    '"access_token": "<<access_token>>"' = '"access_token":\\s*"[^"]+"',
+    '"id_token": "<<id_token>>"' = '"id_token":\\s*"[^"]+"',
+    "refresh_token=<<refresh_token>>" = "refresh_token=[^&]+",
+    "client_id=<<client_id>>" = "client_id=[^&]+",
+    "client_secret=<<client_secret>>" = "client_secret=[^&]+"
   )
 )
 
