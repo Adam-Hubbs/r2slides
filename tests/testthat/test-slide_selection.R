@@ -14,6 +14,7 @@ test_that("`slide()` can be created with valid inputs", {
   expect_equal(s@slide_id, slide_id)
   expect_true(is.presentation(s@presentation))
   expect_equal(s@presentation$presentation_id, ps$presentation_id)
+  rm(ps)
 })
 
 test_that("`slide()` requires a valid presentation", {
@@ -42,6 +43,7 @@ test_that("`slide()` requires a single slide_id", {
     error = TRUE,
     slide(presentation = ps, slide_id = character(0))
   )
+  rm(ps)
 })
 
 test_that("`slide()` validates slide_id is character type", {
@@ -51,6 +53,7 @@ test_that("`slide()` validates slide_id is character type", {
 
   expect_snapshot(error = TRUE, slide(presentation = ps, slide_id = 123))
   expect_snapshot(error = TRUE, slide(presentation = ps, slide_id = NULL))
+  rm(ps)
 })
 
 test_that("`slide@slide_hash` is stable and differs across distinct slides", {
@@ -75,7 +78,8 @@ test_that("`slide@slide_hash` is stable and differs across distinct slides", {
 
   expect_type(hash1, "character")
   expect_equal(hash1, hash1_copy)
-  expect_false(hash1 ==hash2)
+  expect_false(hash1 == hash2)
+  rm(ps)
 })
 
 
@@ -93,6 +97,7 @@ test_that("`on_slide_id()` works with valid slide ID", {
 
   expect_true(is.slide(result))
   expect_equal(result@slide_id, slide_id)
+  rm(ps)
 })
 
 test_that("`on_slide_id()` uses active presentation when ps missing", {
@@ -118,6 +123,7 @@ test_that("`on_slide_id()` fails with NULL id", {
   })
 
   expect_snapshot(error = TRUE, on_slide_id(NULL, ps))
+  rm(ps)
 })
 
 test_that("`on_slide_id()` fails with NA id", {
@@ -126,6 +132,7 @@ test_that("`on_slide_id()` fails with NA id", {
   })
 
   expect_snapshot(error = TRUE, on_slide_id(NA, ps))
+  rm(ps)
 })
 
 test_that("`on_slide_id()` fails with multiple ids", {
@@ -137,6 +144,7 @@ test_that("`on_slide_id()` fails with multiple ids", {
     error = TRUE,
     on_slide_id(c("g3cf39e8ab47_0_0", "g3c5ef24c0f9_0_4"), ps)
   )
+  rm(ps)
 })
 
 test_that("`on_slide_url()` extracts slide from valid URL", {
@@ -158,6 +166,7 @@ test_that("`on_slide_url()` extracts slide from valid URL", {
   )
 
   expect_true(is.slide(result))
+  rm(ps)
 })
 
 
@@ -173,6 +182,7 @@ test_that("`on_slide_number()` works with valid numeric index", {
 
   expect_true(is.slide(result))
   expect_equal(result@slide_id, "g3cf39e8ab47_0_0")
+  rm(ps)
 })
 
 test_that("`on_slide_number()` uses active presentation when ps missing", {
@@ -199,6 +209,7 @@ test_that("`on_slide_number()` fails with NULL", {
   })
 
   expect_snapshot(error = TRUE, on_slide_number(NULL, ps))
+  rm(ps)
 })
 
 test_that("`on_slide_number()` fails with NA", {
@@ -207,6 +218,7 @@ test_that("`on_slide_number()` fails with NA", {
   })
 
   expect_snapshot(error = TRUE, on_slide_number(NA, ps))
+  rm(ps)
 })
 
 test_that("`on_slide_number()` fails with non-numeric input", {
@@ -215,6 +227,7 @@ test_that("`on_slide_number()` fails with non-numeric input", {
   })
 
   expect_snapshot(error = TRUE, on_slide_number("not_a_number", ps))
+  rm(ps)
 })
 
 test_that("`on_slide_number()` fails with multiple values", {
@@ -223,6 +236,7 @@ test_that("`on_slide_number()` fails with multiple values", {
   })
 
   expect_snapshot(error = TRUE, on_slide_number(c(1, 2), ps))
+  rm(ps)
 })
 
 test_that("`on_slide_after()` returns slide after reference", {
@@ -238,6 +252,7 @@ test_that("`on_slide_after()` returns slide after reference", {
 
   expect_true(is.slide(result))
   expect_equal(result@slide_id, "g3cf39e8ab47_0_0")
+  rm(ps)
 })
 
 test_that("`on_slide_after()` works with negative offset", {
@@ -253,6 +268,7 @@ test_that("`on_slide_after()` works with negative offset", {
 
   expect_true(is.slide(result))
   expect_equal(result@slide_id, "p")
+  rm(ps)
 })
 
 test_that("`on_slide_after()` uses active presentation when ps missing", {
@@ -281,6 +297,7 @@ test_that("`on_slide_after()` errors at beginning of presentation with negative 
 
   first_slide <- ps$get_slide_by_index(1)
   expect_snapshot(error = TRUE, on_slide_after(first_slide, offset = -1, ps))
+  rm(ps)
 })
 
 test_that("`on_slide_after()` errors past end of presentation", {
@@ -290,6 +307,7 @@ test_that("`on_slide_after()` errors past end of presentation", {
 
   last_slide <- ps$get_slide_by_index(2)
   expect_snapshot(error = TRUE, on_slide_after(last_slide, offset = 5, ps))
+  rm(ps)
 })
 
 test_that("`resolve_presentation_id()` extracts ID from a full URL", {
@@ -308,6 +326,7 @@ test_that("`resolve_presentation_id()` extracts ID from a full URL", {
   )
 
   expect_equal(result, ps$presentation_id)
+  rm(ps)
 })
 
 test_that("`resolve_presentation_id()` accepts a bare presentation ID", {
@@ -321,6 +340,7 @@ test_that("`resolve_presentation_id()` accepts a bare presentation ID", {
   )
 
   expect_equal(result, ps$presentation_id)
+  rm(ps)
 })
 
 test_that("`resolve_presentation_id()` handles URL with extra query parameters", {
@@ -339,6 +359,7 @@ test_that("`resolve_presentation_id()` handles URL with extra query parameters",
   )
 
   expect_equal(result, ps$presentation_id)
+  rm(ps)
 })
 
 test_that("`resolve_presentation_id()` fails with non-character input", {

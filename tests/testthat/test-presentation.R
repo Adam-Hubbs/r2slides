@@ -13,6 +13,7 @@ test_that("new_presentation() populates all fields correctly", {
   expect_false(is.null(pres$revision_id))
   expect_false(is.null(pres$last_refreshed))
   expect_false(pres$is_active())
+  rm(pres)
 })
 
 test_that("new_presentation() uses default title when none supplied", {
@@ -21,6 +22,7 @@ test_that("new_presentation() uses default title when none supplied", {
   })
 
   expect_equal(pres$title, "Untitled Presentation")
+  rm(pres)
 })
 
 test_that("new_presentation() sets and registers the active presentation", {
@@ -35,12 +37,9 @@ test_that("new_presentation() sets and registers the active presentation", {
   expect_true(pres$is_active())
   expect_true(active_presentation_exists())
   expect_true(is.presentation(get_active_presentation()))
+  rm(pres)
 })
 
-
-# ===========================================================================
-# 2. Constructor — register_presentation()
-# ===========================================================================
 
 test_that("register_presentation() opens an existing presentation by ID", {
   vcr::use_cassette("pres_open_basic", {
@@ -50,12 +49,9 @@ test_that("register_presentation() opens an existing presentation by ID", {
   expect_true(is.presentation(pres))
   expect_false(is.null(pres$presentation_id))
   expect_false(is.null(pres$title))
+  rm(pres)
 })
 
-
-# ===========================================================================
-# 3. Active presentation management
-# ===========================================================================
 
 test_that("set_active() / set_not_active() / is_active() round-trip correctly", {
   withr::defer({
@@ -75,6 +71,7 @@ test_that("set_active() / set_not_active() / is_active() round-trip correctly", 
   pres$set_not_active()
   expect_false(pres$is_active())
   expect_false(active_presentation_exists())
+  rm(pres)
 })
 
 test_that("activating a second presentation deactivates the first", {
@@ -92,6 +89,7 @@ test_that("activating a second presentation deactivates the first", {
   expect_false(pres1$is_active())
   expect_true(pres2$is_active())
   expect_equal(get_active_presentation()$presentation_id, pres2$presentation_id)
+  rm(pres1, pres2)
 })
 
 test_that("get_active_presentation() errors when none is registered", {
@@ -119,12 +117,13 @@ test_that("refresh() fetches updated data and advances last_refreshed", {
   vcr::use_cassette("pres_refresh", {
     pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
     t_before <- pres$last_refreshed
-    Sys.sleep(0.01)
+    Sys.sleep(0.05)
     pres$refresh()
   })
 
   expect_gt(as.numeric(pres$last_refreshed), as.numeric(t_before))
   expect_false(is.null(pres$title))
+  rm(pres)
 })
 
 test_that("refresh() errors when presentation_id is NULL", {
@@ -134,6 +133,7 @@ test_that("refresh() errors when presentation_id is NULL", {
   pres$presentation_id <- NULL
 
   expect_snapshot(pres$refresh(), error = TRUE)
+  rm(pres)
 })
 
 
@@ -149,6 +149,7 @@ test_that("get_slide_ids() returns a non-empty list after opening", {
   ids <- pres$get_slide_ids()
   expect_type(ids, "list")
   expect_gt(length(ids), 0L)
+  rm(pres)
 })
 
 test_that("get_slide_by_index() returns a slide object for a valid index", {
@@ -157,6 +158,7 @@ test_that("get_slide_by_index() returns a slide object for a valid index", {
   })
 
   expect_true(is.slide(pres$get_slide_by_index(1)))
+  rm(pres)
 })
 
 test_that("get_slide_by_index() errors on out-of-bounds index", {
@@ -166,6 +168,7 @@ test_that("get_slide_by_index() errors on out-of-bounds index", {
   n <- length(pres$get_slide_ids())
 
   expect_snapshot(pres$get_slide_by_index(n + 1L), error = TRUE)
+  rm(pres)
 })
 
 test_that("get_slide_by_index() errors on a string input", {
@@ -174,6 +177,7 @@ test_that("get_slide_by_index() errors on a string input", {
   })
 
   expect_snapshot(pres$get_slide_by_index("one"), error = TRUE)
+  rm(pres)
 })
 
 test_that("get_slide_by_index() errors on a vector input", {
@@ -182,6 +186,7 @@ test_that("get_slide_by_index() errors on a vector input", {
   })
 
   expect_snapshot(pres$get_slide_by_index(c(1L, 2L)), error = TRUE)
+  rm(pres)
 })
 
 test_that("get_slide_by_index() errors on NA input", {
@@ -190,6 +195,7 @@ test_that("get_slide_by_index() errors on NA input", {
   })
 
   expect_snapshot(pres$get_slide_by_index(NA_integer_), error = TRUE)
+  rm(pres)
 })
 
 
@@ -200,6 +206,7 @@ test_that("get_slide_by_id() returns a slide for a valid ID", {
 
   valid_id <- pres$get_slide_ids()[[1]]
   expect_true(is.slide(pres$get_slide_by_id(valid_id)))
+  rm(pres)
 })
 
 test_that("get_slide_by_id() errors on an unknown ID", {
@@ -208,6 +215,7 @@ test_that("get_slide_by_id() errors on an unknown ID", {
   })
 
   expect_snapshot(pres$get_slide_by_id("nonexistent_id"), error = TRUE)
+  rm(pres)
 })
 
 test_that("get_slide_by_id() errors on integer input", {
@@ -216,6 +224,7 @@ test_that("get_slide_by_id() errors on integer input", {
   })
 
   expect_snapshot(pres$get_slide_by_id(123L), error = TRUE)
+  rm(pres)
 })
 
 test_that("get_slide_by_id() errors on a character vector input", {
@@ -224,12 +233,8 @@ test_that("get_slide_by_id() errors on a character vector input", {
   })
 
   expect_snapshot(pres$get_slide_by_id(c("a", "b")), error = TRUE)
+  rm(pres)
 })
-
-
-# ===========================================================================
-# 6. Ledger
-# ===========================================================================
 
 test_that("add_to_ledger() appends an entry retrievable via get_elements()", {
   vcr::use_cassette("pres_ledger_add_single", {
@@ -245,6 +250,7 @@ test_that("add_to_ledger() appends an entry retrievable via get_elements()", {
 
   elems <- pres$get_elements()
   expect_true(any(vapply(elems, \(e) e$element_id == "elem_001", logical(1))))
+  rm(pres)
 })
 
 test_that("add_to_ledger() accumulates multiple entries", {
@@ -262,12 +268,8 @@ test_that("add_to_ledger() accumulates multiple entries", {
   }
 
   expect_length(pres$get_elements(), 3L)
+  rm(pres)
 })
-
-
-# ===========================================================================
-# 7. get_url() / browse() / print() / is.presentation()
-# ===========================================================================
 
 test_that("get_url() returns a well-formed Google Slides URL", {
   vcr::use_cassette("pres_get_url", {
@@ -277,6 +279,7 @@ test_that("get_url() returns a well-formed Google Slides URL", {
   url <- pres$get_url()
   expect_match(url, "^https://docs\\.google\\.com/presentation/d/")
   expect_match(url, pres$presentation_id, fixed = TRUE)
+  rm(pres)
 })
 
 test_that("get_url() returns NULL when presentation_id is NULL", {
@@ -286,6 +289,7 @@ test_that("get_url() returns NULL when presentation_id is NULL", {
   pres$presentation_id <- NULL
 
   expect_null(pres$get_url())
+  rm(pres)
 })
 
 test_that("browse() errors when presentation_id is NULL", {
@@ -295,6 +299,7 @@ test_that("browse() errors when presentation_id is NULL", {
   pres$presentation_id <- NULL
 
   expect_snapshot(pres$browse(), error = TRUE)
+  rm(pres)
 })
 
 test_that("browse() calls browseURL and returns self invisibly", {
@@ -307,6 +312,7 @@ test_that("browse() calls browseURL and returns self invisibly", {
     .package = "utils"
   )
   expect_invisible(pres$browse())
+  rm(pres)
 })
 
 test_that("print() produces expected output", {
@@ -315,6 +321,7 @@ test_that("print() produces expected output", {
   })
 
   expect_snapshot(print(pres), transform = scrub_last_refreshed)
+  rm(pres)
 })
 
 test_that("is.presentation() correctly identifies the class", {
@@ -327,12 +334,8 @@ test_that("is.presentation() correctly identifies the class", {
   expect_false(is.presentation(NULL))
   expect_false(is.presentation("a string"))
   expect_false(is.presentation(42L))
+  rm(pres)
 })
-
-
-# ===========================================================================
-# 8. copy() and delete()
-# ===========================================================================
 
 test_that("copy() returns a new presentation with a distinct ID", {
   vcr::use_cassette("pres_copy_named", {
@@ -343,6 +346,7 @@ test_that("copy() returns a new presentation with a distinct ID", {
   expect_true(is.presentation(copied))
   expect_false(identical(original$presentation_id, copied$presentation_id))
   expect_false(copied$is_active())
+  rm(original, copied)
 })
 
 test_that("copy() prepends 'Copy of' to the original title when no name supplied", {
@@ -352,6 +356,7 @@ test_that("copy() prepends 'Copy of' to the original title when no name supplied
   })
 
   expect_equal(copied$title, paste("Copy of", original$title))
+  rm(original, copied)
 })
 
 test_that("copy() errors when presentation_id is NULL", {
@@ -361,6 +366,7 @@ test_that("copy() errors when presentation_id is NULL", {
   pres$presentation_id <- NULL
 
   expect_snapshot(pres$copy(), error = TRUE)
+  rm(pres)
 })
 
 test_that("delete() trashes the presentation and returns NULL", {
@@ -379,4 +385,5 @@ test_that("delete() errors when presentation_id is NULL", {
   pres$presentation_id <- NULL
 
   expect_snapshot(pres$delete(), error = TRUE)
+  rm(pres)
 })
