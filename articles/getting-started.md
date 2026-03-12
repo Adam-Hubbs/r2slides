@@ -14,7 +14,7 @@ or
 [`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
 functions.
 [`new_presentation()`](https://adam-hubbs.github.io/r2slides/reference/new_presentation.md)
-takes the name of a presentation you want to create anad creates it in
+takes the name of a presentation you want to create and creates it in
 your Google Drive.
 [`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
 takes a presentation ID, URL, name, or 1 row dribble object (see the
@@ -43,14 +43,14 @@ presentation$title # Returns the title of the presentation
 presentation$last_refreshed # Returns the last time the presentation was refreshed from Google Drive
 presentation$browse() # Opens the presentation in a browser
 presentation$refresh() # Refreshes the presentation from Google Drive to sync changes
-presentaiton$get_url() # Returns the URL of the presentation
+presentation$get_url() # Returns the URL of the presentation
 presentation$copy() # Creates a copy of the presentation in Google Drive
 
 print(presentation) # Prints a summary of the presentation
 ```
 
 Presentations are pretty unique objects that behave differently than
-most objects you are used to. This is becuase presentation objects are
+most objects you are used to. This is because presentation objects are
 R6 objects that use reference semantics. This means that the object is
 *not* copied on modification. In other words, when you move, modify, or
 copy a r2slides::presentation object, the change is reflected everywhere
@@ -63,7 +63,7 @@ and
 [`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
 an argument called `set_active`. When this is TRUE (the default) the
 presentation object is set as the active presentation. This means for
-the most part you don’t have to specify presenation for anything, it
+the most part you don’t have to specify presentation for anything, it
 will automatically grab the presentation object. You can always check if
 a presentation is active by calling `presentation$is_active` or
 `print(presentation)`. Alternatively, you can call
@@ -88,15 +88,15 @@ on_slide_after(slide, offset = -1) # Creates a slide object that references the 
 ```
 
 While you can pass a presentation object to all of these functions (and
-you should if you are working with multiple presenations in the same R
-session), if you are editing only one presentaiton at a time, you can
+you should if you are working with multiple presentations in the same R
+session), if you are editing only one presentations at a time, you can
 omit the presentation argument and it will default to the active
 presentation.
 
 Slide objects have a couple other goodies that you might find helpful.
 You can use the `==` operator to compare slides. This will return TRUE
 if the two slides are duplicated of each other (that is, every item on
-the slide is exactly equivelent). You can also use the
+the slide is exactly equivalent). You can also use the
 [`print()`](https://rdrr.io/r/base/print.html) function to print a
 summary of the slide. In addition, slide objects have a few other fields
 that are only calculated when you access them. These are mainly used

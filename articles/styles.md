@@ -16,7 +16,7 @@ when you call
 [`add_text()`](https://adam-hubbs.github.io/r2slides/reference/add_text.md)
 or
 [`add_text_multi()`](https://adam-hubbs.github.io/r2slides/reference/add_text_multi.md).
-The approach taken by `r2slides` to seperate visual definitions from the
+The approach taken by `r2slides` to separate visual definitions from the
 logic of when to apply them makes styling code more maintainable and
 resusable.
 
@@ -194,7 +194,7 @@ Let’s try a bit more complex example based on the positive/negative
 example earlier. Suppose we want to style positive and negative numbers
 differently, but only if they are also statistically significant. We can
 write a custom selection function that checks if the text is positive or
-nagative and whether or not the result is significant:
+negative and whether or not the result is significant:
 
 ``` r
 # Base style

@@ -31,7 +31,7 @@ create_styling_request(
 
 - ...:
 
-  Data to be avaiable in the data mask where the selector function will
+  Data to be available in the data mask where the selector function will
   be executed. Must be named.
 
 - call:

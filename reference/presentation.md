@@ -302,7 +302,7 @@ Self, invisibly (for method chaining) Get elements from the presentation
 
 ### Method `get_elements()`
 
-Filter the elements you ahve constructed to return a list of elements
+Filter the elements you have constructed to return a list of elements
 
 #### Usage
 

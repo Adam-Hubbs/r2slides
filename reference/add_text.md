@@ -53,7 +53,7 @@ add_text(
 
 - debug:
 
-  Optional. A logical indicating whether to return hte request objects,
+  Optional. A logical indicating whether to return the request objects,
   or evaluate them. Default: FALSE.
 
 - ...:

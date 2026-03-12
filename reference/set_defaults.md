@@ -20,7 +20,7 @@ set_defaults(
 - args:
 
   A named list of style arguments. If you provide a value, it will not
-  be overrided.
+  be overridden.
 
 - type:
 
@@ -33,4 +33,4 @@ set_defaults(
 ## Value
 
 A list of style arguments with defaults applied based on the \`type\`
-and \`report_style\`. User supplied values will propogate.
+and \`report_style\`. User supplied values will propagate.

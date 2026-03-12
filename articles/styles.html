@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9062</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9063</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
 <li>A <strong>text style</strong> defines formatting properties.</li>
 <li>A <strong>style rule</strong> decides <em>when</em> and <em>where</em> to apply those styles.</li>
 </ul>
-<p>This declarative design provides a powerful and flexable way to control the appearance of text on slides. You describe what text should look like under certain conditions, and <code>r2slides</code> handles the implementation when you call <code><a href="../reference/add_text.html">add_text()</a></code> or <code><a href="../reference/add_text_multi.html">add_text_multi()</a></code>. The approach taken by <code>r2slides</code> to seperate visual definitions from the logic of when to apply them makes styling code more maintainable and resusable.</p>
+<p>This declarative design provides a powerful and flexable way to control the appearance of text on slides. You describe what text should look like under certain conditions, and <code>r2slides</code> handles the implementation when you call <code><a href="../reference/add_text.html">add_text()</a></code> or <code><a href="../reference/add_text_multi.html">add_text_multi()</a></code>. The approach taken by <code>r2slides</code> to separate visual definitions from the logic of when to apply them makes styling code more maintainable and resusable.</p>
 </section><section class="level2"><h2 id="text-styles">Text Styles<a class="anchor" aria-label="anchor" href="#text-styles"></a>
 </h2>
 <p>A text style is created with <code><a href="../reference/text_style.html">text_style()</a></code>. It defines text appearance properties but does not apply them until it is passed to <code><a href="../reference/add_text.html">add_text()</a></code> or <code><a href="../reference/add_text_multi.html">add_text_multi()</a></code>.</p>
@@ -245,7 +245,7 @@
 </section><section class="level3"><h3 id="writing-custom-selection-functions">Writing Custom Selection Functions<a class="anchor" aria-label="anchor" href="#writing-custom-selection-functions"></a>
 </h3>
 <p>When built-in helpers aren’t sufficient, you can write your own selector. Selection functions run inside a special data mask, so you can customize what values it has access too, and be confident it is not incorrectly picking something up from your global environment. The data mask provides access to <code>text</code> (the full text string) and whatever other variables you pass in the … argument of <code><a href="../reference/add_text.html">add_text()</a></code> or <code><a href="../reference/add_text_multi.html">add_text_multi()</a></code>.</p>
-<p>Let’s try a bit more complex example based on the positive/negative example earlier. Suppose we want to style positive and negative numbers differently, but only if they are also statistically significant. We can write a custom selection function that checks if the text is positive or nagative and whether or not the result is significant:</p>
+<p>Let’s try a bit more complex example based on the positive/negative example earlier. Suppose we want to style positive and negative numbers differently, but only if they are also statistically significant. We can write a custom selection function that checks if the text is positive or negative and whether or not the result is significant:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Base style</span></span>
 <span><span class="va">base_stat_sig_style</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/text_style.html">text_style</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">4</span>, font_family <span class="op">=</span> <span class="st">'Roboto'</span>, bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
