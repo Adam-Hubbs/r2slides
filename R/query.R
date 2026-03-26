@@ -6,6 +6,10 @@
 #' @param base Optional. A string indicating the API base service name. (i.e. 'slides', or 'sheets')
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param debug Optional. If `TRUE`, return the unexecuted request. If `FALSE`, execute the request.` Default: `FALSE`.
+#' @param max_tries Optional. Maximum number of attempts before giving up. Default: `4`.
+#'   Set to `1` to disable retrying.
+#' @param backoff_base Optional. Base (in seconds) for truncated exponential backoff. Default: `2`.
+#'   Wait time per attempt is `min(backoff_base ^ attempt, 60) + runif(1, 0, 1)` seconds.
 #' @param call Optional. Call environment used in error messages.
 #' @param ... Additional arguments reserved for future expansion.
 #'
@@ -21,6 +25,8 @@ query <- function(
   base = NULL,
   token = NULL,
   debug = FALSE,
+  max_tries = 4L,
+  backoff_base = 2,
   call = rlang::caller_env(),
   ...
 ) {
@@ -114,9 +120,58 @@ query <- function(
   if (debug) {
     return(req)
   } else {
-    rsp <- gargle::request_make(req)
-    rsp <- gargle::response_process(rsp, call = call)
+    retry_query(req, endpoint = endpoint, max_tries = max_tries, backoff_base = backoff_base, call = call)
   }
+}
+
+
+# Executes a built gargle request with automatic retry on HTTP 429/503.
+#
+# Retryable status codes:
+#   429 - Too Many Requests (rate limit)
+#   503 - Service Unavailable (transient server error)
+#
+# Uses truncated exponential backoff with jitter:
+#   wait = min(backoff_base ^ attempt, 60) + runif(1, 0, 1)  seconds
+retry_query <- function(req, endpoint, max_tries = 4L, backoff_base = 2, call = rlang::caller_env()) {
+  retryable <- c(429L, 503L)
+
+  for (attempt in seq_len(max_tries)) {
+    rsp <- gargle::request_make(req)
+    status <- httr::status_code(rsp)
+
+    if (!status %in% retryable) {
+      # Either success or a non-retryable error — let gargle handle it
+      return(gargle::response_process(rsp, call = call))
+    }
+
+    if (attempt == max_tries) {
+      break
+    }
+
+    wait <- min(backoff_base ^ attempt, 60) + stats::runif(1, 0, 1)
+    status_label <- if (status == 429L) "429 Too Many Requests (rate limit)" else "503 Service Unavailable"
+
+    cli::cli_inform(
+      c(
+        "!" = "HTTP {status_label} from {.val {endpoint}}.",
+        i = "Attempt {attempt} of {max_tries}. Retrying in {round(wait, 1)}s..."
+      )
+    )
+
+    Sys.sleep(wait)
+  }
+
+  # Exhausted retries — surface a clear error
+  status_label <- if (httr::status_code(rsp) == 429L) "rate limit (429)" else "service unavailable (503)"
+  cli::cli_abort(
+    c(
+      x = "Google API {status_label} error for {.val {endpoint}}.",
+      i = "Failed after {max_tries} attempt{?s}.",
+      i = "Consider reducing request volume or increasing {.arg max_tries} / {.arg backoff_base}."
+    ),
+    call = call
+  )
 }
 
 
