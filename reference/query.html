@@ -58,6 +58,8 @@
 <span>  base <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  max_tries <span class="op">=</span> <span class="fl">4L</span>,</span>
+<span>  backoff_base <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  call <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -89,6 +91,16 @@
 
 <dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
 <dd><p>Optional. If `TRUE`, return the unexecuted request. If `FALSE`, execute the request.` Default: `FALSE`.</p></dd>
+
+
+<dt id="arg-max-tries">max_tries<a class="anchor" aria-label="anchor" href="#arg-max-tries"></a></dt>
+<dd><p>Optional. Maximum number of attempts before giving up. Default: `4`.
+Set to `1` to disable retrying.</p></dd>
+
+
+<dt id="arg-backoff-base">backoff_base<a class="anchor" aria-label="anchor" href="#arg-backoff-base"></a></dt>
+<dd><p>Optional. Base (in seconds) for truncated exponential backoff. Default: `2`.
+Wait time per attempt is `min(backoff_base ^ attempt, 60) + runif(1, 0, 1)` seconds.</p></dd>
 
 
 <dt id="arg-call">call<a class="anchor" aria-label="anchor" href="#arg-call"></a></dt>
