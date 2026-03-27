@@ -4,6 +4,8 @@
 #' @param slide_obj A Google Slides slide object
 #' @param position An object of class `r2slides::slide_position`
 #' @param linked Optional. A logical indicating whether the chart should be linked. Default: `TRUE`.
+#' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
+#'   created chart element. Default: `"front"`.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param call Optional. Call environment used in error messages.
 #'
@@ -15,9 +17,11 @@ add_linked_chart <- function(
   slide_obj,
   position,
   linked = TRUE,
+  order = c("front", "back"),
   token = NULL,
   call = rlang::caller_env()
 ) {
+  order <- rlang::arg_match(order)
   linked <- dplyr::if_else(linked, "LINKED", "NOT_LINKED_IMAGE")
 
   if (!inherits(position, "r2slides::slide_position")) {
@@ -63,8 +67,8 @@ add_linked_chart <- function(
     )
   )
 
-  # Make the API request
-  query(
+  # Make the API request; response contains the new objectId
+  rsp <- query(
     endpoint = 'slides.presentations.batchUpdate',
     params = list(presentationId = slide_obj@presentation$presentation_id),
     body = add_linked_chart_request,
@@ -72,6 +76,19 @@ add_linked_chart <- function(
     token = token,
     call = call
   )
+
+  # Apply Z-order using the objectId returned by the API
+  new_id <- rsp$replies[[1]]$createSheetsChart$objectId
+  if (!is.null(new_id)) {
+    if (order == 'back') {
+      zorder_by_id(
+        presentation_id = slide_obj@presentation$presentation_id,
+        element_id = new_id,
+        operation = resolve_zorder_op(order),
+        call = call
+      )
+    }
+  }
 
   return(invisible(slide_obj))
 }

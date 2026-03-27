@@ -9,6 +9,7 @@ add_linked_chart(
   slide_obj,
   position,
   linked = TRUE,
+  order = c("front", "back"),
   token = NULL,
   call = rlang::caller_env()
 )
@@ -21,6 +22,9 @@ add_linked_chart(
 \item{position}{An object of class `r2slides::slide_position`}
 
 \item{linked}{Optional. A logical indicating whether the chart should be linked. Default: `TRUE`.}
+
+\item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of the
+created chart element. Default: `"front"`.}
 
 \item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
 

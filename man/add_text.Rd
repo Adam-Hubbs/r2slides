@@ -10,6 +10,7 @@ add_text(
   position,
   element_id = NULL,
   text_style = NULL,
+  order = c("front", "back"),
   verbose = TRUE,
   token = NULL,
   debug = FALSE,
@@ -26,6 +27,10 @@ add_text(
 \item{element_id}{Optional. A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.}
 
 \item{text_style}{Optional. A list of text styling properties.}
+
+\item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of the
+created element. Default: `"front"`. Ignored when updating an existing element
+via `element_id`.}
 
 \item{verbose}{Optional. A logical indicating whether to print API responses. Default: TRUE.}
 

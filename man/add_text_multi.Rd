@@ -11,6 +11,7 @@ add_text_multi(
   position_base = NULL,
   element_id = NULL,
   text_style = NULL,
+  order = c("front", "back"),
   verbose = TRUE,
   token = NULL,
   pass_strategy = c("one", "all"),
@@ -30,6 +31,9 @@ add_text_multi(
 \item{element_id}{Optional. A vector of string IDs of an existing text element to update. If element_id is `NULL` a new element will be created.}
 
 \item{text_style}{Optional. A vector of text_style or style_rule objects.}
+
+\item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of each
+created element. Default: `"front"`. Ignored for elements updated via `element_id`.}
 
 \item{verbose}{Optional. A logical indicating whether to print API responses. Default: TRUE.}
 
