@@ -64,6 +64,14 @@ method(print, element) <- function(x, ...) {
   cli::cli_text("Element ID: {.val {x@element_id}}")
 }
 
+method(print, text_element) <- function(x, ...) {
+  cli::cli_text("{.strong Text Element Object}")
+  cli::cli_text("Presentation ID: {.val {x@presentation$presentation_id}}")
+  cli::cli_text("Slide ID: {.val {x@slide@slide_id}}")
+  cli::cli_text("Element ID: {.val {x@element_id}}")
+  cli::cli_text("Text: {.val {x@text}}")
+}
+
 
 #' Get all elements in a slide
 #'
