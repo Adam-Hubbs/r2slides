@@ -132,6 +132,11 @@ chart_data |>
   : Register a Google Slides presentation
 - [`relative_position()`](https://adam-hubbs.github.io/r2slides/reference/relative_position.md)
   : Relative Position
+- [`send_to_front()`](https://adam-hubbs.github.io/r2slides/reference/send_to_front.md)
+  [`send_to_back()`](https://adam-hubbs.github.io/r2slides/reference/send_to_front.md)
+  [`send_forward()`](https://adam-hubbs.github.io/r2slides/reference/send_to_front.md)
+  [`send_backward()`](https://adam-hubbs.github.io/r2slides/reference/send_to_front.md)
+  : Change the Z-order of a page element
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
 - [`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)

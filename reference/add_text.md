@@ -11,6 +11,7 @@ add_text(
   position,
   element_id = NULL,
   text_style = NULL,
+  order = c("front", "back"),
   verbose = TRUE,
   token = NULL,
   debug = FALSE,
@@ -40,6 +41,12 @@ add_text(
 - text_style:
 
   Optional. A list of text styling properties.
+
+- order:
+
+  Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
+  the created element. Default: \`"front"\`. Ignored when updating an
+  existing element via \`element_id\`.
 
 - verbose:
 

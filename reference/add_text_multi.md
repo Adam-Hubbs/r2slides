@@ -12,6 +12,7 @@ add_text_multi(
   position_base = NULL,
   element_id = NULL,
   text_style = NULL,
+  order = c("front", "back"),
   verbose = TRUE,
   token = NULL,
   pass_strategy = c("one", "all"),
@@ -46,6 +47,12 @@ add_text_multi(
 - text_style:
 
   Optional. A vector of text_style or style_rule objects.
+
+- order:
+
+  Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
+  each created element. Default: \`"front"\`. Ignored for elements
+  updated via \`element_id\`.
 
 - verbose:
 

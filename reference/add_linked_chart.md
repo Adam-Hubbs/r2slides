@@ -10,6 +10,7 @@ add_linked_chart(
   slide_obj,
   position,
   linked = TRUE,
+  order = c("front", "back"),
   token = NULL,
   call = rlang::caller_env()
 )
@@ -33,6 +34,11 @@ add_linked_chart(
 
   Optional. A logical indicating whether the chart should be linked.
   Default: \`TRUE\`.
+
+- order:
+
+  Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
+  the created chart element. Default: \`"front"\`.
 
 - token:
 
