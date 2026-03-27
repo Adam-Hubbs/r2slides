@@ -103,3 +103,7 @@ elem_is_text_elem <- function(elem = NULL) {
   }
   is_elem
 }
+
+is_element <- function(x) {
+  inherits(x, "r2slides::element")
+}
