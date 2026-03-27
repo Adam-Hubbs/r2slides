@@ -20,7 +20,12 @@ zorder_update <- function(element, operation, call = rlang::caller_env()) {
 # Shared helper — builds and fires the ZOrder batchUpdate using raw IDs.
 # Used internally by add_text(), add_text_multi(), and add_linked_chart()
 # so they don't need a full element object.
-zorder_by_id <- function(presentation_id, element_id, operation, call = rlang::caller_env()) {
+zorder_by_id <- function(
+  presentation_id,
+  element_id,
+  operation,
+  call = rlang::caller_env()
+) {
   query(
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = presentation_id),
@@ -43,10 +48,7 @@ zorder_by_id <- function(presentation_id, element_id, operation, call = rlang::c
 
 # Resolves an `order` argument ("front"/"back") to a ZOrder operation string.
 resolve_zorder_op <- function(order) {
-  switch(order,
-    front = "BRING_TO_FRONT",
-    back  = "SEND_TO_BACK"
-  )
+  switch(order, front = "BRING_TO_FRONT", back = "SEND_TO_BACK")
 }
 
 
@@ -82,4 +84,3 @@ send_forward <- function(element) {
 send_backward <- function(element) {
   zorder_update(element, "SEND_BACKWARD")
 }
-
