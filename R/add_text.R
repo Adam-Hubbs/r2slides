@@ -5,6 +5,9 @@
 #' @param position An object of class `r2slides::slide_position`
 #' @param element_id Optional. A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.
 #' @param text_style Optional. A list of text styling properties.
+#' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
+#'   created element. Default: `"front"`. Ignored when updating an existing element
+#'   via `element_id`.
 #' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param debug Optional. A logical indicating whether to return the request objects, or evaluate them. Default: FALSE.
@@ -19,14 +22,13 @@ add_text <- function(
   position,
   element_id = NULL,
   text_style = NULL,
+  order = c("front", "back"),
   verbose = TRUE,
   token = NULL,
   debug = FALSE,
   ...
 ) {
-  # Adds text to the current slide in a presentation
-  # If element_id is provided, it will update that text element
-  # Otherwise, it creates a new text box at the specified position
+  order <- rlang::arg_match(order)
 
   if (!is.character(text)) {
     cli::cli_abort(
@@ -41,13 +43,14 @@ add_text <- function(
     )
   }
 
-
   # Get current slide_id
   slide_id <- slide_obj@slide_id
 
   params <- list(presentationId = slide_obj@presentation$presentation_id)
 
-  if (is.null(element_id)) {
+  new_element <- is.null(element_id)
+
+  if (new_element) {
     element_id <- paste0(
       "text_",
       format(Sys.time(), "%Y%m%d%H%M%S"),
@@ -109,6 +112,8 @@ add_text <- function(
         element_id = element_id,
         ...
       )
+  } else {
+    text_style_request <- NULL
   }
 
   shape_request <- list(requests = purrr::compact(shape_request))
@@ -154,6 +159,17 @@ add_text <- function(
     )
   })
 
+  # Apply Z-order only when creating a new element
+  if (new_element && !debug) {
+    if (order == 'back') {
+      zorder_by_id(
+        presentation_id = slide_obj@presentation$presentation_id,
+        element_id = element_id,
+        operation = resolve_zorder_op(order)
+      )
+    }
+  }
+
   # Update the ledger
   slide_obj@presentation$add_to_ledger(
     element_id = element_id,
@@ -174,6 +190,8 @@ add_text <- function(
 #' @param position_base A vector of objects of class `r2slides::slide_position`
 #' @param element_id Optional. A vector of string IDs of an existing text element to update. If element_id is `NULL` a new element will be created.
 #' @param text_style Optional. A vector of text_style or style_rule objects.
+#' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of each
+#'   created element. Default: `"front"`. Ignored for elements updated via `element_id`.
 #' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param pass_strategy Optional. A strategy to pass additional values to style_rule objects.
@@ -190,12 +208,14 @@ add_text_multi <- function(
   position_base = NULL,
   element_id = NULL,
   text_style = NULL,
+  order = c("front", "back"),
   verbose = TRUE,
   token = NULL,
   pass_strategy = c('one', 'all'),
   debug = FALSE,
   ...
 ) {
+  order <- rlang::arg_match(order)
   pass_strategy <- rlang::arg_match(pass_strategy)
 
   # Determine the target length from non-scalar arguments
@@ -236,7 +256,13 @@ add_text_multi <- function(
       # Convert to list if not already
       if (is.list(arg)) {
         return(arg)
-      } else if (inherits(arg, "r2slides::slide_position") || inherits(arg, "r2slides::text_style") || inherits(arg, "r2slides::style_rule") || is.function(arg) || rlang::is_quosure(arg)) {
+      } else if (
+        inherits(arg, "r2slides::slide_position") ||
+          inherits(arg, "r2slides::text_style") ||
+          inherits(arg, "r2slides::style_rule") ||
+          is.function(arg) ||
+          rlang::is_quosure(arg)
+      ) {
         return(list(arg))
       } else {
         return(as.list(arg))
@@ -301,6 +327,7 @@ add_text_multi <- function(
           position = final_position,
           element_id = element_id,
           text_style = text_style,
+          order = order,
           verbose = verbose,
           token = token,
           debug = debug,
@@ -315,7 +342,6 @@ add_text_multi <- function(
 
   return(invisible(results[[1]]))
 }
-
 
 
 #' Get the length of an argument
@@ -365,5 +391,3 @@ get_safe_length <- function(arg) {
     }
   )
 }
-
-
