@@ -150,7 +150,7 @@ retry_query <- function(
       if (attempt > 1) {
         cli::cli_inform(
           c(
-            "v" = "Attempt {attempt - 1} succeeded."
+            "v" = "Attempt {attempt} succeeded."
           )
         )
       }
