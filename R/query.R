@@ -126,14 +126,7 @@ query <- function(
 
 
 # Executes a built gargle request with automatic retry on HTTP 429/503.
-#
-# Retryable status codes:
-#   429 - Too Many Requests (rate limit)
-#   503 - Service Unavailable (transient server error)
-#
-# Uses truncated exponential backoff with jitter:
-#   wait = min(backoff_base ^ attempt, 60) + runif(1, 0, 1)  seconds
-retry_query <- function(req, endpoint, max_tries = 4L, backoff_base = 2, call = rlang::caller_env()) {
+retry_query <- function(req, endpoint, max_tries = 4L, backoff_base = 3, call = rlang::caller_env()) {
   retryable <- c(429L, 503L)
 
   for (attempt in seq_len(max_tries)) {
