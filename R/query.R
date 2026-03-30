@@ -135,6 +135,13 @@ retry_query <- function(req, endpoint, max_tries = 4L, backoff_base = 3, call = 
 
     if (!status %in% retryable) {
       # Either success or a non-retryable error — let gargle handle it
+      if (attempt > 1) {
+        cli::cli_inform(
+          c(
+            "v" = "Attempt {attempt} succeeded."
+          )
+        )
+      }
       return(gargle::response_process(rsp, call = call))
     }
 
