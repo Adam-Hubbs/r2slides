@@ -8,7 +8,7 @@
 #' @param debug Optional. If `TRUE`, return the unexecuted request. If `FALSE`, execute the request.` Default: `FALSE`.
 #' @param max_tries Optional. Maximum number of attempts before giving up. Default: `4`.
 #'   Set to `1` to disable retrying.
-#' @param backoff_base Optional. Base (in seconds) for truncated exponential backoff. Default: `2`.
+#' @param backoff_base Optional. Base (in seconds) for truncated exponential backoff. Default: `3`.
 #'   Wait time per attempt is `min(backoff_base ^ attempt, 60) + runif(1, 0, 1)` seconds.
 #' @param call Optional. Call environment used in error messages.
 #' @param ... Additional arguments reserved for future expansion.
@@ -26,7 +26,7 @@ query <- function(
   token = NULL,
   debug = FALSE,
   max_tries = 4L,
-  backoff_base = 2,
+  backoff_base = 3,
   call = rlang::caller_env(),
   ...
 ) {
