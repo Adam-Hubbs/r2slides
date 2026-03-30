@@ -150,7 +150,7 @@ retry_query <- function(
       if (attempt > 1) {
         cli::cli_inform(
           c(
-            "v" = "Attempt {attempt} succeeded."
+            "v" = "Attempt {attempt - 1} succeeded."
           )
         )
       }
@@ -161,7 +161,7 @@ retry_query <- function(
       break
     }
 
-    wait <- min(backoff_base^attempt, 90) + stats::runif(1, 0, 1)
+    wait <- min(backoff_base^attempt, 120) + 5 + stats::runif(1, 0, 1)
     status_label <- if (status == 429L) {
       "429 Too Many Requests (rate limit)"
     } else {
