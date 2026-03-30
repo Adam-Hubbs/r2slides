@@ -120,13 +120,25 @@ query <- function(
   if (debug) {
     return(req)
   } else {
-    retry_query(req, endpoint = endpoint, max_tries = max_tries, backoff_base = backoff_base, call = call)
+    retry_query(
+      req,
+      endpoint = endpoint,
+      max_tries = max_tries,
+      backoff_base = backoff_base,
+      call = call
+    )
   }
 }
 
 
 # Executes a built gargle request with automatic retry on HTTP 429/503.
-retry_query <- function(req, endpoint, max_tries = 4L, backoff_base = 3, call = rlang::caller_env()) {
+retry_query <- function(
+  req,
+  endpoint,
+  max_tries = 4L,
+  backoff_base = 3,
+  call = rlang::caller_env()
+) {
   retryable <- c(429L, 503L)
 
   for (attempt in seq_len(max_tries)) {
@@ -149,8 +161,12 @@ retry_query <- function(req, endpoint, max_tries = 4L, backoff_base = 3, call = 
       break
     }
 
-    wait <- min(backoff_base ^ attempt, 60) + stats::runif(1, 0, 1)
-    status_label <- if (status == 429L) "429 Too Many Requests (rate limit)" else "503 Service Unavailable"
+    wait <- min(backoff_base^attempt, 90) + stats::runif(1, 0, 1)
+    status_label <- if (status == 429L) {
+      "429 Too Many Requests (rate limit)"
+    } else {
+      "503 Service Unavailable"
+    }
 
     cli::cli_inform(
       c(
@@ -163,7 +179,11 @@ retry_query <- function(req, endpoint, max_tries = 4L, backoff_base = 3, call = 
   }
 
   # Exhausted retries — surface a clear error
-  status_label <- if (httr::status_code(rsp) == 429L) "rate limit (429)" else "service unavailable (503)"
+  status_label <- if (httr::status_code(rsp) == 429L) {
+    "rate limit (429)"
+  } else {
+    "service unavailable (503)"
+  }
   cli::cli_abort(
     c(
       x = "Google API {status_label} error for {.val {endpoint}}.",
