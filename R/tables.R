@@ -21,26 +21,7 @@ border_style_values <- c(
   "TRANSPARENT"
 )
 
-#' Intermediate table representation for Google Slides
-#'
-#' `r2slides_table` is a backend-agnostic intermediate representation of a
-#' table, intended to be the target output of [as_r2slides_table()] methods for
-#' table objects such as those produced by **gt** or **flextable**. The object
-#' captures cell locations and styles, dimensions, and border styling so that
-#' it can be rendered as a Google Slides table element.
-#'
-#' @param cells A list of [table_cell] objects defining the 0-based row/column
-#'   start index of each cell along with its optional [cell_style].
-#' @param n_rows A positive integer giving the total number of rows.
-#' @param n_cols A positive integer giving the total number of columns.
-#' @param col_widths A numeric vector of column widths in points. Must have
-#'   length equal to `n_cols` when provided.
-#' @param row_heights A numeric vector of row heights in points. Must have
-#'   length equal to `n_rows` when provided.
-#' @param header_rows A non-negative integer giving the number of header rows.
-#'   Defaults to `0L`.
-#'
-#' @export
+#' @noRd
 r2slides_table <- S7::new_class(
   "r2slides_table",
   properties = list(
@@ -51,24 +32,23 @@ r2slides_table <- S7::new_class(
         if (!all(ok)) return("cells must be a list of table_cell objects")
       }
     ),
+
     n_rows = S7::new_property(
       S7::class_integer,
       validator = function(value) {
-        if (length(value) != 1) {
-          return("n_rows must be a single value")
-        }
-        if (value < 1L) return("n_rows must be a positive integer")
+        if (length(value) != 1) return("n_rows must be a single value")
+        if (value < 1L)         return("n_rows must be a positive integer")
       }
     ),
+
     n_cols = S7::new_property(
       S7::class_integer,
       validator = function(value) {
-        if (length(value) != 1) {
-          return("n_cols must be a single value")
-        }
-        if (value < 1L) return("n_cols must be a positive integer")
+        if (length(value) != 1) return("n_cols must be a single value")
+        if (value < 1L)         return("n_cols must be a positive integer")
       }
     ),
+
     col_widths = S7::new_property(
       NULL | S7::class_numeric,
       validator = function(value) {
@@ -77,6 +57,7 @@ r2slides_table <- S7::new_class(
         }
       }
     ),
+
     row_heights = S7::new_property(
       NULL | S7::class_numeric,
       validator = function(value) {
@@ -85,19 +66,14 @@ r2slides_table <- S7::new_class(
         }
       }
     ),
+
     header_rows = S7::new_property(
       S7::class_integer,
       default = 0L,
       validator = function(value) {
-        if (length(value) != 1) {
-          return("header_rows must be a single value")
-        }
-        if (value < 0L) return("header_rows must be a non-negative integer")
+        if (length(value) != 1) return("header_rows must be a single value")
+        if (value < 0L)         return("header_rows must be a non-negative integer")
       }
-    ),
-    border_styles = S7::new_property(
-      S7::class_any,
-      default = NULL
     )
   ),
   validator = function(self) {
@@ -106,7 +82,6 @@ r2slides_table <- S7::new_class(
     }
   }
 )
-
 
 S7::method(print, r2slides_table) <- function(x, ...) {
   cli::cli_text("{.strong r2slides_table}")
@@ -128,15 +103,15 @@ ft_read_style <- function(slot, row_i, col_key) {
 #' @noRd
 ft_make_text_style <- function(section, row_i, col_key) {
   txt_s <- section$styles$text
+  par_s <- section$styles$pars
 
-  bold         <- ft_read_style(txt_s$bold,          row_i, col_key)
-  italic       <- ft_read_style(txt_s$italic,        row_i, col_key)
-  underline    <- ft_read_style(txt_s$underlined,    row_i, col_key)
-  strikethrough <- ft_read_style(txt_s$strike,       row_i, col_key)
-  font_family  <- ft_read_style(txt_s$font.family,   row_i, col_key)
-  font_size    <- ft_read_style(txt_s$font.size,     row_i, col_key)
+  bold          <- ft_read_style(txt_s$bold,          row_i, col_key)
+  italic        <- ft_read_style(txt_s$italic,        row_i, col_key)
+  underline     <- ft_read_style(txt_s$underlined,    row_i, col_key)
+  strikethrough <- ft_read_style(txt_s$strike,        row_i, col_key)
+  font_family   <- ft_read_style(txt_s$font.family,   row_i, col_key)
+  font_size     <- ft_read_style(txt_s$font.size,     row_i, col_key)
 
-  # normalize_color handles hex, named R colors, and transparent/NA -> NULL
   raw_text_color <- ft_read_style(txt_s$color,         row_i, col_key)
   raw_bg_color   <- ft_read_style(txt_s$shading.color, row_i, col_key)
 
@@ -158,6 +133,15 @@ ft_make_text_style <- function(section, row_i, col_key) {
     NULL
   )
 
+  alignment <- switch(
+    ft_read_style(par_s$text.align, row_i, col_key) %||% "",
+    "left"    = "START",
+    "center"  = "CENTER",
+    "right"   = "END",
+    "justify" = "JUSTIFIED",
+    NULL
+  )
+
   text_style(
     bold          = if (isTRUE(bold) || identical(bold, FALSE)) bold else NULL,
     italic        = if (isTRUE(italic) || identical(italic, FALSE)) italic else NULL,
@@ -167,29 +151,21 @@ ft_make_text_style <- function(section, row_i, col_key) {
     font_size     = if (!is.null(font_size) && is.numeric(font_size) && font_size > 0) as.double(font_size) else NULL,
     text_color    = text_color,
     bg_color      = bg_color,
-    baseline_offset = baseline_offset
+    baseline_offset = baseline_offset,
+    alignment     = alignment
   )
 }
 
-# Build a `cell_style` from a flextable section's cell/paragraph style slots.
+# Build a `cell_style` from a flextable section's cell style slots.
 #' @noRd
 ft_make_cell_style <- function(section, row_i, col_key, ts) {
   cell_s <- section$styles$cells
-  par_s  <- section$styles$pars
 
   raw_bg <- ft_read_style(cell_s$background.color, row_i, col_key)
   bg_color <- if (
     !is.null(raw_bg) && !is.na(raw_bg) &&
     raw_bg != "" && raw_bg != "transparent"
   ) normalize_color(raw_bg) else NULL
-
-  h_align <- switch(
-    ft_read_style(par_s$text.align, row_i, col_key) %||% "",
-    "left"   = "LEFT",
-    "center" = "CENTER",
-    "right"  = "RIGHT",
-    NULL
-  )
 
   v_align <- switch(
     ft_read_style(cell_s$vertical.align, row_i, col_key) %||% "",
@@ -202,8 +178,239 @@ ft_make_cell_style <- function(section, row_i, col_key, ts) {
   cell_style(
     bg_color   = bg_color,
     text_style = ts,
-    h_align    = h_align,
     v_align    = v_align
+  )
+}
+
+# Extract span info from one flextable section.
+# Returns a list of span specs for origin cells only.
+# Each element: list(row_index, col_index, row_span, col_span).
+#
+# Flextable span matrix naming is counterintuitive:
+#   spans$rows[r, c]    = number of COLUMNS the cell spans (horizontal span)
+#   spans$columns[r, c] = number of ROWS    the cell spans (vertical span)
+# Origin cells have the span count (>= 1); consumed cells have 0.
+# We emit only origin cells where at least one span > 1.
+#' @noRd
+ft_extract_spans <- function(section, col_keys, row_offset) {
+  col_span_mat <- section$spans$rows     # value = number of columns spanned
+  row_span_mat <- section$spans$columns  # value = number of rows spanned
+
+  if (is.null(col_span_mat) || is.null(row_span_mat)) return(NULL)
+
+  n_rows <- nrow(col_span_mat)
+  n_cols <- ncol(col_span_mat)
+
+  results <- vector("list", n_rows * n_cols)
+  idx <- 1L
+
+  for (r in seq_len(n_rows)) {
+    for (ci in seq_len(n_cols)) {
+      cs <- col_span_mat[r, ci]  # columns spanned
+      rs <- row_span_mat[r, ci]  # rows spanned
+
+      # Skip consumed cells (value == 0) and no-op single cells (both == 1)
+      if (cs < 1L || rs < 1L) next
+      if (cs == 1L && rs == 1L) next
+
+      results[[idx]] <- list(
+        row_index = as.integer(row_offset + r - 1L),
+        col_index = as.integer(ci - 1L),
+        row_span  = as.integer(rs),
+        col_span  = as.integer(cs)
+      )
+      idx <- idx + 1L
+    }
+  }
+
+  results[seq_len(idx - 1L)]
+}
+
+# Extract border info from one flextable section.
+# Returns a list of border side specs, one per (cell, side) combination.
+# Each element: list(row_index, col_index, side, color, width, dash_style).
+#
+# Flextable border slot naming: "border.color.{side}", "border.width.{side}",
+# "border.style.{side}" where side is bottom/top/left/right.
+#' @noRd
+ft_extract_section_borders <- function(section, col_keys, row_offset) {
+  cell_s <- section$styles$cells
+  n_rows <- nrow(section$dataset)
+  sides  <- c("bottom", "top", "left", "right")
+
+  results <- list()
+
+  for (r in seq_len(n_rows)) {
+    for (ci in seq_along(col_keys)) {
+      col_key <- col_keys[[ci]]
+
+      for (side in sides) {
+        color_slot <- cell_s[[paste0("border.color.", side)]]
+        width_slot <- cell_s[[paste0("border.width.", side)]]
+        style_slot <- cell_s[[paste0("border.style.", side)]]
+
+        if (is.null(color_slot)) next
+
+        raw_color <- ft_read_style(color_slot, r, col_key)
+        raw_width <- if (!is.null(width_slot)) ft_read_style(width_slot, r, col_key) else NULL
+        raw_style <- if (!is.null(style_slot)) ft_read_style(style_slot, r, col_key) else NULL
+
+        color <- if (
+          !is.null(raw_color) && !is.na(raw_color) &&
+          raw_color != "" && raw_color != "transparent"
+        ) normalize_color(raw_color) else NULL
+
+        # Width of 0 means no border — skip
+        width <- if (!is.null(raw_width) && !is.na(raw_width) && raw_width > 0) {
+          as.double(raw_width)
+        } else NULL
+
+        dash_style <- if (!is.null(raw_style) && !is.na(raw_style) && nzchar(raw_style)) {
+          unname(ft_dash_style_map[raw_style])
+        } else NULL
+
+        if (is.null(color) && is.null(width) && is.null(dash_style)) next
+
+        results <- c(results, list(list(
+          row_index  = as.integer(row_offset + r - 1L),
+          col_index  = as.integer(ci - 1L),
+          side       = side,
+          color      = color,
+          width      = width,
+          dash_style = dash_style
+        )))
+      }
+    }
+  }
+
+  results
+}
+
+# Apply span information to a list of table_cell objects in-place.
+# span_specs: list output of ft_extract_spans (both sections combined).
+#' @noRd
+apply_spans_to_cells <- function(cells, span_specs) {
+  if (length(span_specs) == 0L) return(cells)
+
+  # Build a lookup: "row,col" -> span spec
+  lookup <- stats::setNames(
+    span_specs,
+    vapply(span_specs, \(s) paste0(s$row_index, ",", s$col_index), character(1))
+  )
+
+  for (i in seq_along(cells)) {
+    cell <- cells[[i]]
+    key  <- paste0(cell@row_index, ",", cell@col_index)
+    spec <- lookup[[key]]
+
+    if (!is.null(spec) && !is.null(cell@style)) {
+      cell@style@col_span <- spec$col_span
+      cell@style@row_span <- spec$row_span
+      cells[[i]] <- cell
+    }
+  }
+
+  cells
+}
+
+# Apply border information to a list of table_cell objects in-place.
+# border_specs: list output of ft_extract_section_borders (both sections combined).
+#' @noRd
+apply_borders_to_cells <- function(cells, border_specs) {
+  if (length(border_specs) == 0L) return(cells)
+
+  # Build lookup: "row,col" -> list of side specs
+  lookup <- list()
+  for (spec in border_specs) {
+    key <- paste0(spec$row_index, ",", spec$col_index)
+    lookup[[key]] <- c(lookup[[key]], list(spec))
+  }
+
+  for (i in seq_along(cells)) {
+    cell  <- cells[[i]]
+    key   <- paste0(cell@row_index, ",", cell@col_index)
+    specs <- lookup[[key]]
+
+    if (is.null(specs) || is.null(cell@style)) next
+
+    cs <- cell@style
+    for (spec in specs) {
+      border_val <- make_border_side(spec$color, spec$width, spec$dash_style)
+      if (spec$side == "top")    cs@border_top    <- border_val
+      if (spec$side == "bottom") cs@border_bottom <- border_val
+      if (spec$side == "left")   cs@border_left   <- border_val
+      if (spec$side == "right")  cs@border_right  <- border_val
+    }
+    cell@style    <- cs
+    cells[[i]]    <- cell
+  }
+
+  cells
+}
+
+# Build one updateTableBorderProperties request body.
+#' @noRd
+build_border_request <- function(table_id, row_index, col_index, position, color, width, dash_style) {
+  props  <- list()
+  fields <- character()
+
+  if (!is.null(color)) {
+    # color_to_solid_fill returns list(solidFill = list(color = ...))
+    # tableBorderFill expects the same shape
+    props$tableBorderFill <- color_to_solid_fill(color)
+    fields <- c(fields, "tableBorderFill.solidFill")
+  }
+
+  if (!is.null(width)) {
+    props$weight <- list(magnitude = width, unit = "PT")
+    fields <- c(fields, "weight")
+  }
+
+  if (!is.null(dash_style) && !is.na(dash_style)) {
+    props$dashStyle <- dash_style
+    fields <- c(fields, "dashStyle")
+  }
+
+  if (length(props) == 0L) return(NULL)
+
+  list(
+    updateTableBorderProperties = list(
+      objectId      = table_id,
+      tableRange    = list(
+        location   = list(rowIndex = row_index, columnIndex = col_index),
+        rowSpan    = 1L,
+        columnSpan = 1L
+      ),
+      borderPosition        = position,
+      tableBorderProperties = props,
+      fields                = paste(fields, collapse = ",")
+    )
+  )
+}
+
+# Build one mergeTableCells request body.
+#' @noRd
+build_merge_request <- function(table_id, row_index, col_index, row_span, col_span) {
+  list(
+    mergeTableCells = list(
+      objectId   = table_id,
+      tableRange = list(
+        location   = list(rowIndex = row_index, columnIndex = col_index),
+        rowSpan    = row_span,
+        columnSpan = col_span
+      )
+    )
+  )
+}
+
+# Map a cell border side name to the Google Slides border position string.
+#' @noRd
+side_to_border_position <- function(side) {
+  switch(side,
+    top    = "TOP",
+    bottom = "BOTTOM",
+    left   = "LEFT",
+    right  = "RIGHT"
   )
 }
 
@@ -231,19 +438,15 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
     cli::cli_abort("Package {.pkg flextable} is required but is not installed.")
   }
 
-  col_keys <- x$col_keys
-  n_cols <- length(col_keys)
+  col_keys      <- x$col_keys
+  n_cols        <- length(col_keys)
   n_header_rows <- nrow(x$header$dataset)
-  n_body_rows <- nrow(x$body$dataset)
-  n_rows <- n_header_rows + n_body_rows
+  n_body_rows   <- nrow(x$body$dataset)
+  n_rows        <- n_header_rows + n_body_rows
 
-  # Widths/heights: flextable stores in inches; convert to points (* 72)
-  # colwidths is a positional unnamed vector matching col_keys order
-  col_widths <- unname(x$body$colwidths) * 72
+  col_widths  <- unname(x$body$colwidths) * 72
   row_heights <- c(x$header$rowheights, x$body$rowheights) * 72
 
-  # Extract all cells from one section (header or body).
-  # row_offset: 0-based index offset (0 for header, n_header_rows for body).
   extract_section_cells <- function(section, row_offset) {
     n_sec_rows <- nrow(section$dataset)
     cells <- vector("list", n_sec_rows * n_cols)
@@ -266,7 +469,7 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
         cells[[idx]] <- table_cell(
           row_index = as.integer(row_offset + r - 1L),
           col_index = as.integer(ci - 1L),
-          text = txt,
+          text  = txt,
           style = cs
         )
         idx <- idx + 1L
@@ -276,44 +479,30 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
   }
 
   header_cells <- extract_section_cells(x$header, row_offset = 0L)
-  body_cells <- extract_section_cells(x$body, row_offset = n_header_rows)
+  body_cells   <- extract_section_cells(x$body,   row_offset = n_header_rows)
+  all_cells    <- c(header_cells, body_cells)
+
+  # Spans
+  header_spans <- ft_extract_spans(x$header, col_keys, row_offset = 0L)
+  body_spans   <- ft_extract_spans(x$body,   col_keys, row_offset = n_header_rows)
+  all_cells    <- apply_spans_to_cells(all_cells, c(header_spans, body_spans))
+
+  # Borders
+  header_borders <- ft_extract_section_borders(x$header, col_keys, row_offset = 0L)
+  body_borders   <- ft_extract_section_borders(x$body,   col_keys, row_offset = n_header_rows)
+  all_cells      <- apply_borders_to_cells(all_cells, c(header_borders, body_borders))
 
   r2slides_table(
-    cells = c(header_cells, body_cells),
-    n_rows = as.integer(n_rows),
-    n_cols = as.integer(n_cols),
-    col_widths = col_widths,
+    cells       = all_cells,
+    n_rows      = as.integer(n_rows),
+    n_cols      = as.integer(n_cols),
+    col_widths  = col_widths,
     row_heights = row_heights,
     header_rows = as.integer(n_header_rows)
   )
 }
 
 #' Build Google Slides API requests for an r2slides_table
-#'
-#' Returns a named list of batchUpdate request bodies that, when submitted in
-#' order, create and populate a table on the given slide.  The list has four
-#' elements:
-#'
-#' \describe{
-#'   \item{`create`}{A single `createTable` request.}
-#'   \item{`col_widths`}{One `updateTableColumnProperties` request per column.}
-#'   \item{`cells`}{`insertText`, `updateTextStyle`, and
-#'     `updateTableCellProperties` requests for every cell that has content or
-#'     styling.}
-#'   \item{`row_heights`}{One `updateTableRowProperties` request per row.}
-#' }
-#'
-#' @param table An [r2slides_table] object.
-#' @param slide_id Character string. The Google Slides page object ID of the
-#'   target slide.
-#' @param position A [slide_position] object describing where to place the
-#'   table on the slide.
-#' @param table_id Optional character string. The object ID to assign to the
-#'   new table.  If `NULL` a unique ID is generated automatically.
-#'
-#' @return A named list with elements `create`, `col_widths`, `cells`, and
-#'   `row_heights`, each being a list with a `requests` element ready for
-#'   [query()].
 #'
 #' @noRd
 create_table_requests <- function(table, slide_id, position, table_id = NULL) {
@@ -335,27 +524,27 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
           elementProperties = list(
             pageObjectId = slide_id,
             size = list(
-              width = list(magnitude = position@width_emu, unit = "EMU"),
+              width  = list(magnitude = position@width_emu,  unit = "EMU"),
               height = list(magnitude = position@height_emu, unit = "EMU")
             ),
             transform = list(
-              scaleX = position@scaleX,
-              scaleY = position@scaleY,
-              shearX = position@shearX,
-              shearY = position@shearY,
+              scaleX     = position@scaleX,
+              scaleY     = position@scaleY,
+              shearX     = position@shearX,
+              shearY     = position@shearY,
               translateX = position@left_emu,
               translateY = position@top_emu,
-              unit = "EMU"
+              unit       = "EMU"
             )
           ),
-          rows = table@n_rows,
+          rows    = table@n_rows,
           columns = table@n_cols
         )
       )
     )
   )
 
-  # ── 2. updateTableColumnProperties (column widths) ──────────────────────────
+  # ── 2. updateTableColumnProperties ──────────────────────────────────────────
   col_width_reqs <- if (!is.null(table@col_widths)) {
     purrr::imap(table@col_widths, \(w, i) {
       list(
@@ -373,118 +562,154 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
     NULL
   }
 
-  if (is.null(col_width_reqs)) {
-    col_width_req <- NULL
-  } else {
-    col_width_req <- list(requests = col_width_reqs)
-  }
+  col_width_req <- if (!is.null(col_width_reqs)) list(requests = col_width_reqs) else NULL
 
-  # ── 3. Per-cell: insertText + updateTextStyle + updateTableCellProperties ───
-  cell_reqs <- list()
+  # ── 3. Per-cell requests ─────────────────────────────────────────────────────
+  cell_reqs  <- list()
+  merge_reqs <- list()
 
   for (cell in table@cells) {
-    ri <- cell@row_index # 0-based
+    ri <- cell@row_index
     ci <- cell@col_index
-
-    cell_location <- list(
-      rowIndex = ri,
-      columnIndex = ci
-    )
+    cell_location <- list(rowIndex = ri, columnIndex = ci)
 
     has_text <- !is.null(cell@text) && nzchar(cell@text)
 
-    # insertText
     if (has_text) {
-      cell_reqs <- c(
-        cell_reqs,
-        list(
-          list(
-            insertText = list(
-              objectId = table_id,
-              cellLocation = cell_location,
-              text = cell@text,
-              insertionIndex = 0L
-            )
-          )
+      cell_reqs <- c(cell_reqs, list(list(
+        insertText = list(
+          objectId       = table_id,
+          cellLocation   = cell_location,
+          text           = cell@text,
+          insertionIndex = 0L
         )
-      )
+      )))
     }
 
-    # updateTextStyle and updateTableCellProperties only when the cell has text
-    if (has_text) {
-      # updateTextStyle (only when there are fields to set)
-      if (!is.null(cell@style) && !is.null(cell@style@text_style)) {
-        ts <- cell@style@text_style
-        if (S7::S7_inherits(ts, text_style) && length(ts@fields) > 0) {
-          cell_reqs <- c(
-            cell_reqs,
-            list(
-              list(
-                updateTextStyle = list(
-                  objectId = table_id,
-                  cellLocation = cell_location,
-                  textRange = list(type = "ALL"),
-                  style = ts@style,
-                  fields = paste(ts@fields, collapse = ",")
-                )
-              )
+    if (has_text && !is.null(cell@style) && !is.null(cell@style@text_style)) {
+      ts <- cell@style@text_style
+
+      if (S7::S7_inherits(ts, text_style)) {
+        if (length(ts@fields) > 0) {
+          cell_reqs <- c(cell_reqs, list(list(
+            updateTextStyle = list(
+              objectId     = table_id,
+              cellLocation = cell_location,
+              textRange    = list(type = "ALL"),
+              style        = ts@style,
+              fields       = paste(ts@fields, collapse = ",")
             )
-          )
+          )))
+        }
+
+        if (length(ts@paragraph_fields) > 0) {
+          cell_reqs <- c(cell_reqs, list(list(
+            updateParagraphStyle = list(
+              objectId     = table_id,
+              cellLocation = cell_location,
+              textRange    = list(type = "ALL"),
+              style        = ts@paragraph_style,
+              fields       = paste(ts@paragraph_fields, collapse = ",")
+            )
+          )))
+        }
+      }
+    }
+
+    if (has_text && !is.null(cell@style)) {
+      cs <- cell@style
+      tcp <- list()
+      tcp_fields <- character()
+
+      if (!is.null(cs@bg_color)) {
+        tcp$tableCellBackgroundFill <- color_to_solid_fill(cs@bg_color)
+        tcp_fields <- c(tcp_fields, "tableCellBackgroundFill")
+      }
+
+      if (!is.null(cs@v_align)) {
+        content_alignment <- switch(
+          cs@v_align,
+          "TOP"    = "TOP",
+          "MIDDLE" = "MIDDLE",
+          "BOTTOM" = "BOTTOM",
+          NULL
+        )
+        if (!is.null(content_alignment)) {
+          tcp$contentAlignment <- content_alignment
+          tcp_fields <- c(tcp_fields, "contentAlignment")
         }
       }
 
-      # updateTableCellProperties (bg color + content alignment)
-      if (!is.null(cell@style)) {
-        cs <- cell@style
-        tcp <- list()
-        tcp_fields <- character()
+      if (length(tcp) > 0) {
+        row_span <- cs@row_span %||% 1L
+        col_span <- cs@col_span %||% 1L
 
-        if (!is.null(cs@bg_color)) {
-          tcp$tableCellBackgroundFill <- color_to_solid_fill(cs@bg_color)
-          tcp_fields <- c(tcp_fields, "tableCellBackgroundFill")
-        }
-
-        # Google Slides contentAlignment maps from vertical alignment
-        if (!is.null(cs@h_align)) {
-          content_alignment <- switch(
-            cs@v_align,
-            "TOP" = "TOP",
-            "MIDDLE" = "MIDDLE",
-            "BOTTOM" = "BOTTOM",
-            NULL
+        cell_reqs <- c(cell_reqs, list(list(
+          updateTableCellProperties = list(
+            objectId   = table_id,
+            tableRange = list(
+              location   = cell_location,
+              rowSpan    = row_span,
+              columnSpan = col_span
+            ),
+            tableCellProperties = tcp,
+            fields = paste(tcp_fields, collapse = ",")
           )
-          if (!is.null(content_alignment)) {
-            tcp$contentAlignment <- content_alignment
-            tcp_fields <- c(tcp_fields, "contentAlignment")
-          }
-        }
+        )))
+      }
+    }
 
-        if (length(tcp) > 0) {
-          cell_reqs <- c(
-            cell_reqs,
-            list(
-              list(
-                updateTableCellProperties = list(
-                  objectId = table_id,
-                  tableRange = list(
-                    location = cell_location,
-                    rowSpan = 1L,
-                    columnSpan = 1L
-                  ),
-                  tableCellProperties = tcp,
-                  fields = paste(tcp_fields, collapse = ",")
-                )
-              )
-            )
-          )
-        }
+    # Collect merge requests for cells with spans > 1
+    if (!is.null(cell@style)) {
+      rs <- cell@style@row_span %||% 1L
+      cs_span <- cell@style@col_span %||% 1L
+      if (rs > 1L || cs_span > 1L) {
+        merge_reqs <- c(merge_reqs, list(
+          build_merge_request(table_id, ri, ci, rs, cs_span)
+        ))
       }
     }
   }
 
-  cell_req <- list(requests = cell_reqs)
+  cell_req  <- list(requests = cell_reqs)
+  merge_req <- if (length(merge_reqs) > 0L) list(requests = merge_reqs) else NULL
 
-  # ── 4. updateTableRowProperties (row heights) ────────────────────────────────
+  # ── 4. Border requests ───────────────────────────────────────────────────────
+  border_reqs <- list()
+
+  for (cell in table@cells) {
+    if (is.null(cell@style)) next
+    ri <- cell@row_index
+    ci <- cell@col_index
+    cs <- cell@style
+
+    border_sides <- list(
+      top    = cs@border_top,
+      bottom = cs@border_bottom,
+      left   = cs@border_left,
+      right  = cs@border_right
+    )
+
+    for (side in names(border_sides)) {
+      border_val <- border_sides[[side]]
+      if (is.null(border_val)) next
+
+      req <- build_border_request(
+        table_id   = table_id,
+        row_index  = ri,
+        col_index  = ci,
+        position   = side_to_border_position(side),
+        color      = border_val$color,
+        width      = border_val$width,
+        dash_style = border_val$dash_style
+      )
+      if (!is.null(req)) border_reqs <- c(border_reqs, list(req))
+    }
+  }
+
+  border_req <- if (length(border_reqs) > 0L) list(requests = border_reqs) else NULL
+
+  # ── 5. updateTableRowProperties ─────────────────────────────────────────────
   row_height_reqs <- if (!is.null(table@row_heights)) {
     purrr::imap(table@row_heights, \(h, i) {
       list(
@@ -505,9 +730,11 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
   row_height_req <- list(requests = row_height_reqs)
 
   list(
-    create = create_req,
-    col_widths = col_width_req,
-    cells = cell_req,
+    create      = create_req,
+    col_widths  = col_width_req,
+    cells       = cell_req,
+    merges      = merge_req,
+    borders     = border_req,
     row_heights = row_height_req
   ) |> purrr::compact()
 }
@@ -538,10 +765,10 @@ add_table <- function(
   slide_obj,
   table,
   position,
-  order = c("front", "back"),
+  order    = c("front", "back"),
   table_id = NULL,
-  debug = FALSE,
-  token = NULL
+  debug    = FALSE,
+  token    = NULL
 ) {
   order <- rlang::arg_match(order)
 
@@ -557,7 +784,6 @@ add_table <- function(
     )
   }
 
-  # Convert to r2slides_table if needed
   if (!S7::S7_inherits(table, r2slides_table)) {
     table <- as_r2slides_table(table)
   }
@@ -565,64 +791,41 @@ add_table <- function(
   params <- list(presentationId = slide_obj@presentation$presentation_id)
 
   reqs <- create_table_requests(
-    table = table,
+    table    = table,
     slide_id = slide_obj@slide_id,
     position = position,
     table_id = table_id
   )
 
-  # Recover the table_id that was actually used 
   table_id <- reqs$create$requests[[1]]$createTable$objectId
 
-  if (debug) {
-    return(reqs)
+  if (debug) return(reqs)
+
+  do_batch <- function(req) {
+    if (!is.null(req) && length(req$requests) > 0L) {
+      query(
+        endpoint = "slides.presentations.batchUpdate",
+        params   = params,
+        body     = req,
+        base     = "slides",
+        token    = token
+      )
+    }
   }
 
-  # Submit in order: create -> col widths -> cells -> row heights
-  query(
-    endpoint = "slides.presentations.batchUpdate",
-    params = params,
-    body = reqs$create,
-    base = "slides",
-    token = token
-  )
+  # Order matters: create -> col widths -> cells -> merges -> borders -> row heights
+  do_batch(reqs$create)
+  do_batch(reqs$col_widths)
+  do_batch(reqs$cells)
+  do_batch(reqs$merges)
+  do_batch(reqs$borders)
+  do_batch(reqs$row_heights)
 
-  if (length(reqs$col_widths$requests) > 0) {
-    query(
-      endpoint = "slides.presentations.batchUpdate",
-      params = params,
-      body = reqs$col_widths,
-      base = "slides",
-      token = token
-    )
-  }
-
-  if (length(reqs$cells$requests) > 0) {
-    query(
-      endpoint = "slides.presentations.batchUpdate",
-      params = params,
-      body = reqs$cells,
-      base = "slides",
-      token = token
-    )
-  }
-
-  if (length(reqs$row_heights$requests) > 0) {
-    query(
-      endpoint = "slides.presentations.batchUpdate",
-      params = params,
-      body = reqs$row_heights,
-      base = "slides",
-      token = token
-    )
-  }
-
-  # Apply Z-order (only "back" needs an explicit call; "front" is the default)
   if (order == "back") {
     zorder_by_id(
       presentation_id = slide_obj@presentation$presentation_id,
-      element_id = table_id,
-      operation = resolve_zorder_op(order)
+      element_id      = table_id,
+      operation       = resolve_zorder_op(order)
     )
   }
 

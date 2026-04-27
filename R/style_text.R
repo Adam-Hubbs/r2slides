@@ -17,6 +17,26 @@ theme_colors <- c(
   "BACKGROUND2"
 )
 
+alignment_values <- c(
+  "ALIGNMENT_UNSPECIFIED",
+  "START",
+  "CENTER",
+  "END",
+  "JUSTIFIED"
+)
+
+text_direction_values <- c(
+  "TEXT_DIRECTION_UNSPECIFIED",
+  "LEFT_TO_RIGHT",
+  "RIGHT_TO_LEFT"
+)
+
+spacing_mode_values <- c(
+  "SPACING_MODE_UNSPECIFIED",
+  "NEVER_COLLAPSE",
+  "COLLAPSE_LISTS"
+)
+
 #' Normalize any user-supplied color to a canonical internal hex string.
 #'
 #' Accepts a hex string (`"#RRGGBB"` or `"#RGB"`), a named R color (e.g.
@@ -143,6 +163,20 @@ color_to_solid_fill <- function(color) {
 #' @param small_caps A logical indicating whether the text should be in small caps.
 #' @param strikethrough A logical indicating whether the text should be strikethrough.
 #' @param underline A logical indicating whether the text should be underlined.
+#' @param alignment Paragraph horizontal alignment. One of
+#'   `"ALIGNMENT_UNSPECIFIED"`, `"START"`, `"CENTER"`, `"END"`, or
+#'   `"JUSTIFIED"`.
+#' @param line_spacing Line spacing as a percentage of normal, e.g. `100` for
+#'   single-spacing, `200` for double-spacing. Must be >= 0.
+#' @param indent_start Indent from the start side (left for LTR), in points.
+#' @param indent_end Indent from the end side (right for LTR), in points.
+#' @param space_above Extra space above the paragraph, in points.
+#' @param space_below Extra space below the paragraph, in points.
+#' @param indent_first_line First-line indent, in points.
+#' @param direction Text direction. One of `"TEXT_DIRECTION_UNSPECIFIED"`,
+#'   `"LEFT_TO_RIGHT"`, or `"RIGHT_TO_LEFT"`.
+#' @param spacing_mode Spacing mode. One of `"SPACING_MODE_UNSPECIFIED"`,
+#'   `"NEVER_COLLAPSE"`, or `"COLLAPSE_LISTS"`.
 #'
 #' @export
 text_style <- S7::new_class(
@@ -269,6 +303,101 @@ text_style <- S7::new_class(
       }
     ),
 
+    # ── Paragraph style properties ──────────────────────────────────────────
+    alignment = S7::new_property(
+      NULL | S7::class_character,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("alignment must be a single value")
+          if (!(value %in% alignment_values)) {
+            return(paste0(
+              "alignment must be one of: ",
+              paste(alignment_values, collapse = ", ")
+            ))
+          }
+        }
+      }
+    ),
+    line_spacing = S7::new_property(
+      NULL | S7::class_double,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("line_spacing must be a single value")
+          if (value < 0) return("line_spacing must be >= 0")
+        }
+      }
+    ),
+    indent_start = S7::new_property(
+      NULL | S7::class_double,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("indent_start must be a single value")
+        }
+      }
+    ),
+    indent_end = S7::new_property(
+      NULL | S7::class_double,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("indent_end must be a single value")
+        }
+      }
+    ),
+    space_above = S7::new_property(
+      NULL | S7::class_double,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("space_above must be a single value")
+          if (value < 0) return("space_above must be >= 0")
+        }
+      }
+    ),
+    space_below = S7::new_property(
+      NULL | S7::class_double,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("space_below must be a single value")
+          if (value < 0) return("space_below must be >= 0")
+        }
+      }
+    ),
+    indent_first_line = S7::new_property(
+      NULL | S7::class_double,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("indent_first_line must be a single value")
+        }
+      }
+    ),
+    direction = S7::new_property(
+      NULL | S7::class_character,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("direction must be a single value")
+          if (!(value %in% text_direction_values)) {
+            return(paste0(
+              "direction must be one of: ",
+              paste(text_direction_values, collapse = ", ")
+            ))
+          }
+        }
+      }
+    ),
+    spacing_mode = S7::new_property(
+      NULL | S7::class_character,
+      validator = function(value) {
+        if (!is.null(value)) {
+          if (length(value) != 1) return("spacing_mode must be a single value")
+          if (!(value %in% spacing_mode_values)) {
+            return(paste0(
+              "spacing_mode must be one of: ",
+              paste(spacing_mode_values, collapse = ", ")
+            ))
+          }
+        }
+      }
+    ),
+
     # Computed properties
     style = S7::new_property(S7::class_list, getter = function(self) {
       list(
@@ -322,6 +451,33 @@ text_style <- S7::new_class(
         f <- c(f, "underline")
       }
 
+      f
+    }),
+    paragraph_style = S7::new_property(S7::class_list, getter = function(self) {
+      pt_dim <- function(val) if (!is.null(val)) list(magnitude = val, unit = "PT") else NULL
+      list(
+        lineSpacing     = self@line_spacing,
+        alignment       = self@alignment,
+        indentStart     = pt_dim(self@indent_start),
+        indentEnd       = pt_dim(self@indent_end),
+        spaceAbove      = pt_dim(self@space_above),
+        spaceBelow      = pt_dim(self@space_below),
+        indentFirstLine = pt_dim(self@indent_first_line),
+        direction       = self@direction,
+        spacingMode     = self@spacing_mode
+      ) |> purrr::compact()
+    }),
+    paragraph_fields = S7::new_property(S7::class_character, getter = function(self) {
+      f <- character()
+      if (!is.null(self@line_spacing))     f <- c(f, "lineSpacing")
+      if (!is.null(self@alignment))        f <- c(f, "alignment")
+      if (!is.null(self@indent_start))     f <- c(f, "indentStart")
+      if (!is.null(self@indent_end))       f <- c(f, "indentEnd")
+      if (!is.null(self@space_above))      f <- c(f, "spaceAbove")
+      if (!is.null(self@space_below))      f <- c(f, "spaceBelow")
+      if (!is.null(self@indent_first_line)) f <- c(f, "indentFirstLine")
+      if (!is.null(self@direction))        f <- c(f, "direction")
+      if (!is.null(self@spacing_mode))     f <- c(f, "spacingMode")
       f
     })
   )
@@ -595,47 +751,80 @@ create_styling_request <- function(
       start_index <- as.integer(selection_index[1] - 1)
       end_index <- as.integer(selection_index[2])
 
-      # Create request
-      style_requests <- append(
-        style_requests,
-        list(
-          updateTextStyle = list(
-            objectId = element_id,
-            textRange = list(
-              type = "FIXED_RANGE",
-              startIndex = start_index,
-              endIndex = end_index
-            ),
-            style = style_rule@style[[rule]]@style,
-            fields = paste(
-              style_rule@style[[rule]]@fields,
-              collapse = ","
+      ts <- style_rule@style[[rule]]
+      text_range <- list(
+        type       = "FIXED_RANGE",
+        startIndex = start_index,
+        endIndex   = end_index
+      )
+
+      # updateTextStyle (only when character-level fields are set)
+      if (length(ts@fields) > 0) {
+        style_requests <- append(
+          style_requests,
+          list(
+            updateTextStyle = list(
+              objectId  = element_id,
+              textRange = text_range,
+              style     = ts@style,
+              fields    = paste(ts@fields, collapse = ",")
             )
           )
         )
-      )
+      }
+
+      # updateParagraphStyle (only when paragraph-level fields are set)
+      if (length(ts@paragraph_fields) > 0) {
+        style_requests <- append(
+          style_requests,
+          list(
+            updateParagraphStyle = list(
+              objectId  = element_id,
+              textRange = text_range,
+              style     = ts@paragraph_style,
+              fields    = paste(ts@paragraph_fields, collapse = ",")
+            )
+          )
+        )
+      }
     }
   }
 
   if (!when_true && style_rule@has_default_style) {
-    style_requests <- append(
-      style_requests,
-      list(
-        updateTextStyle = list(
-          objectId = element_id,
-          textRange = list(
-            type = "FIXED_RANGE",
-            startIndex = 0,
-            endIndex = nchar(text)
-          ),
-          style = style_rule@style[[style_rule@num_styles]]@style,
-          fields = paste(
-            style_rule@style[[style_rule@num_styles]]@fields,
-            collapse = ","
+    ts <- style_rule@style[[style_rule@num_styles]]
+    text_range <- list(
+      type       = "FIXED_RANGE",
+      startIndex = 0L,
+      endIndex   = nchar(text)
+    )
+
+    if (length(ts@fields) > 0) {
+      style_requests <- append(
+        style_requests,
+        list(
+          updateTextStyle = list(
+            objectId  = element_id,
+            textRange = text_range,
+            style     = ts@style,
+            fields    = paste(ts@fields, collapse = ",")
           )
         )
       )
-    )
+    }
+
+    if (length(ts@paragraph_fields) > 0) {
+      style_requests <- append(
+        style_requests,
+        list(
+          updateParagraphStyle = list(
+            objectId  = element_id,
+            textRange = text_range,
+            style     = ts@paragraph_style,
+            fields    = paste(ts@paragraph_fields, collapse = ",")
+          )
+        )
+      )
+    }
   }
 
   return(style_requests)
@@ -763,48 +952,44 @@ combine_style_impl <- function(
   call = rlang::caller_env()
 ) {
   if (error_on_contradiction) {
-    # Get the fields from both styles
-    fields1 <- e1@fields
-    fields2 <- e2@fields
+    # Helper: resolve a camelCase API field name to its R property value
+    field_val <- function(ts, field) {
+      switch(
+        field,
+        # text style fields
+        "backgroundColor" = ts@bg_color,
+        "foregroundColor" = ts@text_color,
+        "bold"            = ts@bold,
+        "italic"          = ts@italic,
+        "fontFamily"      = ts@font_family,
+        "fontSize"        = ts@font_size,
+        "link"            = ts@link,
+        "baselineOffset"  = ts@baseline_offset,
+        "smallCaps"       = ts@small_caps,
+        "strikethrough"   = ts@strikethrough,
+        "underline"       = ts@underline,
+        # paragraph style fields
+        "alignment"       = ts@alignment,
+        "lineSpacing"     = ts@line_spacing,
+        "indentStart"     = ts@indent_start,
+        "indentEnd"       = ts@indent_end,
+        "spaceAbove"      = ts@space_above,
+        "spaceBelow"      = ts@space_below,
+        "indentFirstLine" = ts@indent_first_line,
+        "direction"       = ts@direction,
+        "spacingMode"     = ts@spacing_mode
+      )
+    }
 
-    # Check for overlapping fields
-    overlapping_fields <- intersect(fields1, fields2)
+    all_fields1 <- c(e1@fields, e1@paragraph_fields)
+    all_fields2 <- c(e2@fields, e2@paragraph_fields)
+    overlapping_fields <- intersect(all_fields1, all_fields2)
 
     if (length(overlapping_fields) > 0) {
-      # Check if the overlapping fields have the same values
       for (field in overlapping_fields) {
-        # Get values directly from properties
-        val1 <- switch(
-          field,
-          "backgroundColor" = e1@bg_color,
-          "foregroundColor" = e1@text_color,
-          "bold" = e1@bold,
-          "italic" = e1@italic,
-          "fontFamily" = e1@font_family,
-          "fontSize" = e1@font_size,
-          "link" = e1@link,
-          "baselineOffset" = e1@baseline_offset,
-          "smallCaps" = e1@small_caps,
-          "strikethrough" = e1@strikethrough,
-          "underline" = e1@underline
-        )
+        val1 <- field_val(e1, field)
+        val2 <- field_val(e2, field)
 
-        val2 <- switch(
-          field,
-          "backgroundColor" = e2@bg_color,
-          "foregroundColor" = e2@text_color,
-          "bold" = e2@bold,
-          "italic" = e2@italic,
-          "fontFamily" = e2@font_family,
-          "fontSize" = e2@font_size,
-          "link" = e2@link,
-          "baselineOffset" = e2@baseline_offset,
-          "smallCaps" = e2@small_caps,
-          "strikethrough" = e2@strikethrough,
-          "underline" = e2@underline
-        )
-
-        # Check if values are identical
         if (!identical(val1, val2)) {
           cli::cli_abort(
             c(
@@ -825,16 +1010,26 @@ combine_style_impl <- function(
 
 mush_styles <- function(e1, e2) {
   text_style(
-    bg_color = e1@bg_color %||% e2@bg_color,
-    text_color = e1@text_color %||% e2@text_color,
-    bold = e1@bold %||% e2@bold,
-    italic = e1@italic %||% e2@italic,
-    font_family = e1@font_family %||% e2@font_family,
-    font_size = e1@font_size %||% e2@font_size,
-    link = e1@link %||% e2@link,
-    baseline_offset = e1@baseline_offset %||% e2@baseline_offset,
-    small_caps = e1@small_caps %||% e2@small_caps,
-    strikethrough = e1@strikethrough %||% e2@strikethrough,
-    underline = e1@underline %||% e2@underline
+    bg_color          = e1@bg_color          %||% e2@bg_color,
+    text_color        = e1@text_color        %||% e2@text_color,
+    bold              = e1@bold              %||% e2@bold,
+    italic            = e1@italic            %||% e2@italic,
+    font_family       = e1@font_family       %||% e2@font_family,
+    font_size         = e1@font_size         %||% e2@font_size,
+    link              = e1@link              %||% e2@link,
+    baseline_offset   = e1@baseline_offset   %||% e2@baseline_offset,
+    small_caps        = e1@small_caps        %||% e2@small_caps,
+    strikethrough     = e1@strikethrough     %||% e2@strikethrough,
+    underline         = e1@underline         %||% e2@underline,
+    # paragraph fields
+    alignment         = e1@alignment         %||% e2@alignment,
+    line_spacing      = e1@line_spacing      %||% e2@line_spacing,
+    indent_start      = e1@indent_start      %||% e2@indent_start,
+    indent_end        = e1@indent_end        %||% e2@indent_end,
+    space_above       = e1@space_above       %||% e2@space_above,
+    space_below       = e1@space_below       %||% e2@space_below,
+    indent_first_line = e1@indent_first_line %||% e2@indent_first_line,
+    direction         = e1@direction         %||% e2@direction,
+    spacing_mode      = e1@spacing_mode      %||% e2@spacing_mode
   )
 }

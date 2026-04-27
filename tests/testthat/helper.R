@@ -59,3 +59,58 @@ scrub_last_refreshed <- function(lines) {
     x = lines
   )
 }
+
+# ── Table test helpers ──────────────────────────────────────────────────────
+
+# A minimal plain flextable: 3 body rows x 3 columns, no merges/borders
+make_plain_ft <- function() {
+  dplyr::tibble(a = c("r1", "r2", "r3"), b = 1:3, c = c(TRUE, FALSE, TRUE)) |>
+    flextable::flextable()
+}
+
+# Flextable with a vertical merge spanning rows 1:2 in column 1 (body)
+make_merged_ft <- function() {
+  flextable::flextable(dplyr::tibble(x = c("A", "A", "B"), y = 1:3)) |>
+    flextable::merge_at(i = 1:2, j = 1)
+}
+
+# Flextable with explicit top/bottom border colours
+make_bordered_ft <- function() {
+  flextable::flextable(dplyr::tibble(x = c("A", "B"), y = 1:2)) |>
+    flextable::border(
+      i = 1,
+      border.top = officer::fp_border(color = "#FF0000", width = 2),
+      part = "body"
+    ) |>
+    flextable::border(
+      i = 2,
+      border.bottom = officer::fp_border(color = "#0000FF", width = 1, style = "dashed"),
+      part = "body"
+    )
+}
+
+# A fixed slide_position used across table request tests
+test_table_position <- function() {
+  slide_position(top = 1, left = 1, width = 8, height = 5)
+}
+
+# Pull the first request of a given type out of a named request list
+first_req <- function(reqs, type) {
+  found <- Filter(\(r) !is.null(r[[type]]), reqs)
+  if (length(found) == 0L) return(NULL)
+  found[[1L]][[type]]
+}
+
+# Find a border request matching row_index / col_index / borderPosition
+find_border_req <- function(border_reqs, row_idx, col_idx, position) {
+  Filter(
+    \(r) {
+      u <- r$updateTableBorderProperties
+      !is.null(u) &&
+        u$tableRange$location$rowIndex    == row_idx &&
+        u$tableRange$location$columnIndex == col_idx &&
+        u$borderPosition == position
+    },
+    border_reqs
+  )
+}

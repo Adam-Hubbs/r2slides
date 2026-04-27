@@ -219,6 +219,9 @@ presentation <- R6::R6Class(
     #' @param index Index of the slide to return (1-based)
     #' @return A slide object
     get_slide_by_index = function(index) {
+
+      self$refresh()
+
       if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
         cli::cli_alert_warning(
           "No slides available. Try calling $refresh() first."
@@ -259,6 +262,9 @@ presentation <- R6::R6Class(
     #' @param slide_id ID of the slide to return
     #' @return A slide object
     get_slide_by_id = function(slide_id) {
+
+      self$refresh()
+
       if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
         cli::cli_alert_warning(
           "No slides available. Try calling $refresh() first."
@@ -296,6 +302,9 @@ presentation <- R6::R6Class(
     #' @param slide A slide object
     #' @return Index of the slide
     get_slide_index = function(slide) {
+
+      self$refresh()
+
       if (!is.slide(slide)) {
         cli::cli_abort("{.arg slide} must be a slide object")
       }
@@ -314,6 +323,9 @@ presentation <- R6::R6Class(
     #'
     #' @return Character vector of slide object IDs
     get_slide_ids = function() {
+
+      self$refresh()
+      
       private$slide_ids %||% character(0)
     },
 

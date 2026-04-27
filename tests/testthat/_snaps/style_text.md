@@ -399,3 +399,174 @@
       Warning:
       i Selector function returned `NA`. Not preforming any styling.
 
+# text_style() rejects invalid alignment values
+
+    Code
+      text_style(alignment = "left")
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @alignment alignment must be one of: ALIGNMENT_UNSPECIFIED, START, CENTER, END, JUSTIFIED
+
+---
+
+    Code
+      text_style(alignment = "UNKNOWN")
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @alignment alignment must be one of: ALIGNMENT_UNSPECIFIED, START, CENTER, END, JUSTIFIED
+
+---
+
+    Code
+      text_style(alignment = c("CENTER", "END"))
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @alignment alignment must be a single value
+
+# text_style() rejects negative / invalid line_spacing
+
+    Code
+      text_style(line_spacing = -1)
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @line_spacing line_spacing must be >= 0
+
+---
+
+    Code
+      text_style(line_spacing = c(100, 200))
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @line_spacing line_spacing must be a single value
+
+# text_style() rejects invalid direction values
+
+    Code
+      text_style(direction = "ltr")
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @direction direction must be one of: TEXT_DIRECTION_UNSPECIFIED, LEFT_TO_RIGHT, RIGHT_TO_LEFT
+
+---
+
+    Code
+      text_style(direction = c("LEFT_TO_RIGHT", "RIGHT_TO_LEFT"))
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @direction direction must be a single value
+
+# text_style() rejects invalid spacing_mode values
+
+    Code
+      text_style(spacing_mode = "COLLAPSE")
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @spacing_mode spacing_mode must be one of: SPACING_MODE_UNSPECIFIED, NEVER_COLLAPSE, COLLAPSE_LISTS
+
+---
+
+    Code
+      text_style(spacing_mode = c("NEVER_COLLAPSE", "COLLAPSE_LISTS"))
+    Condition
+      Error:
+      ! <r2slides::text_style> object properties are invalid:
+      - @spacing_mode spacing_mode must be a single value
+
+# combine_style_impl() errors on contradicting paragraph field values
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for alignment
+      x Object 1 has "CENTER"
+      x Object 2 has "END"
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for lineSpacing
+      x Object 1 has 100
+      x Object 2 has 200
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for indentStart
+      x Object 1 has 10
+      x Object 2 has 20
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for indentEnd
+      x Object 1 has 10
+      x Object 2 has 20
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for spaceAbove
+      x Object 1 has 6
+      x Object 2 has 12
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for spaceBelow
+      x Object 1 has 6
+      x Object 2 has 12
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for indentFirstLine
+      x Object 1 has 18
+      x Object 2 has 36
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for direction
+      x Object 1 has "LEFT_TO_RIGHT"
+      x Object 2 has "RIGHT_TO_LEFT"
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for spacingMode
+      x Object 1 has "NEVER_COLLAPSE"
+      x Object 2 has "COLLAPSE_LISTS"
+
