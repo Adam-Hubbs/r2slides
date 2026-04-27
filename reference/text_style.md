@@ -24,11 +24,13 @@ text_style(
 
 - bg_color:
 
-  A list specifying background color (RGB).
+  Background color. Accepts a hex string (e.g. \`"#FF0000"\`), a named R
+  color (e.g. \`"red"\`), an RGB numeric vector \`c(r, g, b)\` with
+  values in \\0, 1\\, or a theme color string (e.g. \`"ACCENT1"\`).
 
 - text_color:
 
-  A list specifying text color (RGB).
+  Text (foreground) color. Same formats as \`bg_color\`.
 
 - bold:
 

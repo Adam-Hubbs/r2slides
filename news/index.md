@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.0.9070
+
+- Initial support for tables
+
 ## Version 0.0.9064
 
 - Ordering
