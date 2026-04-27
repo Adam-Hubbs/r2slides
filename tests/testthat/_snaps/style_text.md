@@ -218,6 +218,106 @@
       x Object 1 has "#FF0000"
       x Object 2 has "#00FF00"
 
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for foregroundColor
+      x Object 1 has "#FF0000"
+      x Object 2 has "#0000FF"
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for bold
+      x Object 1 has TRUE
+      x Object 2 has FALSE
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for italic
+      x Object 1 has TRUE
+      x Object 2 has FALSE
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for fontFamily
+      x Object 1 has "A"
+      x Object 2 has "B"
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for fontSize
+      x Object 1 has 10
+      x Object 2 has 12
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for link
+      x Object 1 has "https://a.com"
+      x Object 2 has "https://b.com"
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for baselineOffset
+      x Object 1 has "SUPERSCRIPT"
+      x Object 2 has "SUBSCRIPT"
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for smallCaps
+      x Object 1 has TRUE
+      x Object 2 has FALSE
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for strikethrough
+      x Object 1 has TRUE
+      x Object 2 has FALSE
+
+---
+
+    Code
+      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
+    Condition
+      Error in `.f()`:
+      ! Can't combine text styles: conflicting values for underline
+      x Object 1 has TRUE
+      x Object 2 has FALSE
+
 # combine_style() with .priority = 'error' errors on contradictions
 
     Code

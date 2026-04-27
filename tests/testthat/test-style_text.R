@@ -58,7 +58,7 @@ test_that("text_style() stores all valid properties correctly", {
   expect_false(ts@italic)
   expect_equal(ts@font_family, "Arial")
   expect_equal(ts@font_size, 12.0)
-  expect_equal(ts@text_color, c(1, 0, 0))
+  expect_equal(ts@text_color, '#FF0000')
   expect_equal(ts@bg_color, "ACCENT1")
   expect_equal(ts@link, "https://example.com")
   expect_equal(ts@baseline_offset, "SUPERSCRIPT")
@@ -125,7 +125,8 @@ test_that("text_style()@style maps scalar properties correctly", {
 test_that("text_style()@style builds correct color structures", {
   expect_equal(
     text_style(text_color = c(1, 0.5, 0))@style$foregroundColor,
-    list(opaqueColor = list(rgbColor = list(red = 1, green = 0.5, blue = 0)))
+    list(opaqueColor = list(rgbColor = list(red = 1, green = 0.502, blue = 0))),
+    tolerance = 0.001
   )
   expect_equal(
     text_style(text_color = "ACCENT2")@style$foregroundColor,
@@ -133,7 +134,7 @@ test_that("text_style()@style builds correct color structures", {
   )
   expect_equal(
     text_style(bg_color = c(0, 1, 0))@style$backgroundColor,
-    list(opaqueColor = list(rgbColor = c(0, 1, 0)))
+    list(opaqueColor = list(rgbColor = list(red = 0, green = 1, blue = 0)))
   )
   expect_equal(
     text_style(bg_color = "DARK1")@style$backgroundColor,

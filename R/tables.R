@@ -440,9 +440,7 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
         tcp_fields <- character()
 
         if (!is.null(cs@bg_color)) {
-          tcp$tableCellBackgroundFill <- list(
-            solidFill = list(color = color_to_api(cs@bg_color))
-          )
+          tcp$tableCellBackgroundFill <- color_to_solid_fill(cs@bg_color)
           tcp_fields <- c(tcp_fields, "tableCellBackgroundFill")
         }
 

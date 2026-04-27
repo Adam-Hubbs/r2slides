@@ -84,33 +84,48 @@ validate_color <- function(value) {
   )
 }
 
-#' Convert an internally-stored color to the Google Slides API color node.
+#' Convert an internally-stored color to the Google Slides API rgbColor node.
 #'
-#' Accepts a hex string (`"#RRGGBB"`) or a theme color string. Returns the
-#' appropriate `opaqueColor` list for embedding in API requests.
+#' Returns only the innermost color object — either `list(rgbColor = ...)` or
+#' `list(themeColor = ...)`. Callers are responsible for wrapping this in the
+#' appropriate parent node (`opaqueColor`, `solidFill`, etc.) required by the
+#' specific API field being set.
 #'
 #' @param color A hex string or theme color string (as returned by
 #'   [normalize_color()]), or `NULL`.
-#' @return A named list suitable for the Slides API, or `NULL`.
+#' @return A named list with a single `rgbColor` or `themeColor` element, or
+#'   `NULL`.
 #' @noRd
-color_to_api <- function(color) {
+color_to_rgb_api <- function(color) {
   if (is.null(color)) return(NULL)
 
   if (color %in% theme_colors) {
-    return(list(opaqueColor = list(themeColor = color)))
+    return(list(themeColor = color))
   }
 
   # hex "#RRGGBB" -> fractional RGB for API
   rgb_int <- grDevices::col2rgb(color)
   list(
-    opaqueColor = list(
-      rgbColor = list(
-        red   = rgb_int[1L] / 255,
-        green = rgb_int[2L] / 255,
-        blue  = rgb_int[3L] / 255
-      )
+    rgbColor = list(
+      red   = rgb_int[1L] / 255,
+      green = rgb_int[2L] / 255,
+      blue  = rgb_int[3L] / 255
     )
   )
+}
+
+#' Wrap a color as an `opaqueColor` node (used by updateTextStyle).
+#' @noRd
+color_to_opaque_color <- function(color) {
+  inner <- color_to_rgb_api(color)
+  if (is.null(inner)) NULL else list(opaqueColor = inner)
+}
+
+#' Wrap a color as a `solidFill` node (used by updateTableCellProperties).
+#' @noRd
+color_to_solid_fill <- function(color) {
+  inner <- color_to_rgb_api(color)
+  if (is.null(inner)) NULL else list(solidFill = list(color = inner))
 }
 
 #' Text styling properties
@@ -257,8 +272,8 @@ text_style <- S7::new_class(
     # Computed properties
     style = S7::new_property(S7::class_list, getter = function(self) {
       list(
-        backgroundColor = color_to_api(self@bg_color),
-        foregroundColor = color_to_api(self@text_color),
+        backgroundColor = color_to_opaque_color(self@bg_color),
+        foregroundColor = color_to_opaque_color(self@text_color),
         bold            = self@bold,
         italic          = self@italic,
         fontFamily      = self@font_family,
