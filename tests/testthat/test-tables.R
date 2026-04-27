@@ -93,11 +93,13 @@ test_that("as_r2slides_table: cells without explicit borders carry only default 
   ft <- make_plain_ft()
   r2 <- as_r2slides_table(ft)
 
-  # Flextable always emits a default (black) border; colour should NOT be a
-  # custom value and width should be NULL (no explicit width set).
+  # Flextable zero-width borders are emitted as TRANSPARENT so Google Slides
+  # overrides its default. Width is 0 and dash_style is "TRANSPARENT".
   some_cell <- Filter(\(c) c@row_index == 2L && c@col_index == 1L, r2@cells)[[1]]
-  expect_null(some_cell@style@border_top$width)
-  expect_null(some_cell@style@border_bottom$width)
+  expect_equal(some_cell@style@border_top$width, 0)
+  expect_equal(some_cell@style@border_top$dash_style, "TRANSPARENT")
+  expect_equal(some_cell@style@border_bottom$width, 0)
+  expect_equal(some_cell@style@border_bottom$dash_style, "TRANSPARENT")
   # default colour is black, not a custom colour
   expect_false(identical(some_cell@style@border_top$color, "#FF0000"))
 })
@@ -216,10 +218,11 @@ test_that("create_table_requests: plain table has borders key from default flext
   r2   <- as_r2slides_table(make_plain_ft())
   reqs <- create_table_requests(r2, "slide_abc", test_table_position(), table_id = "tbl_nob")
 
-  # Zero-width borders are not emitted. Only non-zero default borders appear:
-  # header top + header bottom (3 cols × 2) + last body row bottom (3 cols × 1) = 9
+  # Every cell side is emitted: zero-width sides as TRANSPARENT to override
+  # Google Slides defaults, non-zero sides with their explicit values.
+  # 4 rows x 3 cols x 4 sides = 48 requests
   expect_false(is.null(reqs$borders))
-  expect_equal(length(reqs$borders$requests), 9L)
+  expect_equal(length(reqs$borders$requests), 48L)
 })
 
 # -- r2slides_table S7 validation --

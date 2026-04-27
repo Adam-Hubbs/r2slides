@@ -260,8 +260,21 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
           raw_color != "" && raw_color != "transparent"
         ) normalize_color(raw_color) else NULL
 
-        # Width of 0 means no border — skip the entire side
-        if (!is.null(raw_width) && !is.na(raw_width) && raw_width == 0) next
+        # Width of 0 means "no visible border" in flextable. We must still emit a
+        # TRANSPARENT request so Google Slides overrides its own default border.
+        no_border <- !is.null(raw_width) && !is.na(raw_width) && raw_width == 0
+
+        if (no_border) {
+          results <- c(results, list(list(
+            row_index  = as.integer(row_offset + r - 1L),
+            col_index  = as.integer(ci - 1L),
+            side       = side,
+            color      = color,
+            width      = 0,
+            dash_style = "TRANSPARENT"
+          )))
+          next
+        }
 
         width <- if (!is.null(raw_width) && !is.na(raw_width) && raw_width > 0) {
           as.double(raw_width)
