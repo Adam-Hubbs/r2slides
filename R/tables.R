@@ -358,7 +358,7 @@ build_border_request <- function(table_id, row_index, col_index, position, color
     # color_to_solid_fill returns list(solidFill = list(color = ...))
     # tableBorderFill expects the same shape
     props$tableBorderFill <- color_to_solid_fill(color)
-    fields <- c(fields, "tableBorderFill.solidFill")
+    fields <- c(fields, "tableBorderFill")
   }
 
   if (!is.null(width)) {
@@ -452,9 +452,19 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
     cells <- vector("list", n_sec_rows * n_cols)
     idx <- 1L
 
+    # Span matrices: 0 means the cell is consumed by a neighbouring merge.
+    #   spans$rows[r, ci]    = col-span count (0 = consumed horizontally)
+    #   spans$columns[r, ci] = row-span count (0 = consumed vertically)
+    col_span_mat <- section$spans$rows
+    row_span_mat <- section$spans$columns
+
     for (r in seq_len(n_sec_rows)) {
       for (ci in seq_along(col_keys)) {
         col_key <- col_keys[[ci]]
+
+        # A cell is consumed when either span dimension is 0.
+        is_consumed <- !is.null(col_span_mat) &&
+          (col_span_mat[r, ci] == 0L || row_span_mat[r, ci] == 0L)
 
         ts <- ft_make_text_style(section, r, col_key)
         cs <- ft_make_cell_style(section, r, col_key, ts)
@@ -469,8 +479,9 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
         cells[[idx]] <- table_cell(
           row_index = as.integer(row_offset + r - 1L),
           col_index = as.integer(ci - 1L),
-          text  = txt,
-          style = cs
+          text      = txt,
+          style     = cs,
+          consumed  = isTRUE(is_consumed)
         )
         idx <- idx + 1L
       }
@@ -572,6 +583,11 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
     ri <- cell@row_index
     ci <- cell@col_index
     cell_location <- list(rowIndex = ri, columnIndex = ci)
+
+    # Consumed cells are covered by a merge — skip all content requests.
+    # (Flextable duplicates text into consumed cells; we must not write it.)
+    # Merge requests are only ever on origin cells, so nothing is lost here.
+    if (isTRUE(cell@consumed)) next
 
     has_text <- !is.null(cell@text) && nzchar(cell@text)
 

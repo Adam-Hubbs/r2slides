@@ -96,7 +96,11 @@ table_cell <- S7::new_class(
     ),
 
     text  = S7::new_property(NULL | S7::class_character),
-    style = S7::new_property(NULL | cell_style)
+    style = S7::new_property(NULL | cell_style),
+
+    # TRUE when this cell is covered by another cell's merge span and should
+    # not receive any content requests (insertText, updateTextStyle, etc.).
+    consumed = S7::new_property(S7::class_logical, default = FALSE)
   )
 )
 

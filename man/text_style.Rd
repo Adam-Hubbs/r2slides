@@ -15,7 +15,16 @@ text_style(
   baseline_offset = NULL,
   small_caps = NULL,
   strikethrough = NULL,
-  underline = NULL
+  underline = NULL,
+  alignment = NULL,
+  line_spacing = NULL,
+  indent_start = NULL,
+  indent_end = NULL,
+  space_above = NULL,
+  space_below = NULL,
+  indent_first_line = NULL,
+  direction = NULL,
+  spacing_mode = NULL
 )
 }
 \arguments{
@@ -42,6 +51,29 @@ values in \[0, 1\], or a theme color string (e.g. `"ACCENT1"`).}
 \item{strikethrough}{A logical indicating whether the text should be strikethrough.}
 
 \item{underline}{A logical indicating whether the text should be underlined.}
+
+\item{alignment}{Paragraph horizontal alignment. One of
+`"ALIGNMENT_UNSPECIFIED"`, `"START"`, `"CENTER"`, `"END"`, or
+`"JUSTIFIED"`.}
+
+\item{line_spacing}{Line spacing as a percentage of normal, e.g. `100` for
+single-spacing, `200` for double-spacing. Must be >= 0.}
+
+\item{indent_start}{Indent from the start side (left for LTR), in points.}
+
+\item{indent_end}{Indent from the end side (right for LTR), in points.}
+
+\item{space_above}{Extra space above the paragraph, in points.}
+
+\item{space_below}{Extra space below the paragraph, in points.}
+
+\item{indent_first_line}{First-line indent, in points.}
+
+\item{direction}{Text direction. One of `"TEXT_DIRECTION_UNSPECIFIED"`,
+`"LEFT_TO_RIGHT"`, or `"RIGHT_TO_LEFT"`.}
+
+\item{spacing_mode}{Spacing mode. One of `"SPACING_MODE_UNSPECIFIED"`,
+`"NEVER_COLLAPSE"`, or `"COLLAPSE_LISTS"`.}
 }
 \description{
 Text styling properties
