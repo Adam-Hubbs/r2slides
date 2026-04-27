@@ -14,8 +14,6 @@
   : Convert a table object to an r2slides_table
 - [`bounding_box()`](https://adam-hubbs.github.io/r2slides/reference/bounding_box.md)
   : Calculate Bounding Box for Slide Position Objects
-- [`cell_style()`](https://adam-hubbs.github.io/r2slides/reference/cell_style.md)
-  : Cell styling properties for table cells
 - [`combine_style()`](https://adam-hubbs.github.io/r2slides/reference/combine_style.md)
   : Combine Text Styles
 - [`correct_slide_size()`](https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.md)
@@ -75,8 +73,6 @@
   : Create OAuth authentication token
 - [`r2slides_deauth()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_deauth.md)
   : Clear current token
-- [`r2slides_table()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_table.md)
-  : Intermediate table representation for Google Slides
 - [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
   : Get authentication token
 - [`register_presentation()`](https://adam-hubbs.github.io/r2slides/reference/register_presentation.md)
@@ -108,8 +104,6 @@
   : String helper functions for text positioning
 - [`style_rule()`](https://adam-hubbs.github.io/r2slides/reference/style_rule.md)
   : Style Rule Object
-- [`table_cell()`](https://adam-hubbs.github.io/r2slides/reference/table_cell.md)
-  : A single cell in an r2slides_table
 - [`text_style()`](https://adam-hubbs.github.io/r2slides/reference/text_style.md)
   : Text styling properties
 - [`write_gs()`](https://adam-hubbs.github.io/r2slides/reference/write_gs.md)

@@ -62,7 +62,16 @@
 <span>  baseline_offset <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  small_caps <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  strikethrough <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  underline <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  underline <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alignment <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  line_spacing <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  indent_start <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  indent_end <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  space_above <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  space_below <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  indent_first_line <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  direction <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  spacing_mode <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -114,6 +123,47 @@ values in \[0, 1\], or a theme color string (e.g. `"ACCENT1"`).</p></dd>
 
 <dt id="arg-underline">underline<a class="anchor" aria-label="anchor" href="#arg-underline"></a></dt>
 <dd><p>A logical indicating whether the text should be underlined.</p></dd>
+
+
+<dt id="arg-alignment">alignment<a class="anchor" aria-label="anchor" href="#arg-alignment"></a></dt>
+<dd><p>Paragraph horizontal alignment. One of
+`"ALIGNMENT_UNSPECIFIED"`, `"START"`, `"CENTER"`, `"END"`, or
+`"JUSTIFIED"`.</p></dd>
+
+
+<dt id="arg-line-spacing">line_spacing<a class="anchor" aria-label="anchor" href="#arg-line-spacing"></a></dt>
+<dd><p>Line spacing as a percentage of normal, e.g. `100` for
+single-spacing, `200` for double-spacing. Must be &gt;= 0.</p></dd>
+
+
+<dt id="arg-indent-start">indent_start<a class="anchor" aria-label="anchor" href="#arg-indent-start"></a></dt>
+<dd><p>Indent from the start side (left for LTR), in points.</p></dd>
+
+
+<dt id="arg-indent-end">indent_end<a class="anchor" aria-label="anchor" href="#arg-indent-end"></a></dt>
+<dd><p>Indent from the end side (right for LTR), in points.</p></dd>
+
+
+<dt id="arg-space-above">space_above<a class="anchor" aria-label="anchor" href="#arg-space-above"></a></dt>
+<dd><p>Extra space above the paragraph, in points.</p></dd>
+
+
+<dt id="arg-space-below">space_below<a class="anchor" aria-label="anchor" href="#arg-space-below"></a></dt>
+<dd><p>Extra space below the paragraph, in points.</p></dd>
+
+
+<dt id="arg-indent-first-line">indent_first_line<a class="anchor" aria-label="anchor" href="#arg-indent-first-line"></a></dt>
+<dd><p>First-line indent, in points.</p></dd>
+
+
+<dt id="arg-direction">direction<a class="anchor" aria-label="anchor" href="#arg-direction"></a></dt>
+<dd><p>Text direction. One of `"TEXT_DIRECTION_UNSPECIFIED"`,
+`"LEFT_TO_RIGHT"`, or `"RIGHT_TO_LEFT"`.</p></dd>
+
+
+<dt id="arg-spacing-mode">spacing_mode<a class="anchor" aria-label="anchor" href="#arg-spacing-mode"></a></dt>
+<dd><p>Spacing mode. One of `"SPACING_MODE_UNSPECIFIED"`,
+`"NEVER_COLLAPSE"`, or `"COLLAPSE_LISTS"`.</p></dd>
 
 </dl></div>
 

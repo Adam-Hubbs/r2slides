@@ -15,7 +15,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/add_text_multi.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/as_r2slides_table.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/bounding_box.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/cell_style.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/combine_style.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/create_spreadsheet_env_in_global.html</loc></url>
@@ -46,7 +45,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_auth.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_deauth.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_default_client.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_table.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/r2slides_token.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/register_presentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/relative_position.html</loc></url>
@@ -57,7 +55,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/slide_position.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/string-helpers.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/style_rule.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/table_cell.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/text_style.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/validatePresentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/validatespreadsheet.html</loc></url>
