@@ -260,7 +260,9 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
           raw_color != "" && raw_color != "transparent"
         ) normalize_color(raw_color) else NULL
 
-        # Width of 0 means no border — skip
+        # Width of 0 means no border — skip the entire side
+        if (!is.null(raw_width) && !is.na(raw_width) && raw_width == 0) next
+
         width <- if (!is.null(raw_width) && !is.na(raw_width) && raw_width > 0) {
           as.double(raw_width)
         } else NULL

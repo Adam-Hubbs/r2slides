@@ -216,9 +216,10 @@ test_that("create_table_requests: plain table has borders key from default flext
   r2   <- as_r2slides_table(make_plain_ft())
   reqs <- create_table_requests(r2, "slide_abc", test_table_position(), table_id = "tbl_nob")
 
-  # Flextable always emits default borders; expect one request per cell side
+  # Zero-width borders are not emitted. Only non-zero default borders appear:
+  # header top + header bottom (3 cols × 2) + last body row bottom (3 cols × 1) = 9
   expect_false(is.null(reqs$borders))
-  expect_equal(length(reqs$borders$requests), r2@n_rows * r2@n_cols * 4L)
+  expect_equal(length(reqs$borders$requests), 9L)
 })
 
 # -- r2slides_table S7 validation --
