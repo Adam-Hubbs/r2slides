@@ -170,7 +170,7 @@ ft_make_cell_style <- function(section, row_i, col_key, ts) {
   v_align <- switch(
     ft_read_style(cell_s$vertical.align, row_i, col_key) %||% "",
     "top"    = "TOP",
-    "center" = "MIDDLE",
+   
     "bottom" = "BOTTOM",
     NULL
   )
@@ -260,8 +260,9 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
           raw_color != "" && raw_color != "transparent"
         ) normalize_color(raw_color) else NULL
 
-        # Width of 0 means "no visible border" in flextable. We must still emit a
-        # TRANSPARENT request so Google Slides overrides its own default border.
+        # Width of 0 means "no visible border" in flextable. The Google Slides
+        # API rejects weight <= 0, so substitute width=1 with white (#FFFFFF),
+        # which is visually invisible and overrides the Google Slides default border.
         no_border <- !is.null(raw_width) && !is.na(raw_width) && raw_width == 0
 
         if (no_border) {
@@ -269,9 +270,9 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
             row_index  = as.integer(row_offset + r - 1L),
             col_index  = as.integer(ci - 1L),
             side       = side,
-            color      = color,
-            width      = 0,
-            dash_style = "TRANSPARENT"
+            color      = "#FFFFFF",
+            width      = 1,
+            dash_style = "SOLID"
           )))
           next
         }
@@ -706,37 +707,65 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
   merge_req <- if (length(merge_reqs) > 0L) list(requests = merge_reqs) else NULL
 
   # ── 4. Border requests ───────────────────────────────────────────────────────
-  border_reqs <- list()
+  # Each interior border is a single physical line shared between two adjacent
+  # cells. Sending both a BOTTOM from the cell above AND a TOP from the cell
+  # below for the same physical line means the second request silently
+  # overwrites the first (last write wins in batchUpdate).
+  #
+  # Strategy: canonicalise every border to the "owner" cell before emitting:
+  #   - TOP at ri > 0  → emit as BOTTOM at (ri - 1, ci)   [cell above owns it]
+  #   - LEFT at ci > 0 → emit as RIGHT at (ri, ci - 1)    [cell to left owns it]
+  #   - BOTTOM / RIGHT are always emitted from the current cell as-is.
+  #   - Outer-edge TOP (ri == 0) and LEFT (ci == 0) emit directly as TOP/LEFT.
+  #
+  # We collect into a named map keyed by "ri,ci,POSITION" so that if both the
+  # cell above and the cell below store a value for the same shared line, the
+  # last one written wins — which is fine because flextable normalises adjacent
+  # cells to agree on shared borders.
+  border_map <- list()
 
   for (cell in table@cells) {
     if (is.null(cell@style)) next
-    ri <- cell@row_index
-    ci <- cell@col_index
+    ri <- cell@row_index   # 0-based
+    ci <- cell@col_index   # 0-based
     cs <- cell@style
 
-    border_sides <- list(
-      top    = cs@border_top,
-      bottom = cs@border_bottom,
-      left   = cs@border_left,
-      right  = cs@border_right
+    sides <- list(
+      top    = list(border = cs@border_top,    emit_ri = ri - 1L, emit_ci = ci,      pos = "BOTTOM"),
+      bottom = list(border = cs@border_bottom, emit_ri = ri,      emit_ci = ci,      pos = "BOTTOM"),
+      left   = list(border = cs@border_left,   emit_ri = ri,      emit_ci = ci - 1L, pos = "RIGHT"),
+      right  = list(border = cs@border_right,  emit_ri = ri,      emit_ci = ci,      pos = "RIGHT")
     )
 
-    for (side in names(border_sides)) {
-      border_val <- border_sides[[side]]
-      if (is.null(border_val)) next
+    # Outer edges: TOP at ri==0 emits as TOP, LEFT at ci==0 emits as LEFT
+    if (ri == 0L) sides$top  <- list(border = cs@border_top,  emit_ri = ri, emit_ci = ci, pos = "TOP")
+    if (ci == 0L) sides$left <- list(border = cs@border_left, emit_ri = ri, emit_ci = ci, pos = "LEFT")
 
-      req <- build_border_request(
-        table_id   = table_id,
-        row_index  = ri,
-        col_index  = ci,
-        position   = side_to_border_position(side),
-        color      = border_val$color,
-        width      = border_val$width,
-        dash_style = border_val$dash_style
+    for (s in sides) {
+      if (is.null(s$border)) next
+      key <- paste(s$emit_ri, s$emit_ci, s$pos, sep = ",")
+      border_map[[key]] <- list(
+        row_index  = s$emit_ri,
+        col_index  = s$emit_ci,
+        position   = s$pos,
+        color      = s$border$color,
+        width      = s$border$width,
+        dash_style = s$border$dash_style
       )
-      if (!is.null(req)) border_reqs <- c(border_reqs, list(req))
     }
   }
+
+  border_reqs <- Filter(Negate(is.null), lapply(border_map, \(b) {
+    build_border_request(
+      table_id   = table_id,
+      row_index  = b$row_index,
+      col_index  = b$col_index,
+      position   = b$position,
+      color      = b$color,
+      width      = b$width,
+      dash_style = b$dash_style
+    )
+  }))
 
   border_req <- if (length(border_reqs) > 0L) list(requests = border_reqs) else NULL
 

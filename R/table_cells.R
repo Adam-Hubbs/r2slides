@@ -4,7 +4,7 @@ ft_dash_style_map <- c(
   "solid"  = "SOLID",
   "dashed" = "DASH",
   "dotted" = "DOT",
-  "none"   = "TRANSPARENT"
+  "none"   = "SOLID"  # width=0 makes it invisible; SOLID is the only valid zero-width style
 )
 
 # Internal helper: build the border side list for one cell border slot.

@@ -93,13 +93,15 @@ test_that("as_r2slides_table: cells without explicit borders carry only default 
   ft <- make_plain_ft()
   r2 <- as_r2slides_table(ft)
 
-  # Flextable zero-width borders are emitted as TRANSPARENT so Google Slides
-  # overrides its default. Width is 0 and dash_style is "TRANSPARENT".
+  # Flextable zero-width borders cannot use weight=0 in the Google Slides API,
+  # so they are emitted as width=1 / color=#FFFFFF (white = visually invisible)
+  # to override the Google Slides default visible border.
   some_cell <- Filter(\(c) c@row_index == 2L && c@col_index == 1L, r2@cells)[[1]]
-  expect_equal(some_cell@style@border_top$width, 0)
-  expect_equal(some_cell@style@border_top$dash_style, "TRANSPARENT")
-  expect_equal(some_cell@style@border_bottom$width, 0)
-  expect_equal(some_cell@style@border_bottom$dash_style, "TRANSPARENT")
+  expect_equal(some_cell@style@border_top$width, 1)
+  expect_equal(some_cell@style@border_top$color, "#FFFFFF")
+  expect_equal(some_cell@style@border_top$dash_style, "SOLID")
+  expect_equal(some_cell@style@border_bottom$width, 1)
+  expect_equal(some_cell@style@border_bottom$color, "#FFFFFF")
   # default colour is black, not a custom colour
   expect_false(identical(some_cell@style@border_top$color, "#FF0000"))
 })
@@ -186,7 +188,9 @@ test_that("create_table_requests: red top border request is correct", {
   r2   <- as_r2slides_table(make_bordered_ft())
   reqs <- create_table_requests(r2, "slide_abc", test_table_position(), table_id = "tbl_rb")
 
-  red_reqs <- find_border_req(reqs$borders$requests, 1L, 0L, "TOP")
+  # border.top on body row 1 is the same physical line as BOTTOM of header row 0.
+  # The canonicalisation emits it from the owner cell (row 0) as BOTTOM.
+  red_reqs <- find_border_req(reqs$borders$requests, 0L, 0L, "BOTTOM")
   expect_length(red_reqs, 1L)
 
   props <- red_reqs[[1]]$updateTableBorderProperties$tableBorderProperties
@@ -218,11 +222,13 @@ test_that("create_table_requests: plain table has borders key from default flext
   r2   <- as_r2slides_table(make_plain_ft())
   reqs <- create_table_requests(r2, "slide_abc", test_table_position(), table_id = "tbl_nob")
 
-  # Every cell side is emitted: zero-width sides as TRANSPARENT to override
-  # Google Slides defaults, non-zero sides with their explicit values.
-  # 4 rows x 3 cols x 4 sides = 48 requests
+  # Each physical border line is emitted exactly once (shared interior borders
+  # are canonicalised to the owner cell). For a 4-row x 3-col table:
+  #   horizontal lines: (4+1) * 3 = 15
+  #   vertical lines:    4 * (3+1) = 16
+  #   total: 31 unique border requests
   expect_false(is.null(reqs$borders))
-  expect_equal(length(reqs$borders$requests), 48L)
+  expect_equal(length(reqs$borders$requests), 31L)
 })
 
 # -- r2slides_table S7 validation --
