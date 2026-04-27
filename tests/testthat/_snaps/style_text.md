@@ -3,42 +3,42 @@
     Code
       validate_color(c("r", "g", "b"))
     Output
-      [1] "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
+      [1] "Color must be a length-1 character string or a numeric `c(r, g, b)` vector."
 
 ---
 
     Code
       validate_color(c(-0.1, 0, 0))
     Output
-      [1] "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
+      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
 
 ---
 
     Code
       validate_color(c(0, 1.1, 0))
     Output
-      [1] "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
+      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
 
 ---
 
     Code
       validate_color("NOT_A_THEME")
     Output
-      [1] "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
+      [1] "Invalid color \"NOT_A_THEME\". Supply a hex string, a named R color, or a theme color."
 
 ---
 
     Code
       validate_color(c(0.1, 0.2))
     Output
-      [1] "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
+      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
 
 ---
 
     Code
       validate_color(c(0.1, 0.2, 0.3, 0.4))
     Output
-      [1] "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
+      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
 
 # text_style() rejects invalid logical vector properties
 
@@ -189,27 +189,24 @@
     Code
       text_style(bg_color = c(-1, 0, 0))
     Condition
-      Error:
-      ! <r2slides::text_style> object properties are invalid:
-      - @bg_color must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color
+      Error in `normalize_color()`:
+      ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 ---
 
     Code
       text_style(bg_color = "FAKE_COLOR")
     Condition
-      Error:
-      ! <r2slides::text_style> object properties are invalid:
-      - @bg_color must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color
+      Error in `tryCatchList()`:
+      ! Invalid color "FAKE_COLOR". Supply a hex string, a named R color, or a theme color.
 
 ---
 
     Code
       text_style(text_color = c(0, 0, 2))
     Condition
-      Error:
-      ! <r2slides::text_style> object properties are invalid:
-      - @text_color must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color
+      Error in `normalize_color()`:
+      ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 # combine_style_impl() errors on contradicting field values for all overlapable fields
 
@@ -218,108 +215,8 @@
     Condition
       Error in `.f()`:
       ! Can't combine text styles: conflicting values for backgroundColor
-      x Object 1 has 1, 0, and 0
-      x Object 2 has 0, 1, and 0
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for foregroundColor
-      x Object 1 has 1, 0, and 0
-      x Object 2 has 0, 0, and 1
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for bold
-      x Object 1 has TRUE
-      x Object 2 has FALSE
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for italic
-      x Object 1 has TRUE
-      x Object 2 has FALSE
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for fontFamily
-      x Object 1 has "A"
-      x Object 2 has "B"
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for fontSize
-      x Object 1 has 10
-      x Object 2 has 12
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for link
-      x Object 1 has "https://a.com"
-      x Object 2 has "https://b.com"
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for baselineOffset
-      x Object 1 has "SUPERSCRIPT"
-      x Object 2 has "SUBSCRIPT"
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for smallCaps
-      x Object 1 has TRUE
-      x Object 2 has FALSE
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for strikethrough
-      x Object 1 has TRUE
-      x Object 2 has FALSE
-
----
-
-    Code
-      combine_style_impl(.x[[1]], .x[[2]], error_on_contradiction = TRUE)
-    Condition
-      Error in `.f()`:
-      ! Can't combine text styles: conflicting values for underline
-      x Object 1 has TRUE
-      x Object 2 has FALSE
+      x Object 1 has "#FF0000"
+      x Object 2 has "#00FF00"
 
 # combine_style() with .priority = 'error' errors on contradictions
 

@@ -12,7 +12,7 @@ query(
   token = NULL,
   debug = FALSE,
   max_tries = 4L,
-  backoff_base = 2,
+  backoff_base = 3,
   call = rlang::caller_env(),
   ...
 )
@@ -33,7 +33,7 @@ query(
 \item{max_tries}{Optional. Maximum number of attempts before giving up. Default: `4`.
 Set to `1` to disable retrying.}
 
-\item{backoff_base}{Optional. Base (in seconds) for truncated exponential backoff. Default: `2`.
+\item{backoff_base}{Optional. Base (in seconds) for truncated exponential backoff. Default: `3`.
 Wait time per attempt is `min(backoff_base ^ attempt, 60) + runif(1, 0, 1)` seconds.}
 
 \item{call}{Optional. Call environment used in error messages.}

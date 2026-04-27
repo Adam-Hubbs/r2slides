@@ -17,41 +17,108 @@ theme_colors <- c(
   "BACKGROUND2"
 )
 
+#' Normalize any user-supplied color to a canonical internal hex string.
+#'
+#' Accepts a hex string (`"#RRGGBB"` or `"#RGB"`), a named R color (e.g.
+#' `"red"`, `"steelblue"`), an RGB numeric vector `c(r, g, b)` where each
+#' component is in \[0, 1\], or a Google Slides theme color string (e.g.
+#' `"ACCENT1"`).
+#'
+#' * Hex / named R colors are normalised to an uppercase 7-character hex string.
+#' * Theme color strings are returned unchanged.
+#' * `NULL` is returned as `NULL`.
+#'
+#' @param color A length-1 character (hex, named R color, or theme color), or
+#'   a length-3 numeric vector `c(r, g, b)` in \[0, 1\].
+#' @return A length-1 hex string, a theme color string, or `NULL`.
+#' @noRd
+normalize_color <- function(color) {
+  if (is.null(color)) return(NULL)
 
-validate_color <- function(value) {
-  if (is.null(value)) {
-    return()
+  # Numeric c(r, g, b) in [0, 1] -> hex
+  if (is.numeric(color)) {
+    if (length(color) != 3 || any(color < 0) || any(color > 1)) {
+      cli::cli_abort(
+        "Numeric color must be {.code c(r, g, b)} with each value in [0, 1]."
+      )
+    }
+    return(toupper(grDevices::rgb(color[1], color[2], color[3])))
   }
-  if (length(value) == 3) {
-    # Validate each value is length 1 numeric between 0 to 1.0
-    if (!all(is.numeric(value))) {
-      return(
-        "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
-      )
-    }
-    if (any(value < 0 | value > 1)) {
-      return(
-        "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
-      )
-    }
-  } else if (length(value) == 1) {
-    if (!(value %in% theme_colors)) {
-      return(
-        "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
-      )
-    }
-  } else {
-    return(
-      "must be an rgb color in the form of c(r, g, b) where r, g, b are numeric between 0 and 1 or a theme color"
+
+  if (!is.character(color) || length(color) != 1) {
+    cli::cli_abort(
+      "Color must be a length-1 character string or a numeric {.code c(r, g, b)} vector."
     )
   }
+
+  # Theme color -> return as-is
+  if (color %in% theme_colors) return(color)
+
+  # Named R color or hex -> normalize to "#RRGGBB" via grDevices
+  hex <- tryCatch(
+    toupper(grDevices::rgb(t(grDevices::col2rgb(color)), maxColorValue = 255)),
+    error = function(e) {
+      cli::cli_abort(
+        paste0(
+          "Invalid color ", dQuote(color), ". ",
+          "Supply a hex string, a named R color, or a theme color."
+        ),
+        call = rlang::caller_env(2)
+      )
+    }
+  )
+  hex
 }
 
+#' Validate a color property value for S7 objects.
+#'
+#' Returns an error string on failure (used by S7 property validators),
+#' or `NULL` on success.
+#'
+#' @noRd
+validate_color <- function(value) {
+  if (is.null(value)) return(NULL)
+  tryCatch(
+    { normalize_color(value); NULL },
+    error = function(e) conditionMessage(e)
+  )
+}
+
+#' Convert an internally-stored color to the Google Slides API color node.
+#'
+#' Accepts a hex string (`"#RRGGBB"`) or a theme color string. Returns the
+#' appropriate `opaqueColor` list for embedding in API requests.
+#'
+#' @param color A hex string or theme color string (as returned by
+#'   [normalize_color()]), or `NULL`.
+#' @return A named list suitable for the Slides API, or `NULL`.
+#' @noRd
+color_to_api <- function(color) {
+  if (is.null(color)) return(NULL)
+
+  if (color %in% theme_colors) {
+    return(list(opaqueColor = list(themeColor = color)))
+  }
+
+  # hex "#RRGGBB" -> fractional RGB for API
+  rgb_int <- grDevices::col2rgb(color)
+  list(
+    opaqueColor = list(
+      rgbColor = list(
+        red   = rgb_int[1L] / 255,
+        green = rgb_int[2L] / 255,
+        blue  = rgb_int[3L] / 255
+      )
+    )
+  )
+}
 
 #' Text styling properties
 #'
-#' @param bg_color A list specifying background color (RGB).
-#' @param text_color A list specifying text color (RGB).
+#' @param bg_color Background color. Accepts a hex string (e.g. `"#FF0000"`),
+#'   a named R color (e.g. `"red"`), an RGB numeric vector `c(r, g, b)` with
+#'   values in \[0, 1\], or a theme color string (e.g. `"ACCENT1"`).
+#' @param text_color Text (foreground) color. Same formats as `bg_color`.
 #' @param bold A logical indicating whether the text should be bold.
 #' @param italic A logical indicating whether the text should be italic.
 #' @param font_family A string specifying the font family.
@@ -66,8 +133,20 @@ validate_color <- function(value) {
 text_style <- S7::new_class(
   "text_style",
   properties = list(
-    bg_color = S7::new_property(validator = validate_color),
-    text_color = S7::new_property(validator = validate_color),
+    bg_color = S7::new_property(
+      setter = function(self, value) {
+        self@bg_color <- normalize_color(value)
+        self
+      },
+      validator = validate_color
+    ),
+    text_color = S7::new_property(
+      setter = function(self, value) {
+        self@text_color <- normalize_color(value)
+        self
+      },
+      validator = validate_color
+    ),
     bold = S7::new_property(
       NULL | S7::class_logical,
       validator = function(value) {
@@ -177,100 +256,19 @@ text_style <- S7::new_class(
 
     # Computed properties
     style = S7::new_property(S7::class_list, getter = function(self) {
-      # bg_color
-      if (!is.null(self@bg_color)) {
-        if (length(self@bg_color) == 3) {
-          backgroundColor <- list(
-            opaqueColor = list(
-              rgbColor = self@bg_color
-            )
-          )
-        } else {
-          backgroundColor <- list(
-            opaqueColor = list(
-              themeColor = self@bg_color
-            )
-          )
-        }
-      } else {
-        backgroundColor <- NULL
-      }
-
-      # text_color
-      if (!is.null(self@text_color)) {
-        if (length(self@text_color) == 3) {
-          foregroundColor <- list(
-            opaqueColor = list(
-              rgbColor = list(
-                red = self@text_color[1],
-                green = self@text_color[2],
-                blue = self@text_color[3]
-              )
-            )
-          )
-        } else {
-          foregroundColor <- list(
-            opaqueColor = list(
-              themeColor = self@text_color
-            )
-          )
-        }
-      } else {
-        foregroundColor <- NULL
-      }
-
-      # bold, italic - no manipulation
-
-      # font_family
-      if (!is.null(self@font_family)) {
-        fontFamily <- self@font_family
-      } else {
-        fontFamily <- NULL
-      }
-
-      #font_size
-      if (!is.null(self@font_size)) {
-        fontSize <- list(
-          magnitude = self@font_size,
-          unit = "PT"
-        )
-      } else {
-        fontSize <- NULL
-      }
-
-      #link
-      if (!is.null(self@link)) {
-        link <- list(
-          url = self@link
-        )
-      } else {
-        link <- NULL
-      }
-
-      #baseline_offset
-      if (!is.null(self@baseline_offset)) {
-        baselineOffset <- self@baseline_offset
-      } else {
-        baselineOffset <- NULL
-      }
-
-      #small_caps, strikethrough, underline - no manipulation
-
-      # Build request
       list(
-        backgroundColor = backgroundColor,
-        foregroundColor = foregroundColor,
-        bold = self@bold,
-        italic = self@italic,
-        fontFamily = fontFamily,
-        fontSize = fontSize,
-        link = link,
-        baselineOffset = baselineOffset,
-        smallCaps = self@small_caps,
-        strikethrough = self@strikethrough,
-        underline = self@underline
-      ) |>
-        purrr::compact()
+        backgroundColor = color_to_api(self@bg_color),
+        foregroundColor = color_to_api(self@text_color),
+        bold            = self@bold,
+        italic          = self@italic,
+        fontFamily      = self@font_family,
+        fontSize        = if (!is.null(self@font_size)) list(magnitude = self@font_size, unit = "PT") else NULL,
+        link            = if (!is.null(self@link)) list(url = self@link) else NULL,
+        baselineOffset  = self@baseline_offset,
+        smallCaps       = self@small_caps,
+        strikethrough   = self@strikethrough,
+        underline       = self@underline
+      ) |> purrr::compact()
     }),
     fields = S7::new_property(S7::class_character, getter = function(self) {
       f <- character()
