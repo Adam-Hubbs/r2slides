@@ -709,7 +709,11 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
   # so we emit each side directly from its own cell without any ownership
   # canonicalisation. Interior shared lines are written twice (once from each
   # adjacent cell), but both writes are identical so the result is correct.
-  border_reqs <- list()
+  #
+  # Ordering: transparent (alpha=0) requests are sent first so that visible
+  # borders written afterwards are never overwritten by a later transparent one.
+  transparent_border_reqs <- list()
+  visible_border_reqs     <- list()
 
   for (cell in table@cells) {
     if (is.null(cell@style)) next
@@ -735,11 +739,21 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
         width      = s$border$width,
         dash_style = s$border$dash_style
       )
-      if (!is.null(req)) border_reqs <- c(border_reqs, list(req))
+      if (is.null(req)) next
+      clr <- s$border$color
+      is_transparent <- !is.null(clr) &&
+        S7::S7_inherits(clr, transparent_color) &&
+        !is.null(clr@alpha) && identical(clr@alpha, 0)
+      if (is_transparent) {
+        transparent_border_reqs <- c(transparent_border_reqs, list(req))
+      } else {
+        visible_border_reqs <- c(visible_border_reqs, list(req))
+      }
     }
   }
 
-  border_req <- if (length(border_reqs) > 0L) list(requests = border_reqs) else NULL
+  border_reqs <- c(transparent_border_reqs, visible_border_reqs)
+  border_req  <- if (length(border_reqs) > 0L) list(requests = border_reqs) else NULL
 
   # ── 5. updateTableRowProperties ─────────────────────────────────────────────
   row_height_reqs <- if (!is.null(table@row_heights)) {
