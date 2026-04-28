@@ -1,7 +1,6 @@
-
 #' Create a new slide in a Google Slides presentation
 #'
-#' @param presentation Optional. A Google Slides presentation object. 
+#' @param presentation Optional. A Google Slides presentation object.
 #' @param layout Optional. A character string specifying the slide layout. Default is "TITLE_AND_BODY".
 #' @param verbose Optional. A logical value indicating whether to print status updates.
 #' @param master Currently unused; must be NULL. Reserved for officer compatibility. (May drop in future)
@@ -13,13 +12,12 @@
 #'
 #' @export
 new_slide <- function(
-    presentation = get_active_presentation(),
-    layout = "BLANK",
-    verbose = TRUE,
-    master = NULL,
-    ...
+  presentation = get_active_presentation(),
+  layout = "BLANK",
+  verbose = TRUE,
+  master = NULL,
+  ...
 ) {
-
   if (!is.null(master)) {
     cli::cli_abort("{.var master} is reserved for officer compatibility")
   }
@@ -61,4 +59,3 @@ new_slide <- function(
   # TODO: REturn slide_id object
   invisible()
 }
-

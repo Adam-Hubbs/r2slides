@@ -29,5 +29,3 @@ method(peek, slide) <- function(x) {
 
   return(invisible(x))
 }
-
-

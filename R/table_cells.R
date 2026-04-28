@@ -1,17 +1,19 @@
 v_align_values <- c("VERTICAL_ALIGNMENT_UNSPECIFIED", "TOP", "MIDDLE", "BOTTOM")
 
 ft_dash_style_map <- c(
-  "solid"  = "SOLID",
+  "solid" = "SOLID",
   "dashed" = "DASH",
   "dotted" = "DOT",
-  "none"   = "SOLID"  # width=0 makes it invisible; SOLID is the only valid zero-width style
+  "none" = "SOLID" # width=0 makes it invisible; SOLID is the only valid zero-width style
 )
 
 # Internal helper: build the border side list for one cell border slot.
 # Returns NULL when all inputs are NULL.
 # @noRd
 make_border_side <- function(color, width, dash_style) {
-  if (is.null(color) && is.null(width) && is.null(dash_style)) return(NULL)
+  if (is.null(color) && is.null(width) && is.null(dash_style)) {
+    return(NULL)
+  }
   list(color = color, width = width, dash_style = dash_style)
 }
 
@@ -29,7 +31,9 @@ cell_style <- S7::new_class(
         } else if (S7::S7_inherits(value, solid_color)) {
           self@bg_color <- transparent_color(color = value)
         } else {
-          self@bg_color <- transparent_color(color = solid_color(color = normalize_color(value)))
+          self@bg_color <- transparent_color(
+            color = solid_color(color = normalize_color(value))
+          )
         }
         self
       }
@@ -43,7 +47,9 @@ cell_style <- S7::new_class(
       NULL | S7::class_character,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("v_align must be a single value")
+          if (length(value) != 1) {
+            return("v_align must be a single value")
+          }
           if (!(value %in% v_align_values)) {
             return(paste0(
               "v_align must be one of: ",
@@ -58,8 +64,10 @@ cell_style <- S7::new_class(
       NULL | S7::class_integer,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("col_span must be a single value")
-          if (value < 1L)         return("col_span must be a positive integer")
+          if (length(value) != 1) {
+            return("col_span must be a single value")
+          }
+          if (value < 1L) return("col_span must be a positive integer")
         }
       }
     ),
@@ -68,18 +76,20 @@ cell_style <- S7::new_class(
       NULL | S7::class_integer,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("row_span must be a single value")
-          if (value < 1L)         return("row_span must be a positive integer")
+          if (length(value) != 1) {
+            return("row_span must be a single value")
+          }
+          if (value < 1L) return("row_span must be a positive integer")
         }
       }
     ),
 
     # Each border slot is NULL or a list(color, width, dash_style).
     # Use make_border_side() to construct.
-    border_top    = S7::new_property(NULL | S7::class_list),
+    border_top = S7::new_property(NULL | S7::class_list),
     border_bottom = S7::new_property(NULL | S7::class_list),
-    border_left   = S7::new_property(NULL | S7::class_list),
-    border_right  = S7::new_property(NULL | S7::class_list)
+    border_left = S7::new_property(NULL | S7::class_list),
+    border_right = S7::new_property(NULL | S7::class_list)
   )
 )
 
@@ -90,20 +100,24 @@ table_cell <- S7::new_class(
     row_index = S7::new_property(
       S7::class_integer,
       validator = function(value) {
-        if (length(value) != 1) return("row_index must be a single value")
-        if (value < 0L)         return("row_index must be >= 0")
+        if (length(value) != 1) {
+          return("row_index must be a single value")
+        }
+        if (value < 0L) return("row_index must be >= 0")
       }
     ),
 
     col_index = S7::new_property(
       S7::class_integer,
       validator = function(value) {
-        if (length(value) != 1) return("col_index must be a single value")
-        if (value < 0L)         return("col_index must be >= 0")
+        if (length(value) != 1) {
+          return("col_index must be a single value")
+        }
+        if (value < 0L) return("col_index must be >= 0")
       }
     ),
 
-    text  = S7::new_property(NULL | S7::class_character),
+    text = S7::new_property(NULL | S7::class_character),
     style = S7::new_property(NULL | cell_style),
 
     # TRUE when this cell is covered by another cell's merge span and should

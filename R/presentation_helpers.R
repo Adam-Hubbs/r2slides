@@ -39,4 +39,3 @@ validatePresentation <- function(presentation) {
 
   # Future presentation validation checks go here
 }
-

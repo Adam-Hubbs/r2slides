@@ -15,9 +15,9 @@
 #'
 #' @export
 set_defaults <- function(
-    args,
-    type = c('title', 'commentary', 'footer'),
-    report_style = c('qualtrics', 'municipal', 'y2')
+  args,
+  type = c('title', 'commentary', 'footer'),
+  report_style = c('qualtrics', 'municipal', 'y2')
 ) {
   report_style <- rlang::arg_match(report_style)
   type <- rlang::arg_match(type)
@@ -36,7 +36,8 @@ set_defaults <- function(
       args$title_top <- args$title_top %||% 0.25
       args$title_width <- args$title_width %||% 10.5
       args$title_height <- args$title_height %||% 0.75
-    } else if (type == 'commentary') { ### Commentary defaults
+    } else if (type == 'commentary') {
+      ### Commentary defaults
       args$commentary_font_family <- args$commentary_font_family %||%
         'BentonSans Regular'
       args$commentary_color <- args$commentary_color %||% "#000000"
@@ -45,7 +46,8 @@ set_defaults <- function(
       args$commentary_top <- args$commentary_top %||% 1
       args$commentary_width <- args$commentary_width %||% 10.5
       args$commentary_height <- args$commentary_height %||% 0.75
-    } else if (type == 'footer') { ### Footer defaults
+    } else if (type == 'footer') {
+      ### Footer defaults
       args$footer_font_family <- args$footer_font_family %||%
         'BentonSans Regular'
       args$footer_color <- args$footer_color %||% "#000000"
@@ -66,7 +68,8 @@ set_defaults <- function(
       args$title_top <- args$title_top %||% 0
       args$title_width <- args$title_width %||% 13.33
       args$title_height <- args$title_height %||% 0.83
-    } else if (type == 'commentary') { ### Commentary defaults
+    } else if (type == 'commentary') {
+      ### Commentary defaults
       args$commentary_font_family <- args$commentary_font_family %||%
         'Flama Light'
       args$commentary_color <- args$commentary_color %||% "#FFFFFF"
@@ -75,7 +78,8 @@ set_defaults <- function(
       args$commentary_top <- args$commentary_top %||% 0.83
       args$commentary_width <- args$commentary_width %||% 13.33
       args$commentary_height <- args$commentary_height %||% 0.83
-    } else if (type == 'footer') { ### Footer defaults
+    } else if (type == 'footer') {
+      ### Footer defaults
       args$footer_font_family <- args$footer_font_family %||% 'Flama Light'
       args$footer_color <- args$footer_color %||% "#222222"
       args$footer_left <- args$footer_left %||% 0.24
@@ -96,7 +100,8 @@ set_defaults <- function(
       args$title_top <- args$title_top %||% 0.05
       args$title_width <- args$title_width %||% 13.33
       args$title_height <- args$title_height %||% 0.88
-    } else if (type == 'commentary') { ### Commentary defaults
+    } else if (type == 'commentary') {
+      ### Commentary defaults
       args$commentary_font_family <- args$commentary_font_family %||%
         'Flama Semicondensed Basic'
       args$commentary_color <- args$commentary_color %||% "#767171"
@@ -105,7 +110,8 @@ set_defaults <- function(
       args$commentary_top <- args$commentary_top %||% 1.1
       args$commentary_width <- args$commentary_width %||% 12.82
       args$commentary_height <- args$commentary_height %||% 0.34
-    } else if (type == 'footer') { ### Footer defaults
+    } else if (type == 'footer') {
+      ### Footer defaults
       args$footer_font_family <- args$footer_font_family %||%
         'Flama Semicondensed Basic'
       args$footer_color <- args$footer_color %||% "#A6A6A6"

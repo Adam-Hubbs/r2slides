@@ -1,6 +1,10 @@
 test_that("set_defaults handles Qualtrics style title defaults", {
   # Test default values for Qualtrics title
-  defaults <- set_defaults(default_title_args, type = "title", report_style = "qualtrics")
+  defaults <- set_defaults(
+    default_title_args,
+    type = "title",
+    report_style = "qualtrics"
+  )
 
   expect_equal(defaults$title_font_size, 32)
   expect_false(defaults$title_font_bold)
@@ -15,7 +19,11 @@ test_that("set_defaults handles Qualtrics style title defaults", {
 
 test_that("set_defaults handles Qualtrics style commentary defaults", {
   # Test default values for Qualtrics commentary
-  defaults <- set_defaults(default_commentary_args, type = "commentary", report_style = "qualtrics")
+  defaults <- set_defaults(
+    default_commentary_args,
+    type = "commentary",
+    report_style = "qualtrics"
+  )
 
   expect_equal(defaults$commentary_font_family, 'BentonSans Regular')
   expect_equal(defaults$commentary_color, "#000000")
@@ -28,7 +36,11 @@ test_that("set_defaults handles Qualtrics style commentary defaults", {
 
 test_that("set_defaults handles Qualtrics style footer defaults", {
   # Test default values for Qualtrics footer
-  defaults <- set_defaults(default_footer_args, type = "footer", report_style = "qualtrics")
+  defaults <- set_defaults(
+    default_footer_args,
+    type = "footer",
+    report_style = "qualtrics"
+  )
 
   expect_equal(defaults$footer_font_family, 'BentonSans Regular')
   expect_equal(defaults$footer_color, "#000000")
@@ -40,7 +52,11 @@ test_that("set_defaults handles Qualtrics style footer defaults", {
 
 test_that("set_defaults handles Municipal style title defaults", {
   # Test default values for Municipal title
-  defaults <- set_defaults(default_title_args, type = "title", report_style = "municipal")
+  defaults <- set_defaults(
+    default_title_args,
+    type = "title",
+    report_style = "municipal"
+  )
 
   expect_equal(defaults$title_font_size, 40)
   expect_false(defaults$title_font_bold)
@@ -55,7 +71,11 @@ test_that("set_defaults handles Municipal style title defaults", {
 
 test_that("set_defaults handles Y2 style commentary defaults", {
   # Test default values for Y2 commentary
-  defaults <- set_defaults(default_commentary_args, type = "commentary", report_style = "y2")
+  defaults <- set_defaults(
+    default_commentary_args,
+    type = "commentary",
+    report_style = "y2"
+  )
 
   expect_equal(defaults$commentary_font_family, 'Flama Semicondensed Basic')
   expect_equal(defaults$commentary_color, "#767171")
@@ -80,7 +100,11 @@ test_that("set_defaults preserves user-provided values", {
     title_height = NULL
   )
 
-  defaults <- set_defaults(custom_args, type = "title", report_style = "qualtrics")
+  defaults <- set_defaults(
+    custom_args,
+    type = "title",
+    report_style = "qualtrics"
+  )
 
   expect_equal(defaults$title_font_size, 50)
   expect_equal(defaults$title_color, "#FF0000")
@@ -106,7 +130,11 @@ test_that("set_defaults maintains original argument names", {
   # Test that only originally provided argument names are returned
   custom_args <- list(custom_title = 42)
 
-  defaults <- set_defaults(custom_args, type = "title", report_style = "qualtrics")
+  defaults <- set_defaults(
+    custom_args,
+    type = "title",
+    report_style = "qualtrics"
+  )
 
   expect_named(defaults, "custom_title")
 })

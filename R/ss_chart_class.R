@@ -46,10 +46,10 @@ is_sht_id <- function(x) {
 }
 
 #' Print a sht_id object
-#' 
+#'
 #' @param x The object to print
 #' @param ... Additional arguments
-#' 
+#'
 #' @export
 print.sht_id <- function(x, ...) {
   cli::cli_text("sht_id:")

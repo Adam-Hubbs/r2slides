@@ -1,4 +1,3 @@
-
 #' Writes data to a Google Sheet
 #'
 #' @param data A data frame to write to the Google Sheet.

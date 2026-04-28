@@ -53,7 +53,9 @@ spacing_mode_values <- c(
 #' @return A length-1 hex string, a theme color string, or `NULL`.
 #' @noRd
 normalize_color <- function(color) {
-  if (is.null(color)) return(NULL)
+  if (is.null(color)) {
+    return(NULL)
+  }
 
   # Numeric c(r, g, b) in [0, 1] -> hex
   if (is.numeric(color)) {
@@ -72,7 +74,9 @@ normalize_color <- function(color) {
   }
 
   # Theme color -> return as-is
-  if (color %in% theme_colors) return(color)
+  if (color %in% theme_colors) {
+    return(color)
+  }
 
   # Named R color or hex -> normalize to "#RRGGBB" via grDevices
   hex <- tryCatch(
@@ -80,7 +84,9 @@ normalize_color <- function(color) {
     error = function(e) {
       cli::cli_abort(
         paste0(
-          "Invalid color ", dQuote(color), ". ",
+          "Invalid color ",
+          dQuote(color),
+          ". ",
           "Supply a hex string, a named R color, or a theme color."
         ),
         call = rlang::caller_env(2)
@@ -97,9 +103,14 @@ normalize_color <- function(color) {
 #'
 #' @noRd
 validate_color <- function(value) {
-  if (is.null(value)) return(NULL)
+  if (is.null(value)) {
+    return(NULL)
+  }
   tryCatch(
-    { normalize_color(value); NULL },
+    {
+      normalize_color(value)
+      NULL
+    },
     error = function(e) conditionMessage(e)
   )
 }
@@ -128,9 +139,14 @@ solid_color <- S7::new_class(
         self
       },
       validator = function(value) {
-        if (is.null(value)) return(NULL)
+        if (is.null(value)) {
+          return(NULL)
+        }
         tryCatch(
-          { normalize_color(value); NULL },
+          {
+            normalize_color(value)
+            NULL
+          },
           error = function(e) conditionMessage(e)
         )
       }
@@ -170,8 +186,12 @@ transparent_color <- S7::new_class(
     alpha = S7::new_property(
       NULL | S7::class_numeric,
       validator = function(value) {
-        if (is.null(value)) return(NULL)
-        if (length(value) != 1)     return("alpha must be a single value")
+        if (is.null(value)) {
+          return(NULL)
+        }
+        if (length(value) != 1) {
+          return("alpha must be a single value")
+        }
         if (value < 0 || value > 1) return("alpha must be in [0, 1]")
       }
     )
@@ -196,16 +216,18 @@ color_to_api <- S7::new_generic("color_to_api", "color")
 # Internal helper: hex or theme string -> innermost rgbColor/themeColor node.
 # @noRd
 .color_str_to_inner <- function(color_str) {
-  if (is.null(color_str)) return(NULL)
+  if (is.null(color_str)) {
+    return(NULL)
+  }
   if (color_str %in% theme_colors) {
     return(list(themeColor = color_str))
   }
   rgb_int <- grDevices::col2rgb(color_str)
   list(
     rgbColor = list(
-      red   = rgb_int[1L] / 255,
+      red = rgb_int[1L] / 255,
       green = rgb_int[2L] / 255,
-      blue  = rgb_int[3L] / 255
+      blue = rgb_int[3L] / 255
     )
   )
 }
@@ -217,9 +239,13 @@ S7::method(color_to_api, solid_color) <- function(color) {
 
 S7::method(color_to_api, transparent_color) <- function(color) {
   inner <- .color_str_to_inner(color@color@color)
-  if (is.null(inner)) return(NULL)
+  if (is.null(inner)) {
+    return(NULL)
+  }
   fill <- list(color = inner)
-  if (!is.null(color@alpha)) fill$alpha <- color@alpha
+  if (!is.null(color@alpha)) {
+    fill$alpha <- color@alpha
+  }
   list(solidFill = fill)
 }
 
@@ -395,7 +421,9 @@ text_style <- S7::new_class(
       NULL | S7::class_character,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("alignment must be a single value")
+          if (length(value) != 1) {
+            return("alignment must be a single value")
+          }
           if (!(value %in% alignment_values)) {
             return(paste0(
               "alignment must be one of: ",
@@ -409,7 +437,9 @@ text_style <- S7::new_class(
       NULL | S7::class_double,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("line_spacing must be a single value")
+          if (length(value) != 1) {
+            return("line_spacing must be a single value")
+          }
           if (value < 0) return("line_spacing must be >= 0")
         }
       }
@@ -434,7 +464,9 @@ text_style <- S7::new_class(
       NULL | S7::class_double,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("space_above must be a single value")
+          if (length(value) != 1) {
+            return("space_above must be a single value")
+          }
           if (value < 0) return("space_above must be >= 0")
         }
       }
@@ -443,7 +475,9 @@ text_style <- S7::new_class(
       NULL | S7::class_double,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("space_below must be a single value")
+          if (length(value) != 1) {
+            return("space_below must be a single value")
+          }
           if (value < 0) return("space_below must be >= 0")
         }
       }
@@ -452,7 +486,9 @@ text_style <- S7::new_class(
       NULL | S7::class_double,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("indent_first_line must be a single value")
+          if (length(value) != 1) {
+            return("indent_first_line must be a single value")
+          }
         }
       }
     ),
@@ -460,7 +496,9 @@ text_style <- S7::new_class(
       NULL | S7::class_character,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("direction must be a single value")
+          if (length(value) != 1) {
+            return("direction must be a single value")
+          }
           if (!(value %in% text_direction_values)) {
             return(paste0(
               "direction must be one of: ",
@@ -474,7 +512,9 @@ text_style <- S7::new_class(
       NULL | S7::class_character,
       validator = function(value) {
         if (!is.null(value)) {
-          if (length(value) != 1) return("spacing_mode must be a single value")
+          if (length(value) != 1) {
+            return("spacing_mode must be a single value")
+          }
           if (!(value %in% spacing_mode_values)) {
             return(paste0(
               "spacing_mode must be one of: ",
@@ -488,18 +528,31 @@ text_style <- S7::new_class(
     # Computed properties
     style = S7::new_property(S7::class_list, getter = function(self) {
       list(
-        backgroundColor = if (!is.null(self@bg_color)) color_to_api(self@bg_color) else NULL,
-        foregroundColor = if (!is.null(self@text_color)) color_to_api(self@text_color) else NULL,
-        bold            = self@bold,
-        italic          = self@italic,
-        fontFamily      = self@font_family,
-        fontSize        = if (!is.null(self@font_size)) list(magnitude = self@font_size, unit = "PT") else NULL,
-        link            = if (!is.null(self@link)) list(url = self@link) else NULL,
-        baselineOffset  = self@baseline_offset,
-        smallCaps       = self@small_caps,
-        strikethrough   = self@strikethrough,
-        underline       = self@underline
-      ) |> purrr::compact()
+        backgroundColor = if (!is.null(self@bg_color)) {
+          color_to_api(self@bg_color)
+        } else {
+          NULL
+        },
+        foregroundColor = if (!is.null(self@text_color)) {
+          color_to_api(self@text_color)
+        } else {
+          NULL
+        },
+        bold = self@bold,
+        italic = self@italic,
+        fontFamily = self@font_family,
+        fontSize = if (!is.null(self@font_size)) {
+          list(magnitude = self@font_size, unit = "PT")
+        } else {
+          NULL
+        },
+        link = if (!is.null(self@link)) list(url = self@link) else NULL,
+        baselineOffset = self@baseline_offset,
+        smallCaps = self@small_caps,
+        strikethrough = self@strikethrough,
+        underline = self@underline
+      ) |>
+        purrr::compact()
     }),
     fields = S7::new_property(S7::class_character, getter = function(self) {
       f <- character()
@@ -541,32 +594,56 @@ text_style <- S7::new_class(
       f
     }),
     paragraph_style = S7::new_property(S7::class_list, getter = function(self) {
-      pt_dim <- function(val) if (!is.null(val)) list(magnitude = val, unit = "PT") else NULL
+      pt_dim <- function(val) {
+        if (!is.null(val)) list(magnitude = val, unit = "PT") else NULL
+      }
       list(
-        lineSpacing     = self@line_spacing,
-        alignment       = self@alignment,
-        indentStart     = pt_dim(self@indent_start),
-        indentEnd       = pt_dim(self@indent_end),
-        spaceAbove      = pt_dim(self@space_above),
-        spaceBelow      = pt_dim(self@space_below),
+        lineSpacing = self@line_spacing,
+        alignment = self@alignment,
+        indentStart = pt_dim(self@indent_start),
+        indentEnd = pt_dim(self@indent_end),
+        spaceAbove = pt_dim(self@space_above),
+        spaceBelow = pt_dim(self@space_below),
         indentFirstLine = pt_dim(self@indent_first_line),
-        direction       = self@direction,
-        spacingMode     = self@spacing_mode
-      ) |> purrr::compact()
+        direction = self@direction,
+        spacingMode = self@spacing_mode
+      ) |>
+        purrr::compact()
     }),
-    paragraph_fields = S7::new_property(S7::class_character, getter = function(self) {
-      f <- character()
-      if (!is.null(self@line_spacing))     f <- c(f, "lineSpacing")
-      if (!is.null(self@alignment))        f <- c(f, "alignment")
-      if (!is.null(self@indent_start))     f <- c(f, "indentStart")
-      if (!is.null(self@indent_end))       f <- c(f, "indentEnd")
-      if (!is.null(self@space_above))      f <- c(f, "spaceAbove")
-      if (!is.null(self@space_below))      f <- c(f, "spaceBelow")
-      if (!is.null(self@indent_first_line)) f <- c(f, "indentFirstLine")
-      if (!is.null(self@direction))        f <- c(f, "direction")
-      if (!is.null(self@spacing_mode))     f <- c(f, "spacingMode")
-      f
-    })
+    paragraph_fields = S7::new_property(
+      S7::class_character,
+      getter = function(self) {
+        f <- character()
+        if (!is.null(self@line_spacing)) {
+          f <- c(f, "lineSpacing")
+        }
+        if (!is.null(self@alignment)) {
+          f <- c(f, "alignment")
+        }
+        if (!is.null(self@indent_start)) {
+          f <- c(f, "indentStart")
+        }
+        if (!is.null(self@indent_end)) {
+          f <- c(f, "indentEnd")
+        }
+        if (!is.null(self@space_above)) {
+          f <- c(f, "spaceAbove")
+        }
+        if (!is.null(self@space_below)) {
+          f <- c(f, "spaceBelow")
+        }
+        if (!is.null(self@indent_first_line)) {
+          f <- c(f, "indentFirstLine")
+        }
+        if (!is.null(self@direction)) {
+          f <- c(f, "direction")
+        }
+        if (!is.null(self@spacing_mode)) {
+          f <- c(f, "spacingMode")
+        }
+        f
+      }
+    )
   )
 )
 
@@ -724,7 +801,7 @@ create_styling_request <- function(
   ...,
   call = rlang::caller_env()
 ) {
-  style_requests <- c()
+  style_requests <- list()
 
   extra_vars <- rlang::list2(...)
 
@@ -743,7 +820,7 @@ create_styling_request <- function(
   # Do any of the selector functions evaluate to true or any non-zero indices?
   when_true <- FALSE
 
-  for (rule in 1:style_rule@num_selectors) {
+  for (rule in seq_len(style_rule@num_selectors)) {
     tryCatch(
       {
         quo_in_dm <- rlang::eval_tidy(
@@ -840,21 +917,21 @@ create_styling_request <- function(
 
       ts <- style_rule@style[[rule]]
       text_range <- list(
-        type       = "FIXED_RANGE",
+        type = "FIXED_RANGE",
         startIndex = start_index,
-        endIndex   = end_index
+        endIndex = end_index
       )
 
       # updateTextStyle (only when character-level fields are set)
       if (length(ts@fields) > 0) {
-        style_requests <- append(
+        style_requests <- c(
           style_requests,
           list(
             updateTextStyle = list(
-              objectId  = element_id,
+              objectId = element_id,
               textRange = text_range,
-              style     = ts@style,
-              fields    = paste(ts@fields, collapse = ",")
+              style = ts@style,
+              fields = paste(ts@fields, collapse = ",")
             )
           )
         )
@@ -862,14 +939,14 @@ create_styling_request <- function(
 
       # updateParagraphStyle (only when paragraph-level fields are set)
       if (length(ts@paragraph_fields) > 0) {
-        style_requests <- append(
+        style_requests <- c(
           style_requests,
           list(
             updateParagraphStyle = list(
-              objectId  = element_id,
+              objectId = element_id,
               textRange = text_range,
-              style     = ts@paragraph_style,
-              fields    = paste(ts@paragraph_fields, collapse = ",")
+              style = ts@paragraph_style,
+              fields = paste(ts@paragraph_fields, collapse = ",")
             )
           )
         )
@@ -880,34 +957,34 @@ create_styling_request <- function(
   if (!when_true && style_rule@has_default_style) {
     ts <- style_rule@style[[style_rule@num_styles]]
     text_range <- list(
-      type       = "FIXED_RANGE",
+      type = "FIXED_RANGE",
       startIndex = 0L,
-      endIndex   = nchar(text)
+      endIndex = nchar(text)
     )
 
     if (length(ts@fields) > 0) {
-      style_requests <- append(
+      style_requests <- c(
         style_requests,
         list(
           updateTextStyle = list(
-            objectId  = element_id,
+            objectId = element_id,
             textRange = text_range,
-            style     = ts@style,
-            fields    = paste(ts@fields, collapse = ",")
+            style = ts@style,
+            fields = paste(ts@fields, collapse = ",")
           )
         )
       )
     }
 
     if (length(ts@paragraph_fields) > 0) {
-      style_requests <- append(
+      style_requests <- c(
         style_requests,
         list(
           updateParagraphStyle = list(
-            objectId  = element_id,
+            objectId = element_id,
             textRange = text_range,
-            style     = ts@paragraph_style,
-            fields    = paste(ts@paragraph_fields, collapse = ",")
+            style = ts@paragraph_style,
+            fields = paste(ts@paragraph_fields, collapse = ",")
           )
         )
       )
@@ -919,7 +996,7 @@ create_styling_request <- function(
 
 
 print_selector <- function(selector_list) {
-  purrr::map(selector_list, function(element) {
+  purrr::map(selector_list, \(element) {
     if (rlang::is_quosure(element)) {
       # should always be true, if it is not something broke
       inner_expr <- rlang::quo_get_expr(element)
@@ -1046,25 +1123,25 @@ combine_style_impl <- function(
         # text style fields
         "backgroundColor" = ts@bg_color,
         "foregroundColor" = ts@text_color,
-        "bold"            = ts@bold,
-        "italic"          = ts@italic,
-        "fontFamily"      = ts@font_family,
-        "fontSize"        = ts@font_size,
-        "link"            = ts@link,
-        "baselineOffset"  = ts@baseline_offset,
-        "smallCaps"       = ts@small_caps,
-        "strikethrough"   = ts@strikethrough,
-        "underline"       = ts@underline,
+        "bold" = ts@bold,
+        "italic" = ts@italic,
+        "fontFamily" = ts@font_family,
+        "fontSize" = ts@font_size,
+        "link" = ts@link,
+        "baselineOffset" = ts@baseline_offset,
+        "smallCaps" = ts@small_caps,
+        "strikethrough" = ts@strikethrough,
+        "underline" = ts@underline,
         # paragraph style fields
-        "alignment"       = ts@alignment,
-        "lineSpacing"     = ts@line_spacing,
-        "indentStart"     = ts@indent_start,
-        "indentEnd"       = ts@indent_end,
-        "spaceAbove"      = ts@space_above,
-        "spaceBelow"      = ts@space_below,
+        "alignment" = ts@alignment,
+        "lineSpacing" = ts@line_spacing,
+        "indentStart" = ts@indent_start,
+        "indentEnd" = ts@indent_end,
+        "spaceAbove" = ts@space_above,
+        "spaceBelow" = ts@space_below,
         "indentFirstLine" = ts@indent_first_line,
-        "direction"       = ts@direction,
-        "spacingMode"     = ts@spacing_mode
+        "direction" = ts@direction,
+        "spacingMode" = ts@spacing_mode
       )
     }
 
@@ -1097,26 +1174,26 @@ combine_style_impl <- function(
 
 mush_styles <- function(e1, e2) {
   text_style(
-    bg_color          = e1@bg_color          %||% e2@bg_color,
-    text_color        = e1@text_color        %||% e2@text_color,
-    bold              = e1@bold              %||% e2@bold,
-    italic            = e1@italic            %||% e2@italic,
-    font_family       = e1@font_family       %||% e2@font_family,
-    font_size         = e1@font_size         %||% e2@font_size,
-    link              = e1@link              %||% e2@link,
-    baseline_offset   = e1@baseline_offset   %||% e2@baseline_offset,
-    small_caps        = e1@small_caps        %||% e2@small_caps,
-    strikethrough     = e1@strikethrough     %||% e2@strikethrough,
-    underline         = e1@underline         %||% e2@underline,
+    bg_color = e1@bg_color %||% e2@bg_color,
+    text_color = e1@text_color %||% e2@text_color,
+    bold = e1@bold %||% e2@bold,
+    italic = e1@italic %||% e2@italic,
+    font_family = e1@font_family %||% e2@font_family,
+    font_size = e1@font_size %||% e2@font_size,
+    link = e1@link %||% e2@link,
+    baseline_offset = e1@baseline_offset %||% e2@baseline_offset,
+    small_caps = e1@small_caps %||% e2@small_caps,
+    strikethrough = e1@strikethrough %||% e2@strikethrough,
+    underline = e1@underline %||% e2@underline,
     # paragraph fields
-    alignment         = e1@alignment         %||% e2@alignment,
-    line_spacing      = e1@line_spacing      %||% e2@line_spacing,
-    indent_start      = e1@indent_start      %||% e2@indent_start,
-    indent_end        = e1@indent_end        %||% e2@indent_end,
-    space_above       = e1@space_above       %||% e2@space_above,
-    space_below       = e1@space_below       %||% e2@space_below,
+    alignment = e1@alignment %||% e2@alignment,
+    line_spacing = e1@line_spacing %||% e2@line_spacing,
+    indent_start = e1@indent_start %||% e2@indent_start,
+    indent_end = e1@indent_end %||% e2@indent_end,
+    space_above = e1@space_above %||% e2@space_above,
+    space_below = e1@space_below %||% e2@space_below,
     indent_first_line = e1@indent_first_line %||% e2@indent_first_line,
-    direction         = e1@direction         %||% e2@direction,
-    spacing_mode      = e1@spacing_mode      %||% e2@spacing_mode
+    direction = e1@direction %||% e2@direction,
+    spacing_mode = e1@spacing_mode %||% e2@spacing_mode
   )
 }

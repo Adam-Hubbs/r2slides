@@ -74,17 +74,21 @@ make_merged_ft <- function() {
     flextable::merge_at(i = 1:2, j = 1)
 }
 
-# Flextable with explicit top/bottom border colours
+# Flextable with explicit top/bottom border colours.
+# Layout: 1 header row + 5 body rows x 2 cols (row_index 0..5).
+#   - Header (row_index 0): thick red (3pt) top border
+#   - Body row 5 (last, row_index 5): visible blue (1.5pt) bottom border
 make_bordered_ft <- function() {
-  flextable::flextable(dplyr::tibble(x = c("A", "B"), y = 1:2)) |>
+  flextable::flextable(
+    dplyr::tibble(x = c("A", "B", "C", "D", "E"), y = 1:5)
+  ) |>
     flextable::border(
-      i = 1,
-      border.top = officer::fp_border(color = "#FF0000", width = 2),
-      part = "body"
+      border.top = officer::fp_border(color = "#FF0000", width = 3),
+      part = "header"
     ) |>
     flextable::border(
-      i = 2,
-      border.bottom = officer::fp_border(color = "#0000FF", width = 1, style = "dashed"),
+      i = 5,
+      border.bottom = officer::fp_border(color = "#0000FF", width = 1.5),
       part = "body"
     )
 }
@@ -115,7 +119,11 @@ make_borders_ft <- function() {
     # Dashed blue bottom border on body row 3
     flextable::border(
       i = 3,
-      border.bottom = officer::fp_border(color = "#0000FF", width = 1, style = "dashed"),
+      border.bottom = officer::fp_border(
+        color = "#0000FF",
+        width = 1,
+        style = "dashed"
+      ),
       part = "body"
     ) |>
     # Green left border on all body cells in col 1
@@ -146,7 +154,9 @@ test_table_position <- function() {
 # Pull the first request of a given type out of a named request list
 first_req <- function(reqs, type) {
   found <- Filter(\(r) !is.null(r[[type]]), reqs)
-  if (length(found) == 0L) return(NULL)
+  if (length(found) == 0L) {
+    return(NULL)
+  }
   found[[1L]][[type]]
 }
 
@@ -156,7 +166,7 @@ find_border_req <- function(border_reqs, row_idx, col_idx, position) {
     \(r) {
       u <- r$updateTableBorderProperties
       !is.null(u) &&
-        u$tableRange$location$rowIndex    == row_idx &&
+        u$tableRange$location$rowIndex == row_idx &&
         u$tableRange$location$columnIndex == col_idx &&
         u$borderPosition == position
     },

@@ -101,9 +101,12 @@ get_all_elements <- function(slide) {
 
 
 elem_is_text_elem <- function(elem = NULL) {
-  if(!is.null(elem)) {
-    is_elem <- tryCatch(elem$shape$shapeType == "TEXT_BOX", error = function(e) FALSE)
-    if(length(is_elem) == 0) {
+  if (!is.null(elem)) {
+    is_elem <- tryCatch(
+      elem$shape$shapeType == "TEXT_BOX",
+      error = function(e) FALSE
+    )
+    if (length(is_elem) == 0) {
       is_elem <- FALSE
     }
   } else {

@@ -574,9 +574,15 @@ test_that("text_style() defaults all paragraph properties to NULL", {
   ts <- text_style()
   purrr::walk(
     c(
-      "alignment", "line_spacing", "indent_start", "indent_end",
-      "space_above", "space_below", "indent_first_line",
-      "direction", "spacing_mode"
+      "alignment",
+      "line_spacing",
+      "indent_start",
+      "indent_end",
+      "space_above",
+      "space_below",
+      "indent_first_line",
+      "direction",
+      "spacing_mode"
     ),
     ~ expect_null(S7::prop(ts, .x))
   )
@@ -584,25 +590,25 @@ test_that("text_style() defaults all paragraph properties to NULL", {
 
 test_that("text_style() stores valid paragraph property values", {
   ts <- text_style(
-    alignment         = "CENTER",
-    line_spacing      = 150,
-    indent_start      = 18,
-    indent_end        = 18,
-    space_above       = 6,
-    space_below       = 6,
+    alignment = "CENTER",
+    line_spacing = 150,
+    indent_start = 18,
+    indent_end = 18,
+    space_above = 6,
+    space_below = 6,
     indent_first_line = 36,
-    direction         = "LEFT_TO_RIGHT",
-    spacing_mode      = "NEVER_COLLAPSE"
+    direction = "LEFT_TO_RIGHT",
+    spacing_mode = "NEVER_COLLAPSE"
   )
-  expect_equal(ts@alignment,         "CENTER")
-  expect_equal(ts@line_spacing,      150)
-  expect_equal(ts@indent_start,      18)
-  expect_equal(ts@indent_end,        18)
-  expect_equal(ts@space_above,       6)
-  expect_equal(ts@space_below,       6)
+  expect_equal(ts@alignment, "CENTER")
+  expect_equal(ts@line_spacing, 150)
+  expect_equal(ts@indent_start, 18)
+  expect_equal(ts@indent_end, 18)
+  expect_equal(ts@space_above, 6)
+  expect_equal(ts@space_below, 6)
   expect_equal(ts@indent_first_line, 36)
-  expect_equal(ts@direction,         "LEFT_TO_RIGHT")
-  expect_equal(ts@spacing_mode,      "NEVER_COLLAPSE")
+  expect_equal(ts@direction, "LEFT_TO_RIGHT")
+  expect_equal(ts@spacing_mode, "NEVER_COLLAPSE")
 })
 
 test_that("text_style() rejects invalid alignment values", {
@@ -618,26 +624,41 @@ test_that("text_style() rejects negative / invalid line_spacing", {
 
 test_that("text_style() rejects invalid direction values", {
   expect_snapshot(error = TRUE, text_style(direction = "ltr"))
-  expect_snapshot(error = TRUE, text_style(direction = c("LEFT_TO_RIGHT", "RIGHT_TO_LEFT")))
+  expect_snapshot(
+    error = TRUE,
+    text_style(direction = c("LEFT_TO_RIGHT", "RIGHT_TO_LEFT"))
+  )
 })
 
 test_that("text_style() rejects invalid spacing_mode values", {
   expect_snapshot(error = TRUE, text_style(spacing_mode = "COLLAPSE"))
-  expect_snapshot(error = TRUE, text_style(spacing_mode = c("NEVER_COLLAPSE", "COLLAPSE_LISTS")))
+  expect_snapshot(
+    error = TRUE,
+    text_style(spacing_mode = c("NEVER_COLLAPSE", "COLLAPSE_LISTS"))
+  )
 })
 
 
 # text_style@paragraph_style ---------------------------------------------------
 
 test_that("text_style()@paragraph_style is empty list when all paragraph properties are NULL", {
-  expect_equal(text_style()@paragraph_style, structure(list(), names = character(0)))
+  expect_equal(
+    text_style()@paragraph_style,
+    structure(list(), names = character(0))
+  )
 })
 
 test_that("text_style()@paragraph_style serializes Dimension fields to {magnitude, unit='PT'}", {
   ts <- text_style(space_above = 6, indent_start = 18, indent_first_line = 36)
-  expect_equal(ts@paragraph_style$spaceAbove,      list(magnitude = 6,  unit = "PT"))
-  expect_equal(ts@paragraph_style$indentStart,     list(magnitude = 18, unit = "PT"))
-  expect_equal(ts@paragraph_style$indentFirstLine, list(magnitude = 36, unit = "PT"))
+  expect_equal(ts@paragraph_style$spaceAbove, list(magnitude = 6, unit = "PT"))
+  expect_equal(
+    ts@paragraph_style$indentStart,
+    list(magnitude = 18, unit = "PT")
+  )
+  expect_equal(
+    ts@paragraph_style$indentFirstLine,
+    list(magnitude = 36, unit = "PT")
+  )
 })
 
 test_that("text_style()@paragraph_style passes lineSpacing as a plain number", {
@@ -645,9 +666,18 @@ test_that("text_style()@paragraph_style passes lineSpacing as a plain number", {
 })
 
 test_that("text_style()@paragraph_style passes enum fields as strings", {
-  expect_equal(text_style(alignment    = "JUSTIFIED")@paragraph_style$alignment,    "JUSTIFIED")
-  expect_equal(text_style(direction    = "RIGHT_TO_LEFT")@paragraph_style$direction, "RIGHT_TO_LEFT")
-  expect_equal(text_style(spacing_mode = "COLLAPSE_LISTS")@paragraph_style$spacingMode, "COLLAPSE_LISTS")
+  expect_equal(
+    text_style(alignment = "JUSTIFIED")@paragraph_style$alignment,
+    "JUSTIFIED"
+  )
+  expect_equal(
+    text_style(direction = "RIGHT_TO_LEFT")@paragraph_style$direction,
+    "RIGHT_TO_LEFT"
+  )
+  expect_equal(
+    text_style(spacing_mode = "COLLAPSE_LISTS")@paragraph_style$spacingMode,
+    "COLLAPSE_LISTS"
+  )
 })
 
 test_that("text_style()@paragraph_style omits NULL paragraph properties", {
@@ -664,22 +694,28 @@ test_that("text_style()@paragraph_fields is character(0) when all paragraph prop
 
 test_that("text_style()@paragraph_fields contains all expected camelCase names when fully populated", {
   ts <- text_style(
-    alignment         = "START",
-    line_spacing      = 100,
-    indent_start      = 0,
-    indent_end        = 0,
-    space_above       = 0,
-    space_below       = 0,
+    alignment = "START",
+    line_spacing = 100,
+    indent_start = 0,
+    indent_end = 0,
+    space_above = 0,
+    space_below = 0,
     indent_first_line = 0,
-    direction         = "LEFT_TO_RIGHT",
-    spacing_mode      = "NEVER_COLLAPSE"
+    direction = "LEFT_TO_RIGHT",
+    spacing_mode = "NEVER_COLLAPSE"
   )
   expect_setequal(
     ts@paragraph_fields,
     c(
-      "alignment", "lineSpacing", "indentStart", "indentEnd",
-      "spaceAbove", "spaceBelow", "indentFirstLine",
-      "direction", "spacingMode"
+      "alignment",
+      "lineSpacing",
+      "indentStart",
+      "indentEnd",
+      "spaceAbove",
+      "spaceBelow",
+      "indentFirstLine",
+      "direction",
+      "spacingMode"
     )
   )
   expect_false(any(grepl("_", ts@paragraph_fields)))
@@ -695,24 +731,33 @@ test_that("text_style()@paragraph_fields reflects only set paragraph properties"
 
 test_that("mush_styles() applies left-priority for overlapping paragraph fields", {
   e1 <- text_style(alignment = "CENTER", space_above = 6)
-  e2 <- text_style(alignment = "END",    space_above = 12, space_below = 4)
+  e2 <- text_style(alignment = "END", space_above = 12, space_below = 4)
   result <- mush_styles(e1, e2)
-  expect_equal(result@alignment,   "CENTER") # e1 wins
-  expect_equal(result@space_above, 6)        # e1 wins
-  expect_equal(result@space_below, 4)        # falls through from e2
+  expect_equal(result@alignment, "CENTER") # e1 wins
+  expect_equal(result@space_above, 6) # e1 wins
+  expect_equal(result@space_below, 4) # falls through from e2
 })
 
 test_that("combine_style_impl() errors on contradicting paragraph field values", {
   contradicting_paragraph_pairs <- list(
-    list(text_style(alignment    = "CENTER"),       text_style(alignment    = "END")),
-    list(text_style(line_spacing = 100),            text_style(line_spacing = 200)),
-    list(text_style(indent_start = 10),             text_style(indent_start = 20)),
-    list(text_style(indent_end   = 10),             text_style(indent_end   = 20)),
-    list(text_style(space_above  = 6),              text_style(space_above  = 12)),
-    list(text_style(space_below  = 6),              text_style(space_below  = 12)),
-    list(text_style(indent_first_line = 18),        text_style(indent_first_line = 36)),
-    list(text_style(direction    = "LEFT_TO_RIGHT"), text_style(direction   = "RIGHT_TO_LEFT")),
-    list(text_style(spacing_mode = "NEVER_COLLAPSE"), text_style(spacing_mode = "COLLAPSE_LISTS"))
+    list(text_style(alignment = "CENTER"), text_style(alignment = "END")),
+    list(text_style(line_spacing = 100), text_style(line_spacing = 200)),
+    list(text_style(indent_start = 10), text_style(indent_start = 20)),
+    list(text_style(indent_end = 10), text_style(indent_end = 20)),
+    list(text_style(space_above = 6), text_style(space_above = 12)),
+    list(text_style(space_below = 6), text_style(space_below = 12)),
+    list(
+      text_style(indent_first_line = 18),
+      text_style(indent_first_line = 36)
+    ),
+    list(
+      text_style(direction = "LEFT_TO_RIGHT"),
+      text_style(direction = "RIGHT_TO_LEFT")
+    ),
+    list(
+      text_style(spacing_mode = "NEVER_COLLAPSE"),
+      text_style(spacing_mode = "COLLAPSE_LISTS")
+    )
   )
   purrr::walk(
     contradicting_paragraph_pairs,
@@ -729,7 +774,7 @@ test_that("combine_style_impl() allows same-value overlapping paragraph fields",
     text_style(alignment = "CENTER", space_below = 4),
     error_on_contradiction = TRUE
   )
-  expect_equal(result@alignment,   "CENTER")
+  expect_equal(result@alignment, "CENTER")
   expect_equal(result@space_above, 6)
   expect_equal(result@space_below, 4)
 })
@@ -752,7 +797,9 @@ test_that("create_styling_request() emits updateParagraphStyle when paragraph fi
   expect_equal(para_req$textRange$type, "FIXED_RANGE")
   expect_equal(para_req$style$alignment, "CENTER")
   expect_equal(para_req$style$spaceAbove, list(magnitude = 6, unit = "PT"))
-  expect_true(all(c("alignment", "spaceAbove") %in% strsplit(para_req$fields, ",")[[1]]))
+  expect_true(all(
+    c("alignment", "spaceAbove") %in% strsplit(para_req$fields, ",")[[1]]
+  ))
 })
 
 test_that("create_styling_request() emits both updateTextStyle and updateParagraphStyle when both are set", {
@@ -764,7 +811,7 @@ test_that("create_styling_request() emits both updateTextStyle and updateParagra
 
   expect_length(result, 2L)
   request_names <- names(result)
-  expect_true("updateTextStyle"      %in% request_names)
+  expect_true("updateTextStyle" %in% request_names)
   expect_true("updateParagraphStyle" %in% request_names)
 })
 
@@ -781,8 +828,8 @@ test_that("create_styling_request() emits no updateTextStyle when only paragraph
 
 test_that("create_styling_request() default style emits updateParagraphStyle when paragraph fields are set", {
   sr <- style_rule(
-    when    = grepl("nomatch", text),
-    what    = text_style(bold = TRUE),
+    when = grepl("nomatch", text),
+    what = text_style(bold = TRUE),
     default = text_style(alignment = "START")
   )
   result <- create_styling_request(sr, "hello", "my_id")

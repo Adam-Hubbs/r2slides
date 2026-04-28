@@ -1,6 +1,5 @@
 #' Convert a hex color code to RGB values
 
-
 #' Convert inches to EMU's
 #' @description
 #' Google slides API's can only handle EMU or PT's. This function converts inches to EMU's so the user can continue to work in inches.
@@ -18,7 +17,6 @@ in_to_emu <- function(x) {
   }
   return(x * 914400)
 }
-
 
 
 recursively_replace <- function(x, what, with) {

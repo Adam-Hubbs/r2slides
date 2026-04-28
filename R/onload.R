@@ -2,7 +2,7 @@
 .auth <- NULL
 .r2slides_objects <- new.env(parent = emptyenv())
 
-if(getRversion() < "4.4.0") {
+if (getRversion() < "4.4.0") {
   `%||%` <- function(a, b) {
     if (!is.null(a)) a else b
   }
@@ -12,20 +12,16 @@ utils::globalVariables("properties")
 
 #Set up when package is created
 .onLoad <- function(libname, pkgname) {
-
   utils::assignInMyNamespace(
     ".auth",
     gargle::init_AuthState(package = "r2slides", auth_active = TRUE)
   )
 
   S7::methods_register()
-
 }
-
 
 # TODO Need to add gs discovery document into mthds (and combine slides and gs into one top level directory?)
 # Use gargle internal functions to extract and clean discovery document
-
 
 ### This is code to create and save the discovery package in a internal only way in R --
 # For Development only. Read in low level function helpers for working with the discovery document
@@ -55,7 +51,4 @@ utils::globalVariables("properties")
 # mthds_slides <- c(mthds_slides, mthds_slides_pages)
 # mthds_sheets <- get_raw_methods(sheetsDiscDoc)
 
-
 # usethis::use_data(mthds_slides, mthds_sheets, .json_key, test_rsp, internal = TRUE, overwrite = TRUE)
-
-

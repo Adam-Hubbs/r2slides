@@ -56,4 +56,3 @@ create_spreadsheet_env_in_global <- function() {
     )
   }
 }
-

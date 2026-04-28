@@ -141,17 +141,22 @@ test_that("affine transform properties work with rotation", {
   expect_equal(pos@shearX, -1, tolerance = 1e-10)
   expect_equal(pos@shearY, 1, tolerance = 1e-10)
 
-    pos2 <- slide_position(top = 1, left = 2, width = 3, height = 4, rotation = 45)
+  pos2 <- slide_position(
+    top = 1,
+    left = 2,
+    width = 3,
+    height = 4,
+    rotation = 45
+  )
 
-    expected_cos <- cos(45 * pi / 180)
-    expected_sin <- sin(45 * pi / 180)
+  expected_cos <- cos(45 * pi / 180)
+  expected_sin <- sin(45 * pi / 180)
 
-    expect_equal(pos2@scaleX, expected_cos)
-    expect_equal(pos2@scaleY, expected_cos)
-    expect_equal(pos2@shearX, -expected_sin)
-    expect_equal(pos2@shearY, expected_sin)
+  expect_equal(pos2@scaleX, expected_cos)
+  expect_equal(pos2@scaleY, expected_cos)
+  expect_equal(pos2@shearX, -expected_sin)
+  expect_equal(pos2@shearY, expected_sin)
 })
-
 
 
 # Slide size conversion ----
@@ -374,17 +379,13 @@ test_that("bounding_box works with mixed rotated and unrotated objects", {
 })
 
 test_that("bounding_box requires at least one object", {
-  expect_snapshot(error = TRUE,
-    bounding_box()
-  )
+  expect_snapshot(error = TRUE, bounding_box())
 })
 
 test_that("bounding_box validates all inputs are slide_position", {
   pos <- slide_position(top = 1, left = 1, width = 2, height = 2)
 
-  expect_snapshot(error = TRUE,
-    bounding_box(pos, "not a position")
-  )
+  expect_snapshot(error = TRUE, bounding_box(pos, "not a position"))
 })
 
 test_that("bounding_box requires matching slide sizes", {
@@ -403,9 +404,7 @@ test_that("bounding_box requires matching slide sizes", {
     slide_size = c(7.5, 10)
   )
 
-  expect_snapshot(error = TRUE,
-    bounding_box(pos1, pos2)
-  )
+  expect_snapshot(error = TRUE, bounding_box(pos1, pos2))
 })
 
 test_that("bounding_box preserves slide_size from input", {

@@ -622,7 +622,7 @@ S7::method(plot, slide_position) <- function(
     pos_data <- rect_data[rect_data$id == i, ]
     color <- unique(pos_data$color)
 
-    # Add filled polygon 
+    # Add filled polygon
     p <- p +
       ggplot2::geom_polygon(
         data = pos_data,
@@ -767,10 +767,6 @@ S7::method(plot, slide_position) <- function(
 }
 
 
-
-
-
-
 S7::method(convert, list(slide_position, S7::class_list)) <- function(
   from,
   to
@@ -802,7 +798,6 @@ S7::method(`+`, list(slide_position, S7::class_numeric)) <- function(e1, e2) {
 }
 
 
-
 mirror <- S7::new_generic('mirror', 'x', function(x, ...) {
   S7::S7_dispatch()
 })
@@ -819,7 +814,7 @@ S7::method(mirror, slide_position) <- function(
       left = x@slide_width - x@left - x@width,
       width = x@width,
       height = x@height,
-      rotation = -x@rotation, 
+      rotation = -x@rotation,
       slide_size = c(x@slide_height, x@slide_width)
     )
   } else if (flip_axis == 'Vertical') {
@@ -828,7 +823,7 @@ S7::method(mirror, slide_position) <- function(
       left = x@left,
       width = x@width,
       height = x@height,
-      rotation = -x@rotation, 
+      rotation = -x@rotation,
       slide_size = c(x@slide_height, x@slide_width)
     )
   }

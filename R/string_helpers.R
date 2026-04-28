@@ -43,7 +43,7 @@ str_before <- function(
   } else if (include_boundary) {
     tmp <- c(1, location[[1, 2]])
   } else {
-    if(is.na(location[[1, 1]])) {
+    if (is.na(location[[1, 1]])) {
       # No match
       tmp <- NA
     } else if (location[[1, 1]] == 1) {
@@ -93,8 +93,7 @@ str_after <- function(
   } else if (include_boundary) {
     tmp <- c(location[[1, 1]], nchar(text))
   } else {
-    
-    if(is.na(location[[1, 2]])) {
+    if (is.na(location[[1, 2]])) {
       # No match
       tmp <- NA
     } else if (location[[1, 2]] == nchar(text)) {
