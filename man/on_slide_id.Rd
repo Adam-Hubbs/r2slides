@@ -5,6 +5,7 @@
 \alias{on_slide_url}
 \alias{on_slide_number}
 \alias{on_slide_after}
+\alias{on_slide_with_notes}
 \title{Create a slide object}
 \usage{
 on_slide_id(id, ps)
@@ -14,6 +15,13 @@ on_slide_url(url, ps)
 on_slide_number(n, ps)
 
 on_slide_after(slide, offset = 1, ps)
+
+on_slide_with_notes(
+  text,
+  match = c("exact", "regex"),
+  on_multiple = c("error", "return"),
+  ps
+)
 }
 \arguments{
 \item{id}{A slide identifier. Can be either:
@@ -30,6 +38,16 @@ on_slide_after(slide, offset = 1, ps)
 \item{slide}{A slide object}
 
 \item{offset}{A position integer - the number of slides after the reference slide. Can be negative to return slides before the reference slide}
+
+\item{text}{A string to search for in slide speaker notes}
+
+\item{match}{How to match \code{text} against notes: \code{"exact"} requires
+an identical string; \code{"regex"} treats \code{text} as a Perl-compatible
+regular expression}
+
+\item{on_multiple}{What to do when multiple slides match: \code{"error"}
+(default) raises an error listing the matching slide numbers; \code{"return"}
+returns all matches as a named list of slide objects (names are slide IDs)}
 }
 \value{
 A slide object

@@ -191,6 +191,79 @@ on_slide_after <- function(slide, offset = 1, ps) {
 }
 
 
+#' @param text A string to search for in slide speaker notes
+#' @param match How to match \code{text} against notes: \code{"exact"} requires
+#'   an identical string; \code{"regex"} treats \code{text} as a Perl-compatible
+#'   regular expression
+#' @param on_multiple What to do when multiple slides match: \code{"error"}
+#'   (default) raises an error listing the matching slide numbers; \code{"return"}
+#'   returns all matches as a named list of slide objects (names are slide IDs)
+#' @rdname on_slide_id
+#' @export
+on_slide_with_notes <- function(
+  text,
+  match = c("exact", "regex"),
+  on_multiple = c("error", "return"),
+  ps
+) {
+  if (rlang::is_missing(ps)) {
+    ps <- get_active_presentation()
+  }
+
+  match       <- rlang::arg_match(match)
+  on_multiple <- rlang::arg_match(on_multiple)
+
+  if (!is.character(text) || length(text) != 1 || is.na(text)) {
+    cli::cli_abort("{.arg text} must be a single non-NA string")
+  }
+
+  # Single refresh up front; all subsequent calls skip their own refresh
+  ps$refresh()
+
+  slide_ids <- ps$get_slide_ids_cache()
+
+  if (length(slide_ids) == 0) {
+    cli::cli_abort("Presentation has no slides")
+  }
+
+  notes <- purrr::map_chr(slide_ids, ~ ps$get_slide_notes_text(.x))
+
+  matched <- if (match == "exact") {
+    notes == text
+  } else {
+    grepl(text, notes, perl = TRUE)
+  }
+
+  n_matched <- sum(matched)
+
+  if (n_matched == 0) {
+    cli::cli_abort(
+      "No slides found whose notes {if (match == 'exact') 'equal' else 'match'} {.val {text}}"
+    )
+  }
+
+  matched_ids     <- slide_ids[matched]
+  matched_indices <- which(matched)
+
+  # Construct slide objects directly to avoid a refresh() per matched slide
+  matched_slides <- purrr::map(matched_ids, ~ slide(presentation = ps, slide_id = .x))
+
+  if (on_multiple == "error") {
+    if (n_matched > 1) {
+      cli::cli_abort(c(
+        "{n_matched} slides found whose notes {if (match == 'exact') 'equal' else 'match'} {.val {text}}",
+        "i" = "Matched slide numbers: {matched_indices}",
+        "i" = "Use {.code on_multiple = 'return'} to retrieve all matches"
+      ))
+    }
+    return(matched_slides[[1]])
+  }
+
+  # on_multiple == "return"
+  rlang::set_names(matched_slides, matched_ids)
+}
+
+
 resolve_presentation_id <- function(id) {
   if (!is.character(id) || length(id) != 1) {
     cli::cli_abort("{.arg id} must be a single string")

@@ -38,6 +38,7 @@ An R6 class to represent and manipulate Google Slides presentations.
 \item \href{#method-presentation-get_slide_by_id}{\code{presentation$get_slide_by_id()}}
 \item \href{#method-presentation-get_slide_index}{\code{presentation$get_slide_index()}}
 \item \href{#method-presentation-get_slide_ids}{\code{presentation$get_slide_ids()}}
+\item \href{#method-presentation-get_slide_notes_text}{\code{presentation$get_slide_notes_text()}}
 \item \href{#method-presentation-set_active}{\code{presentation$set_active()}}
 \item \href{#method-presentation-set_not_active}{\code{presentation$set_not_active()}}
 \item \href{#method-presentation-is_active}{\code{presentation$is_active()}}
@@ -196,6 +197,26 @@ Get slide IDs from the presentation
 
 \subsection{Returns}{
 Character vector of slide object IDs
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-presentation-get_slide_notes_text"></a>}}
+\if{latex}{\out{\hypertarget{method-presentation-get_slide_notes_text}{}}}
+\subsection{Method \code{get_slide_notes_text()}}{
+Get the speaker notes text for a slide
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_notes_text(slide_id)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{slide_id}}{ID of the slide}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A single character string (empty string if no notes)
 }
 }
 \if{html}{\out{<hr>}}

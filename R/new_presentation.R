@@ -326,6 +326,46 @@ presentation <- R6::R6Class(
     },
 
     #' @description
+    #' Get the speaker notes text for a slide.
+    #' Does not refresh; caller is responsible for refreshing first.
+    #'
+    #' @param slide_id ID of the slide
+    #' @return A single character string (empty string if no notes)
+    get_slide_ids_cache = function() {
+      private$slide_ids %||% character(0)
+    },
+
+    get_slide_notes_text = function(slide_id) {
+      raw_slide <- purrr::detect(private$slides, ~ .x$objectId == slide_id)
+
+      if (is.null(raw_slide)) {
+        cli::cli_abort("Slide {.val {slide_id}} not found in presentation")
+      }
+
+      notes_id <- raw_slide$slideProperties$notesPage$notesProperties$speakerNotesObjectId
+
+      if (is.null(notes_id)) {
+        return("")
+      }
+
+      page_elements <- raw_slide$slideProperties$notesPage$pageElements
+      notes_elem <- purrr::detect(page_elements, ~ .x$objectId == notes_id)
+
+      if (is.null(notes_elem)) {
+        return("")
+      }
+
+      text_elems <- notes_elem$shape$text$textElements
+
+      if (is.null(text_elems)) {
+        return("")
+      }
+
+      runs <- purrr::map_chr(text_elems, ~ .x$textRun$content %||% "")
+      trimws(paste(runs, collapse = ""), which = "right")
+    },
+
+    #' @description
     #' Set this presentation as the active one
     #'
     #' @return Self, invisibly (for method chaining)
