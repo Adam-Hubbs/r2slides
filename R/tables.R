@@ -258,7 +258,7 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
         color <- if (
           !is.null(raw_color) && !is.na(raw_color) &&
           raw_color != "" && raw_color != "transparent"
-        ) normalize_color(raw_color) else NULL
+        ) transparent_color(color = solid_color(color = normalize_color(raw_color))) else NULL
 
         # Width of 0 means "no visible border" in flextable. The Google Slides
         # API rejects weight <= 0, so substitute width=1 with white (#FFFFFF),
@@ -270,7 +270,7 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
             row_index  = as.integer(row_offset + r - 1L),
             col_index  = as.integer(ci - 1L),
             side       = side,
-            color      = "#FFFFFF",
+            color      = transparent_color(color = solid_color(color = "#FFFFFF")),
             width      = 1,
             dash_style = "SOLID"
           )))
@@ -371,9 +371,7 @@ build_border_request <- function(table_id, row_index, col_index, position, color
   fields <- character()
 
   if (!is.null(color)) {
-    # color_to_solid_fill returns list(solidFill = list(color = ...))
-    # tableBorderFill expects the same shape
-    props$tableBorderFill <- color_to_solid_fill(color)
+    props$tableBorderFill <- color_to_api(color)
     fields <- c(fields, "tableBorderFill")
   }
 
@@ -654,7 +652,7 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
       tcp_fields <- character()
 
       if (!is.null(cs@bg_color)) {
-        tcp$tableCellBackgroundFill <- color_to_solid_fill(cs@bg_color)
+        tcp$tableCellBackgroundFill <- color_to_api(cs@bg_color)
         tcp_fields <- c(tcp_fields, "tableCellBackgroundFill")
       }
 

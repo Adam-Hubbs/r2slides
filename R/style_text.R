@@ -104,27 +104,103 @@ validate_color <- function(value) {
   )
 }
 
-#' Convert an internally-stored color to the Google Slides API rgbColor node.
+# -- Color classes -----------------------------------------------------------
+
+#' Opaque color for use in text styles
 #'
-#' Returns only the innermost color object — either `list(rgbColor = ...)` or
-#' `list(themeColor = ...)`. Callers are responsible for wrapping this in the
-#' appropriate parent node (`opaqueColor`, `solidFill`, etc.) required by the
-#' specific API field being set.
+#' Represents a Google Slides `opaqueColor` - a color with no alpha channel.
+#' Used for text foreground and background colors (`updateTextStyle`).
 #'
-#' @param color A hex string or theme color string (as returned by
-#'   [normalize_color()]), or `NULL`.
-#' @return A named list with a single `rgbColor` or `themeColor` element, or
-#'   `NULL`.
+#' Accepts a hex string (`"#RRGGBB"`), a named R color (e.g. `"red"`),
+#' an RGB numeric vector `c(r, g, b)` with values in [0, 1], or a Google
+#' Slides theme color string (e.g. `"ACCENT1"`).
+#'
+#' @param color A color value in any accepted format (see above).
+#'
+#' @export
+solid_color <- S7::new_class(
+  "solid_color",
+  properties = list(
+    color = S7::new_property(
+      NULL | S7::class_character,
+      setter = function(self, value) {
+        self@color <- normalize_color(value)
+        self
+      },
+      validator = function(value) {
+        if (is.null(value)) return(NULL)
+        tryCatch(
+          { normalize_color(value); NULL },
+          error = function(e) conditionMessage(e)
+        )
+      }
+    )
+  )
+)
+
+#' Color with optional alpha for use in fills
+#'
+#' Represents a Google Slides `solidFill` - a color with an optional alpha
+#' (opacity) value. Used for table cell background fills and border fills
+#' (`updateTableCellProperties`, `updateTableBorderProperties`).
+#'
+#' The `color` argument accepts the same formats as [solid_color()].
+#' `alpha` is a number in [0, 1] where `0` is fully transparent and `1` is
+#' fully opaque. When `NULL` (the default) the alpha field is omitted from the
+#' API request, which the API treats as fully opaque.
+#'
+#' @param color A color value in any format accepted by [solid_color()].
+#' @param alpha `NULL` or a single number in [0, 1].
+#'
+#' @export
+transparent_color <- S7::new_class(
+  "transparent_color",
+  properties = list(
+    color = S7::new_property(
+      solid_color,
+      setter = function(self, value) {
+        if (S7::S7_inherits(value, solid_color)) {
+          self@color <- value
+        } else {
+          self@color <- solid_color(color = normalize_color(value))
+        }
+        self
+      }
+    ),
+    alpha = S7::new_property(
+      NULL | S7::class_numeric,
+      validator = function(value) {
+        if (is.null(value)) return(NULL)
+        if (length(value) != 1)     return("alpha must be a single value")
+        if (value < 0 || value > 1) return("alpha must be in [0, 1]")
+      }
+    )
+  )
+)
+
+# -- color_to_api() generic --------------------------------------------------
+
+#' Convert a color object to its Google Slides API representation
+#'
+#' A generic function dispatching on the color class:
+#'
+#' * `solid_color` -> `list(opaqueColor = ...)` used for text styles.
+#' * `transparent_color` -> `list(solidFill = list(color = ..., alpha = ...))`
+#'   used for table border fills and cell background fills.
+#'
+#' @param color A [solid_color] or [transparent_color] object.
+#' @return A named list suitable for embedding in a Google Slides API request.
 #' @noRd
-color_to_rgb_api <- function(color) {
-  if (is.null(color)) return(NULL)
+color_to_api <- S7::new_generic("color_to_api", "color")
 
-  if (color %in% theme_colors) {
-    return(list(themeColor = color))
+# Internal helper: hex or theme string -> innermost rgbColor/themeColor node.
+# @noRd
+.color_str_to_inner <- function(color_str) {
+  if (is.null(color_str)) return(NULL)
+  if (color_str %in% theme_colors) {
+    return(list(themeColor = color_str))
   }
-
-  # hex "#RRGGBB" -> fractional RGB for API
-  rgb_int <- grDevices::col2rgb(color)
+  rgb_int <- grDevices::col2rgb(color_str)
   list(
     rgbColor = list(
       red   = rgb_int[1L] / 255,
@@ -134,18 +210,17 @@ color_to_rgb_api <- function(color) {
   )
 }
 
-#' Wrap a color as an `opaqueColor` node (used by updateTextStyle).
-#' @noRd
-color_to_opaque_color <- function(color) {
-  inner <- color_to_rgb_api(color)
+S7::method(color_to_api, solid_color) <- function(color) {
+  inner <- .color_str_to_inner(color@color)
   if (is.null(inner)) NULL else list(opaqueColor = inner)
 }
 
-#' Wrap a color as a `solidFill` node (used by updateTableCellProperties).
-#' @noRd
-color_to_solid_fill <- function(color) {
-  inner <- color_to_rgb_api(color)
-  if (is.null(inner)) NULL else list(solidFill = list(color = inner))
+S7::method(color_to_api, transparent_color) <- function(color) {
+  inner <- .color_str_to_inner(color@color@color)
+  if (is.null(inner)) return(NULL)
+  fill <- list(color = inner)
+  if (!is.null(color@alpha)) fill$alpha <- color@alpha
+  list(solidFill = fill)
 }
 
 #' Text styling properties
@@ -183,18 +258,30 @@ text_style <- S7::new_class(
   "text_style",
   properties = list(
     bg_color = S7::new_property(
+      NULL | solid_color,
       setter = function(self, value) {
-        self@bg_color <- normalize_color(value)
+        if (is.null(value)) {
+          self@bg_color <- NULL
+        } else if (S7::S7_inherits(value, solid_color)) {
+          self@bg_color <- value
+        } else {
+          self@bg_color <- solid_color(color = normalize_color(value))
+        }
         self
-      },
-      validator = validate_color
+      }
     ),
     text_color = S7::new_property(
+      NULL | solid_color,
       setter = function(self, value) {
-        self@text_color <- normalize_color(value)
+        if (is.null(value)) {
+          self@text_color <- NULL
+        } else if (S7::S7_inherits(value, solid_color)) {
+          self@text_color <- value
+        } else {
+          self@text_color <- solid_color(color = normalize_color(value))
+        }
         self
-      },
-      validator = validate_color
+      }
     ),
     bold = S7::new_property(
       NULL | S7::class_logical,
@@ -401,8 +488,8 @@ text_style <- S7::new_class(
     # Computed properties
     style = S7::new_property(S7::class_list, getter = function(self) {
       list(
-        backgroundColor = color_to_opaque_color(self@bg_color),
-        foregroundColor = color_to_opaque_color(self@text_color),
+        backgroundColor = if (!is.null(self@bg_color)) color_to_api(self@bg_color) else NULL,
+        foregroundColor = if (!is.null(self@text_color)) color_to_api(self@text_color) else NULL,
         bold            = self@bold,
         italic          = self@italic,
         fontFamily      = self@font_family,
