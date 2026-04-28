@@ -1,4 +1,4 @@
-# Convert inches to EMU's
+# Convert a hex color code to RGB values Convert inches to EMU's
 
 Google slides API's can only handle EMU or PT's. This function converts
 inches to EMU's so the user can continue to work in inches.

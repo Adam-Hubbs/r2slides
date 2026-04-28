@@ -25,7 +25,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_all_elements.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_chart_id.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_safe_length.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/hex_to_rgb.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/in_qualtrics_title.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/in_to_emu.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/index.html</loc></url>
@@ -53,9 +52,11 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/slide.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/slide_position.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/solid_color.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/string-helpers.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/style_rule.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/text_style.html</loc></url>
+<url><loc>https://adam-hubbs.github.io/r2slides/reference/transparent_color.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/validatePresentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/validatespreadsheet.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/write_gs.html</loc></url>
