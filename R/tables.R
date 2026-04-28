@@ -342,13 +342,14 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
           color = solid_color(color = "#FFFFFF"),
           alpha = 0
         ),
-        width = 1,
+        width = 12700,
         dash_style = "SOLID"
       ))
     }
 
     width <- if (!is.null(raw_width) && !is.na(raw_width) && raw_width > 0) {
-      as.double(raw_width)
+      # raw_width is in PT; divide by 1.33 then convert to EMU (1 PT = 914400/72 EMU)
+      as.double(raw_width) / 1.33 * 914400 / 72
     } else {
       NULL
     }
@@ -514,7 +515,7 @@ build_border_request <- function(
   }
 
   if (!is.null(width)) {
-    props$weight <- list(magnitude = width, unit = "PT")
+    props$weight <- list(magnitude = width, unit = "EMU")
     fields <- c(fields, "weight")
   }
 
