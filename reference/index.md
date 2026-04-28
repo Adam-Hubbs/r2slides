@@ -60,6 +60,7 @@
   [`on_slide_url()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   [`on_slide_number()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   [`on_slide_after()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
+  [`on_slide_with_notes()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   : Create a slide object
 - [`peek`](https://adam-hubbs.github.io/r2slides/reference/peek.md) :
   Peek at a slide

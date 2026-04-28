@@ -56,6 +56,8 @@ An R6 class to represent and manipulate Google Slides presentations.
 
 - [`presentation$get_slide_ids()`](#method-presentation-get_slide_ids)
 
+- [`presentation$get_slide_notes_text()`](#method-presentation-get_slide_notes_text)
+
 - [`presentation$set_active()`](#method-presentation-set_active)
 
 - [`presentation$set_not_active()`](#method-presentation-set_not_active)
@@ -227,6 +229,26 @@ Get slide IDs from the presentation
 #### Returns
 
 Character vector of slide object IDs
+
+------------------------------------------------------------------------
+
+### Method `get_slide_notes_text()`
+
+Get the speaker notes text for a slide
+
+#### Usage
+
+    presentation$get_slide_notes_text(slide_id)
+
+#### Arguments
+
+- `slide_id`:
+
+  ID of the slide
+
+#### Returns
+
+A single character string (empty string if no notes)
 
 ------------------------------------------------------------------------
 

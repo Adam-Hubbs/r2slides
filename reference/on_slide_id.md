@@ -14,6 +14,13 @@ on_slide_url(url, ps)
 on_slide_number(n, ps)
 
 on_slide_after(slide, offset = 1, ps)
+
+on_slide_with_notes(
+  text,
+  match = c("exact", "regex"),
+  on_multiple = c("error", "return"),
+  ps
+)
 ```
 
 ## Arguments
@@ -43,6 +50,22 @@ on_slide_after(slide, offset = 1, ps)
 
   A position integer - the number of slides after the reference slide.
   Can be negative to return slides before the reference slide
+
+- text:
+
+  A string to search for in slide speaker notes
+
+- match:
+
+  How to match `text` against notes: `"exact"` requires an identical
+  string; `"regex"` treats `text` as a Perl-compatible regular
+  expression
+
+- on_multiple:
+
+  What to do when multiple slides match: `"error"` (default) raises an
+  error listing the matching slide numbers; `"return"` returns all
+  matches as a named list of slide objects (names are slide IDs)
 
 ## Value
 
