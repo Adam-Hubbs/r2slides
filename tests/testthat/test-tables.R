@@ -79,31 +79,33 @@ test_that("as_r2slides_table: explicit border colour and width are captured", {
   ft <- make_bordered_ft()
   r2 <- as_r2slides_table(ft)
 
-  cell_top <- Filter(\(c) c@row_index == 1L && c@col_index == 0L, r2@cells)[[1]]
-  expect_equal(cell_top@style@border_top$color, "#FF0000")
-  expect_equal(cell_top@style@border_top$width, 2)
+  # Header row (row_index=0) has an explicit top border (width=3, no alpha)
+  cell_hdr <- Filter(\(c) c@row_index == 0L && c@col_index == 0L, r2@cells)[[1]]
+  top_color <- cell_hdr@style@border_top$color
+  expect_true(S7::S7_inherits(top_color, transparent_color))
+  expect_null(top_color@alpha)          # opaque: alpha not set
+  expect_equal(cell_hdr@style@border_top$width, 3)
 
-  cell_bot <- Filter(\(c) c@row_index == 2L && c@col_index == 0L, r2@cells)[[1]]
-  expect_equal(cell_bot@style@border_bottom$color, "#0000FF")
-  expect_equal(cell_bot@style@border_bottom$width, 1)
-  expect_equal(cell_bot@style@border_bottom$dash_style, "DASH")
+  # Bottom border of last body row (row_index=5) is also an explicit visible border
+  cell_bot <- Filter(\(c) c@row_index == 5L && c@col_index == 0L, r2@cells)[[1]]
+  bot_color <- cell_bot@style@border_bottom$color
+  expect_true(S7::S7_inherits(bot_color, transparent_color))
+  expect_null(bot_color@alpha)
+  expect_equal(cell_bot@style@border_bottom$width, 1.5)
 })
 
-test_that("as_r2slides_table: cells without explicit borders carry only default border colour", {
+test_that("as_r2slides_table: zero-width borders are stored as transparent (alpha=0)", {
   ft <- make_plain_ft()
   r2 <- as_r2slides_table(ft)
 
-  # Flextable zero-width borders cannot use weight=0 in the Google Slides API,
-  # so they are emitted as width=1 / color=#FFFFFF (white = visually invisible)
-  # to override the Google Slides default visible border.
+  # Zero-width flextable borders become width=1, alpha=0 in the r2slides_table.
+  # The Slides API rejects weight<=0, so width stays 1; alpha=0 makes it invisible.
   some_cell <- Filter(\(c) c@row_index == 2L && c@col_index == 1L, r2@cells)[[1]]
+  top_color <- some_cell@style@border_top$color
   expect_equal(some_cell@style@border_top$width, 1)
-  expect_equal(some_cell@style@border_top$color, "#FFFFFF")
   expect_equal(some_cell@style@border_top$dash_style, "SOLID")
-  expect_equal(some_cell@style@border_bottom$width, 1)
-  expect_equal(some_cell@style@border_bottom$color, "#FFFFFF")
-  # default colour is black, not a custom colour
-  expect_false(identical(some_cell@style@border_top$color, "#FF0000"))
+  expect_true(S7::S7_inherits(top_color, transparent_color))
+  expect_equal(top_color@alpha, 0)
 })
 
 # -- create_table_requests: structure --
@@ -184,51 +186,42 @@ test_that("create_table_requests: explicit borders produce border requests", {
   expect_gt(length(reqs$borders$requests), 0L)
 })
 
-test_that("create_table_requests: red top border request is correct", {
+test_that("create_table_requests: visible header top border request is correct", {
   r2   <- as_r2slides_table(make_bordered_ft())
   reqs <- create_table_requests(r2, "slide_abc", test_table_position(), table_id = "tbl_rb")
 
-  # border.top on body row 1 is the same physical line as BOTTOM of header row 0.
-  # The canonicalisation emits it from the owner cell (row 0) as BOTTOM.
-  red_reqs <- find_border_req(reqs$borders$requests, 0L, 0L, "BOTTOM")
-  expect_length(red_reqs, 1L)
+  # Header row (row_index=0) has a visible top border: width=3, emitted as TOP
+  # directly from that cell.
+  top_reqs <- find_border_req(reqs$borders$requests, 0L, 0L, "TOP")
+  expect_length(top_reqs, 1L)
 
-  props <- red_reqs[[1]]$updateTableBorderProperties$tableBorderProperties
-  rgb   <- props$tableBorderFill$solidFill$color$rgbColor
-  expect_equal(rgb$red,   1)
-  expect_equal(rgb$green, 0)
-  expect_equal(rgb$blue,  0)
-  expect_equal(props$weight$magnitude, 2)
-  expect_equal(props$dashStyle, "SOLID")
+  props <- top_reqs[[1]]$updateTableBorderProperties$tableBorderProperties
+  expect_equal(props$weight$magnitude, 3)
+  expect_null(props$tableBorderFill$solidFill$alpha)  # opaque, no alpha field
 })
 
-test_that("create_table_requests: dashed blue bottom border request is correct", {
+test_that("create_table_requests: visible bottom border on last row is correct", {
   r2   <- as_r2slides_table(make_bordered_ft())
   reqs <- create_table_requests(r2, "slide_abc", test_table_position(), table_id = "tbl_bb")
 
-  blue_reqs <- find_border_req(reqs$borders$requests, 2L, 0L, "BOTTOM")
-  expect_length(blue_reqs, 1L)
+  # Last body row (row_index=5, col=0) has a visible bottom border: width=1.5
+  bot_reqs <- find_border_req(reqs$borders$requests, 5L, 0L, "BOTTOM")
+  expect_length(bot_reqs, 1L)
 
-  props <- blue_reqs[[1]]$updateTableBorderProperties$tableBorderProperties
-  rgb   <- props$tableBorderFill$solidFill$color$rgbColor
-  expect_equal(rgb$red,   0)
-  expect_equal(rgb$green, 0)
-  expect_equal(rgb$blue,  1)
-  expect_equal(props$weight$magnitude, 1)
-  expect_equal(props$dashStyle, "DASH")
+  props <- bot_reqs[[1]]$updateTableBorderProperties$tableBorderProperties
+  expect_equal(props$weight$magnitude, 1.5)
+  expect_null(props$tableBorderFill$solidFill$alpha)  # opaque, no alpha field
 })
 
 test_that("create_table_requests: plain table has borders key from default flextable borders", {
   r2   <- as_r2slides_table(make_plain_ft())
   reqs <- create_table_requests(r2, "slide_abc", test_table_position(), table_id = "tbl_nob")
 
-  # Each physical border line is emitted exactly once (shared interior borders
-  # are canonicalised to the owner cell). For a 4-row x 3-col table:
-  #   horizontal lines: (4+1) * 3 = 15
-  #   vertical lines:    4 * (3+1) = 16
-  #   total: 31 unique border requests
+  # Each cell emits all 4 sides directly (no deduplication of shared interior
+  # borders). For a 4-row x 3-col table: 4 * 3 * 4 = 48 border requests.
+  # Interior lines are written twice but are idempotent (transparent borders).
   expect_false(is.null(reqs$borders))
-  expect_equal(length(reqs$borders$requests), 31L)
+  expect_equal(length(reqs$borders$requests), 48L)
 })
 
 # -- r2slides_table S7 validation --
