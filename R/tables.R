@@ -404,6 +404,56 @@ apply_spans_to_cells <- function(cells, span_specs) {
 # Apply border information to a list of table_cell objects in-place.
 # border_specs: list output of ft_extract_section_borders (both sections combined).
 #' @noRd
+# For each merged origin cell, copy trailing-edge borders from the last
+# consumed cell in the merge so that the visible outer edge of the merged
+# region is preserved after consumed cells are skipped in border requests.
+#
+#   row_span > 1  ->  origin@border_bottom  <-  cell[row + row_span - 1, col]@border_bottom
+#   col_span > 1  ->  origin@border_right   <-  cell[row, col + col_span - 1]@border_right
+#
+# Must be called AFTER apply_borders_to_cells and apply_spans_to_cells.
+#' @noRd
+propagate_merge_borders <- function(cells) {
+  lookup <- stats::setNames(
+    seq_along(cells),
+    vapply(cells, \(c) paste0(c@row_index, ",", c@col_index), character(1))
+  )
+
+  purrr::map(cells, \(cell) {
+    if (isTRUE(cell@consumed) || is.null(cell@style)) {
+      return(cell)
+    }
+    cs <- cell@style
+    row_span <- cs@row_span %||% 1L
+    col_span <- cs@col_span %||% 1L
+
+    if (row_span > 1L) {
+      tail_key <- paste0(cell@row_index + row_span - 1L, ",", cell@col_index)
+      tail_idx <- lookup[[tail_key]]
+      if (!is.null(tail_idx)) {
+        tail_cell <- cells[[tail_idx]]
+        if (!is.null(tail_cell@style)) {
+          cs@border_bottom <- tail_cell@style@border_bottom
+        }
+      }
+    }
+
+    if (col_span > 1L) {
+      tail_key <- paste0(cell@row_index, ",", cell@col_index + col_span - 1L)
+      tail_idx <- lookup[[tail_key]]
+      if (!is.null(tail_idx)) {
+        tail_cell <- cells[[tail_idx]]
+        if (!is.null(tail_cell@style)) {
+          cs@border_right <- tail_cell@style@border_right
+        }
+      }
+    }
+
+    cell@style <- cs
+    cell
+  })
+}
+
 apply_borders_to_cells <- function(cells, border_specs) {
   if (length(border_specs) == 0L) {
     return(cells)
@@ -451,7 +501,9 @@ build_border_request <- function(
   position,
   color,
   width,
-  dash_style
+  dash_style,
+  row_span = 1L,
+  col_span = 1L
 ) {
   props <- list()
   fields <- character()
@@ -480,8 +532,8 @@ build_border_request <- function(
       objectId = table_id,
       tableRange = list(
         location = list(rowIndex = row_index, columnIndex = col_index),
-        rowSpan = 1L,
-        columnSpan = 1L
+        rowSpan = as.integer(row_span),
+        columnSpan = as.integer(col_span)
       ),
       borderPosition = position,
       tableBorderProperties = props,
@@ -616,6 +668,7 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
     all_cells,
     c(header_borders, body_borders)
   )
+  all_cells <- propagate_merge_borders(all_cells)
 
   r2slides_table(
     cells = all_cells,
@@ -850,7 +903,16 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
     if (is.null(cell@style)) {
       return(list())
     }
+    # Consumed cells are covered by a merge — their border slots reflect the
+    # raw flextable data for a cell that no longer exists as an independent
+    # unit. Emitting requests for them would incorrectly overwrite the shared
+    # edge of the merged region, so skip them entirely.
+    if (isTRUE(cell@consumed)) {
+      return(list())
+    }
     cs <- cell@style
+    row_span <- cs@row_span %||% 1L
+    col_span <- cs@col_span %||% 1L
     sides <- list(
       list(border = cs@border_top, pos = "TOP"),
       list(border = cs@border_bottom, pos = "BOTTOM"),
@@ -868,7 +930,9 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
         position = s$pos,
         color = s$border$color,
         width = s$border$width,
-        dash_style = s$border$dash_style
+        dash_style = s$border$dash_style,
+        row_span = row_span,
+        col_span = col_span
       )
     }) |>
       purrr::compact()

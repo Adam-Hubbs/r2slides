@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{in_to_emu}
 \alias{in_to_emu}
-\title{Convert inches to EMU's}
+\title{Convert a hex color code to RGB values
+Convert inches to EMU's}
 \usage{
 in_to_emu(x)
 }
