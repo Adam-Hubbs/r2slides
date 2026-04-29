@@ -60,7 +60,7 @@ slide <- S7::new_class(
   ),
 
   validator = function(self) {
-    if (!self@slide_id %in% unlist(self@presentation$get_slide_ids())) {
+    if (!self@slide_id %in% unlist(self@presentation$get_slide_ids_cache())) {
       glue::glue(
         "Slide '{self@slide_id}' does not exist in presentation '{self@presentation$title}'."
       )
@@ -217,8 +217,6 @@ on_slide_with_notes <- function(
     cli::cli_abort("{.arg text} must be a single non-NA string")
   }
 
-  # Single refresh up front; all subsequent calls skip their own refresh
-  ps$refresh()
 
   slide_ids <- ps$get_slide_ids_cache()
 

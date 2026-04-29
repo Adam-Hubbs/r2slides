@@ -130,23 +130,7 @@ presentation <- R6::R6Class(
     #'
     #' @return Self, invisibly (for method chaining)
     refresh = function() {
-      if (is.null(self$presentation_id)) {
-        cli::cli_abort("Cannot refresh: presentation_id is not set")
-      }
-
-      # Fetch current state from API
-      rsp <- query(
-        endpoint = "slides.presentations.get",
-        params = list(presentationId = self$presentation_id),
-        base = "slides"
-      )
-
-      # Update all fields
-      private$populate_from_response(rsp)
-
-      cli::cli_alert_success("Refreshed presentation {.val {self$title}}")
-
-      invisible(self)
+      private$refresh_internal(force = TRUE)
     },
 
     #' @description
@@ -219,7 +203,7 @@ presentation <- R6::R6Class(
     #' @param index Index of the slide to return (1-based)
     #' @return A slide object
     get_slide_by_index = function(index) {
-      self$refresh()
+      private$refresh_internal()
 
       if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
         cli::cli_alert_warning(
@@ -261,7 +245,7 @@ presentation <- R6::R6Class(
     #' @param slide_id ID of the slide to return
     #' @return A slide object
     get_slide_by_id = function(slide_id) {
-      self$refresh()
+      private$refresh_internal()
 
       if (is.null(private$slide_ids) || length(private$slide_ids) == 0) {
         cli::cli_alert_warning(
@@ -300,7 +284,7 @@ presentation <- R6::R6Class(
     #' @param slide A slide object
     #' @return Index of the slide
     get_slide_index = function(slide) {
-      self$refresh()
+      private$refresh_internal()
 
       if (!is.slide(slide)) {
         cli::cli_abort("{.arg slide} must be a slide object")
@@ -320,8 +304,13 @@ presentation <- R6::R6Class(
     #'
     #' @return Character vector of slide object IDs
     get_slide_ids = function() {
-      self$refresh()
+      private$refresh_internal()
 
+      private$slide_ids %||% character(0)
+    },
+
+    get_slide_ids_cache = function() {
+      private$refresh_internal()
       private$slide_ids %||% character(0)
     },
 
@@ -331,38 +320,12 @@ presentation <- R6::R6Class(
     #'
     #' @param slide_id ID of the slide
     #' @return A single character string (empty string if no notes)
-    get_slide_ids_cache = function() {
-      private$slide_ids %||% character(0)
-    },
-
     get_slide_notes_text = function(slide_id) {
-      raw_slide <- purrr::detect(private$slides, ~ .x$objectId == slide_id)
-
-      if (is.null(raw_slide)) {
+      private$refresh_internal()
+      if (!slide_id %in% names(private$notes_index)) {
         cli::cli_abort("Slide {.val {slide_id}} not found in presentation")
       }
-
-      notes_id <- raw_slide$slideProperties$notesPage$notesProperties$speakerNotesObjectId
-
-      if (is.null(notes_id)) {
-        return("")
-      }
-
-      page_elements <- raw_slide$slideProperties$notesPage$pageElements
-      notes_elem <- purrr::detect(page_elements, ~ .x$objectId == notes_id)
-
-      if (is.null(notes_elem)) {
-        return("")
-      }
-
-      text_elems <- notes_elem$shape$text$textElements
-
-      if (is.null(text_elems)) {
-        return("")
-      }
-
-      runs <- purrr::map_chr(text_elems, ~ .x$textRun$content %||% "")
-      trimws(paste(runs, collapse = ""), which = "right")
+      private$notes_index[[slide_id]]
     },
 
     #' @description
@@ -558,6 +521,40 @@ presentation <- R6::R6Class(
     # Slide ID's
     slide_ids = NULL,
 
+    # Named character vector: slide_id -> notes text (built at refresh time)
+    notes_index = NULL,
+
+    # Internal refresh: respects 15-second TTL; use force = TRUE only from public refresh()
+    refresh_internal = function(force = FALSE) {
+      if (
+        !force &&
+          !is.null(self$last_refreshed) &&
+          as.numeric(difftime(
+            Sys.time(),
+            self$last_refreshed,
+            units = "secs"
+          )) <
+            15
+      ) {
+        return(invisible(self))
+      }
+
+      if (is.null(self$presentation_id)) {
+        cli::cli_abort("Cannot refresh: presentation_id is not set")
+      }
+
+      rsp <- query(
+        endpoint = "slides.presentations.get",
+        params = list(presentationId = self$presentation_id),
+        base = "slides"
+      )
+
+      private$populate_from_response(rsp)
+      cli::cli_alert_success("Refreshed presentation {.val {self$title}}")
+
+      invisible(self)
+    },
+
     # Create a new presentation via API
     create_new = function(title) {
       # Validate inputs
@@ -634,6 +631,26 @@ presentation <- R6::R6Class(
 
       private$slides <- rsp$slides
       private$slide_ids <- purrr::map(private$slides, ~ .x$objectId)
+
+      ids <- purrr::map_chr(private$slides, ~ .x$objectId)
+      notes <- purrr::map_chr(private$slides, function(s) {
+        notes_id <- s$slideProperties$notesPage$notesProperties$speakerNotesObjectId
+        if (is.null(notes_id)) {
+          return("")
+        }
+        page_elements <- s$slideProperties$notesPage$pageElements
+        notes_elem <- purrr::detect(page_elements, ~ .x$objectId == notes_id)
+        if (is.null(notes_elem)) {
+          return("")
+        }
+        text_elems <- notes_elem$shape$text$textElements
+        if (is.null(text_elems)) {
+          return("")
+        }
+        runs <- purrr::map_chr(text_elems, ~ .x$textRun$content %||% "")
+        trimws(paste(runs, collapse = ""), which = "right")
+      })
+      private$notes_index <- rlang::set_names(notes, ids)
     },
 
     # Set finalizer
