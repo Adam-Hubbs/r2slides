@@ -7,9 +7,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15061'
+      content-length: '14956'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:56:51 GMT
+      date: Fri, 01 May 2026 03:21:43 GMT
       server: ESF
       vary:
       - Origin
@@ -3085,130 +3085,6 @@ http_interactions:
                   },
                   "notesProperties": {
                     "speakerNotesObjectId": "g3db51d43376_0_34"
-                  }
-                }
-              },
-              "pageProperties": {
-                "pageBackgroundFill": {
-                  "propertyState": "INHERIT"
-                }
-              }
-            },
-            {
-              "objectId": "SLIDES_API570982246_0",
-              "slideProperties": {
-                "layoutObjectId": "p12",
-                "masterObjectId": "simple-light-2",
-                "notesPage": {
-                  "objectId": "SLIDES_API570982246_0:notes",
-                  "pageType": "NOTES",
-                  "pageElements": [
-                    {
-                      "objectId": "SLIDES_API570982246_1",
-                      "size": {
-                        "width": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        },
-                        "height": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        }
-                      },
-                      "transform": {
-                        "scaleX": 2.032,
-                        "scaleY": 1.143,
-                        "translateX": 381300,
-                        "translateY": 685800,
-                        "unit": "EMU"
-                      },
-                      "shape": {
-                        "shapeProperties": {
-                          "outline": {
-                            "propertyState": "INHERIT"
-                          }
-                        },
-                        "placeholder": {
-                          "type": "SLIDE_IMAGE",
-                          "parentObjectId": "n:slide"
-                        }
-                      }
-                    },
-                    {
-                      "objectId": "SLIDES_API570982246_2",
-                      "size": {
-                        "width": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        },
-                        "height": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        }
-                      },
-                      "transform": {
-                        "scaleX": 1.8288,
-                        "scaleY": 1.3716,
-                        "translateX": 685800,
-                        "translateY": 4343400,
-                        "unit": "EMU"
-                      },
-                      "shape": {
-                        "shapeType": "TEXT_BOX",
-                        "text": {
-                          "textElements": [
-                            {
-                              "endIndex": 23,
-                              "paragraphMarker": {
-                                "style": {
-                                  "indentStart": {
-                                    "unit": "PT"
-                                  },
-                                  "indentFirstLine": {
-                                    "unit": "PT"
-                                  },
-                                  "direction": "LEFT_TO_RIGHT"
-                                }
-                              }
-                            },
-                            {
-                              "endIndex": 23,
-                              "textRun": {
-                                "content": "r2slides vcr test note\n",
-                                "style": {}
-                              }
-                            }
-                          ]
-                        },
-                        "shapeProperties": {
-                          "shapeBackgroundFill": {
-                            "propertyState": "INHERIT"
-                          },
-                          "outline": {
-                            "propertyState": "INHERIT"
-                          },
-                          "shadow": {
-                            "propertyState": "INHERIT"
-                          },
-                          "autofit": {
-                            "fontScale": 1
-                          }
-                        },
-                        "placeholder": {
-                          "type": "BODY",
-                          "index": 1,
-                          "parentObjectId": "n:text"
-                        }
-                      }
-                    }
-                  ],
-                  "pageProperties": {
-                    "pageBackgroundFill": {
-                      "propertyState": "INHERIT"
-                    }
-                  },
-                  "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API570982246_2"
                   }
                 }
               },
@@ -12399,7 +12275,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "RnoJSwNrmlXmsw",
+          "revisionId": "WBDcOWc80X4gyA",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -13468,7 +13344,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-05-01 02:56:51
+  recorded_at: 2026-05-01 03:21:43
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -13477,9 +13353,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15061'
+      content-length: '14956'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:56:51 GMT
+      date: Fri, 01 May 2026 03:21:43 GMT
       server: ESF
       vary:
       - Origin
@@ -16555,130 +16431,6 @@ http_interactions:
                   },
                   "notesProperties": {
                     "speakerNotesObjectId": "g3db51d43376_0_34"
-                  }
-                }
-              },
-              "pageProperties": {
-                "pageBackgroundFill": {
-                  "propertyState": "INHERIT"
-                }
-              }
-            },
-            {
-              "objectId": "SLIDES_API570982246_0",
-              "slideProperties": {
-                "layoutObjectId": "p12",
-                "masterObjectId": "simple-light-2",
-                "notesPage": {
-                  "objectId": "SLIDES_API570982246_0:notes",
-                  "pageType": "NOTES",
-                  "pageElements": [
-                    {
-                      "objectId": "SLIDES_API570982246_1",
-                      "size": {
-                        "width": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        },
-                        "height": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        }
-                      },
-                      "transform": {
-                        "scaleX": 2.032,
-                        "scaleY": 1.143,
-                        "translateX": 381300,
-                        "translateY": 685800,
-                        "unit": "EMU"
-                      },
-                      "shape": {
-                        "shapeProperties": {
-                          "outline": {
-                            "propertyState": "INHERIT"
-                          }
-                        },
-                        "placeholder": {
-                          "type": "SLIDE_IMAGE",
-                          "parentObjectId": "n:slide"
-                        }
-                      }
-                    },
-                    {
-                      "objectId": "SLIDES_API570982246_2",
-                      "size": {
-                        "width": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        },
-                        "height": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        }
-                      },
-                      "transform": {
-                        "scaleX": 1.8288,
-                        "scaleY": 1.3716,
-                        "translateX": 685800,
-                        "translateY": 4343400,
-                        "unit": "EMU"
-                      },
-                      "shape": {
-                        "shapeType": "TEXT_BOX",
-                        "text": {
-                          "textElements": [
-                            {
-                              "endIndex": 23,
-                              "paragraphMarker": {
-                                "style": {
-                                  "indentStart": {
-                                    "unit": "PT"
-                                  },
-                                  "indentFirstLine": {
-                                    "unit": "PT"
-                                  },
-                                  "direction": "LEFT_TO_RIGHT"
-                                }
-                              }
-                            },
-                            {
-                              "endIndex": 23,
-                              "textRun": {
-                                "content": "r2slides vcr test note\n",
-                                "style": {}
-                              }
-                            }
-                          ]
-                        },
-                        "shapeProperties": {
-                          "shapeBackgroundFill": {
-                            "propertyState": "INHERIT"
-                          },
-                          "outline": {
-                            "propertyState": "INHERIT"
-                          },
-                          "shadow": {
-                            "propertyState": "INHERIT"
-                          },
-                          "autofit": {
-                            "fontScale": 1
-                          }
-                        },
-                        "placeholder": {
-                          "type": "BODY",
-                          "index": 1,
-                          "parentObjectId": "n:text"
-                        }
-                      }
-                    }
-                  ],
-                  "pageProperties": {
-                    "pageBackgroundFill": {
-                      "propertyState": "INHERIT"
-                    }
-                  },
-                  "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API570982246_2"
                   }
                 }
               },
@@ -25869,7 +25621,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "RnoJSwNrmlXmsw",
+          "revisionId": "WBDcOWc80X4gyA",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -26938,20 +26690,18 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-05-01 02:56:51
+  recorded_at: 2026-05-01 03:21:43
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
-    body:
-      string: '{"requests":[{"createSlide":{"slideLayoutReference":{"predefinedLayout":"BLANK"}}}]}'
   response:
     status: 200
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '208'
+      content-length: '210'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:56:52 GMT
+      date: Fri, 01 May 2026 03:21:43 GMT
       server: ESF
       vary:
       - Origin
@@ -26968,15 +26718,15 @@ http_interactions:
           "replies": [
             {
               "createSlide": {
-                "objectId": "SLIDES_API1893013021_0"
+                "objectId": "SLIDES_API1790565926_0"
               }
             }
           ],
           "writeControl": {
-            "requiredRevisionId": "yYJo_0Pel4syXQ"
+            "requiredRevisionId": "a09Tvmdxwf82CA"
           }
         }
-  recorded_at: 2026-05-01 02:56:52
+  recorded_at: 2026-05-01 03:21:43
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -26985,9 +26735,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15115'
+      content-length: '15021'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:56:52 GMT
+      date: Fri, 01 May 2026 03:21:43 GMT
       server: ESF
       vary:
       - Origin
@@ -30073,16 +29823,16 @@ http_interactions:
               }
             },
             {
-              "objectId": "SLIDES_API570982246_0",
+              "objectId": "SLIDES_API1790565926_0",
               "slideProperties": {
                 "layoutObjectId": "p12",
                 "masterObjectId": "simple-light-2",
                 "notesPage": {
-                  "objectId": "SLIDES_API570982246_0:notes",
+                  "objectId": "SLIDES_API1790565926_0:notes",
                   "pageType": "NOTES",
                   "pageElements": [
                     {
-                      "objectId": "SLIDES_API570982246_1",
+                      "objectId": "SLIDES_API1790565926_1",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -30113,131 +29863,7 @@ http_interactions:
                       }
                     },
                     {
-                      "objectId": "SLIDES_API570982246_2",
-                      "size": {
-                        "width": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        },
-                        "height": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        }
-                      },
-                      "transform": {
-                        "scaleX": 1.8288,
-                        "scaleY": 1.3716,
-                        "translateX": 685800,
-                        "translateY": 4343400,
-                        "unit": "EMU"
-                      },
-                      "shape": {
-                        "shapeType": "TEXT_BOX",
-                        "text": {
-                          "textElements": [
-                            {
-                              "endIndex": 23,
-                              "paragraphMarker": {
-                                "style": {
-                                  "indentStart": {
-                                    "unit": "PT"
-                                  },
-                                  "indentFirstLine": {
-                                    "unit": "PT"
-                                  },
-                                  "direction": "LEFT_TO_RIGHT"
-                                }
-                              }
-                            },
-                            {
-                              "endIndex": 23,
-                              "textRun": {
-                                "content": "r2slides vcr test note\n",
-                                "style": {}
-                              }
-                            }
-                          ]
-                        },
-                        "shapeProperties": {
-                          "shapeBackgroundFill": {
-                            "propertyState": "INHERIT"
-                          },
-                          "outline": {
-                            "propertyState": "INHERIT"
-                          },
-                          "shadow": {
-                            "propertyState": "INHERIT"
-                          },
-                          "autofit": {
-                            "fontScale": 1
-                          }
-                        },
-                        "placeholder": {
-                          "type": "BODY",
-                          "index": 1,
-                          "parentObjectId": "n:text"
-                        }
-                      }
-                    }
-                  ],
-                  "pageProperties": {
-                    "pageBackgroundFill": {
-                      "propertyState": "INHERIT"
-                    }
-                  },
-                  "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API570982246_2"
-                  }
-                }
-              },
-              "pageProperties": {
-                "pageBackgroundFill": {
-                  "propertyState": "INHERIT"
-                }
-              }
-            },
-            {
-              "objectId": "SLIDES_API1893013021_0",
-              "slideProperties": {
-                "layoutObjectId": "p12",
-                "masterObjectId": "simple-light-2",
-                "notesPage": {
-                  "objectId": "SLIDES_API1893013021_0:notes",
-                  "pageType": "NOTES",
-                  "pageElements": [
-                    {
-                      "objectId": "SLIDES_API1893013021_1",
-                      "size": {
-                        "width": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        },
-                        "height": {
-                          "magnitude": 3000000,
-                          "unit": "EMU"
-                        }
-                      },
-                      "transform": {
-                        "scaleX": 2.032,
-                        "scaleY": 1.143,
-                        "translateX": 381300,
-                        "translateY": 685800,
-                        "unit": "EMU"
-                      },
-                      "shape": {
-                        "shapeProperties": {
-                          "outline": {
-                            "propertyState": "INHERIT"
-                          }
-                        },
-                        "placeholder": {
-                          "type": "SLIDE_IMAGE",
-                          "parentObjectId": "n:slide"
-                        }
-                      }
-                    },
-                    {
-                      "objectId": "SLIDES_API1893013021_2",
+                      "objectId": "SLIDES_API1790565926_2",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -30285,7 +29911,7 @@ http_interactions:
                     }
                   },
                   "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API1893013021_2"
+                    "speakerNotesObjectId": "SLIDES_API1790565926_2"
                   }
                 }
               },
@@ -39476,7 +39102,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "yYJo_0Pel4syXQ",
+          "revisionId": "a09Tvmdxwf82CA",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -40545,12 +40171,10 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-05-01 02:56:52
+  recorded_at: 2026-05-01 03:21:43
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
-    body:
-      string: '{"requests":[{"deleteObject":{"objectId":"SLIDES_API1893013021_0"}}]}'
   response:
     status: 200
     headers:
@@ -40558,7 +40182,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '164'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:56:52 GMT
+      date: Fri, 01 May 2026 03:21:44 GMT
       server: ESF
       vary:
       - Origin
@@ -40576,8 +40200,8 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "h37SU9vVEyJ7dg"
+            "requiredRevisionId": "Djm5J6m3WurP-g"
           }
         }
-  recorded_at: 2026-05-01 02:56:52
+  recorded_at: 2026-05-01 03:21:44
 recorded_with: VCR-vcr/2.1.0

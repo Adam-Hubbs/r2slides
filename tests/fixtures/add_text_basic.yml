@@ -7,9 +7,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '14957'
+      content-length: '14955'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:59:58 GMT
+      date: Fri, 01 May 2026 03:21:39 GMT
       server: ESF
       vary:
       - Origin
@@ -12275,7 +12275,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "-7l6XNuSJYPjRw",
+          "revisionId": "sUvDNrqDTVpOMg",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -13344,7 +13344,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-05-01 02:59:58
+  recorded_at: 2026-05-01 03:21:39
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -13353,9 +13353,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '14957'
+      content-length: '14955'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:59:58 GMT
+      date: Fri, 01 May 2026 03:21:39 GMT
       server: ESF
       vary:
       - Origin
@@ -25621,7 +25621,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "-7l6XNuSJYPjRw",
+          "revisionId": "sUvDNrqDTVpOMg",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -26690,20 +26690,18 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-05-01 02:59:58
+  recorded_at: 2026-05-01 03:21:39
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
-    body:
-      string: '{"requests":[{"createSlide":{"slideLayoutReference":{"predefinedLayout":"BLANK"}}}]}'
   response:
     status: 200
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '210'
+      content-length: '208'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:59:58 GMT
+      date: Fri, 01 May 2026 03:21:40 GMT
       server: ESF
       vary:
       - Origin
@@ -26720,15 +26718,15 @@ http_interactions:
           "replies": [
             {
               "createSlide": {
-                "objectId": "SLIDES_API1530626793_0"
+                "objectId": "SLIDES_API1559919959_0"
               }
             }
           ],
           "writeControl": {
-            "requiredRevisionId": "nU6gaW82LisYYw"
+            "requiredRevisionId": "diFr3OdHQSpJjA"
           }
         }
-  recorded_at: 2026-05-01 02:59:58
+  recorded_at: 2026-05-01 03:21:40
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -26737,9 +26735,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15020'
+      content-length: '15021'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:59:58 GMT
+      date: Fri, 01 May 2026 03:21:40 GMT
       server: ESF
       vary:
       - Origin
@@ -29825,16 +29823,16 @@ http_interactions:
               }
             },
             {
-              "objectId": "SLIDES_API1530626793_0",
+              "objectId": "SLIDES_API1559919959_0",
               "slideProperties": {
                 "layoutObjectId": "p12",
                 "masterObjectId": "simple-light-2",
                 "notesPage": {
-                  "objectId": "SLIDES_API1530626793_0:notes",
+                  "objectId": "SLIDES_API1559919959_0:notes",
                   "pageType": "NOTES",
                   "pageElements": [
                     {
-                      "objectId": "SLIDES_API1530626793_1",
+                      "objectId": "SLIDES_API1559919959_1",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -29865,7 +29863,7 @@ http_interactions:
                       }
                     },
                     {
-                      "objectId": "SLIDES_API1530626793_2",
+                      "objectId": "SLIDES_API1559919959_2",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -29913,7 +29911,7 @@ http_interactions:
                     }
                   },
                   "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API1530626793_2"
+                    "speakerNotesObjectId": "SLIDES_API1559919959_2"
                   }
                 }
               },
@@ -39104,7 +39102,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "nU6gaW82LisYYw",
+          "revisionId": "diFr3OdHQSpJjA",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -40173,20 +40171,18 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-05-01 02:59:58
+  recorded_at: 2026-05-01 03:21:40
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
-    body:
-      string: '{"requests":[{"createShape":{"objectId":"text_20260430205958_8740","shapeType":"TEXT_BOX","elementProperties":{"pageObjectId":"SLIDES_API1530626793_0","size":{"width":{"magnitude":2926080,"unit":"EMU"},"height":{"magnitude":1645920,"unit":"EMU"}},"transform":{"scaleX":1,"scaleY":1,"shearX":-0,"shearY":0,"translateX":109728,"translateY":1353312,"unit":"EMU"}}}}]}'
   response:
     status: 200
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '211'
+      content-length: '208'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:59:59 GMT
+      date: Fri, 01 May 2026 03:21:40 GMT
       server: ESF
       vary:
       - Origin
@@ -40203,21 +40199,18 @@ http_interactions:
           "replies": [
             {
               "createShape": {
-                "objectId": "text_20260430205958_8740"
+                "objectId": "text_20260430212140_5173"
               }
             }
           ],
           "writeControl": {
-            "requiredRevisionId": "nnhBkACDtTVbCw"
+            "requiredRevisionId": "wpcCdZyIeueiUw"
           }
         }
-  recorded_at: 2026-05-01 02:59:59
+  recorded_at: 2026-05-01 03:21:40
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
-    body:
-      string: '{"requests":[{"insertText":{"objectId":"text_20260430205958_8740","text":"Hello
-        World"}}]}'
   response:
     status: 200
     headers:
@@ -40225,7 +40218,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '164'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:59:59 GMT
+      date: Fri, 01 May 2026 03:21:40 GMT
       server: ESF
       vary:
       - Origin
@@ -40243,23 +40236,21 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "AF_jeUfkvef3cQ"
+            "requiredRevisionId": "PNGxv-7nGLoaXA"
           }
         }
-  recorded_at: 2026-05-01 02:59:59
+  recorded_at: 2026-05-01 03:21:40
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
-    body:
-      string: '{"requests":[{"deleteObject":{"objectId":"SLIDES_API1530626793_0"}}]}'
   response:
     status: 200
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '162'
+      content-length: '164'
       content-type: application/json; charset=UTF-8
-      date: Fri, 01 May 2026 02:59:59 GMT
+      date: Fri, 01 May 2026 03:21:41 GMT
       server: ESF
       vary:
       - Origin
@@ -40277,8 +40268,8 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "hCPfYjjLnOiBmQ"
+            "requiredRevisionId": "3X6sU5NVgGMdfw"
           }
         }
-  recorded_at: 2026-05-01 02:59:59
+  recorded_at: 2026-05-01 03:21:41
 recorded_with: VCR-vcr/2.1.0

@@ -22,7 +22,8 @@ if (!inherits(r2slides:::.auth$cred, "Token2.0")) {
         "https://www.googleapis.com/auth/presentations",
         "https://www.googleapis.com/auth/drive"
       ),
-      client = r2slides:::.auth$client %||% r2slides:::r2slides_default_client(),
+      client = r2slides:::.auth$client %||%
+        r2slides:::r2slides_default_client(),
       package = "r2slides"
     ),
     error = function(e) NULL
