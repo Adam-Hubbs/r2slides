@@ -210,13 +210,12 @@ on_slide_with_notes <- function(
     ps <- get_active_presentation()
   }
 
-  match       <- rlang::arg_match(match)
+  match <- rlang::arg_match(match)
   on_multiple <- rlang::arg_match(on_multiple)
 
   if (!is.character(text) || length(text) != 1 || is.na(text)) {
     cli::cli_abort("{.arg text} must be a single non-NA string")
   }
-
 
   slide_ids <- ps$get_slide_ids_cache()
 
@@ -240,11 +239,14 @@ on_slide_with_notes <- function(
     )
   }
 
-  matched_ids     <- slide_ids[matched]
+  matched_ids <- slide_ids[matched]
   matched_indices <- which(matched)
 
   # Construct slide objects directly to avoid a refresh() per matched slide
-  matched_slides <- purrr::map(matched_ids, ~ slide(presentation = ps, slide_id = .x))
+  matched_slides <- purrr::map(
+    matched_ids,
+    ~ slide(presentation = ps, slide_id = .x)
+  )
 
   if (on_multiple == "error") {
     if (n_matched > 1) {

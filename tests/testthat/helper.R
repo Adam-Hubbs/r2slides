@@ -121,6 +121,33 @@ test_table_position <- function() {
   slide_position(top = 1, left = 1, width = 8, height = 5)
 }
 
+# ── vcr / API test helpers ────────────────────────────────────────────────────
+
+# Passed as `token` in tests that exercise query() error paths — those tests
+# abort before any HTTP call, so the token value is irrelevant.
+test_token <- NULL
+
+# IDs for the dedicated test Google Slides / Sheets documents.
+TEST_PRESENTATION_ID <- Sys.getenv(
+  "R2SLIDES_TEST_PRESENTATION_ID",
+  "1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY"
+)
+TEST_SPREADSHEET_ID <- Sys.getenv("R2SLIDES_TEST_SPREADSHEET_ID", "")
+
+# Sends a deleteObject batchUpdate for a slide. Used for state cleanup inside
+# vcr cassette blocks so every test that creates a slide also removes it.
+delete_slide_raw <- function(ps, slide_id) {
+  query(
+    endpoint = "slides.presentations.batchUpdate",
+    params = list(presentationId = ps$presentation_id),
+    body = list(
+      requests = list(list(deleteObject = list(objectId = slide_id)))
+    ),
+    base = "slides"
+  )
+  invisible(NULL)
+}
+
 # Pull the first request of a given type out of a named request list
 first_req <- function(reqs, type) {
   found <- Filter(\(r) !is.null(r[[type]]), reqs)
