@@ -309,11 +309,6 @@ presentation <- R6::R6Class(
       private$slide_ids %||% character(0)
     },
 
-    get_slide_ids_cache = function() {
-      private$refresh_internal()
-      private$slide_ids %||% character(0)
-    },
-
     #' @description
     #' Get the speaker notes text for a slide.
     #' Does not refresh; caller is responsible for refreshing first.

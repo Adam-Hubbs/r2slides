@@ -1,3 +1,4 @@
+# jarl-ignore internal_function: Used for testing only
 test_that("register_presentation() opens by direct ID and populates fields", {
   vcr::use_cassette(
     "presentation_register_id",
@@ -88,7 +89,7 @@ test_that("presentation$get_url() returns a valid Google Slides URL containing t
   url <- ps$get_url()
   expect_type(url, "character")
   expect_true(startsWith(url, "https://docs.google.com/presentation/d/"))
-  expect_true(grepl(TEST_PRESENTATION_ID, url, fixed = TRUE))
+  expect_match(url, TEST_PRESENTATION_ID, fixed = TRUE)
 })
 
 test_that("presentation$is_active() is FALSE when set_active = FALSE", {
@@ -121,21 +122,21 @@ test_that("add_to_ledger() records elements; get_elements() filters correctly", 
   ps$add_to_ledger("e003", "slide_b", "text", "World")
 
   all_elems <- ps$get_elements()
-  expect_equal(length(all_elems), 3L)
+  expect_length(all_elems, 3L)
 
   # Filter by element_type
   text_elems <- ps$get_elements(element_type = "text")
-  expect_equal(length(text_elems), 2L)
+  expect_length(text_elems, 2L)
   text_ids <- purrr::map_chr(text_elems, "element_id")
   expect_in(text_ids, c("e001", "e003"))
 
   table_elems <- ps$get_elements(element_type = "table")
-  expect_equal(length(table_elems), 1L)
+  expect_length(table_elems, 1L)
   expect_equal(table_elems[[1]]$element_id, "e002")
 
   # Filter by element_text
   hello_elems <- ps$get_elements(element_text = "Hello")
-  expect_equal(length(hello_elems), 1L)
+  expect_length(hello_elems, 1L)
   expect_equal(hello_elems[[1]]$element_id, "e001")
 
   # Type with no matches returns NULL
@@ -143,7 +144,7 @@ test_that("add_to_ledger() records elements; get_elements() filters correctly", 
 
   # slide_id is also recorded
   slide_a_elems <- purrr::keep(all_elems, \(e) e$slide_id == "slide_a")
-  expect_equal(length(slide_a_elems), 2L)
+  expect_length(slide_a_elems, 2L)
 })
 
 test_that("presentation$get_slide_notes_text() returns notes for slides with and without speaker notes", {

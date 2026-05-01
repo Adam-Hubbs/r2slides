@@ -50,7 +50,7 @@ test_that("add_text_multi() adds multiple text elements to the same slide", {
 
   elements <- ps$get_elements(element_type = "text")
   expect_false(is.null(elements))
-  expect_equal(length(elements), 2L)
+  expect_length(elements, 2L)
   expect_true(all(purrr::map_chr(elements, "slide_id") == test_slide_id))
 })
 
@@ -136,7 +136,7 @@ test_that("add_text_multi() recycles scalar text across multiple positions", {
   )
 
   elements <- ps$get_elements(element_type = "text")
-  expect_equal(length(elements), 3L)
+  expect_length(elements, 3L)
   expect_true(all(purrr::map_chr(elements, "slide_id") == test_slide_id))
 })
 
@@ -171,5 +171,5 @@ test_that("add_text_multi() accepts relative transformation functions as positio
   )
 
   elements <- ps$get_elements(element_type = "text")
-  expect_equal(length(elements), 2L)
+  expect_length(elements, 2L)
 })

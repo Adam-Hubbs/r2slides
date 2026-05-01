@@ -275,7 +275,7 @@ test_that("on_slide_with_notes() returns all matches when on_multiple = 'return'
   )
 
   expect_type(result, "list")
-  expect_equal(length(result), 2L)
+  expect_length(result, 2L)
   expect_true(all(purrr::map_lgl(result, is.slide)))
   # Names are the slide IDs
   expect_in(
