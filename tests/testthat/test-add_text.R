@@ -10,7 +10,7 @@ test_that("add_text() adds a text element and records it in the ledger", {
       test_slide_id <- setdiff(unlist(ps$get_slide_ids()), before_ids)[[1]]
 
       slide_obj <- on_slide_id(test_slide_id, ps)
-      add_text(slide_obj, "Hello World", in_top_left(), verbose = FALSE)
+      add_text(slide_obj, "Hello World", in_top_left())
 
       delete_slide_raw(ps, test_slide_id)
     }
@@ -40,8 +40,7 @@ test_that("add_text_multi() adds multiple text elements to the same slide", {
       add_text_multi(
         slide_obj,
         text = c("First", "Second"),
-        position = list(in_top_left(), in_top_right()),
-        verbose = FALSE
+        position = list(in_top_left(), in_top_right())
       )
 
       delete_slide_raw(ps, test_slide_id)
@@ -106,8 +105,7 @@ test_that("add_text_multi() errors when argument lengths cannot be recycled", {
     add_text_multi(
       slide_obj = NULL,
       text = c("A", "B", "C"),
-      position = list(in_top_left(), in_top_right()),
-      verbose = FALSE
+      position = list(in_top_left(), in_top_right())
     )
   )
 })
@@ -127,8 +125,7 @@ test_that("add_text_multi() recycles scalar text across multiple positions", {
       add_text_multi(
         slide_obj,
         text = "Same Text",
-        position = list(in_top_left(), in_top_middle(), in_top_right()),
-        verbose = FALSE
+        position = list(in_top_left(), in_top_middle(), in_top_right())
       )
 
       delete_slide_raw(ps, test_slide_id)
@@ -162,8 +159,7 @@ test_that("add_text_multi() accepts relative transformation functions as positio
         slide_obj,
         text = c("A", "B"),
         position = shift_right,
-        position_base = list(in_top_left(), in_top_left()),
-        verbose = FALSE
+        position_base = list(in_top_left(), in_top_left())
       )
 
       delete_slide_raw(ps, test_slide_id)

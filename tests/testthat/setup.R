@@ -132,7 +132,10 @@ TEST_PRESENTATION_ID <- Sys.getenv(
   "R2SLIDES_TEST_PRESENTATION_ID",
   "1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY"
 )
-TEST_SPREADSHEET_ID <- Sys.getenv("R2SLIDES_TEST_SPREADSHEET_ID", "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI")
+TEST_SPREADSHEET_ID <- Sys.getenv(
+  "R2SLIDES_TEST_SPREADSHEET_ID",
+  "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI"
+)
 
 # Sends a deleteObject batchUpdate for a slide. Used for state cleanup inside
 # vcr cassette blocks so every test that creates a slide also removes it.

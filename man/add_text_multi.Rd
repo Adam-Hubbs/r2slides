@@ -12,7 +12,6 @@ add_text_multi(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  verbose = TRUE,
   token = NULL,
   pass_strategy = c("one", "all"),
   debug = FALSE,
@@ -34,8 +33,6 @@ add_text_multi(
 
 \item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of each
 created element. Default: `"front"`. Ignored for elements updated via `element_id`.}
-
-\item{verbose}{Optional. A logical indicating whether to print API responses. Default: TRUE.}
 
 \item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
 

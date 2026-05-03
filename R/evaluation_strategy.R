@@ -158,7 +158,6 @@ clear_request_buffer <- function() {
 #' @seealso [set_evaluation_strategy()], [view_request_buffer()]
 #' @export
 execute_requests <- function(batch_all = TRUE) {
-
   rlang::check_bool(batch_all)
 
   # Force eager during execution so buffered calls don't re-buffer themselves

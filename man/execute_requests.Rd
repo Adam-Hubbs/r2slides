@@ -14,13 +14,13 @@ executed individually. If `FALSE`, every buffered request is executed
 one at a time in the order it was added.}
 }
 \value{
-`NULL`, invisibly. The request buffer is updated in place to record
-  which requests were attempted and whether they succeeded.
+`NULL`, invisibly.
 }
 \description{
-Executes all pending requests in the buffer (those with
-`tried_to_execute == FALSE`). Typically called after accumulating requests
-with the `"lazy"` evaluation strategy (see [set_evaluation_strategy()]).
+Executes all pending requests in the buffer. Each request is removed from the
+buffer after it is attempted, whether or not it succeeds. Typically called
+after accumulating requests with the `"lazy"` evaluation strategy (see
+[set_evaluation_strategy()]).
 }
 \seealso{
 [set_evaluation_strategy()], [view_request_buffer()]

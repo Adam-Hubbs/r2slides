@@ -291,4 +291,3 @@ test_that("presentation$print() outputs all fields", {
   result <- print(ps)
   expect_identical(result, ps)
 })
-

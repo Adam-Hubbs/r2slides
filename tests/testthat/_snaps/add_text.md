@@ -30,7 +30,7 @@
 
     Code
       add_text_multi(slide_obj = NULL, text = c("A", "B", "C"), position = list(
-        in_top_left(), in_top_right()), verbose = FALSE)
+        in_top_left(), in_top_right()))
     Condition
       Error in `add_text_multi()`:
       ! Cannot recycle arguments to a common length.

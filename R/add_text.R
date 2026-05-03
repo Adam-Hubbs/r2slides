@@ -8,7 +8,6 @@
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
 #'   created element. Default: `"front"`. Ignored when updating an existing element
 #'   via `element_id`.
-#' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param debug Optional. A logical indicating whether to return the request objects, or evaluate them. Default: FALSE.
 #' @param ... Additional values available to style_rule objects.
@@ -23,7 +22,6 @@ add_text <- function(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  verbose = TRUE,
   token = NULL,
   debug = FALSE,
   ...
@@ -192,7 +190,6 @@ add_text <- function(
 #' @param text_style Optional. A vector of text_style or style_rule objects.
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of each
 #'   created element. Default: `"front"`. Ignored for elements updated via `element_id`.
-#' @param verbose Optional. A logical indicating whether to print API responses. Default: TRUE.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param pass_strategy Optional. A strategy to pass additional values to style_rule objects.
 #' @param debug Optional. A logical indicating whether to print debug messages. Default: FALSE.
@@ -209,7 +206,6 @@ add_text_multi <- function(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  verbose = TRUE,
   token = NULL,
   pass_strategy = c('one', 'all'),
   debug = FALSE,
@@ -328,7 +324,6 @@ add_text_multi <- function(
           element_id = element_id,
           text_style = text_style,
           order = order,
-          verbose = verbose,
           token = token,
           debug = debug,
           ... = !!!dots

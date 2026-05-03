@@ -8,11 +8,13 @@ view_request_buffer()
 }
 \value{
 A [tibble::tibble()] with columns:
+  - `id`: integer row identifier
   - `request`: a list of query arguments (endpoint, params, body, base, etc.)
   - `time_requested`: when the request was buffered
-  - `tried_to_execute`: whether execution has been attempted
-  - `execute_succeeded`: `NA` if not yet attempted, `TRUE`/`FALSE` otherwise
-  - `presentation`: the `presentationId` from the request params, or `NA`
+  - `resource_id`: the resource identifier from the request params
+    (`presentationId`, `spreadsheetId`, or `fileId`), or `NA`
+  - `user_call`: the calling environment captured at buffer time, used for
+    error attribution on execution
 }
 \description{
 Returns a tibble showing all buffered API requests. Each row represents one

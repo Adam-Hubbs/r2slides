@@ -10,8 +10,8 @@ clear_request_buffer()
 `NULL`, invisibly.
 }
 \description{
-Removes all entries from the internal request buffer, including any that have
-already been executed. Useful for resetting state between workflows.
+Removes all entries from the internal request buffer. Useful for resetting
+state between workflows.
 }
 \seealso{
 [view_request_buffer()], [execute_requests()]
