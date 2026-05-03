@@ -203,7 +203,8 @@ Character vector of slide object IDs
 \if{html}{\out{<a id="method-presentation-get_slide_notes_text"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_slide_notes_text}{}}}
 \subsection{Method \code{get_slide_notes_text()}}{
-Get the speaker notes text for a slide
+Get the speaker notes text for a slide.
+Does not refresh; caller is responsible for refreshing first.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_notes_text(slide_id)}\if{html}{\out{</div>}}
 }

@@ -30,6 +30,19 @@ query <- function(
   call = rlang::caller_env(),
   ...
 ) {
+  if (!isTRUE(debug) && identical(get_evaluation_strategy(), "lazy")) {
+    .get_request_buffer()$add(
+      endpoint = endpoint,
+      params = params,
+      body = body,
+      base = base,
+      max_tries = max_tries,
+      backoff_base = backoff_base,
+      presentation_id = params$presentationId %||% NA_character_
+    )
+    return(invisible(NULL))
+  }
+
   #Base
   base <- base %||% 'slides'
   #Check that this pattern also works for sheets

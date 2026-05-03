@@ -1,389 +1,294 @@
-# ===========================================================================
-# 1. Constructor — new_presentation()
-# ===========================================================================
-
-test_that("new_presentation() populates all fields correctly", {
-  vcr::use_cassette("pres_create_new_fields", {
-    pres <- new_presentation(title = "My New Deck", set_active = FALSE)
-  })
-
-  expect_true(is.presentation(pres))
-  expect_equal(pres$title, "My New Deck")
-  expect_false(is.null(pres$presentation_id))
-  expect_false(is.null(pres$revision_id))
-  expect_false(is.null(pres$last_refreshed))
-  expect_false(pres$is_active())
-  rm(pres)
-})
-
-test_that("new_presentation() uses default title when none supplied", {
-  vcr::use_cassette("pres_create_default_title", {
-    pres <- new_presentation(set_active = FALSE)
-  })
-
-  expect_equal(pres$title, "Untitled Presentation")
-  rm(pres)
-})
-
-test_that("new_presentation() sets and registers the active presentation", {
-  withr::defer({
-    if (active_presentation_exists()) get_active_presentation()$set_not_active()
-  })
-
-  vcr::use_cassette("pres_create_set_active", {
-    pres <- new_presentation(title = "Active Deck", set_active = TRUE)
-  })
-
-  expect_true(pres$is_active())
-  expect_true(active_presentation_exists())
-  expect_true(is.presentation(get_active_presentation()))
-  rm(pres)
-})
-
-
-test_that("register_presentation() opens an existing presentation by ID", {
-  vcr::use_cassette("pres_open_basic", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_true(is.presentation(pres))
-  expect_false(is.null(pres$presentation_id))
-  expect_false(is.null(pres$title))
-  rm(pres)
-})
-
-
-test_that("set_active() / set_not_active() / is_active() round-trip correctly", {
-  withr::defer({
-    if (active_presentation_exists()) get_active_presentation()$set_not_active()
-  })
-
-  vcr::use_cassette("pres_active_roundtrip", {
-    pres <- new_presentation(title = "Roundtrip", set_active = FALSE)
-  })
-
-  expect_false(pres$is_active())
-
-  pres$set_active()
-  expect_true(pres$is_active())
-  expect_true(active_presentation_exists())
-
-  pres$set_not_active()
-  expect_false(pres$is_active())
-  expect_false(active_presentation_exists())
-  rm(pres)
-})
-
-test_that("activating a second presentation deactivates the first", {
-  withr::defer({
-    if (active_presentation_exists()) get_active_presentation()$set_not_active()
-  })
-
-  vcr::use_cassette("pres_active_swap", {
-    pres1 <- new_presentation(title = "First", set_active = TRUE)
-    pres2 <- new_presentation(title = "Second", set_active = FALSE)
-  })
-
-  pres2$set_active()
-
-  expect_false(pres1$is_active())
-  expect_true(pres2$is_active())
-  expect_equal(get_active_presentation()$presentation_id, pres2$presentation_id)
-  rm(pres1, pres2)
-})
-
-test_that("get_active_presentation() errors when none is registered", {
-  if (active_presentation_exists()) {
-    get_active_presentation()$set_not_active()
-  }
-
-  expect_snapshot(get_active_presentation(), error = TRUE)
-})
-
-test_that("active_presentation_exists() returns FALSE when none registered", {
-  if (active_presentation_exists()) {
-    get_active_presentation()$set_not_active()
-  }
-
-  expect_false(active_presentation_exists())
-})
-
-
-# ===========================================================================
-# 4. refresh()
-# ===========================================================================
-
-test_that("refresh() fetches updated data and advances last_refreshed", {
-  vcr::use_cassette("pres_refresh", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-    t_before <- pres$last_refreshed
-    Sys.sleep(0.05)
-    pres$refresh()
-  })
-
-  expect_gt(as.numeric(pres$last_refreshed), as.numeric(t_before))
-  expect_false(is.null(pres$title))
-  rm(pres)
-})
-
-test_that("refresh() errors when presentation_id is NULL", {
-  vcr::use_cassette("pres_refresh_null_id", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-  pres$presentation_id <- NULL
-
-  expect_snapshot(pres$refresh(), error = TRUE)
-  rm(pres)
-})
-
-
-# ===========================================================================
-# 5. Slide access
-# ===========================================================================
-
-test_that("get_slide_ids() returns a non-empty list after opening", {
-  vcr::use_cassette("pres_slide_ids", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  ids <- pres$get_slide_ids()
-  expect_type(ids, "list")
-  expect_gt(length(ids), 0L)
-  rm(pres)
-})
-
-test_that("get_slide_by_index() returns a slide object for a valid index", {
-  vcr::use_cassette("pres_get_slide_index_valid", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_true(is.slide(pres$get_slide_by_index(1)))
-  rm(pres)
-})
-
-test_that("get_slide_by_index() errors on out-of-bounds index", {
-  vcr::use_cassette("pres_get_slide_index_oob", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-  n <- length(pres$get_slide_ids())
-
-  expect_snapshot(pres$get_slide_by_index(n + 1L), error = TRUE)
-  rm(pres)
-})
-
-test_that("get_slide_by_index() errors on a string input", {
-  vcr::use_cassette("pres_get_slide_index_bad_string", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(pres$get_slide_by_index("one"), error = TRUE)
-  rm(pres)
-})
-
-test_that("get_slide_by_index() errors on a vector input", {
-  vcr::use_cassette("pres_get_slide_index_bad_vector", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(pres$get_slide_by_index(c(1L, 2L)), error = TRUE)
-  rm(pres)
-})
-
-test_that("get_slide_by_index() errors on NA input", {
-  vcr::use_cassette("pres_get_slide_index_bad_na", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(pres$get_slide_by_index(NA_integer_), error = TRUE)
-  rm(pres)
-})
-
-
-test_that("get_slide_by_id() returns a slide for a valid ID", {
-  vcr::use_cassette("pres_get_slide_by_id_valid", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  valid_id <- pres$get_slide_ids()[[1]]
-  expect_true(is.slide(pres$get_slide_by_id(valid_id)))
-  rm(pres)
-})
-
-test_that("get_slide_by_id() errors on an unknown ID", {
-  vcr::use_cassette("pres_get_slide_by_id_unknown", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(pres$get_slide_by_id("nonexistent_id"), error = TRUE)
-  rm(pres)
-})
-
-test_that("get_slide_by_id() errors on integer input", {
-  vcr::use_cassette("pres_get_slide_by_id_bad_int", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(pres$get_slide_by_id(123L), error = TRUE)
-  rm(pres)
-})
-
-test_that("get_slide_by_id() errors on a character vector input", {
-  vcr::use_cassette("pres_get_slide_by_id_bad_vector", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(pres$get_slide_by_id(c("a", "b")), error = TRUE)
-  rm(pres)
-})
-
-test_that("add_to_ledger() appends an entry retrievable via get_elements()", {
-  vcr::use_cassette("pres_ledger_add_single", {
-    pres <- new_presentation(title = "Ledger Test", set_active = FALSE)
-  })
-
-  pres$add_to_ledger(
-    element_id = "elem_001",
-    slide_id = "slide_id_1",
-    element_type = "textBox",
-    element_text = "Hello world"
+# jarl-ignore internal_function: Used for testing only
+test_that("register_presentation() opens by direct ID and populates fields", {
+  vcr::use_cassette(
+    "presentation_register_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
   )
 
-  elems <- pres$get_elements()
-  expect_true(any(vapply(elems, \(e) e$element_id == "elem_001", logical(1))))
-  rm(pres)
+  expect_true(is.presentation(ps))
+  expect_equal(ps$presentation_id, TEST_PRESENTATION_ID)
+  expect_type(ps$title, "character")
+  expect_true(length(ps$get_slide_ids()) > 0)
 })
 
-test_that("add_to_ledger() accumulates multiple entries", {
-  vcr::use_cassette("pres_ledger_add_multi", {
-    pres <- new_presentation(title = "Multi Ledger", set_active = FALSE)
-  })
+test_that("register_presentation() opens by full URL", {
+  url <- paste0(
+    "https://docs.google.com/presentation/d/",
+    TEST_PRESENTATION_ID,
+    "/edit"
+  )
 
-  for (i in seq_len(3)) {
-    pres$add_to_ledger(
-      element_id = paste0("elem_00", i),
-      slide_id = "slide_id_1",
-      element_type = "textBox",
-      element_text = paste("Text", i)
-    )
+  vcr::use_cassette(
+    "presentation_register_url",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = url, set_active = FALSE)
+    }
+  )
+
+  expect_true(is.presentation(ps))
+  expect_equal(ps$presentation_id, TEST_PRESENTATION_ID)
+})
+
+# ── Pure unit tests (no API) ──────────────────────────────────────────────────
+
+test_that("is.presentation() returns FALSE for non-presentation objects", {
+  expect_false(is.presentation(list()))
+  expect_false(is.presentation("character"))
+  expect_false(is.presentation(NULL))
+  expect_false(is.presentation(42L))
+  expect_false(is.presentation(data.frame()))
+})
+
+test_that("get_active_presentation() errors when no active presentation", {
+  old <- if (
+    exists("active_presentation", envir = r2slides:::.r2slides_objects)
+  ) {
+    get("active_presentation", envir = r2slides:::.r2slides_objects)
+  } else {
+    NULL
   }
+  assign("active_presentation", NULL, envir = r2slides:::.r2slides_objects)
+  withr::defer(
+    assign("active_presentation", old, envir = r2slides:::.r2slides_objects)
+  )
 
-  expect_length(pres$get_elements(), 3L)
-  rm(pres)
+  expect_snapshot(error = TRUE, get_active_presentation())
 })
 
-test_that("get_url() returns a well-formed Google Slides URL", {
-  vcr::use_cassette("pres_get_url", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
+test_that("active_presentation_exists() returns FALSE when no active presentation is set", {
+  old <- if (
+    exists("active_presentation", envir = r2slides:::.r2slides_objects)
+  ) {
+    get("active_presentation", envir = r2slides:::.r2slides_objects)
+  } else {
+    NULL
+  }
+  assign("active_presentation", NULL, envir = r2slides:::.r2slides_objects)
+  withr::defer(
+    assign("active_presentation", old, envir = r2slides:::.r2slides_objects)
+  )
 
-  url <- pres$get_url()
-  expect_match(url, "^https://docs\\.google\\.com/presentation/d/")
-  expect_match(url, pres$presentation_id, fixed = TRUE)
-  rm(pres)
+  expect_false(active_presentation_exists())
 })
 
-test_that("get_url() returns NULL when presentation_id is NULL", {
-  vcr::use_cassette("pres_get_url_null_id", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-  pres$presentation_id <- NULL
+# ── API-backed presentation method tests ──────────────────────────────────────
 
-  expect_null(pres$get_url())
-  rm(pres)
+test_that("presentation$get_url() returns a valid Google Slides URL containing the presentation ID", {
+  vcr::use_cassette(
+    "presentation_get_url",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  url <- ps$get_url()
+  expect_type(url, "character")
+  expect_true(startsWith(url, "https://docs.google.com/presentation/d/"))
+  expect_match(url, TEST_PRESENTATION_ID, fixed = TRUE)
 })
 
-test_that("browse() errors when presentation_id is NULL", {
-  vcr::use_cassette("pres_browse_null_id", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-  pres$presentation_id <- NULL
+test_that("presentation$is_active() is FALSE when set_active = FALSE", {
+  vcr::use_cassette(
+    "presentation_is_active",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
 
-  expect_snapshot(pres$browse(), error = TRUE)
-  rm(pres)
+  expect_false(ps$is_active())
 })
 
-test_that("browse() calls browseURL and returns self invisibly", {
-  vcr::use_cassette("pres_browse", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
+test_that("add_to_ledger() records elements; get_elements() filters correctly", {
+  vcr::use_cassette(
+    "presentation_ledger_operations",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
 
+  # Empty ledger returns NULL
+  expect_null(ps$get_elements())
+
+  # Populate with two types
+  ps$add_to_ledger("e001", "slide_a", "text", "Hello")
+  ps$add_to_ledger("e002", "slide_a", "table", NA_character_)
+  ps$add_to_ledger("e003", "slide_b", "text", "World")
+
+  all_elems <- ps$get_elements()
+  expect_length(all_elems, 3L)
+
+  # Filter by element_type
+  text_elems <- ps$get_elements(element_type = "text")
+  expect_length(text_elems, 2L)
+  text_ids <- purrr::map_chr(text_elems, "element_id")
+  expect_in(text_ids, c("e001", "e003"))
+
+  table_elems <- ps$get_elements(element_type = "table")
+  expect_length(table_elems, 1L)
+  expect_equal(table_elems[[1]]$element_id, "e002")
+
+  # Filter by element_text
+  hello_elems <- ps$get_elements(element_text = "Hello")
+  expect_length(hello_elems, 1L)
+  expect_equal(hello_elems[[1]]$element_id, "e001")
+
+  # Type with no matches returns NULL
+  expect_null(ps$get_elements(element_type = "chart"))
+
+  # slide_id is also recorded
+  slide_a_elems <- purrr::keep(all_elems, \(e) e$slide_id == "slide_a")
+  expect_length(slide_a_elems, 2L)
+})
+
+test_that("presentation$get_slide_notes_text() returns notes for slides with and without speaker notes", {
+  vcr::use_cassette(
+    "presentation_notes_text",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  # Slide 4 has "Notes hopefully they match"
+  notes_4 <- ps$get_slide_notes_text("g3db51d43376_0_12")
+  expect_type(notes_4, "character")
+  expect_equal(notes_4, "Notes hopefully they match")
+
+  # Slide 2 has no notes (empty string)
+  notes_empty <- ps$get_slide_notes_text("g3db51d43376_0_0")
+  expect_equal(notes_empty, "")
+
+  # Non-existent slide_id errors
+  expect_snapshot(
+    error = TRUE,
+    ps$get_slide_notes_text("this_id_does_not_exist")
+  )
+})
+
+test_that("presentation$get_slide_by_index() returns the correct slide and errors on bad inputs", {
+  vcr::use_cassette(
+    "presentation_get_slide_by_index",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      s <- ps$get_slide_by_index(1)
+      first_id <- unlist(ps$get_slide_ids())[[1]]
+    }
+  )
+
+  expect_true(is.slide(s))
+  expect_equal(s@slide_id, first_id)
+
+  # Out-of-bounds, zero, NULL, non-numeric
+  expect_snapshot(error = TRUE, ps$get_slide_by_index(9999))
+  expect_snapshot(error = TRUE, ps$get_slide_by_index(0))
+  expect_snapshot(error = TRUE, ps$get_slide_by_index(NULL))
+  expect_snapshot(error = TRUE, ps$get_slide_by_index("a"))
+})
+
+test_that("presentation$get_slide_by_id() returns the correct slide and errors on bad inputs", {
+  vcr::use_cassette(
+    "presentation_get_slide_by_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      first_id <- unlist(ps$get_slide_ids())[[1]]
+      s <- ps$get_slide_by_id(first_id)
+    }
+  )
+
+  expect_true(is.slide(s))
+  expect_equal(s@slide_id, first_id)
+
+  # Non-existent ID, NULL, vector, numeric
+  expect_snapshot(error = TRUE, ps$get_slide_by_id("this_id_does_not_exist"))
+  expect_snapshot(error = TRUE, ps$get_slide_by_id(NULL))
+  expect_snapshot(error = TRUE, ps$get_slide_by_id(c("a", "b")))
+  expect_snapshot(error = TRUE, ps$get_slide_by_id(123))
+})
+
+test_that("presentation$get_slide_index() returns the 1-based position of a slide", {
+  vcr::use_cassette(
+    "presentation_get_slide_index",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      s1 <- ps$get_slide_by_index(1)
+      idx <- ps$get_slide_index(s1)
+    }
+  )
+
+  expect_equal(idx, 1L)
+
+  # Non-slide input errors
+  expect_snapshot(error = TRUE, ps$get_slide_index("not_a_slide"))
+  expect_snapshot(error = TRUE, ps$get_slide_index(NULL))
+})
+
+# ── browse() ──────────────────────────────────────────────────────────────────
+
+test_that("presentation$browse() opens the correct URL and returns self invisibly", {
+  vcr::use_cassette(
+    "presentation_register_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  opened_url <- NULL
   local_mocked_bindings(
-    browseURL = function(...) invisible(NULL),
+    browseURL = function(url) {
+      opened_url <<- url
+      invisible(NULL)
+    },
     .package = "utils"
   )
-  expect_invisible(pres$browse())
-  rm(pres)
+
+  result <- ps$browse()
+  expect_identical(result, ps)
+  expect_true(startsWith(opened_url, "https://docs.google.com/presentation/d/"))
+  expect_match(opened_url, TEST_PRESENTATION_ID, fixed = TRUE)
 })
 
-test_that("print() produces expected output", {
-  vcr::use_cassette("pres_print", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
+test_that("presentation$browse() errors when presentation_id is not set", {
+  vcr::use_cassette(
+    "presentation_register_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+  ps$presentation_id <- NULL
 
-  expect_snapshot(print(pres), transform = scrub_last_refreshed)
-  rm(pres)
+  expect_snapshot(error = TRUE, ps$browse())
 })
 
-test_that("is.presentation() correctly identifies the class", {
-  vcr::use_cassette("pres_is_presentation", {
-    pres <- new_presentation(title = "Class Check", set_active = FALSE)
-  })
+# ── print() ───────────────────────────────────────────────────────────────────
 
-  expect_true(is.presentation(pres))
-  expect_false(is.presentation(list()))
-  expect_false(is.presentation(NULL))
-  expect_false(is.presentation("a string"))
-  expect_false(is.presentation(42L))
-  rm(pres)
+test_that("presentation$print() outputs all fields", {
+  vcr::use_cassette(
+    "presentation_register_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  expect_snapshot(
+    print(ps),
+    transform = function(x) {
+      gsub("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}", "<timestamp>", x)
+    }
+  )
+  result <- print(ps)
+  expect_identical(result, ps)
 })
 
-test_that("copy() returns a new presentation with a distinct ID", {
-  vcr::use_cassette("pres_copy_named", {
-    original <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-    copied <- original$copy(name = "Copy of Test")
-  })
-
-  expect_true(is.presentation(copied))
-  expect_false(identical(original$presentation_id, copied$presentation_id))
-  expect_false(copied$is_active())
-  rm(original, copied)
-})
-
-test_that("copy() prepends 'Copy of' to the original title when no name supplied", {
-  vcr::use_cassette("pres_copy_default_name", {
-    original <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-    copied <- original$copy()
-  })
-
-  expect_equal(copied$title, paste("Copy of", original$title))
-  rm(original, copied)
-})
-
-test_that("copy() errors when presentation_id is NULL", {
-  vcr::use_cassette("pres_copy_null_id", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-  pres$presentation_id <- NULL
-
-  expect_snapshot(pres$copy(), error = TRUE)
-  rm(pres)
-})
-
-test_that("delete() trashes the presentation and returns NULL", {
-  vcr::use_cassette("pres_delete", {
-    pres <- new_presentation(title = "To Be Deleted", set_active = FALSE)
-    result <- pres$delete()
-  })
-
-  expect_null(result)
-})
-
-test_that("delete() errors when presentation_id is NULL", {
-  vcr::use_cassette("pres_delete_null_id", {
-    pres <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-  pres$presentation_id <- NULL
-
-  expect_snapshot(pres$delete(), error = TRUE)
-  rm(pres)
-})

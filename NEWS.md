@@ -1,3 +1,6 @@
+# Version 0.0.9073
+* New lazy evaluation strategy: use `set_evaluation_strategy("lazy")` to buffer API requests instead of executing them immediately, then flush with `execute_requests()`. `get_evaluation_strategy()` returns the current setting. `view_request_buffer()` inspects queued requests and `clear_request_buffer()` resets the buffer. `execute_requests(batch_all = TRUE)` (the default) merges all pending `batchUpdate` requests for the same presentation into a single API call.
+
 # Version 0.0.9070
 * Initial support for tables
 

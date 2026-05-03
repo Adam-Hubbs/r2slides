@@ -1,4 +1,4 @@
-# get_active_presentation() errors when none is registered
+# get_active_presentation() errors when no active presentation
 
     Code
       get_active_presentation()
@@ -6,106 +6,114 @@
       Error in `get_active_presentation()`:
       ! No active presentation
 
-# refresh() errors when presentation_id is NULL
+# presentation$get_slide_notes_text() returns notes for slides with and without speaker notes
 
     Code
-      pres$refresh()
+      ps$get_slide_notes_text("this_id_does_not_exist")
     Condition
-      Error in `pres$refresh()`:
-      ! Cannot refresh: presentation_id is not set
+      Error in `ps$get_slide_notes_text()`:
+      ! Slide "this_id_does_not_exist" not found in presentation
 
-# get_slide_by_index() errors on out-of-bounds index
+# presentation$get_slide_by_index() returns the correct slide and errors on bad inputs
 
     Code
-      pres$get_slide_by_index(n + 1L)
+      ps$get_slide_by_index(9999)
     Condition
-      Error in `pres$get_slide_by_index()`:
-      ! Index out of bounds. Presentation has 2 slides.
+      Error in `ps$get_slide_by_index()`:
+      ! Index out of bounds. Presentation has 7 slides.
 
-# get_slide_by_index() errors on a string input
+---
 
     Code
-      pres$get_slide_by_index("one")
+      ps$get_slide_by_index(0)
     Condition
-      Error in `pres$get_slide_by_index()`:
+      Error in `ps$get_slide_by_index()`:
+      ! Index out of bounds. Presentation has 7 slides.
+
+---
+
+    Code
+      ps$get_slide_by_index(NULL)
+    Condition
+      Error in `ps$get_slide_by_index()`:
+      ! `index` is required
+
+---
+
+    Code
+      ps$get_slide_by_index("a")
+    Condition
+      Error in `ps$get_slide_by_index()`:
       ! `index` must be a single integer
 
-# get_slide_by_index() errors on a vector input
+# presentation$get_slide_by_id() returns the correct slide and errors on bad inputs
 
     Code
-      pres$get_slide_by_index(c(1L, 2L))
+      ps$get_slide_by_id("this_id_does_not_exist")
     Condition
-      Error in `pres$get_slide_by_index()`:
-      ! `index` must be a single integer
-
-# get_slide_by_index() errors on NA input
-
-    Code
-      pres$get_slide_by_index(NA_integer_)
-    Condition
-      Error in `pres$get_slide_by_index()`:
-      ! `index` must be a single integer
-
-# get_slide_by_id() errors on an unknown ID
-
-    Code
-      pres$get_slide_by_id("nonexistent_id")
-    Condition
-      Error in `pres$get_slide_by_id()`:
+      Error in `ps$get_slide_by_id()`:
       ! Slide ID not found in this presentation
 
-# get_slide_by_id() errors on integer input
+---
 
     Code
-      pres$get_slide_by_id(123L)
+      ps$get_slide_by_id(NULL)
     Condition
-      Error in `pres$get_slide_by_id()`:
+      Error in `ps$get_slide_by_id()`:
+      ! `slide_id` is required
+
+---
+
+    Code
+      ps$get_slide_by_id(c("a", "b"))
+    Condition
+      Error in `ps$get_slide_by_id()`:
       ! `slide_id` must be a single string
 
-# get_slide_by_id() errors on a character vector input
+---
 
     Code
-      pres$get_slide_by_id(c("a", "b"))
+      ps$get_slide_by_id(123)
     Condition
-      Error in `pres$get_slide_by_id()`:
+      Error in `ps$get_slide_by_id()`:
       ! `slide_id` must be a single string
 
-# browse() errors when presentation_id is NULL
+# presentation$get_slide_index() returns the 1-based position of a slide
 
     Code
-      pres$browse()
+      ps$get_slide_index("not_a_slide")
     Condition
-      Error in `pres$browse()`:
+      Error in `ps$get_slide_index()`:
+      ! `slide` must be a slide object
+
+---
+
+    Code
+      ps$get_slide_index(NULL)
+    Condition
+      Error in `ps$get_slide_index()`:
+      ! `slide` must be a slide object
+
+# presentation$browse() errors when presentation_id is not set
+
+    Code
+      ps$browse()
+    Condition
+      Error in `ps$browse()`:
       ! Cannot browse: presentation_id is not set
 
-# print() produces expected output
+# presentation$print() outputs all fields
 
     Code
-      print(pres)
+      print(ps)
     Message
       
       -- Google Slides Presentation --
       
-      Title: Testing Pres 5
-      ID: 1bT5eBiMt1PXcVApTEUWz2cEi820ARpo4NgADGnkF9fE
+      Title: r2slides testing presentation
+      ID: 1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
       Slides: 0
       Active: No
-      Last refreshed: <<Last Refreshed Value>>
-      <https://docs.google.com/presentation/d/1bT5eBiMt1PXcVApTEUWz2cEi820ARpo4NgADGnkF9fE>
-
-# copy() errors when presentation_id is NULL
-
-    Code
-      pres$copy()
-    Condition
-      Error in `pres$copy()`:
-      ! Cannot copy: presentation_id is not set
-
-# delete() errors when presentation_id is NULL
-
-    Code
-      pres$delete()
-    Condition
-      Error in `pres$delete()`:
-      ! Cannot delete: presentation_id is not set
+      Last refreshed: <timestamp>
+      <https://docs.google.com/presentation/d/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY>
 

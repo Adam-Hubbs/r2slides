@@ -30,36 +30,6 @@ default_footer_args <- list(
   footer_height = NULL
 )
 
-test_token <- list("Test Token")
-
-
-vcr::vcr_configure(
-  dir = vcr::vcr_test_path("fixtures"),
-  # Scrub the OAuth Bearer token before cassettes are written
-  filter_request_headers = list(Authorization = "Bearer <<OAUTH_TOKEN>>"),
-  filter_response_headers = list(
-    "x-goog-authenticated-user-email" = "<<USER_EMAIL>>"
-  ),
-  filter_sensitive_data_regex = list(
-    '"access_token": "<<access_token>>"' = '"access_token":\\s*"[^"]+"',
-    '"id_token": "<<id_token>>"' = '"id_token":\\s*"[^"]+"',
-    "refresh_token=<<refresh_token>>" = "refresh_token=[^&]+",
-    "client_id=<<client_id>>" = "client_id=[^&]+",
-    "client_secret=<<client_secret>>" = "client_secret=[^&]+"
-  )
-)
-
-# Snapshot transformer — replaces the last_refreshed timestamp printed by
-# presentation$print() so snapshots are not invalidated by the wall-clock value.
-# Format is set in presentation$print(): "%Y-%m-%d %H:%M:%S"
-scrub_last_refreshed <- function(lines) {
-  gsub(
-    pattern = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}",
-    replacement = "<<Last Refreshed Value>>",
-    x = lines
-  )
-}
-
 # ── Table test helpers ──────────────────────────────────────────────────────
 
 # A minimal plain flextable: 3 body rows x 3 columns, no merges/borders
@@ -151,6 +121,33 @@ test_table_position <- function() {
   slide_position(top = 1, left = 1, width = 8, height = 5)
 }
 
+# ── vcr / API test helpers ────────────────────────────────────────────────────
+
+# Passed as `token` in tests that exercise query() error paths — those tests
+# abort before any HTTP call, so the token value is irrelevant.
+test_token <- NULL
+
+# IDs for the dedicated test Google Slides / Sheets documents.
+TEST_PRESENTATION_ID <- Sys.getenv(
+  "R2SLIDES_TEST_PRESENTATION_ID",
+  "1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY"
+)
+TEST_SPREADSHEET_ID <- Sys.getenv("R2SLIDES_TEST_SPREADSHEET_ID", "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI")
+
+# Sends a deleteObject batchUpdate for a slide. Used for state cleanup inside
+# vcr cassette blocks so every test that creates a slide also removes it.
+delete_slide_raw <- function(ps, slide_id) {
+  query(
+    endpoint = "slides.presentations.batchUpdate",
+    params = list(presentationId = ps$presentation_id),
+    body = list(
+      requests = list(list(deleteObject = list(objectId = slide_id)))
+    ),
+    base = "slides"
+  )
+  invisible(NULL)
+}
+
 # Pull the first request of a given type out of a named request list
 first_req <- function(reqs, type) {
   found <- Filter(\(r) !is.null(r[[type]]), reqs)
@@ -172,4 +169,23 @@ find_border_req <- function(border_reqs, row_idx, col_idx, position) {
     },
     border_reqs
   )
+}
+
+
+vcr::vcr_configure(
+  dir = testthat::test_path("../fixtures"),
+  filter_request_headers = list(
+    Authorization = "Bearer PLACEHOLDER_AUTH_TOKEN"
+  ),
+  ignore_hosts = "oauth2.googleapis.com",
+  record = if (identical(Sys.getenv("CI"), "true")) "none" else "once"
+)
+
+# If r2slides_auth() was called before running tests, auth is already live and
+# vcr can record new cassettes. Otherwise, deauth everything and rely on
+# recorded cassettes. To record new requests, call r2slides_auth() first.
+if (!inherits(r2slides:::.auth$cred, "Token2.0")) {
+  r2slides:::.auth$set_auth_active(FALSE)
+  googledrive::drive_deauth()
+  googlesheets4::gs4_deauth()
 }

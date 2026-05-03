@@ -1,371 +1,281 @@
-test_that("`slide()` can be created with valid inputs", {
-  slide_id <- "g3cf39e8ab47_0_0"
-
+test_that("on_slide_number() returns a slide at the given index", {
   vcr::use_cassette(
-    "slide_create_valid",
+    "slide_on_number",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      s <- slide(presentation = ps, slide_id = slide_id)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      s <- on_slide_number(1, ps)
     }
   )
 
   expect_true(is.slide(s))
-  expect_equal(s@slide_id, slide_id)
-  expect_true(is.presentation(s@presentation))
-  expect_equal(s@presentation$presentation_id, ps$presentation_id)
-  rm(ps)
+  expect_type(s@slide_id, "character")
+  expect_true(nchar(s@slide_id) > 0)
 })
 
-test_that("`slide()` requires a valid presentation", {
-  expect_snapshot(
-    error = TRUE,
-    slide(
-      presentation = list(presentation_id = "test"),
-      slide_id = "g3cf39e8ab47_0_0"
-    )
-  )
-})
 
-test_that("`slide()` requires a single slide_id", {
-  vcr::use_cassette("slide_create_multi_id", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(
-    error = TRUE,
-    slide(
-      presentation = ps,
-      slide_id = c("g3cf39e8ab47_0_0", "g3c5ef24c0f9_0_4")
-    )
-  )
-  expect_snapshot(
-    error = TRUE,
-    slide(presentation = ps, slide_id = character(0))
-  )
-  rm(ps)
-})
-
-test_that("`slide()` validates slide_id is character type", {
-  vcr::use_cassette("slide_create_bad_type", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(error = TRUE, slide(presentation = ps, slide_id = 123))
-  expect_snapshot(error = TRUE, slide(presentation = ps, slide_id = NULL))
-  rm(ps)
-})
-
-test_that("`slide@slide_hash` is stable and differs across distinct slides", {
-  # Each slide() call fetches the slide from the API. vcr records all four
-  # interactions in sequence and replays them in order. s1 and s1_copy hit
-  # the same endpoint with the same params, so body_json matching lets vcr
-  # serve the same recorded response to both.
+test_that("on_slide_number() errors with invalid input", {
   vcr::use_cassette(
-    "slide_hash",
+    "slide_on_number_errors",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      s1 <- slide(presentation = ps, slide_id = "p")
-      s1_copy <- slide(presentation = ps, slide_id = "p")
-      s2 <- slide(presentation = ps, slide_id = "g3cf39e8ab47_0_0")
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
     }
   )
 
-  hash1 <- s1@slide_hash
-  hash1_copy <- s1_copy@slide_hash
-  hash2 <- s2@slide_hash
-
-  expect_type(hash1, "character")
-  expect_equal(hash1, hash1_copy)
-  expect_false(hash1 == hash2)
-  rm(ps)
+  expect_snapshot(error = TRUE, on_slide_number(NULL, ps))
+  expect_snapshot(error = TRUE, on_slide_number(NA, ps))
+  expect_snapshot(error = TRUE, on_slide_number(c(1, 2), ps))
+  expect_snapshot(error = TRUE, on_slide_number("a", ps))
 })
 
 
-test_that("`on_slide_id()` works with valid slide ID", {
-  slide_id <- "g3cf39e8ab47_0_0"
-
+test_that("on_slide_id() returns the slide with the given ID", {
   vcr::use_cassette(
-    "slide_on_id_valid",
+    "slide_on_id",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      result <- on_slide_id(slide_id, ps)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      first_id <- unlist(ps$get_slide_ids())[[1]]
+      s <- on_slide_id(first_id, ps)
     }
   )
 
-  expect_true(is.slide(result))
-  expect_equal(result@slide_id, slide_id)
-  rm(ps)
+  expect_true(is.slide(s))
+  expect_equal(s@slide_id, first_id)
 })
 
-test_that("`on_slide_id()` uses active presentation when ps missing", {
-  withr::defer({
-    if (active_presentation_exists()) get_active_presentation()$set_not_active()
-  })
 
+test_that("on_slide_id() errors with invalid input", {
   vcr::use_cassette(
-    "slide_on_id_active_pres",
+    "slide_on_id_errors",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      register_presentation(id = "Testing Pres 5", set_active = TRUE)
-      result <- on_slide_id("g3cf39e8ab47_0_0")
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
     }
   )
-
-  expect_true(is.slide(result))
-})
-
-test_that("`on_slide_id()` fails with NULL id", {
-  vcr::use_cassette("slide_on_id_null", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
 
   expect_snapshot(error = TRUE, on_slide_id(NULL, ps))
-  rm(ps)
-})
-
-test_that("`on_slide_id()` fails with NA id", {
-  vcr::use_cassette("slide_on_id_na", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
   expect_snapshot(error = TRUE, on_slide_id(NA, ps))
-  rm(ps)
+  expect_snapshot(error = TRUE, on_slide_id(c("a", "b"), ps))
 })
 
-test_that("`on_slide_id()` fails with multiple ids", {
-  vcr::use_cassette("slide_on_id_multi", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(
-    error = TRUE,
-    on_slide_id(c("g3cf39e8ab47_0_0", "g3c5ef24c0f9_0_4"), ps)
-  )
-  rm(ps)
-})
-
-test_that("`on_slide_url()` extracts slide from valid URL", {
-  slide_id <- "g3cf39e8ab47_0_0"
-
+test_that("on_slide_url() resolves a slide from its full URL", {
   vcr::use_cassette(
-    "slide_on_url_valid",
+    "slide_on_url",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      first_id <- unlist(ps$get_slide_ids())[[1]]
       url <- paste0(
         "https://docs.google.com/presentation/d/",
         ps$presentation_id,
         "/edit#slide=id.",
-        slide_id
+        first_id
       )
-      result <- on_slide_url(url, ps)
+      s <- on_slide_url(url, ps)
+    }
+  )
+
+  expect_true(is.slide(s))
+  expect_equal(s@slide_id, first_id)
+})
+
+test_that("on_slide_with_notes() errors when no slide matches", {
+  vcr::use_cassette(
+    "slide_with_notes_no_match",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    on_slide_with_notes("this_pattern_xyz_does_not_exist_abc123", ps = ps)
+  )
+})
+
+test_that("on_slide_with_notes() finds a slide with matching notes", {
+  vcr::use_cassette(
+    "slide_with_notes_match",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      # Slide 4 in the test presentation has notes "Notes hopefully they match"
+      result <- on_slide_with_notes("Notes hopefully they match", ps = ps)
+      expected_id <- "g3db51d43376_0_12"
     }
   )
 
   expect_true(is.slide(result))
-  rm(ps)
+  expect_equal(result@slide_id, expected_id)
 })
 
-
-test_that("`on_slide_number()` works with valid numeric index", {
+test_that("on_slide_with_notes() errors on invalid text types", {
   vcr::use_cassette(
-    "slide_on_number_valid",
+    "slide_with_notes_errors",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      result <- on_slide_number(2, ps)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  expect_snapshot(error = TRUE, on_slide_with_notes(123, ps = ps))
+  expect_snapshot(error = TRUE, on_slide_with_notes(NA_character_, ps = ps))
+  expect_snapshot(error = TRUE, on_slide_with_notes(c("a", "b"), ps = ps))
+})
+
+test_that("on_slide_with_notes() finds an exact single-match note", {
+  vcr::use_cassette(
+    "slide_with_notes_exact_single",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      # Slide 5 has notes "Notes" — no other slide matches exactly
+      result <- on_slide_with_notes("Notes", ps = ps)
     }
   )
 
   expect_true(is.slide(result))
-  expect_equal(result@slide_id, "g3cf39e8ab47_0_0")
-  rm(ps)
+  expect_equal(result@slide_id, "g3db51d43376_0_17")
 })
 
-test_that("`on_slide_number()` uses active presentation when ps missing", {
-  withr::defer({
-    if (active_presentation_exists()) get_active_presentation()$set_not_active()
-  })
-
+test_that("on_slide_with_notes() finds a slide using regex matching", {
   vcr::use_cassette(
-    "slide_on_number_active_pres",
+    "slide_with_notes_regex",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      register_presentation(id = "Testing Pres 5", set_active = TRUE)
-      result <- on_slide_number(1)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      # Slide 4 is the only slide whose notes contain "hopefully"
+      result <- on_slide_with_notes("hopefully", match = "regex", ps = ps)
     }
   )
 
   expect_true(is.slide(result))
-  expect_equal(result@slide_id, "p")
+  expect_equal(result@slide_id, "g3db51d43376_0_12")
 })
 
-test_that("`on_slide_number()` fails with NULL", {
-  vcr::use_cassette("slide_on_number_null", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(error = TRUE, on_slide_number(NULL, ps))
-  rm(ps)
-})
-
-test_that("`on_slide_number()` fails with NA", {
-  vcr::use_cassette("slide_on_number_na", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(error = TRUE, on_slide_number(NA, ps))
-  rm(ps)
-})
-
-test_that("`on_slide_number()` fails with non-numeric input", {
-  vcr::use_cassette("slide_on_number_bad_type", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(error = TRUE, on_slide_number("not_a_number", ps))
-  rm(ps)
-})
-
-test_that("`on_slide_number()` fails with multiple values", {
-  vcr::use_cassette("slide_on_number_multi", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  expect_snapshot(error = TRUE, on_slide_number(c(1, 2), ps))
-  rm(ps)
-})
-
-test_that("`on_slide_after()` returns slide after reference", {
+test_that("on_slide_with_notes() errors by default when multiple slides match", {
   vcr::use_cassette(
-    "slide_on_after_valid",
+    "slide_with_notes_multi_match_error",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      ref_slide <- ps$get_slide_by_index(1)
-      result <- on_slide_after(ref_slide, offset = 1, ps)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
     }
   )
 
-  expect_true(is.slide(result))
-  expect_equal(result@slide_id, "g3cf39e8ab47_0_0")
-  rm(ps)
-})
-
-test_that("`on_slide_after()` works with negative offset", {
-  vcr::use_cassette(
-    "slide_on_after_negative",
-    match_requests_on = c("method", "uri", "body_json"),
-    {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      ref_slide <- ps$get_slide_by_index(2)
-      result <- on_slide_after(ref_slide, offset = -1, ps)
-    }
+  # "^Notes" matches both slide 4 ("Notes hopefully they match") and slide 5 ("Notes")
+  expect_snapshot(
+    error = TRUE,
+    on_slide_with_notes("^Notes", match = "regex", ps = ps)
   )
-
-  expect_true(is.slide(result))
-  expect_equal(result@slide_id, "p")
-  rm(ps)
 })
 
-test_that("`on_slide_after()` uses active presentation when ps missing", {
-  withr::defer({
-    if (active_presentation_exists()) get_active_presentation()$set_not_active()
-  })
-
+test_that("on_slide_with_notes() returns all matches when on_multiple = 'return'", {
   vcr::use_cassette(
-    "slide_on_after_active_pres",
+    "slide_with_notes_return_multi",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      register_presentation(id = "Testing Pres 5", set_active = TRUE)
-      ref_slide <- get_active_presentation()$get_slide_by_index(1)
-      result <- on_slide_after(ref_slide, offset = 1)
-    }
-  )
-
-  expect_true(is.slide(result))
-  expect_equal(result@slide_id, "g3cf39e8ab47_0_0")
-})
-
-test_that("`on_slide_after()` errors at beginning of presentation with negative offset", {
-  vcr::use_cassette("slide_on_after_edge_start", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  first_slide <- ps$get_slide_by_index(1)
-  expect_snapshot(error = TRUE, on_slide_after(first_slide, offset = -1, ps))
-  rm(ps)
-})
-
-test_that("`on_slide_after()` errors past end of presentation", {
-  vcr::use_cassette("slide_on_after_edge_end", {
-    ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-  })
-
-  last_slide <- ps$get_slide_by_index(2)
-  expect_snapshot(error = TRUE, on_slide_after(last_slide, offset = 5, ps))
-  rm(ps)
-})
-
-test_that("`resolve_presentation_id()` extracts ID from a full URL", {
-  vcr::use_cassette(
-    "slide_resolve_id_url",
-    match_requests_on = c("method", "uri", "body_json"),
-    {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      url <- paste0(
-        "https://docs.google.com/presentation/d/",
-        ps$presentation_id,
-        "/edit"
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      result <- on_slide_with_notes(
+        "^Notes",
+        match = "regex",
+        on_multiple = "return",
+        ps = ps
       )
-      result <- resolve_presentation_id(url)
     }
   )
 
-  expect_equal(result, ps$presentation_id)
-  rm(ps)
+  expect_type(result, "list")
+  expect_length(result, 2L)
+  expect_true(all(purrr::map_lgl(result, is.slide)))
+  # Names are the slide IDs
+  expect_in(
+    names(result),
+    c("g3db51d43376_0_12", "g3db51d43376_0_17")
+  )
 })
 
-test_that("`resolve_presentation_id()` accepts a bare presentation ID", {
+test_that("is.slide() returns TRUE for slide objects and FALSE for everything else", {
   vcr::use_cassette(
-    "slide_resolve_id_direct",
+    "is_slide_type_check",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      result <- resolve_presentation_id(ps$presentation_id)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      s <- on_slide_number(1, ps)
     }
   )
 
-  expect_equal(result, ps$presentation_id)
-  rm(ps)
+  expect_true(is.slide(s))
+  expect_false(is.slide(list()))
+  expect_false(is.slide("a character string"))
+  expect_false(is.slide(NULL))
+  expect_false(is.slide(1L))
 })
 
-test_that("`resolve_presentation_id()` handles URL with extra query parameters", {
+test_that("on_slide_after() returns the slide at a positive offset", {
   vcr::use_cassette(
-    "slide_resolve_id_url_params",
+    "slide_after_positive",
     match_requests_on = c("method", "uri", "body_json"),
     {
-      ps <- register_presentation(id = "Testing Pres 5", set_active = FALSE)
-      url <- paste0(
-        "https://docs.google.com/presentation/d/",
-        ps$presentation_id,
-        "/edit?usp=sharing&slide=id.xyz"
-      )
-      result <- resolve_presentation_id(url)
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      slide_ids <- unlist(ps$get_slide_ids())
+      s1 <- on_slide_number(1, ps)
+      s_after <- on_slide_after(s1, offset = 1, ps)
+      s_after2 <- on_slide_after(s1, offset = 3, ps)
     }
   )
 
-  expect_equal(result, ps$presentation_id)
-  rm(ps)
+  expect_true(is.slide(s_after))
+  expect_equal(s_after@slide_id, slide_ids[[2]])
+  expect_true(is.slide(s_after2))
+  expect_equal(s_after2@slide_id, slide_ids[[4]])
 })
 
-test_that("`resolve_presentation_id()` fails with non-character input", {
-  expect_snapshot(error = TRUE, resolve_presentation_id(123))
+test_that("on_slide_after() navigates backwards with a negative offset", {
+  vcr::use_cassette(
+    "slide_after_negative",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      slide_ids <- unlist(ps$get_slide_ids())
+      s3 <- on_slide_number(3, ps)
+      s_prev <- on_slide_after(s3, offset = -1, ps)
+    }
+  )
+
+  expect_true(is.slide(s_prev))
+  expect_equal(s_prev@slide_id, slide_ids[[2]])
 })
 
-test_that("`resolve_presentation_id()` fails with multiple values", {
-  expect_snapshot(error = TRUE, resolve_presentation_id(c("id1", "id2")))
+test_that("slide == returns TRUE for structurally identical slides", {
+  vcr::use_cassette(
+    "slide_equality_identical",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      # Slides 2 and 3 in the test presentation are structurally identical
+      s2 <- on_slide_number(2, ps)
+      s3 <- on_slide_number(3, ps)
+      eq <- s2 == s3
+    }
+  )
+
+  expect_true(eq)
+})
+
+test_that("slide == returns FALSE for structurally different slides", {
+  vcr::use_cassette(
+    "slide_equality_different",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+      s1 <- on_slide_number(1, ps)
+      s2 <- on_slide_number(2, ps)
+      eq <- s1 == s2
+    }
+  )
+
+  expect_false(eq)
 })

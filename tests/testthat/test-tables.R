@@ -7,7 +7,7 @@ test_that("as_r2slides_table: plain flextable has correct dimensions and cell co
   expect_equal(r2@n_rows, 4L)
   expect_equal(r2@n_cols, 3L)
   expect_equal(r2@header_rows, 1L)
-  expect_equal(length(r2@cells), 12L)
+  expect_length(r2@cells, 12L)
 })
 
 test_that("as_r2slides_table: cell indices are 0-based and cover the full grid", {
@@ -286,7 +286,7 @@ test_that("create_table_requests: plain table has borders key from default flext
   # borders). For a 4-row x 3-col table: 4 * 3 * 4 = 48 border requests.
   # Interior lines are written twice but are idempotent (transparent borders).
   expect_false(is.null(reqs$borders))
-  expect_equal(length(reqs$borders$requests), 48L)
+  expect_length(reqs$borders$requests, 48L)
 })
 
 # -- r2slides_table S7 validation --

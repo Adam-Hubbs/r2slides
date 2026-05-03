@@ -18,6 +18,8 @@ utils::globalVariables("properties")
   )
 
   S7::methods_register()
+
+  assign("request_buffer", RequestBuffer$new(), envir = .r2slides_objects)
 }
 
 # TODO Need to add gs discovery document into mthds (and combine slides and gs into one top level directory?)

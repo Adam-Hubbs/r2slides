@@ -309,11 +309,6 @@ presentation <- R6::R6Class(
       private$slide_ids %||% character(0)
     },
 
-    get_slide_ids_cache = function() {
-      private$refresh_internal()
-      private$slide_ids %||% character(0)
-    },
-
     #' @description
     #' Get the speaker notes text for a slide.
     #' Does not refresh; caller is responsible for refreshing first.
@@ -605,11 +600,11 @@ presentation <- R6::R6Class(
       slide_id = character(),
       element_type = character(),
       element_text = character(),
-      time_created = NULL,
-      time_updated = NULL,
-      time_deleted = NULL,
+      time_created = as.POSIXct(character()),
+      time_updated = as.POSIXct(character()),
+      time_deleted = as.POSIXct(character()),
       is_deleted = logical(),
-      time_known_deletion = NULL
+      time_known_deletion = as.POSIXct(character())
     ),
 
     refresh_ledger = function() {
