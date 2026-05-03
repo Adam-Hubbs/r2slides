@@ -1,14 +1,15 @@
-RequestBuffer <- R6::R6Class(
-  "RequestBuffer",
+request_buffer <- R6::R6Class(
+  "request_buffer",
   public = list(
     initialize = function() {
       private$data <- tibble::tibble(
+        id = integer(0),
         request = list(),
         time_requested = as.POSIXct(character(0)),
-        tried_to_execute = logical(0),
-        execute_succeeded = logical(0),
-        presentation = character(0)
+        resource_id = character(0),
+        user_call = list()
       )
+      private$next_id <- 1L
     },
     add = function(
       endpoint,
@@ -17,9 +18,11 @@ RequestBuffer <- R6::R6Class(
       base,
       max_tries,
       backoff_base,
-      presentation_id
+      resource_id,
+      user_call
     ) {
       new_row <- tibble::tibble(
+        id = private$next_id,
         request = list(list(
           endpoint = endpoint,
           params = params,
@@ -29,35 +32,33 @@ RequestBuffer <- R6::R6Class(
           backoff_base = backoff_base
         )),
         time_requested = Sys.time(),
-        tried_to_execute = FALSE,
-        execute_succeeded = NA,
-        presentation = as.character(presentation_id %||% NA_character_)
+        resource_id = as.character(resource_id %||% NA_character_),
+        user_call = list(user_call)
       )
+      private$next_id <- private$next_id + 1L
       private$data <- dplyr::bind_rows(private$data, new_row)
       invisible(self)
     },
     view = function() private$data,
-    mark_tried = function(indices) {
-      private$data$tried_to_execute[indices] <- TRUE
-      invisible(self)
-    },
-    mark_succeeded = function(indices, succeeded) {
-      private$data$execute_succeeded[indices] <- succeeded
+    remove_request = function(ids) {
+      private$data <- dplyr::filter_out(private$data, id %in% ids)
       invisible(self)
     },
     clear = function() {
       private$data <- tibble::tibble(
+        id = integer(0),
         request = list(),
         time_requested = as.POSIXct(character(0)),
-        tried_to_execute = logical(0),
-        execute_succeeded = logical(0),
-        presentation = character(0)
+        resource_id = character(0),
+        user_call = list()
       )
+      private$next_id <- 1L
       invisible(self)
     }
   ),
   private = list(
-    data = NULL
+    data = NULL,
+    next_id = 1L
   )
 )
 
@@ -114,11 +115,13 @@ get_evaluation_strategy <- function() {
 #' `"lazy"` evaluation strategy.
 #'
 #' @return A [tibble::tibble()] with columns:
+#'   - `id`: integer row identifier
 #'   - `request`: a list of query arguments (endpoint, params, body, base, etc.)
 #'   - `time_requested`: when the request was buffered
-#'   - `tried_to_execute`: whether execution has been attempted
-#'   - `execute_succeeded`: `NA` if not yet attempted, `TRUE`/`FALSE` otherwise
-#'   - `presentation`: the `presentationId` from the request params, or `NA`
+#'   - `resource_id`: the resource identifier from the request params
+#'     (`presentationId`, `spreadsheetId`, or `fileId`), or `NA`
+#'   - `user_call`: the calling environment captured at buffer time, used for
+#'     error attribution on execution
 #' @seealso [set_evaluation_strategy()], [execute_requests()]
 #' @export
 view_request_buffer <- function() {
@@ -127,8 +130,8 @@ view_request_buffer <- function() {
 
 #' Clear the request buffer
 #'
-#' Removes all entries from the internal request buffer, including any that have
-#' already been executed. Useful for resetting state between workflows.
+#' Removes all entries from the internal request buffer. Useful for resetting
+#' state between workflows.
 #'
 #' @return `NULL`, invisibly.
 #' @seealso [view_request_buffer()], [execute_requests()]
@@ -140,9 +143,10 @@ clear_request_buffer <- function() {
 
 #' Execute buffered API requests
 #'
-#' Executes all pending requests in the buffer (those with
-#' `tried_to_execute == FALSE`). Typically called after accumulating requests
-#' with the `"lazy"` evaluation strategy (see [set_evaluation_strategy()]).
+#' Executes all pending requests in the buffer. Each request is removed from the
+#' buffer after it is attempted, whether or not it succeeds. Typically called
+#' after accumulating requests with the `"lazy"` evaluation strategy (see
+#' [set_evaluation_strategy()]).
 #'
 #' @param batch_all Logical. If `TRUE` (the default), all pending
 #'   `slides.presentations.batchUpdate` requests for the same presentation are
@@ -150,11 +154,13 @@ clear_request_buffer <- function() {
 #'   executed individually. If `FALSE`, every buffered request is executed
 #'   one at a time in the order it was added.
 #'
-#' @return `NULL`, invisibly. The request buffer is updated in place to record
-#'   which requests were attempted and whether they succeeded.
+#' @return `NULL`, invisibly.
 #' @seealso [set_evaluation_strategy()], [view_request_buffer()]
 #' @export
 execute_requests <- function(batch_all = TRUE) {
+
+  rlang::check_bool(batch_all)
+
   # Force eager during execution so buffered calls don't re-buffer themselves
   old_strategy <- Sys.getenv(
     "r2slides_request_evaluation_strategy",
@@ -168,79 +174,73 @@ execute_requests <- function(batch_all = TRUE) {
 
   buf <- .get_request_buffer()
   data <- buf$view()
-  pending_idx <- which(!data$tried_to_execute)
 
-  if (length(pending_idx) == 0L) {
+  if (nrow(data) == 0L) {
     cli::cli_inform("No pending requests to execute.")
     return(invisible(NULL))
   }
 
   if (batch_all) {
-    execute_batched(buf, data, pending_idx)
+    execute_batched(buf, data)
   } else {
-    execute_sequential(buf, data, pending_idx)
+    execute_sequential(buf, data)
   }
 
   invisible(NULL)
 }
 
-execute_sequential <- function(buf, data, pending_idx) {
-  purrr::walk(pending_idx, \(i) {
+execute_sequential <- function(buf, data) {
+  purrr::walk(seq_len(nrow(data)), \(i) {
     req <- data$request[[i]]
-    buf$mark_tried(i)
+    user_call <- data$user_call[[i]]
+    id <- data$id[[i]]
     tryCatch(
       {
-        do.call(query, req)
-        buf$mark_succeeded(i, TRUE)
+        do.call(query, c(req, list(call = user_call)))
       },
       error = function(e) {
-        buf$mark_succeeded(i, FALSE)
         cli::cli_warn(c(
-          "!" = "Request {i} failed.",
+          "!" = "Request failed.",
           "x" = conditionMessage(e)
         ))
       }
     )
+    buf$remove_request(id)
   })
 }
 
-execute_batched <- function(buf, data, pending_idx) {
-  pending <- data[pending_idx, ]
+execute_batched <- function(buf, data) {
   batch_endpoint <- "slides.presentations.batchUpdate"
 
   is_batchable <- purrr::map2_lgl(
-    pending$request,
-    pending$presentation,
-    \(req, pres) identical(req$endpoint, batch_endpoint) && !is.na(pres)
+    data$request,
+    data$resource_id,
+    \(req, res_id) identical(req$endpoint, batch_endpoint) && !is.na(res_id)
   )
 
-  non_batch_idx <- pending_idx[!is_batchable]
-  if (length(non_batch_idx) > 0L) {
-    execute_sequential(buf, data, non_batch_idx)
+  non_batch_data <- data[!is_batchable, ]
+  if (nrow(non_batch_data) > 0L) {
+    execute_sequential(buf, non_batch_data)
   }
 
-  batch_pending_idx <- pending_idx[is_batchable]
-  batch_pending <- pending[is_batchable, ]
-
-  if (nrow(batch_pending) == 0L) {
+  batch_data <- data[is_batchable, ]
+  if (nrow(batch_data) == 0L) {
     return(invisible(NULL))
   }
 
-  presentations <- unique(batch_pending$presentation)
-  presentations <- presentations[!is.na(presentations)]
+  resources <- unique(batch_data$resource_id)
+  resources <- resources[!is.na(resources)]
 
-  purrr::walk(presentations, \(pres_id) {
-    pres_mask <- batch_pending$presentation == pres_id
-    pres_global_idx <- batch_pending_idx[pres_mask]
-    pres_reqs <- batch_pending$request[pres_mask]
+  purrr::walk(resources, \(res_id) {
+    res_mask <- batch_data$resource_id == res_id
+    res_rows <- batch_data[res_mask, ]
 
-    combined_requests <- purrr::map(pres_reqs, \(r) r$body$requests) |>
+    combined_requests <- purrr::map(res_rows$request, \(r) r$body$requests) |>
       purrr::list_flatten()
 
-    first <- pres_reqs[[1]]
+    first <- res_rows$request[[1]]
     combined_body <- list(requests = combined_requests)
 
-    buf$mark_tried(pres_global_idx)
     tryCatch(
       {
         query(
@@ -251,15 +251,14 @@ execute_batched <- function(buf, data, pending_idx) {
           max_tries = first$max_tries,
           backoff_base = first$backoff_base
         )
-        buf$mark_succeeded(pres_global_idx, TRUE)
       },
       error = function(e) {
-        buf$mark_succeeded(pres_global_idx, FALSE)
         cli::cli_warn(c(
-          "!" = "Batched requests for presentation {.val {pres_id}} failed.",
+          "!" = "Batched requests for resource {.val {res_id}} failed.",
           "x" = conditionMessage(e)
         ))
       }
     )
+    buf$remove_request(res_rows$id)
   })
 }

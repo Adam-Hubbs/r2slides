@@ -30,7 +30,7 @@ query <- function(
   call = rlang::caller_env(),
   ...
 ) {
-  if (!isTRUE(debug) && identical(get_evaluation_strategy(), "lazy")) {
+  if (isFALSE(debug) && identical(get_evaluation_strategy(), "lazy")) {
     .get_request_buffer()$add(
       endpoint = endpoint,
       params = params,
@@ -38,7 +38,11 @@ query <- function(
       base = base,
       max_tries = max_tries,
       backoff_base = backoff_base,
-      presentation_id = params$presentationId %||% NA_character_
+      resource_id = params$presentationId %||%
+        params$spreadsheetId %||%
+        params$fileId %||%
+        NA_character_,
+      user_call = call
     )
     return(invisible(NULL))
   }

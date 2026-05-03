@@ -25,13 +25,7 @@ test_that("view_request_buffer() returns a tibble with the right columns", {
   expect_s3_class(buf, "tbl_df")
   expect_named(
     buf,
-    c(
-      "request",
-      "time_requested",
-      "tried_to_execute",
-      "execute_succeeded",
-      "presentation"
-    )
+    c("id", "request", "time_requested", "resource_id", "user_call")
   )
 })
 
@@ -50,9 +44,8 @@ test_that("lazy strategy buffers query() calls without executing", {
   expect_null(result)
   buf <- view_request_buffer()
   expect_equal(nrow(buf), 1L)
-  expect_equal(buf$presentation[[1]], "test123")
-  expect_false(buf$tried_to_execute[[1]])
-  expect_identical(buf$execute_succeeded[[1]], NA)
+  expect_equal(buf$resource_id[[1]], "test123")
+  expect_true(is.environment(buf$user_call[[1]]))
 })
 
 test_that("lazy strategy buffers multiple calls independently", {
@@ -76,14 +69,28 @@ test_that("lazy strategy buffers multiple calls independently", {
 
   buf <- view_request_buffer()
   expect_equal(nrow(buf), 2L)
-  expect_equal(buf$presentation, c("presA", "presB"))
+  expect_equal(buf$resource_id, c("presA", "presB"))
+})
+
+test_that("lazy strategy captures resource_id from spreadsheetId", {
+  withr::local_envvar(r2slides_request_evaluation_strategy = "lazy")
+  withr::defer(clear_request_buffer())
+
+  query(
+    endpoint = "sheets.spreadsheets.values.get",
+    params = list(spreadsheetId = "sheet123", range = "A1"),
+    base = "sheets",
+    token = test_token
+  )
+
+  buf <- view_request_buffer()
+  expect_equal(buf$resource_id[[1]], "sheet123")
 })
 
 test_that("query() with debug=TRUE bypasses lazy buffering", {
   withr::local_envvar(r2slides_request_evaluation_strategy = "lazy")
   withr::defer(clear_request_buffer())
 
-  # debug=TRUE should return a request object, not buffer it
   result <- query(
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = "test123"),
@@ -97,7 +104,7 @@ test_that("query() with debug=TRUE bypasses lazy buffering", {
   expect_equal(nrow(view_request_buffer()), 0L)
 })
 
-test_that("execute_requests() with batch_all=FALSE marks each request as tried", {
+test_that("execute_requests() with batch_all=FALSE removes executed requests", {
   withr::local_envvar(r2slides_request_evaluation_strategy = "lazy")
   withr::defer(clear_request_buffer())
 
@@ -116,15 +123,12 @@ test_that("execute_requests() with batch_all=FALSE marks each request as tried",
     token = test_token
   )
 
-  # Execution will fail (no real token), but the buffer should be updated
+  expect_equal(nrow(view_request_buffer()), 2L)
   suppressWarnings(execute_requests(batch_all = FALSE))
-
-  buf <- view_request_buffer()
-  expect_true(all(buf$tried_to_execute))
-  expect_true(all(!buf$execute_succeeded))
+  expect_equal(nrow(view_request_buffer()), 0L)
 })
 
-test_that("execute_requests() with batch_all=TRUE marks all same-presentation requests as tried", {
+test_that("execute_requests() with batch_all=TRUE removes batched requests", {
   withr::local_envvar(r2slides_request_evaluation_strategy = "lazy")
   withr::defer(clear_request_buffer())
 
@@ -143,12 +147,9 @@ test_that("execute_requests() with batch_all=TRUE marks all same-presentation re
     token = test_token
   )
 
+  expect_equal(nrow(view_request_buffer()), 2L)
   suppressWarnings(execute_requests(batch_all = TRUE))
-
-  buf <- view_request_buffer()
-  expect_true(all(buf$tried_to_execute))
-  # Both rows correspond to one combined API call, so both share the same outcome
-  expect_equal(buf$execute_succeeded[[1]], buf$execute_succeeded[[2]])
+  expect_equal(nrow(view_request_buffer()), 0L)
 })
 
 test_that("execute_requests() does not re-buffer when called in lazy mode", {
@@ -165,9 +166,8 @@ test_that("execute_requests() does not re-buffer when called in lazy mode", {
 
   suppressWarnings(execute_requests(batch_all = FALSE))
 
-  # Buffer should still have exactly 1 row, not 2 (no re-buffering)
-  buf <- view_request_buffer()
-  expect_equal(nrow(buf), 1L)
+  # Buffer should be empty after execution (not 2 rows from re-buffering)
+  expect_equal(nrow(view_request_buffer()), 0L)
 })
 
 test_that("execute_requests() reports no pending requests when buffer is empty", {
@@ -211,4 +211,27 @@ test_that("buffered request stores correct query arguments", {
   expect_equal(req$params$presentationId, "pres_xyz")
   expect_equal(req$body, body)
   expect_equal(req$base, "slides")
+})
+
+test_that("sequential IDs increment across add() calls", {
+  withr::local_envvar(r2slides_request_evaluation_strategy = "lazy")
+  withr::defer(clear_request_buffer())
+
+  query(
+    endpoint = "slides.presentations.batchUpdate",
+    params = list(presentationId = "p1"),
+    body = list(requests = list()),
+    base = "slides",
+    token = test_token
+  )
+  query(
+    endpoint = "slides.presentations.batchUpdate",
+    params = list(presentationId = "p2"),
+    body = list(requests = list()),
+    base = "slides",
+    token = test_token
+  )
+
+  buf <- view_request_buffer()
+  expect_true(buf$id[[2]] > buf$id[[1]])
 })
