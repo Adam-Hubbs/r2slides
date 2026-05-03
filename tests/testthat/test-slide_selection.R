@@ -222,7 +222,7 @@ test_that("on_slide_after() returns the slide at a positive offset", {
       ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
       slide_ids <- unlist(ps$get_slide_ids())
       s1 <- on_slide_number(1, ps)
-      s_after <- on_slide_after(s1, ps)
+      s_after <- on_slide_after(s1, offset = 1, ps)
       s_after2 <- on_slide_after(s1, offset = 3, ps)
     }
   )

@@ -1,11 +1,3 @@
-# on_slide_with_notes() errors when no slide matches
-
-    Code
-      on_slide_with_notes("this_pattern_xyz_does_not_exist_abc123", ps = ps)
-    Condition
-      Error in `on_slide_with_notes()`:
-      ! No slides found whose notes equal "this_pattern_xyz_does_not_exist_abc123"
-
 # on_slide_number() errors with invalid input
 
     Code
@@ -61,6 +53,14 @@
     Condition
       Error in `on_slide_id()`:
       ! `id` must be a single value
+
+# on_slide_with_notes() errors when no slide matches
+
+    Code
+      on_slide_with_notes("this_pattern_xyz_does_not_exist_abc123", ps = ps)
+    Condition
+      Error in `on_slide_with_notes()`:
+      ! No slides found whose notes equal "this_pattern_xyz_does_not_exist_abc123"
 
 # on_slide_with_notes() errors on invalid text types
 

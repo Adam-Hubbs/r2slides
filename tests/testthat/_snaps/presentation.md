@@ -94,3 +94,26 @@
       Error in `ps$get_slide_index()`:
       ! `slide` must be a slide object
 
+# presentation$browse() errors when presentation_id is not set
+
+    Code
+      ps$browse()
+    Condition
+      Error in `ps$browse()`:
+      ! Cannot browse: presentation_id is not set
+
+# presentation$print() outputs all fields
+
+    Code
+      print(ps)
+    Message
+      
+      -- Google Slides Presentation --
+      
+      Title: r2slides testing presentation
+      ID: 1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
+      Slides: 0
+      Active: No
+      Last refreshed: <timestamp>
+      <https://docs.google.com/presentation/d/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY>
+

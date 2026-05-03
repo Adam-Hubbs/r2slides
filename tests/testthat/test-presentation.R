@@ -231,3 +231,64 @@ test_that("presentation$get_slide_index() returns the 1-based position of a slid
   expect_snapshot(error = TRUE, ps$get_slide_index("not_a_slide"))
   expect_snapshot(error = TRUE, ps$get_slide_index(NULL))
 })
+
+# ── browse() ──────────────────────────────────────────────────────────────────
+
+test_that("presentation$browse() opens the correct URL and returns self invisibly", {
+  vcr::use_cassette(
+    "presentation_register_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  opened_url <- NULL
+  local_mocked_bindings(
+    browseURL = function(url) {
+      opened_url <<- url
+      invisible(NULL)
+    },
+    .package = "utils"
+  )
+
+  result <- ps$browse()
+  expect_identical(result, ps)
+  expect_true(startsWith(opened_url, "https://docs.google.com/presentation/d/"))
+  expect_match(opened_url, TEST_PRESENTATION_ID, fixed = TRUE)
+})
+
+test_that("presentation$browse() errors when presentation_id is not set", {
+  vcr::use_cassette(
+    "presentation_register_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+  ps$presentation_id <- NULL
+
+  expect_snapshot(error = TRUE, ps$browse())
+})
+
+# ── print() ───────────────────────────────────────────────────────────────────
+
+test_that("presentation$print() outputs all fields", {
+  vcr::use_cassette(
+    "presentation_register_id",
+    match_requests_on = c("method", "uri", "body_json"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+    }
+  )
+
+  expect_snapshot(
+    print(ps),
+    transform = function(x) {
+      gsub("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}", "<timestamp>", x)
+    }
+  )
+  result <- print(ps)
+  expect_identical(result, ps)
+})
+
