@@ -11,7 +11,7 @@ deferred [query()] call. Useful for inspecting what is queued when using the
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9072</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9073</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,11 +64,13 @@ deferred [query()] call. Useful for inspecting what is queued when using the
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A [tibble::tibble()] with columns:
+  - `id`: integer row identifier
   - `request`: a list of query arguments (endpoint, params, body, base, etc.)
   - `time_requested`: when the request was buffered
-  - `tried_to_execute`: whether execution has been attempted
-  - `execute_succeeded`: `NA` if not yet attempted, `TRUE`/`FALSE` otherwise
-  - `presentation`: the `presentationId` from the request params, or `NA`</p>
+  - `resource_id`: the resource identifier from the request params
+    (`presentationId`, `spreadsheetId`, or `fileId`), or `NA`
+  - `user_call`: the calling environment captured at buffer time, used for
+    error attribution on execution</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

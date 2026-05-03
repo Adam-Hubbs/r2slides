@@ -12,7 +12,6 @@ add_text(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  verbose = TRUE,
   token = NULL,
   debug = FALSE,
   ...
@@ -47,11 +46,6 @@ add_text(
   Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
   the created element. Default: \`"front"\`. Ignored when updating an
   existing element via \`element_id\`.
-
-- verbose:
-
-  Optional. A logical indicating whether to print API responses.
-  Default: TRUE.
 
 - token:
 

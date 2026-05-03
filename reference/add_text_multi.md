@@ -13,7 +13,6 @@ add_text_multi(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  verbose = TRUE,
   token = NULL,
   pass_strategy = c("one", "all"),
   debug = FALSE,
@@ -53,11 +52,6 @@ add_text_multi(
   Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
   each created element. Default: \`"front"\`. Ignored for elements
   updated via \`element_id\`.
-
-- verbose:
-
-  Optional. A logical indicating whether to print API responses.
-  Default: TRUE.
 
 - token:
 
