@@ -19,6 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
+    <li><a class="dropdown-item" href="../articles/lazy-evaluation.html">Lazy Evaluation and Request Batching</a></li>
     <li><a class="dropdown-item" href="../articles/positioning-system.html">Positioning System</a></li>
     <li><a class="dropdown-item" href="../articles/styles.html">Text Styling and Style Rules</a></li>
   </ul></li>
@@ -44,6 +45,10 @@
       <small>Source: <a href="https://github.com/Adam-Hubbs/r2slides/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.9073" id="version-009073">Version 0.0.9073<a class="anchor" aria-label="anchor" href="#version-009073"></a></h2>
+<ul><li>New lazy evaluation strategy: use <code>set_evaluation_strategy("lazy")</code> to buffer API requests instead of executing them immediately, then flush with <code><a href="../reference/execute_requests.html">execute_requests()</a></code>. <code><a href="../reference/get_evaluation_strategy.html">get_evaluation_strategy()</a></code> returns the current setting. <code><a href="../reference/view_request_buffer.html">view_request_buffer()</a></code> inspects queued requests and <code><a href="../reference/clear_request_buffer.html">clear_request_buffer()</a></code> resets the buffer. <code>execute_requests(batch_all = TRUE)</code> (the default) merges all pending <code>batchUpdate</code> requests for the same presentation into a single API call.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.9070" id="version-009070">Version 0.0.9070<a class="anchor" aria-label="anchor" href="#version-009070"></a></h2>
 <ul><li>Initial support for tables</li>

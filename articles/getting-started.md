@@ -1,6 +1,7 @@
 # Getting Started
 
 ``` r
+
 library(r2slides)
 ```
 
@@ -21,6 +22,7 @@ takes a presentation ID, URL, name, or 1 row dribble object (see the
 excellent googledrive package) and registers it for use in r2slides.
 
 ``` r
+
 presentation <- new_presentation(title = "My Presentation")
 
 presentation2 <- register_presentation("Already existing presentation")
@@ -39,6 +41,7 @@ The Presentation class includes several helpful fields and methods. Here
 are a few that you are most likely to interact with:
 
 ``` r
+
 presentation$title # Returns the title of the presentation
 presentation$last_refreshed # Returns the last time the presentation was refreshed from Google Drive
 presentation$browse() # Opens the presentation in a browser
@@ -80,6 +83,7 @@ There are a variety of slide selection helpers that can be used to
 create slide objects.
 
 ``` r
+
 on_slide_url("<URL GOES HERE>") # Creates a slide object from a URL
 on_slide_id("slide_id") # Creates a slide object from a slide ID
 on_slide_number(2) # Creates a slide object that references the 2nd slide in a presentation

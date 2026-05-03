@@ -31,24 +31,25 @@ or
 [`add_text_multi()`](https://adam-hubbs.github.io/r2slides/reference/add_text_multi.md).
 
 Each argument corresponds to a visual property. Colors are currently
-specified as RGB vectors (values between 0 and 1)[¹](#fn1). Font size is
-in points.
+specified as RGB vectors (values between 0 and 1)[^1]. Font size is in
+points.
 
-| Property          | Type     | Description                                         |
-|-------------------|----------|-----------------------------------------------------|
-| `text_color`      | RGB list | Text color as `c(red, green, blue)` with values 0-1 |
-| `bg_color`        | RGB list | Background color as `c(red, green, blue)`           |
-| `font_size`       | Numeric  | Font size in points                                 |
-| `font_family`     | String   | Font family name                                    |
-| `bold`            | Logical  | Whether text is bold                                |
-| `italic`          | Logical  | Whether text is italic                              |
-| `underline`       | Logical  | Whether text is underlined                          |
-| `strikethrough`   | Logical  | Whether text has strikethrough                      |
-| `small_caps`      | Logical  | Whether text uses small capitals                    |
-| `baseline_offset` | Numeric  | Vertical offset in points                           |
-| `link`            | String   | URL for hyperlinked text                            |
+| Property | Type | Description |
+|----|----|----|
+| `text_color` | RGB list | Text color as `c(red, green, blue)` with values 0-1 |
+| `bg_color` | RGB list | Background color as `c(red, green, blue)` |
+| `font_size` | Numeric | Font size in points |
+| `font_family` | String | Font family name |
+| `bold` | Logical | Whether text is bold |
+| `italic` | Logical | Whether text is italic |
+| `underline` | Logical | Whether text is underlined |
+| `strikethrough` | Logical | Whether text has strikethrough |
+| `small_caps` | Logical | Whether text uses small capitals |
+| `baseline_offset` | Numeric | Vertical offset in points |
+| `link` | String | URL for hyperlinked text |
 
 ``` r
+
 title_style <- text_style(
   font_family = "Roboto",
   font_size   = 24,
@@ -70,6 +71,7 @@ Text styles can be combined using `+`. This allows you to define a base
 style and extend it in controlled ways.
 
 ``` r
+
 base_label <- text_style(
   font_family = "Roboto",
   font_size   = 12
@@ -91,7 +93,7 @@ with
 [`text_style()`](https://adam-hubbs.github.io/r2slides/reference/text_style.md).
 With the `+` operator, you cannot override styles, only add
 non-conflicting properties. This encourages a composable approach to
-styling where you build up styles from smaller pieces.[²](#fn2)
+styling where you build up styles from smaller pieces.[^2]
 
 Once you understand
 [`text_style()`](https://adam-hubbs.github.io/r2slides/reference/text_style.md),
@@ -124,6 +126,7 @@ Let’s begin with a simple example. Suppose we want positive numbers to
 appear green and negative numbers red.
 
 ``` r
+
 positive_style <- text_style(text_color = c(0.1, 0.6, 0.2))
 negative_style <- text_style(text_color = c(0.8, 0.2, 0.2))
 
@@ -148,6 +151,7 @@ Style rules can apply styles to specific parts of text by returning
 index ranges:
 
 ``` r
+
 estimate_style_rule <- style_rule(
   when = list(
     \() str_before(text, '±'),  # Returns c(start, end) indices
@@ -197,6 +201,7 @@ write a custom selection function that checks if the text is positive or
 negative and whether or not the result is significant:
 
 ``` r
+
 # Base style
 base_stat_sig_style <- text_style(font_size = 4, font_family = 'Roboto', bold = TRUE)
 
@@ -277,11 +282,9 @@ The pattern remains the same:
   or
   [`add_text_multi()`](https://adam-hubbs.github.io/r2slides/reference/add_text_multi.md)
 
-------------------------------------------------------------------------
+[^1]: Support for other color systems like hex codes, or the default
+    basic colors is coming soon
 
-1.  Support for other color systems like hex codes, or the default basic
-    colors is coming soon
-
-2.  You can use the combine_style() function to override styles. You
+[^2]: You can use the combine_style() function to override styles. You
     specify the text_style objects, then the priority argument. Priority
     can be set to first, last, or ‘error’ to match the behavior of `+`.

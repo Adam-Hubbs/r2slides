@@ -29,9 +29,10 @@ You create positions using the
 function, which takes coordinates and dimensions as its arguments. By
 default, slides are assumed to be 10 × 5.625 inches, matching Google
 Slides’ default dimensions, though you can specify different slide sizes
-when needed.[¹](#fn1)
+when needed.[^1]
 
 ``` r
+
 pos <- slide_position(
   top = 1,
   left = 2,
@@ -52,6 +53,7 @@ development, `slide_position` objects implement a
 makes it easy to inspect layouts without rendering a full slide:
 
 ``` r
+
 plot(pos)
 ```
 
@@ -70,6 +72,7 @@ center point. Critically, rotation doesn’t change the object’s intrinsic
 width and height—instead, it’s applied as an affine transformation.
 
 ``` r
+
 rotated <- slide_position(
   top = 1,
   left = 1,
@@ -116,6 +119,7 @@ width, and height—can be transformed independently using either a
 function or a scalar numeric value.
 
 ``` r
+
 base <- slide_position(1, 1, 4, 2)
 
 # Move the object right by 0.5 inches
@@ -158,6 +162,7 @@ calls repeatedly would quickly become tedious and error-prone. Instead,
 lets you capture transformation logic in reusable functions.
 
 ``` r
+
 annotation_transform <- define_relative_transformation_function(
   top_transformation = \(x) x - 0.5,
   width_transformation = 0.5,
@@ -170,6 +175,7 @@ transformed version. You can think of it as a version of
 relative_position, but with the transformations pre-programmed.
 
 ``` r
+
 add_text("Label", in_top_left() |> annotation_transform())
 ```
 
@@ -180,6 +186,7 @@ transformation functions for where to put a month to month change and a
 year to year change relative to the position of a chart.
 
 ``` r
+
 month2month <- define_relative_transformation_function(
   top_transformation = \(x) x -0.5,
   left_transformation = \(x) x + 0.13,
@@ -220,6 +227,7 @@ spatial relationships between different element types. Finally, you
 apply these transformations when adding content to slides.
 
 ``` r
+
 chart_pos <- in_top_left()
 
 # Add the chart
@@ -249,9 +257,7 @@ transformation functions that can be reused and adjusted independently
 of the content-adding code. This separation of concerns leads to code
 that’s easier to read, maintain, and scale across large presentations.
 
-------------------------------------------------------------------------
-
-1.  This is implemented through the slide_slide, old_slide_size, and
+[^1]: This is implemented through the slide_slide, old_slide_size, and
     convert arguments. This makes it possible to build your slide
     position objects with another system (say PowerPoint) that has
     different slide sizes, and automatically convert them to the google

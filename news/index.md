@@ -1,5 +1,20 @@
 # Changelog
 
+## Version 0.0.9073
+
+- New lazy evaluation strategy: use `set_evaluation_strategy("lazy")` to
+  buffer API requests instead of executing them immediately, then flush
+  with
+  [`execute_requests()`](https://adam-hubbs.github.io/r2slides/reference/execute_requests.md).
+  [`get_evaluation_strategy()`](https://adam-hubbs.github.io/r2slides/reference/get_evaluation_strategy.md)
+  returns the current setting.
+  [`view_request_buffer()`](https://adam-hubbs.github.io/r2slides/reference/view_request_buffer.md)
+  inspects queued requests and
+  [`clear_request_buffer()`](https://adam-hubbs.github.io/r2slides/reference/clear_request_buffer.md)
+  resets the buffer. `execute_requests(batch_all = TRUE)` (the default)
+  merges all pending `batchUpdate` requests for the same presentation
+  into a single API call.
+
 ## Version 0.0.9070
 
 - Initial support for tables

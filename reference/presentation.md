@@ -234,7 +234,8 @@ Character vector of slide object IDs
 
 ### Method `get_slide_notes_text()`
 
-Get the speaker notes text for a slide
+Get the speaker notes text for a slide. Does not refresh; caller is
+responsible for refreshing first.
 
 #### Usage
 

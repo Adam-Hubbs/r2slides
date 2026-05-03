@@ -15,6 +15,7 @@ look at the articles on the website.
 ## Example Workflow
 
 ``` r
+
 chart_data |>
   write_gs("Seahawks vs Dolphins Points Per Game") |>
   get_chart_id() |>

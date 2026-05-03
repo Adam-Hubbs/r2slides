@@ -14,6 +14,8 @@
   : Convert a table object to an r2slides_table
 - [`bounding_box()`](https://adam-hubbs.github.io/r2slides/reference/bounding_box.md)
   : Calculate Bounding Box for Slide Position Objects
+- [`clear_request_buffer()`](https://adam-hubbs.github.io/r2slides/reference/clear_request_buffer.md)
+  : Clear the request buffer
 - [`combine_style()`](https://adam-hubbs.github.io/r2slides/reference/combine_style.md)
   : Combine Text Styles
 - [`correct_slide_size()`](https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.md)
@@ -29,12 +31,16 @@
 - [`element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
   [`text_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
   : Element Object
+- [`execute_requests()`](https://adam-hubbs.github.io/r2slides/reference/execute_requests.md)
+  : Execute buffered API requests
 - [`get_active_presentation()`](https://adam-hubbs.github.io/r2slides/reference/get_active_presentation.md)
   : Get the currently active presentation
 - [`get_all_elements()`](https://adam-hubbs.github.io/r2slides/reference/get_all_elements.md)
   : Get all elements in a slide
 - [`get_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/get_chart_id.md)
   : Get chart_id from a Google Sheet
+- [`get_evaluation_strategy()`](https://adam-hubbs.github.io/r2slides/reference/get_evaluation_strategy.md)
+  : Get the current request evaluation strategy
 - [`get_safe_length()`](https://adam-hubbs.github.io/r2slides/reference/get_safe_length.md)
   : Get the length of an argument
 - [`in_qualtrics_title()`](https://adam-hubbs.github.io/r2slides/reference/in_qualtrics_title.md)
@@ -87,6 +93,8 @@
   : Change the Z-order of a page element
 - [`set_defaults()`](https://adam-hubbs.github.io/r2slides/reference/set_defaults.md)
   : Set default style values
+- [`set_evaluation_strategy()`](https://adam-hubbs.github.io/r2slides/reference/set_evaluation_strategy.md)
+  : Set the request evaluation strategy
 - [`in_top_left()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
   [`in_top_middle()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
   [`in_top_right()`](https://adam-hubbs.github.io/r2slides/reference/slide-position-helpers.md)
@@ -111,5 +119,7 @@
   : Text styling properties
 - [`transparent_color()`](https://adam-hubbs.github.io/r2slides/reference/transparent_color.md)
   : Color with optional alpha for use in fills
+- [`view_request_buffer()`](https://adam-hubbs.github.io/r2slides/reference/view_request_buffer.md)
+  : View the pending request buffer
 - [`write_gs()`](https://adam-hubbs.github.io/r2slides/reference/write_gs.md)
   : Writes data to a Google Sheet
