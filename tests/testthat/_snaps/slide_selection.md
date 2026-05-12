@@ -89,7 +89,7 @@
 # on_slide_with_notes() errors by default when multiple slides match
 
     Code
-      on_slide_with_notes("^Notes", match = "regex", ps = ps)
+      on_slide_with_notes("^Notes", exact = FALSE, ps = ps)
     Condition
       Error in `on_slide_with_notes()`:
       ! 2 slides found whose notes match "^Notes"

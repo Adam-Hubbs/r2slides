@@ -7,292 +7,312 @@
 An R6 class to represent and manipulate Google Slides presentations.
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{title}}{The title of the presentation}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{title}}{The title of the presentation}
 
-\item{\code{presentation_id}}{The Google Slides presentation ID}
+    \item{\code{presentation_id}}{The Google Slides presentation ID}
 
-\item{\code{page_size}}{Dimensions of slides (height and width in PTs)}
+    \item{\code{page_size}}{Dimensions of slides (height and width in PTs)}
 
-\item{\code{revision_id}}{The current revision ID from Google Drive}
+    \item{\code{revision_id}}{The current revision ID from Google Drive}
 
-\item{\code{locale}}{The presentation locale (e.g., "en")}
+    \item{\code{locale}}{The presentation locale (e.g., "en")}
 
-\item{\code{masters}}{List of master slide metadata}
+    \item{\code{masters}}{List of master slide metadata}
 
-\item{\code{layouts}}{List of layout slide metadata}
+    \item{\code{layouts}}{List of layout slide metadata}
 
-\item{\code{last_refreshed}}{Timestamp of last refresh from API}
-}
-\if{html}{\out{</div>}}
+    \item{\code{last_refreshed}}{Timestamp of last refresh from API}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-presentation-new}{\code{presentation$new()}}
-\item \href{#method-presentation-refresh}{\code{presentation$refresh()}}
-\item \href{#method-presentation-delete}{\code{presentation$delete()}}
-\item \href{#method-presentation-copy}{\code{presentation$copy()}}
-\item \href{#method-presentation-get_slide_by_index}{\code{presentation$get_slide_by_index()}}
-\item \href{#method-presentation-get_slide_by_id}{\code{presentation$get_slide_by_id()}}
-\item \href{#method-presentation-get_slide_index}{\code{presentation$get_slide_index()}}
-\item \href{#method-presentation-get_slide_ids}{\code{presentation$get_slide_ids()}}
-\item \href{#method-presentation-get_slide_notes_text}{\code{presentation$get_slide_notes_text()}}
-\item \href{#method-presentation-set_active}{\code{presentation$set_active()}}
-\item \href{#method-presentation-set_not_active}{\code{presentation$set_not_active()}}
-\item \href{#method-presentation-is_active}{\code{presentation$is_active()}}
-\item \href{#method-presentation-get_url}{\code{presentation$get_url()}}
-\item \href{#method-presentation-browse}{\code{presentation$browse()}}
-\item \href{#method-presentation-get_elements}{\code{presentation$get_elements()}}
-\item \href{#method-presentation-add_to_ledger}{\code{presentation$add_to_ledger()}}
-\item \href{#method-presentation-print}{\code{presentation$print()}}
-}
+  \itemize{
+    \item \href{#method-presentation-initialize}{\code{presentation$new()}}
+    \item \href{#method-presentation-refresh}{\code{presentation$refresh()}}
+    \item \href{#method-presentation-delete}{\code{presentation$delete()}}
+    \item \href{#method-presentation-copy}{\code{presentation$copy()}}
+    \item \href{#method-presentation-get_slide_by_index}{\code{presentation$get_slide_by_index()}}
+    \item \href{#method-presentation-get_slide_by_id}{\code{presentation$get_slide_by_id()}}
+    \item \href{#method-presentation-get_slide_index}{\code{presentation$get_slide_index()}}
+    \item \href{#method-presentation-get_slide_ids}{\code{presentation$get_slide_ids()}}
+    \item \href{#method-presentation-get_slide_notes_text}{\code{presentation$get_slide_notes_text()}}
+    \item \href{#method-presentation-set_active}{\code{presentation$set_active()}}
+    \item \href{#method-presentation-set_not_active}{\code{presentation$set_not_active()}}
+    \item \href{#method-presentation-is_active}{\code{presentation$is_active()}}
+    \item \href{#method-presentation-get_url}{\code{presentation$get_url()}}
+    \item \href{#method-presentation-browse}{\code{presentation$browse()}}
+    \item \href{#method-presentation-get_elements}{\code{presentation$get_elements()}}
+    \item \href{#method-presentation-add_to_ledger}{\code{presentation$add_to_ledger()}}
+    \item \href{#method-presentation-print}{\code{presentation$print()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-presentation-new"></a>}}
-\if{latex}{\out{\hypertarget{method-presentation-new}{}}}
-\subsection{Method \code{new()}}{
-Create or open a presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$new(id = NULL, title = "Untitled Presentation", set_active = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-presentation-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-presentation-initialize}{}}}
+\subsection{\code{presentation$new()}}{
+  Create or open a presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$new(id = NULL, title = "Untitled Presentation", set_active = TRUE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{id}}{Presentation ID, URL, name, or NULL to create new}
+      \item{\code{title}}{Title for new presentation (only used if id is NULL)}
+      \item{\code{set_active}}{Whether to make this the active presentation}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new `presentation` object
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{id}}{Presentation ID, URL, name, or NULL to create new}
-
-\item{\code{title}}{Title for new presentation (only used if id is NULL)}
-
-\item{\code{set_active}}{Whether to make this the active presentation}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new `presentation` object
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-refresh"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-refresh}{}}}
-\subsection{Method \code{refresh()}}{
-Refresh presentation data from Google Slides API
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$refresh()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$refresh()}}{
+  Refresh presentation data from Google Slides API
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$refresh()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Self, invisibly (for method chaining)
+  }
 }
 
-\subsection{Returns}{
-Self, invisibly (for method chaining)
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-delete"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-delete}{}}}
-\subsection{Method \code{delete()}}{
-Delete the presentation from Google Drive
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$delete()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$delete()}}{
+  Delete the presentation from Google Drive
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$delete()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    NULL, invisibly
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{permanent}}{Whether to permanently delete (TRUE) or move to trash (FALSE)}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-NULL, invisibly
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-copy"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-copy}{}}}
-\subsection{Method \code{copy()}}{
-Create a copy of the presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$copy(name = NULL)}\if{html}{\out{</div>}}
+\subsection{\code{presentation$copy()}}{
+  Create a copy of the presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$copy(name = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{Name for the copy (defaults to "Copy of original_name")}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new presentation object for the copy
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Name for the copy (defaults to "Copy of original_name")}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new presentation object for the copy
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-get_slide_by_index"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_slide_by_index}{}}}
-\subsection{Method \code{get_slide_by_index()}}{
-Get slide object from the presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_by_index(index)}\if{html}{\out{</div>}}
+\subsection{\code{presentation$get_slide_by_index()}}{
+  Get slide object from the presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$get_slide_by_index(index)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{index}}{Index of the slide to return (1-based)}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A slide object
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{index}}{Index of the slide to return (1-based)}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A slide object
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-get_slide_by_id"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_slide_by_id}{}}}
-\subsection{Method \code{get_slide_by_id()}}{
-Get slide object from the presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_by_id(slide_id)}\if{html}{\out{</div>}}
+\subsection{\code{presentation$get_slide_by_id()}}{
+  Get slide object from the presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$get_slide_by_id(slide_id)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{slide_id}}{ID of the slide to return}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A slide object
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{slide_id}}{ID of the slide to return}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A slide object
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-get_slide_index"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_slide_index}{}}}
-\subsection{Method \code{get_slide_index()}}{
-Get the position of a slide in the presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_index(slide)}\if{html}{\out{</div>}}
+\subsection{\code{presentation$get_slide_index()}}{
+  Get the position of a slide in the presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$get_slide_index(slide)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{slide}}{A slide object}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Index of the slide
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{slide}}{A slide object}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Index of the slide
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-get_slide_ids"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_slide_ids}{}}}
-\subsection{Method \code{get_slide_ids()}}{
-Get slide IDs from the presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_ids()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$get_slide_ids()}}{
+  Get slide IDs from the presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$get_slide_ids()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Character vector of slide object IDs
+  }
 }
 
-\subsection{Returns}{
-Character vector of slide object IDs
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-get_slide_notes_text"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_slide_notes_text}{}}}
-\subsection{Method \code{get_slide_notes_text()}}{
-Get the speaker notes text for a slide.
+\subsection{\code{presentation$get_slide_notes_text()}}{
+  Get the speaker notes text for a slide.
 Does not refresh; caller is responsible for refreshing first.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_slide_notes_text(slide_id)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$get_slide_notes_text(slide_id)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{slide_id}}{ID of the slide}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A single character string (empty string if no notes)
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{slide_id}}{ID of the slide}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A single character string (empty string if no notes)
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-set_active"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-set_active}{}}}
-\subsection{Method \code{set_active()}}{
-Set this presentation as the active one
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$set_active()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$set_active()}}{
+  Set this presentation as the active one
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$set_active()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Self, invisibly (for method chaining)
+  }
 }
 
-\subsection{Returns}{
-Self, invisibly (for method chaining)
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-set_not_active"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-set_not_active}{}}}
-\subsection{Method \code{set_not_active()}}{
-Set this presentation to not active
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$set_not_active()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$set_not_active()}}{
+  Set this presentation to not active
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$set_not_active()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Self, invisibly (for method chaining)
+  }
 }
 
-\subsection{Returns}{
-Self, invisibly (for method chaining)
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-is_active"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-is_active}{}}}
-\subsection{Method \code{is_active()}}{
-Check if this is the active presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$is_active()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$is_active()}}{
+  Check if this is the active presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$is_active()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Logical
+  }
 }
 
-\subsection{Returns}{
-Logical
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-get_url"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_url}{}}}
-\subsection{Method \code{get_url()}}{
-Get the Google Slides URL for this presentation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_url()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$get_url()}}{
+  Get the Google Slides URL for this presentation
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$get_url()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Character URL or NULL
+  }
 }
 
-\subsection{Returns}{
-Character URL or NULL
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-browse"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-browse}{}}}
-\subsection{Method \code{browse()}}{
-Open the presentation in a browser
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$browse()}\if{html}{\out{</div>}}
+\subsection{\code{presentation$browse()}}{
+  Open the presentation in a browser
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$browse()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Self, invisibly (for method chaining)
+Get elements from the presentation
+  }
 }
 
-\subsection{Returns}{
-Self, invisibly (for method chaining)
-Get elements from the presentation
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-get_elements"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-get_elements}{}}}
-\subsection{Method \code{get_elements()}}{
-Filter the elements you have constructed to return a list of elements
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$get_elements(
+\subsection{\code{presentation$get_elements()}}{
+  Filter the elements you have constructed to return a list of elements
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$get_elements(
   modified_since = NULL,
   modified_end = NULL,
   created_since = NULL,
@@ -300,73 +320,69 @@ Filter the elements you have constructed to return a list of elements
   element_type = NULL,
   element_text = NULL,
   show_deleted = FALSE
-)}\if{html}{\out{</div>}}
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{modified_since}}{Optional. Only return elements modified since this time}
+      \item{\code{modified_end}}{Optional. Only return elements modified before this time}
+      \item{\code{created_since}}{Optional. Only return elements created since this time}
+      \item{\code{created_end}}{Optional. Only return elements created before this time}
+      \item{\code{element_type}}{Optional. Only return elements of this type}
+      \item{\code{element_text}}{Optional. Only return elements with this text}
+      \item{\code{show_deleted}}{Optional. Show deleted elements}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    List of elements
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{modified_since}}{Optional. Only return elements modified since this time}
-
-\item{\code{modified_end}}{Optional. Only return elements modified before this time}
-
-\item{\code{created_since}}{Optional. Only return elements created since this time}
-
-\item{\code{created_end}}{Optional. Only return elements created before this time}
-
-\item{\code{element_type}}{Optional. Only return elements of this type}
-
-\item{\code{element_text}}{Optional. Only return elements with this text}
-
-\item{\code{show_deleted}}{Optional. Show deleted elements}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-List of elements
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-add_to_ledger"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-add_to_ledger}{}}}
-\subsection{Method \code{add_to_ledger()}}{
-Add an element to the ledger
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$add_to_ledger(element_id, slide_id, element_type, element_text)}\if{html}{\out{</div>}}
+\subsection{\code{presentation$add_to_ledger()}}{
+  Add an element to the ledger
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$add_to_ledger(element_id, slide_id, element_type, element_text)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{element_id}}{Element ID}
+      \item{\code{slide_id}}{Slide ID}
+      \item{\code{element_type}}{Element type}
+      \item{\code{element_text}}{Element text}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    Self
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{element_id}}{Element ID}
-
-\item{\code{slide_id}}{Slide ID}
-
-\item{\code{element_type}}{Element type}
-
-\item{\code{element_text}}{Element text}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Self
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-presentation-print"></a>}}
 \if{latex}{\out{\hypertarget{method-presentation-print}{}}}
-\subsection{Method \code{print()}}{
-Print method for presentation objects
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{presentation$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{presentation$print()}}{
+  Print method for presentation objects
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{presentation$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Additional arguments (unused)}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Additional arguments (unused)}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

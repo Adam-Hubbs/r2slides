@@ -2,7 +2,14 @@
 % Please edit documentation in R/zzz-peek.R
 \name{peek}
 \alias{peek}
+\alias{peek,r2slides::slide-method}
 \title{Peek at a slide}
+\usage{
+peek(x, ...)
+
+## S7 method for class <r2slides::slide>
+peek(x)
+}
 \arguments{
 \item{x}{A slide object}
 }

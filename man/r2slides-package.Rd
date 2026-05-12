@@ -19,5 +19,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Adam Hubbs \email{adam@y2analytics.com}
 
+Authors:
+\itemize{
+  \item Adam Hubbs \email{adam@y2analytics.com}
+}
+
 }
 \keyword{internal}

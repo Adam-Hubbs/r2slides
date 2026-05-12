@@ -16,12 +16,7 @@ on_slide_number(n, ps)
 
 on_slide_after(slide, offset = 1, ps)
 
-on_slide_with_notes(
-  text,
-  match = c("exact", "regex"),
-  on_multiple = c("error", "return"),
-  ps
-)
+on_slide_with_notes(text, exact = TRUE, on_multiple = c("error", "return"), ps)
 }
 \arguments{
 \item{id}{A slide identifier. Can be either:
@@ -39,11 +34,17 @@ on_slide_with_notes(
 
 \item{offset}{A position integer - the number of slides after the reference slide. Can be negative to return slides before the reference slide}
 
-\item{text}{A string to search for in slide speaker notes}
+\item{text}{A string to search for in slide speaker notes. By default
+(\code{exact = TRUE}), the notes must equal \code{text} exactly. Pass a
+\code{\link[stringr]{stringr-pattern}} object (e.g.
+\code{stringr::regex(...)}, \code{stringr::fixed(...)},
+\code{stringr::coll(...)}) as \code{text} to use a different matching
+strategy.}
 
-\item{match}{How to match \code{text} against notes: \code{"exact"} requires
-an identical string; \code{"regex"} treats \code{text} as a Perl-compatible
-regular expression}
+\item{exact}{Logical. When \code{TRUE} (default) the full notes string must
+equal \code{text}. When \code{FALSE}, the notes need only \emph{contain}
+\code{text} (matched as a Perl-compatible regular expression via
+\code{\link[stringr]{regex}}).}
 
 \item{on_multiple}{What to do when multiple slides match: \code{"error"}
 (default) raises an error listing the matching slide numbers; \code{"return"}

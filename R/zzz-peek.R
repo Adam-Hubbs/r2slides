@@ -1,6 +1,3 @@
-peek <- S7::new_generic("peek", "x")
-
-
 #' Peek at a slide
 #'
 #' @description
@@ -9,6 +6,11 @@ peek <- S7::new_generic("peek", "x")
 #' @param x A slide object
 #'
 #' @name peek
+#' @export
+peek <- S7::new_generic("peek", "x")
+
+
+#' @rdname peek
 #' @export
 method(peek, slide) <- function(x) {
   url <- query(

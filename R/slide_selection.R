@@ -76,7 +76,6 @@ slide <- S7::new_class(
   }
 )
 
-# Check that this works
 S7::method(`==`, list(slide, slide)) <- function(e1, e2) {
   return(e1@slide_hash == e2@slide_hash)
 }
@@ -191,10 +190,16 @@ on_slide_after <- function(slide, offset = 1, ps) {
 }
 
 
-#' @param text A string to search for in slide speaker notes
-#' @param match How to match \code{text} against notes: \code{"exact"} requires
-#'   an identical string; \code{"regex"} treats \code{text} as a Perl-compatible
-#'   regular expression
+#' @param text A string to search for in slide speaker notes. By default
+#'   (\code{exact = TRUE}), the notes must equal \code{text} exactly. Pass a
+#'   \code{\link[stringr]{stringr-pattern}} object (e.g.
+#'   \code{stringr::regex(...)}, \code{stringr::fixed(...)},
+#'   \code{stringr::coll(...)}) as \code{text} to use a different matching
+#'   strategy.
+#' @param exact Logical. When \code{TRUE} (default) the full notes string must
+#'   equal \code{text}. When \code{FALSE}, the notes need only \emph{contain}
+#'   \code{text} (matched as a Perl-compatible regular expression via
+#'   \code{\link[stringr]{regex}}).
 #' @param on_multiple What to do when multiple slides match: \code{"error"}
 #'   (default) raises an error listing the matching slide numbers; \code{"return"}
 #'   returns all matches as a named list of slide objects (names are slide IDs)
@@ -202,7 +207,7 @@ on_slide_after <- function(slide, offset = 1, ps) {
 #' @export
 on_slide_with_notes <- function(
   text,
-  match = c("exact", "regex"),
+  exact = TRUE,
   on_multiple = c("error", "return"),
   ps
 ) {
@@ -210,8 +215,8 @@ on_slide_with_notes <- function(
     ps <- get_active_presentation()
   }
 
-  match <- rlang::arg_match(match)
   on_multiple <- rlang::arg_match(on_multiple)
+  rlang::check_bool(exact)
 
   if (!is.character(text) || length(text) != 1 || is.na(text)) {
     cli::cli_abort("{.arg text} must be a single non-NA string")
@@ -224,19 +229,48 @@ on_slide_with_notes <- function(
   }
 
   notes <- purrr::map_chr(slide_ids, ~ ps$get_slide_notes_text(.x))
+  pattern_class <- class(text)[[1]]
 
-  matched <- if (match == "exact") {
-    notes == text
+  if (exact) {
+    if (inherits(text, 'stringr_pattern')) {
+      cli::cli_warn(c(
+        "{.arg text} is a {.cls {pattern_class}} pattern object, but {.arg exact} is {.val TRUE}.",
+        "i" = "The pattern modifier is ignored and an exact string match will be performed.",
+        "i" = "Set {.code exact = FALSE} to use {.cls {pattern_class}} pattern matching."
+      ))
+    }
+    # Using str_equal instead of == here because there are different unicode ways to specify the same thing. This catches if they are displayed the same.
+    matched <- stringr::str_equal(notes, text)
   } else {
-    grepl(text, notes, perl = TRUE)
+    matched <- stringr::str_detect(notes, text)
   }
 
   n_matched <- sum(matched)
 
   if (n_matched == 0) {
-    cli::cli_abort(
-      "No slides found whose notes {if (match == 'exact') 'equal' else 'match'} {.val {text}}"
-    )
+    if (
+      !exact &&
+        !(pattern_class %in%
+          c(
+            'stringr_pattern',
+            'stringr_fixed',
+            'stringr_coll',
+            'stringr_regex'
+          ))
+    ) {
+      matched <- stringr::str_detect(notes, coll(text))
+      if (sum(matched) > 0) {
+        cli::cli_abort(c(
+          "x" = "No slides found whose notes match the regex {.val {text}}",
+          "i" = "Matches were found when searching using standard Unicode collation rules.",
+          "i" = "Use {.code on_slide_with_notes(coll(\"{text}\"))} to search using standard Unicode collation rules instead of regex."
+        ))
+      }
+    } else {
+      cli::cli_abort(
+        "No slides found whose notes {if (exact) 'equal' else 'match'} {.val {text}}"
+      )
+    }
   }
 
   matched_ids <- slide_ids[matched]
@@ -251,7 +285,7 @@ on_slide_with_notes <- function(
   if (on_multiple == "error") {
     if (n_matched > 1) {
       cli::cli_abort(c(
-        "{n_matched} slides found whose notes {if (match == 'exact') 'equal' else 'match'} {.val {text}}",
+        "{n_matched} slides found whose notes {if (exact) 'equal' else 'match'} {.val {text}}",
         "i" = "Matched slide numbers: {matched_indices}",
         "i" = "Use {.code on_multiple = 'return'} to retrieve all matches"
       ))

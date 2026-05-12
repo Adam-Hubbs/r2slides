@@ -148,7 +148,7 @@ test_that("on_slide_with_notes() finds a slide using regex matching", {
     {
       ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
       # Slide 4 is the only slide whose notes contain "hopefully"
-      result <- on_slide_with_notes("hopefully", match = "regex", ps = ps)
+      result <- on_slide_with_notes("hopefully", exact = FALSE, ps = ps)
     }
   )
 
@@ -168,7 +168,7 @@ test_that("on_slide_with_notes() errors by default when multiple slides match", 
   # "^Notes" matches both slide 4 ("Notes hopefully they match") and slide 5 ("Notes")
   expect_snapshot(
     error = TRUE,
-    on_slide_with_notes("^Notes", match = "regex", ps = ps)
+    on_slide_with_notes("^Notes", exact = FALSE, ps = ps)
   )
 })
 
@@ -180,7 +180,7 @@ test_that("on_slide_with_notes() returns all matches when on_multiple = 'return'
       ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
       result <- on_slide_with_notes(
         "^Notes",
-        match = "regex",
+        exact = FALSE,
         on_multiple = "return",
         ps = ps
       )
