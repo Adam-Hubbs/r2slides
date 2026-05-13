@@ -68,7 +68,7 @@
   [`on_slide_after()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   [`on_slide_with_notes()`](https://adam-hubbs.github.io/r2slides/reference/on_slide_id.md)
   : Create a slide object
-- [`peek`](https://adam-hubbs.github.io/r2slides/reference/peek.md) :
+- [`peek()`](https://adam-hubbs.github.io/r2slides/reference/peek.md) :
   Peek at a slide
 - [`presentation`](https://adam-hubbs.github.io/r2slides/reference/presentation.md)
   : R6 Class for Google Slides Presentations

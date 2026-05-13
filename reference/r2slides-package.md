@@ -15,3 +15,7 @@ Useful links:
 ## Author
 
 **Maintainer**: Adam Hubbs <adam@y2analytics.com>
+
+Authors:
+
+- Adam Hubbs <adam@y2analytics.com>

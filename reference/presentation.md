@@ -40,7 +40,7 @@ An R6 class to represent and manipulate Google Slides presentations.
 
 ### Public methods
 
-- [`presentation$new()`](#method-presentation-new)
+- [`presentation$new()`](#method-presentation-initialize)
 
 - [`presentation$refresh()`](#method-presentation-refresh)
 
@@ -76,7 +76,7 @@ An R6 class to represent and manipulate Google Slides presentations.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `presentation$new()`
 
 Create or open a presentation
 
@@ -104,7 +104,7 @@ A new \`presentation\` object
 
 ------------------------------------------------------------------------
 
-### Method `refresh()`
+### `presentation$refresh()`
 
 Refresh presentation data from Google Slides API
 
@@ -118,7 +118,7 @@ Self, invisibly (for method chaining)
 
 ------------------------------------------------------------------------
 
-### Method `delete()`
+### `presentation$delete()`
 
 Delete the presentation from Google Drive
 
@@ -126,19 +126,13 @@ Delete the presentation from Google Drive
 
     presentation$delete()
 
-#### Arguments
-
-- `permanent`:
-
-  Whether to permanently delete (TRUE) or move to trash (FALSE)
-
 #### Returns
 
 NULL, invisibly
 
 ------------------------------------------------------------------------
 
-### Method `copy()`
+### `presentation$copy()`
 
 Create a copy of the presentation
 
@@ -158,7 +152,7 @@ A new presentation object for the copy
 
 ------------------------------------------------------------------------
 
-### Method `get_slide_by_index()`
+### `presentation$get_slide_by_index()`
 
 Get slide object from the presentation
 
@@ -178,7 +172,7 @@ A slide object
 
 ------------------------------------------------------------------------
 
-### Method `get_slide_by_id()`
+### `presentation$get_slide_by_id()`
 
 Get slide object from the presentation
 
@@ -198,7 +192,7 @@ A slide object
 
 ------------------------------------------------------------------------
 
-### Method `get_slide_index()`
+### `presentation$get_slide_index()`
 
 Get the position of a slide in the presentation
 
@@ -218,7 +212,7 @@ Index of the slide
 
 ------------------------------------------------------------------------
 
-### Method `get_slide_ids()`
+### `presentation$get_slide_ids()`
 
 Get slide IDs from the presentation
 
@@ -232,7 +226,7 @@ Character vector of slide object IDs
 
 ------------------------------------------------------------------------
 
-### Method `get_slide_notes_text()`
+### `presentation$get_slide_notes_text()`
 
 Get the speaker notes text for a slide. Does not refresh; caller is
 responsible for refreshing first.
@@ -253,7 +247,7 @@ A single character string (empty string if no notes)
 
 ------------------------------------------------------------------------
 
-### Method `set_active()`
+### `presentation$set_active()`
 
 Set this presentation as the active one
 
@@ -267,7 +261,7 @@ Self, invisibly (for method chaining)
 
 ------------------------------------------------------------------------
 
-### Method `set_not_active()`
+### `presentation$set_not_active()`
 
 Set this presentation to not active
 
@@ -281,7 +275,7 @@ Self, invisibly (for method chaining)
 
 ------------------------------------------------------------------------
 
-### Method `is_active()`
+### `presentation$is_active()`
 
 Check if this is the active presentation
 
@@ -295,7 +289,7 @@ Logical
 
 ------------------------------------------------------------------------
 
-### Method `get_url()`
+### `presentation$get_url()`
 
 Get the Google Slides URL for this presentation
 
@@ -309,7 +303,7 @@ Character URL or NULL
 
 ------------------------------------------------------------------------
 
-### Method `browse()`
+### `presentation$browse()`
 
 Open the presentation in a browser
 
@@ -323,7 +317,7 @@ Self, invisibly (for method chaining) Get elements from the presentation
 
 ------------------------------------------------------------------------
 
-### Method `get_elements()`
+### `presentation$get_elements()`
 
 Filter the elements you have constructed to return a list of elements
 
@@ -375,7 +369,7 @@ List of elements
 
 ------------------------------------------------------------------------
 
-### Method `add_to_ledger()`
+### `presentation$add_to_ledger()`
 
 Add an element to the ledger
 
@@ -407,7 +401,7 @@ Self
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `presentation$print()`
 
 Print method for presentation objects
 

@@ -15,12 +15,7 @@ on_slide_number(n, ps)
 
 on_slide_after(slide, offset = 1, ps)
 
-on_slide_with_notes(
-  text,
-  match = c("exact", "regex"),
-  on_multiple = c("error", "return"),
-  ps
-)
+on_slide_with_notes(text, exact = TRUE, on_multiple = c("error", "return"), ps)
 ```
 
 ## Arguments
@@ -53,13 +48,18 @@ on_slide_with_notes(
 
 - text:
 
-  A string to search for in slide speaker notes
+  A string to search for in slide speaker notes. By default
+  (`exact = TRUE`), the notes must equal `text` exactly. Pass a
+  `stringr-pattern` object (e.g. `stringr::regex(...)`,
+  `stringr::fixed(...)`, `stringr::coll(...)`) as `text` to use a
+  different matching strategy.
 
-- match:
+- exact:
 
-  How to match `text` against notes: `"exact"` requires an identical
-  string; `"regex"` treats `text` as a Perl-compatible regular
-  expression
+  Logical. When `TRUE` (default) the full notes string must equal
+  `text`. When `FALSE`, the notes need only *contain* `text` (matched as
+  a Perl-compatible regular expression via
+  [`regex`](https://stringr.tidyverse.org/reference/modifiers.html)).
 
 - on_multiple:
 
