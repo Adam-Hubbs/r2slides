@@ -2,11 +2,14 @@
 
 [![Codecov test coverage](https://codecov.io/gh/Adam-Hubbs/r2slides/graph/badge.svg)](https://app.codecov.io/gh/Adam-Hubbs/r2slides) [![R-CMD-check](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml)
 
-r2slides is a package designed to create and modify google slides presentations in R.
+r2slides is a package designed to create and modify Google Slides presentations in R.
 
-To install r2slides, run `pak::pkg_install('Adam-Hubbs/r2slides)`
+To install r2slides, run 
+```r
+pak::pkg_install("Adam-Hubbs/r2slides")
+```
 
-To get a more in depth understanding of the main systems in r2slides, look at the articles on the website.
+For a more in-depth overview of the main systems, look at the [articles on the package website](https://adam-hubbs.github.io/r2slides/).
 
 ## Example Workflow
 
