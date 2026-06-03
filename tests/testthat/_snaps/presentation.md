@@ -112,7 +112,7 @@
       
       Title: r2slides testing presentation
       ID: 1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
-      Slides: 0
+      Slides: 8
       Active: No
       Last refreshed: <timestamp>
       <https://docs.google.com/presentation/d/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY>

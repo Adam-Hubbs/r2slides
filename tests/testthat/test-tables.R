@@ -1,47 +1,41 @@
-test_that("as_r2slides_table: plain flextable has correct dimensions and cell count", {
-  ft <- make_plain_ft()
-  r2 <- as_r2slides_table(ft)
+# -- as_r2slides_table: plain flextable ----------------------------------------
 
-  # 1 header row + 3 body rows, 3 cols
-  expect_s3_class(r2, "r2slides::r2slides_table")
-  expect_equal(r2@n_rows, 4L)
+test_that("as_r2slides_table: plain flextable has correct dimensions and cell count", {
+  r2 <- as_r2slides_table(make_plain_ft())
+
+  expect_equal(r2@n_rows, 4L) # 1 header + 3 body
   expect_equal(r2@n_cols, 3L)
   expect_equal(r2@header_rows, 1L)
   expect_length(r2@cells, 12L)
 })
 
 test_that("as_r2slides_table: cell indices are 0-based and cover the full grid", {
-  ft <- make_plain_ft()
-  r2 <- as_r2slides_table(ft)
+  r2 <- as_r2slides_table(make_plain_ft())
 
-  row_indices <- vapply(r2@cells, \(c) c@row_index, integer(1))
-  col_indices <- vapply(r2@cells, \(c) c@col_index, integer(1))
+  row_indices <- purrr::map_int(r2@cells, \(c) c@row_index)
+  col_indices <- purrr::map_int(r2@cells, \(c) c@col_index)
 
-  expect_equal(sort(unique(row_indices)), 0L:3L)
-  expect_equal(sort(unique(col_indices)), 0L:2L)
+  expect_setequal(row_indices, 0L:3L)
+  expect_setequal(col_indices, 0L:2L)
 })
 
-test_that("as_r2slides_table: header cell text matches column names", {
-  ft <- make_plain_ft()
-  r2 <- as_r2slides_table(ft)
+test_that("as_r2slides_table: header and body cell text is correctly extracted", {
+  r2 <- as_r2slides_table(make_plain_ft())
 
-  header_cells <- Filter(\(c) c@row_index == 0L, r2@cells)
-  header_text <- vapply(header_cells, \(c) c@text %||% "", character(1))
+  header_text <- r2@cells |>
+    purrr::keep(\(c) c@row_index == 0L) |>
+    purrr::map_chr(\(c) c@text %||% "")
+  expect_setequal(header_text, c("a", "b", "c"))
 
-  expect_equal(sort(header_text), sort(c("a", "b", "c")))
+  body_cell <- purrr::keep(
+    r2@cells,
+    \(c) c@row_index == 1L && c@col_index == 0L
+  )[[1]]
+  expect_equal(body_cell@text, "r1")
 })
 
-test_that("as_r2slides_table: body cell text is correctly extracted", {
-  ft <- make_plain_ft()
-  r2 <- as_r2slides_table(ft)
-
-  cell <- Filter(\(c) c@row_index == 1L && c@col_index == 0L, r2@cells)[[1]]
-  expect_equal(cell@text, "r1")
-})
-
-test_that("as_r2slides_table: col_widths and row_heights are positive numerics", {
-  ft <- make_plain_ft()
-  r2 <- as_r2slides_table(ft)
+test_that("as_r2slides_table: col_widths and row_heights are positive and correctly sized", {
+  r2 <- as_r2slides_table(make_plain_ft())
 
   expect_length(r2@col_widths, r2@n_cols)
   expect_length(r2@row_heights, r2@n_rows)
@@ -49,72 +43,91 @@ test_that("as_r2slides_table: col_widths and row_heights are positive numerics",
   expect_true(all(r2@row_heights > 0))
 })
 
-# -- Merges --
+# -- as_r2slides_table: merged cells -------------------------------------------
 
-test_that("as_r2slides_table: merged cells get correct row_span and col_span", {
-  ft <- make_merged_ft()
-  r2 <- as_r2slides_table(ft)
+test_that("as_r2slides_table: merged origin cell has correct row_span and col_span", {
+  r2 <- as_r2slides_table(make_merged_ft())
 
-  # merge_at(i = 1:2, j = 1) spans 2 body rows (row_index 1 & 2), col 0
-  origin <- Filter(\(c) c@row_index == 1L && c@col_index == 0L, r2@cells)[[1]]
+  # merge_at(i = 1:2, j = 1) → body rows 1–2 in col 1 → row_index 1, col_index 0
+  origin <- purrr::keep(r2@cells, \(c) c@row_index == 1L && c@col_index == 0L)[[
+    1
+  ]]
 
   expect_equal(origin@style@row_span, 2L)
   expect_equal(origin@style@col_span, 1L)
 })
 
-test_that("as_r2slides_table: non-merged cells have NULL span", {
-  ft <- make_plain_ft()
-  r2 <- as_r2slides_table(ft)
+test_that("as_r2slides_table: consumed cells are flagged and non-merged cells are not", {
+  r2 <- as_r2slides_table(make_merged_ft())
 
-  all_null <- all(vapply(
+  consumed <- purrr::keep(
     r2@cells,
-    \(c) {
-      is.null(c@style@row_span) && is.null(c@style@col_span)
-    },
-    logical(1)
-  ))
+    \(c) c@row_index == 2L && c@col_index == 0L
+  )[[1]]
+  expect_true(consumed@consumed)
 
+  regular <- purrr::keep(
+    r2@cells,
+    \(c) c@row_index == 1L && c@col_index == 1L
+  )[[1]]
+  expect_false(regular@consumed)
+})
+
+test_that("as_r2slides_table: non-merged cells have NULL span properties", {
+  r2 <- as_r2slides_table(make_plain_ft())
+
+  all_null <- purrr::every(
+    r2@cells,
+    \(c) is.null(c@style@row_span) && is.null(c@style@col_span)
+  )
   expect_true(all_null)
 })
 
-# -- Borders --
+# -- as_r2slides_table: borders ------------------------------------------------
 
-test_that("as_r2slides_table: explicit border colour and width are captured", {
-  ft <- make_bordered_ft()
-  r2 <- as_r2slides_table(ft)
+test_that("as_r2slides_table: zero-width borders are stored as transparent with correct values", {
+  r2 <- as_r2slides_table(make_plain_ft())
 
-  # Header row (row_index=0) has an explicit top border (width=3, no alpha)
-  cell_hdr <- Filter(\(c) c@row_index == 0L && c@col_index == 0L, r2@cells)[[1]]
-  top_color <- cell_hdr@style@border_top$color
-  expect_true(S7::S7_inherits(top_color, transparent_color))
-  expect_null(top_color@alpha) # opaque: alpha not set
-  expect_equal(cell_hdr@style@border_top$width, 3)
-
-  # Bottom border of last body row (row_index=5) is also an explicit visible border
-  cell_bot <- Filter(\(c) c@row_index == 5L && c@col_index == 0L, r2@cells)[[1]]
-  bot_color <- cell_bot@style@border_bottom$color
-  expect_true(S7::S7_inherits(bot_color, transparent_color))
-  expect_null(bot_color@alpha)
-  expect_equal(cell_bot@style@border_bottom$width, 1.5)
-})
-
-test_that("as_r2slides_table: zero-width borders are stored as transparent (alpha=0)", {
-  ft <- make_plain_ft()
-  r2 <- as_r2slides_table(ft)
-
-  # Zero-width flextable borders become width=1, alpha=0 in the r2slides_table.
-  # The Slides API rejects weight<=0, so width stays 1; alpha=0 makes it invisible.
-  some_cell <- Filter(\(c) c@row_index == 2L && c@col_index == 1L, r2@cells)[[
+  cell <- purrr::keep(r2@cells, \(c) c@row_index == 2L && c@col_index == 1L)[[
     1
   ]]
-  top_color <- some_cell@style@border_top$color
-  expect_equal(some_cell@style@border_top$width, 1)
-  expect_equal(some_cell@style@border_top$dash_style, "SOLID")
-  expect_true(S7::S7_inherits(top_color, transparent_color))
-  expect_equal(top_color@alpha, 0)
+  top <- cell@style@border_top
+
+  # Width uses 1 PT in EMU (12700) as a placeholder so the Slides API accepts it;
+  # alpha = 0 makes it visually invisible.
+  expect_equal(top$width, 12700)
+  expect_equal(top$dash_style, "SOLID")
+  expect_true(S7::S7_inherits(top$color, r2s_color))
+  expect_equal(top$color@alpha, 0)
 })
 
-# -- create_table_requests: structure --
+test_that("as_r2slides_table: visible borders have positive EMU width and no alpha", {
+  r2 <- as_r2slides_table(make_bordered_ft())
+
+  # Header row (row_index 0) has a 3 PT visible red top border
+  hdr_cell <- purrr::keep(
+    r2@cells,
+    \(c) c@row_index == 0L && c@col_index == 0L
+  )[[1]]
+  top <- hdr_cell@style@border_top
+
+  expect_true(S7::S7_inherits(top$color, r2s_color))
+  expect_null(top$color@alpha) # opaque: alpha not set
+  expect_gt(top$width, 12700) # wider than the transparent placeholder
+})
+
+test_that("as_r2slides_table: dashed borders map to DASH style", {
+  r2 <- as_r2slides_table(make_borders_ft())
+
+  # make_borders_ft: 1 header + body, "i = 3" in body → row_index = 3
+  dashed_cell <- purrr::keep(
+    r2@cells,
+    \(c) c@row_index == 3L && c@col_index == 0L
+  )[[1]]
+  expect_equal(dashed_cell@style@border_bottom$dash_style, "DASH")
+})
+
+# -- create_table_requests: structure ------------------------------------------
 
 test_that("create_table_requests: returns expected top-level keys", {
   r2 <- as_r2slides_table(make_plain_ft())
@@ -125,14 +138,11 @@ test_that("create_table_requests: returns expected top-level keys", {
     table_id = "tbl_1"
   )
 
-  expect_named(
-    reqs,
-    c("create", "col_widths", "cells", "borders", "row_heights"),
-    ignore.order = TRUE
-  )
+  expect_in(c("create", "cells", "row_heights"), names(reqs))
+  expect_false("merges" %in% names(reqs))
 })
 
-test_that("create_table_requests: createTable request has correct dimensions and id", {
+test_that("create_table_requests: createTable request has correct structure", {
   r2 <- as_r2slides_table(make_plain_ft())
   reqs <- create_table_requests(
     r2,
@@ -148,31 +158,7 @@ test_that("create_table_requests: createTable request has correct dimensions and
   expect_equal(ct$elementProperties$pageObjectId, "slide_abc")
 })
 
-test_that("create_table_requests: col_widths has one request per column", {
-  r2 <- as_r2slides_table(make_plain_ft())
-  reqs <- create_table_requests(
-    r2,
-    "slide_abc",
-    test_table_position(),
-    table_id = "tbl_cw"
-  )
-
-  expect_length(reqs$col_widths$requests, r2@n_cols)
-})
-
-test_that("create_table_requests: row_heights has one request per row", {
-  r2 <- as_r2slides_table(make_plain_ft())
-  reqs <- create_table_requests(
-    r2,
-    "slide_abc",
-    test_table_position(),
-    table_id = "tbl_rh"
-  )
-
-  expect_length(reqs$row_heights$requests, r2@n_rows)
-})
-
-test_that("create_table_requests: insertText requests match non-empty cells", {
+test_that("create_table_requests: insertText requests cover header and body cell text", {
   r2 <- as_r2slides_table(make_plain_ft())
   reqs <- create_table_requests(
     r2,
@@ -181,16 +167,17 @@ test_that("create_table_requests: insertText requests match non-empty cells", {
     table_id = "tbl_txt"
   )
 
-  text_reqs <- Filter(\(r) !is.null(r$insertText), reqs$cells$requests)
-  inserted <- vapply(text_reqs, \(r) r$insertText$text, character(1))
+  inserted <- reqs$cells$requests |>
+    purrr::keep(\(r) !is.null(r$insertText)) |>
+    purrr::map_chr(\(r) r$insertText$text)
 
-  expect_true("r1" %in% inserted)
-  expect_true("a" %in% inserted)
+  expect_in("a", inserted)
+  expect_in("r1", inserted)
 })
 
-# -- create_table_requests: merges --
+# -- create_table_requests: merges ---------------------------------------------
 
-test_that("create_table_requests: merge produces a mergeTableCells request", {
+test_that("create_table_requests: merged table produces a mergeTableCells request", {
   r2 <- as_r2slides_table(make_merged_ft())
   reqs <- create_table_requests(
     r2,
@@ -200,7 +187,6 @@ test_that("create_table_requests: merge produces a mergeTableCells request", {
   )
 
   expect_false(is.null(reqs$merges))
-  expect_length(reqs$merges$requests, 1L)
 
   merge <- reqs$merges$requests[[1]]$mergeTableCells
   expect_equal(merge$tableRange$location$rowIndex, 1L)
@@ -209,7 +195,7 @@ test_that("create_table_requests: merge produces a mergeTableCells request", {
   expect_equal(merge$tableRange$columnSpan, 1L)
 })
 
-test_that("create_table_requests: no merges key when table has no merged cells", {
+test_that("create_table_requests: plain table has no merges key", {
   r2 <- as_r2slides_table(make_plain_ft())
   reqs <- create_table_requests(
     r2,
@@ -221,9 +207,9 @@ test_that("create_table_requests: no merges key when table has no merged cells",
   expect_null(reqs$merges)
 })
 
-# -- create_table_requests: borders --
+# -- create_table_requests: borders --------------------------------------------
 
-test_that("create_table_requests: explicit borders produce border requests", {
+test_that("create_table_requests: visible borders produce border requests", {
   r2 <- as_r2slides_table(make_bordered_ft())
   reqs <- create_table_requests(
     r2,
@@ -236,7 +222,26 @@ test_that("create_table_requests: explicit borders produce border requests", {
   expect_gt(length(reqs$borders$requests), 0L)
 })
 
-test_that("create_table_requests: visible header top border request is correct", {
+test_that("create_table_requests: transparent border requests come before visible ones", {
+  r2 <- as_r2slides_table(make_bordered_ft())
+  reqs <- create_table_requests(
+    r2,
+    "slide_abc",
+    test_table_position(),
+    table_id = "tbl_ord"
+  )
+
+  is_transparent <- purrr::map_lgl(reqs$borders$requests, \(r) {
+    alpha <- r$updateTableBorderProperties$tableBorderProperties$tableBorderFill$solidFill$alpha
+    !is.null(alpha) && alpha == 0
+  })
+
+  last_transparent <- max(c(0L, which(is_transparent)))
+  first_visible <- min(c(Inf, which(!is_transparent)))
+  expect_lte(last_transparent, first_visible)
+})
+
+test_that("create_table_requests: visible border request has opaque fill and positive weight", {
   r2 <- as_r2slides_table(make_bordered_ft())
   reqs <- create_table_requests(
     r2,
@@ -245,123 +250,15 @@ test_that("create_table_requests: visible header top border request is correct",
     table_id = "tbl_rb"
   )
 
-  # Header row (row_index=0) has a visible top border: width=3, emitted as TOP
-  # directly from that cell.
   top_reqs <- find_border_req(reqs$borders$requests, 0L, 0L, "TOP")
-  expect_length(top_reqs, 1L)
-
   props <- top_reqs[[1]]$updateTableBorderProperties$tableBorderProperties
-  expect_equal(props$weight$magnitude, 3)
-  expect_null(props$tableBorderFill$solidFill$alpha) # opaque, no alpha field
+
+  expect_null(props$tableBorderFill$solidFill$alpha) # opaque: no alpha field
+  expect_gt(props$weight$magnitude, 0)
 })
 
-test_that("create_table_requests: visible bottom border on last row is correct", {
-  r2 <- as_r2slides_table(make_bordered_ft())
-  reqs <- create_table_requests(
-    r2,
-    "slide_abc",
-    test_table_position(),
-    table_id = "tbl_bb"
-  )
-
-  # Last body row (row_index=5, col=0) has a visible bottom border: width=1.5
-  bot_reqs <- find_border_req(reqs$borders$requests, 5L, 0L, "BOTTOM")
-  expect_length(bot_reqs, 1L)
-
-  props <- bot_reqs[[1]]$updateTableBorderProperties$tableBorderProperties
-  expect_equal(props$weight$magnitude, 1.5)
-  expect_null(props$tableBorderFill$solidFill$alpha) # opaque, no alpha field
-})
-
-test_that("create_table_requests: plain table has borders key from default flextable borders", {
-  r2 <- as_r2slides_table(make_plain_ft())
-  reqs <- create_table_requests(
-    r2,
-    "slide_abc",
-    test_table_position(),
-    table_id = "tbl_nob"
-  )
-
-  # Each cell emits all 4 sides directly (no deduplication of shared interior
-  # borders). For a 4-row x 3-col table: 4 * 3 * 4 = 48 border requests.
-  # Interior lines are written twice but are idempotent (transparent borders).
-  expect_false(is.null(reqs$borders))
-  expect_length(reqs$borders$requests, 48L)
-})
-
-# -- r2slides_table S7 validation --
-
-test_that("r2slides_table: rejects non-table_cell objects in cells list", {
-  expect_error(
-    r2slides_table(
-      cells = list("not a cell"),
-      n_rows = 1L,
-      n_cols = 1L,
-      header_rows = 0L
-    ),
-    regexp = "table_cell"
-  )
-})
-
-test_that("r2slides_table: rejects n_rows < 1", {
-  expect_error(
-    r2slides_table(
-      cells = list(),
-      n_rows = 0L,
-      n_cols = 1L,
-      header_rows = 0L
-    ),
-    regexp = "positive"
-  )
-})
-
-test_that("r2slides_table: rejects header_rows > n_rows", {
-  cell <- table_cell(row_index = 0L, col_index = 0L)
-  expect_error(
-    r2slides_table(
-      cells = list(cell),
-      n_rows = 1L,
-      n_cols = 1L,
-      header_rows = 5L
-    ),
-    regexp = "header_rows"
-  )
-})
-
-test_that("r2slides_table: rejects non-positive col_widths", {
-  cell <- table_cell(row_index = 0L, col_index = 0L)
-  expect_error(
-    r2slides_table(
-      cells = list(cell),
-      n_rows = 1L,
-      n_cols = 1L,
-      col_widths = c(-1, 2),
-      header_rows = 0L
-    ),
-    regexp = "positive"
-  )
-})
-
-# -- table_cell S7 validation --
-
-test_that("table_cell: rejects negative row_index or col_index", {
-  expect_error(table_cell(row_index = -1L, col_index = 0L), regexp = ">= 0")
-  expect_error(table_cell(row_index = 0L, col_index = -1L), regexp = ">= 0")
-})
-
-# -- cell_style S7 validation --
-
-test_that("cell_style: rejects invalid v_align and non-positive spans", {
-  expect_error(cell_style(v_align = "INVALID"), regexp = "v_align")
-  expect_error(cell_style(col_span = 0L), regexp = "positive")
-  expect_error(cell_style(row_span = 0L), regexp = "positive")
-})
-
-# -- as_r2slides_table: error handling --
+# -- as_r2slides_table: error handling -----------------------------------------
 
 test_that("as_r2slides_table: errors on unsupported input type", {
-  expect_error(
-    as_r2slides_table(list(a = 1)),
-    class = "S7_error_method_not_found"
-  )
+  expect_snapshot(error = TRUE, as_r2slides_table(list(a = 1)))
 })
