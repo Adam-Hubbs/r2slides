@@ -1,45 +1,3 @@
-# validate_color() returns an error string for invalid inputs
-
-    Code
-      validate_color(c("r", "g", "b"))
-    Output
-      [1] "Color must be a length-1 character string or a numeric `c(r, g, b)` vector."
-
----
-
-    Code
-      validate_color(c(-0.1, 0, 0))
-    Output
-      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
-
----
-
-    Code
-      validate_color(c(0, 1.1, 0))
-    Output
-      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
-
----
-
-    Code
-      validate_color("NOT_A_THEME")
-    Output
-      [1] "Invalid color \"NOT_A_THEME\". Supply a hex string, a named R color, or a theme color."
-
----
-
-    Code
-      validate_color(c(0.1, 0.2))
-    Output
-      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
-
----
-
-    Code
-      validate_color(c(0.1, 0.2, 0.3, 0.4))
-    Output
-      [1] "Numeric color must be `c(r, g, b)` with each value in [0, 1]."
-
 # text_style() rejects invalid logical vector properties
 
     Code
@@ -189,7 +147,7 @@
     Code
       text_style(bg_color = c(-1, 0, 0))
     Condition
-      Error in `normalize_color()`:
+      Error in `.parse_to_rgb()`:
       ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 ---
@@ -198,14 +156,14 @@
       text_style(bg_color = "FAKE_COLOR")
     Condition
       Error in `tryCatchList()`:
-      ! Invalid color "FAKE_COLOR". Supply a hex string, a named R color, or a theme color.
+      ! Invalid color "FAKE_COLOR". Supply a hex string, a named R color, or an RGB vector.
 
 ---
 
     Code
       text_style(text_color = c(0, 0, 2))
     Condition
-      Error in `normalize_color()`:
+      Error in `.parse_to_rgb()`:
       ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 # combine_style_impl() errors on contradicting field values for all overlapable fields
@@ -215,8 +173,8 @@
     Condition
       Error in `.f()`:
       ! Can't combine text styles: conflicting values for backgroundColor
-      x Object 1 has "#FF0000"
-      x Object 2 has "#00FF00"
+      x Object 1 has "<solid_color> #FF0000"
+      x Object 2 has "<solid_color> #00FF00"
 
 ---
 
@@ -225,8 +183,8 @@
     Condition
       Error in `.f()`:
       ! Can't combine text styles: conflicting values for foregroundColor
-      x Object 1 has "#FF0000"
-      x Object 2 has "#0000FF"
+      x Object 1 has "<solid_color> #FF0000"
+      x Object 2 has "<solid_color> #0000FF"
 
 ---
 

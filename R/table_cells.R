@@ -22,18 +22,12 @@ cell_style <- S7::new_class(
   "cell_style",
   properties = list(
     bg_color = S7::new_property(
-      NULL | transparent_color,
+      NULL | r2s_color,
       setter = function(self, value) {
         if (is.null(value)) {
           self@bg_color <- NULL
-        } else if (S7::S7_inherits(value, transparent_color)) {
-          self@bg_color <- value
-        } else if (S7::S7_inherits(value, solid_color)) {
-          self@bg_color <- transparent_color(color = value)
         } else {
-          self@bg_color <- transparent_color(
-            color = solid_color(color = normalize_color(value))
-          )
+          self@bg_color <- as_r2s_color(value)
         }
         self
       }

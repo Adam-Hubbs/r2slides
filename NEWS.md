@@ -1,3 +1,6 @@
+# Version 0.0.9074
+* `solid_color()` now stores red/green/blue as numeric components (no hex round-trip) and accepts all the same inputs as before. `theme_color()` is a new exported class for Google Slides theme color references (e.g. `"ACCENT1"`). Both extend a common `r2s_color` base class that carries an optional `alpha` channel. The old `transparent_color()` class is removed — pass `alpha` directly to `solid_color()` or `theme_color()` instead. A new `visualize()` generic renders a color swatch or theme name. Colors with `alpha` set used in text-style contexts now produce a warning that alpha will be ignored.
+
 # Version 0.0.9073
 * New lazy evaluation strategy: use `set_evaluation_strategy("lazy")` to buffer API requests instead of executing them immediately, then flush with `execute_requests()`. `get_evaluation_strategy()` returns the current setting. `view_request_buffer()` inspects queued requests and `clear_request_buffer()` resets the buffer. `execute_requests(batch_all = TRUE)` (the default) merges all pending `batchUpdate` requests for the same presentation into a single API call.
 

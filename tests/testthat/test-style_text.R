@@ -1,23 +1,3 @@
-# validate_color ---------------------------------------------------------------
-
-test_that("validate_color() returns NULL for all valid inputs", {
-  expect_null(validate_color(NULL))
-  expect_null(validate_color(c(0, 0, 0)))
-  expect_null(validate_color(c(1, 1, 1)))
-  expect_null(validate_color(c(0.5, 0.2, 0.9)))
-  purrr::walk(theme_colors, ~ expect_null(validate_color(.x)))
-})
-
-test_that("validate_color() returns an error string for invalid inputs", {
-  expect_snapshot(validate_color(c("r", "g", "b"))) # non-numeric RGB
-  expect_snapshot(validate_color(c(-0.1, 0, 0))) # below-range RGB
-  expect_snapshot(validate_color(c(0, 1.1, 0))) # above-range RGB
-  expect_snapshot(validate_color("NOT_A_THEME")) # invalid theme string
-  expect_snapshot(validate_color(c(0.1, 0.2))) # too few elements
-  expect_snapshot(validate_color(c(0.1, 0.2, 0.3, 0.4))) # too many elements
-})
-
-
 # text_style construction ------------------------------------------------------
 
 test_that("text_style() constructs with all-NULL defaults", {
@@ -58,8 +38,10 @@ test_that("text_style() stores all valid properties correctly", {
   expect_false(ts@italic)
   expect_equal(ts@font_family, "Arial")
   expect_equal(ts@font_size, 12.0)
-  expect_equal(ts@text_color, '#FF0000')
-  expect_equal(ts@bg_color, "ACCENT1")
+  expect_true(S7::S7_inherits(ts@text_color, solid_color))
+  expect_equal(format(ts@text_color), "<solid_color> #FF0000")
+  expect_true(S7::S7_inherits(ts@bg_color, theme_color))
+  expect_equal(ts@bg_color@theme, "ACCENT1")
   expect_equal(ts@link, "https://example.com")
   expect_equal(ts@baseline_offset, "SUPERSCRIPT")
   expect_true(ts@small_caps)
@@ -125,8 +107,7 @@ test_that("text_style()@style maps scalar properties correctly", {
 test_that("text_style()@style builds correct color structures", {
   expect_equal(
     text_style(text_color = c(1, 0.5, 0))@style$foregroundColor,
-    list(opaqueColor = list(rgbColor = list(red = 1, green = 0.502, blue = 0))),
-    tolerance = 0.001
+    list(opaqueColor = list(rgbColor = list(red = 1, green = 0.5, blue = 0)))
   )
   expect_equal(
     text_style(text_color = "ACCENT2")@style$foregroundColor,

@@ -127,7 +127,7 @@ ft_make_text_style <- function(section, row_i, col_key) {
       raw_text_color != "" &&
       raw_text_color != "transparent"
   ) {
-    normalize_color(raw_text_color)
+    raw_text_color
   } else {
     NULL
   }
@@ -138,7 +138,7 @@ ft_make_text_style <- function(section, row_i, col_key) {
       raw_bg_color != "" &&
       raw_bg_color != "transparent"
   ) {
-    normalize_color(raw_bg_color)
+    raw_bg_color
   } else {
     NULL
   }
@@ -206,7 +206,7 @@ ft_make_cell_style <- function(section, row_i, col_key, ts) {
       raw_bg != "" &&
       raw_bg != "transparent"
   ) {
-    normalize_color(raw_bg)
+    raw_bg
   } else {
     NULL
   }
@@ -323,7 +323,7 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
         raw_color != "" &&
         raw_color != "transparent"
     ) {
-      transparent_color(color = solid_color(color = normalize_color(raw_color)))
+      solid_color(raw_color)
     } else {
       NULL
     }
@@ -338,10 +338,7 @@ ft_extract_section_borders <- function(section, col_keys, row_offset) {
         row_index = as.integer(row_offset + r - 1L),
         col_index = as.integer(ci - 1L),
         side = side,
-        color = transparent_color(
-          color = solid_color(color = "#FFFFFF"),
-          alpha = 0
-        ),
+        color = solid_color("#FFFFFF", alpha = 0),
         width = 12700,
         dash_style = "SOLID"
       ))
@@ -510,7 +507,7 @@ build_border_request <- function(
   fields <- character()
 
   if (!is.null(color)) {
-    props$tableBorderFill <- color_to_api(color)
+    props$tableBorderFill <- as_fill_api(color)
     fields <- c(fields, "tableBorderFill")
   }
 
@@ -815,7 +812,7 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
       tcp_fields <- character()
 
       if (!is.null(cs@bg_color)) {
-        tcp$tableCellBackgroundFill <- color_to_api(cs@bg_color)
+        tcp$tableCellBackgroundFill <- as_fill_api(cs@bg_color)
         tcp_fields <- c(tcp_fields, "tableCellBackgroundFill")
       }
 
@@ -895,7 +892,7 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
 
   is_transparent_color <- \(clr) {
     !is.null(clr) &&
-      S7::S7_inherits(clr, transparent_color) &&
+      S7::S7_inherits(clr, r2s_color) &&
       !is.null(clr@alpha) &&
       identical(clr@alpha, 0)
   }

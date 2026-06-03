@@ -1,22 +1,3 @@
-theme_colors <- c(
-  "DARK1",
-  "LIGHT1",
-  "DARK2",
-  "LIGHT2",
-  "ACCENT1",
-  "ACCENT2",
-  "ACCENT3",
-  "ACCENT4",
-  "ACCENT5",
-  "ACCENT6",
-  "HYPERLINK",
-  "FOLLOWED_HYPERLINK",
-  "TEXT1",
-  "BACKGROUND1",
-  "TEXT2",
-  "BACKGROUND2"
-)
-
 alignment_values <- c(
   "ALIGNMENT_UNSPECIFIED",
   "START",
@@ -36,218 +17,6 @@ spacing_mode_values <- c(
   "NEVER_COLLAPSE",
   "COLLAPSE_LISTS"
 )
-
-#' Normalize any user-supplied color to a canonical internal hex string.
-#'
-#' Accepts a hex string (`"#RRGGBB"` or `"#RGB"`), a named R color (e.g.
-#' `"red"`, `"steelblue"`), an RGB numeric vector `c(r, g, b)` where each
-#' component is in \[0, 1\], or a Google Slides theme color string (e.g.
-#' `"ACCENT1"`).
-#'
-#' * Hex / named R colors are normalised to an uppercase 7-character hex string.
-#' * Theme color strings are returned unchanged.
-#' * `NULL` is returned as `NULL`.
-#'
-#' @param color A length-1 character (hex, named R color, or theme color), or
-#'   a length-3 numeric vector `c(r, g, b)` in \[0, 1\].
-#' @return A length-1 hex string, a theme color string, or `NULL`.
-#' @noRd
-normalize_color <- function(color) {
-  if (is.null(color)) {
-    return(NULL)
-  }
-
-  # Numeric c(r, g, b) in [0, 1] -> hex
-  if (is.numeric(color)) {
-    if (length(color) != 3 || any(color < 0) || any(color > 1)) {
-      cli::cli_abort(
-        "Numeric color must be {.code c(r, g, b)} with each value in [0, 1]."
-      )
-    }
-    return(toupper(grDevices::rgb(color[1], color[2], color[3])))
-  }
-
-  if (!is.character(color) || length(color) != 1) {
-    cli::cli_abort(
-      "Color must be a length-1 character string or a numeric {.code c(r, g, b)} vector."
-    )
-  }
-
-  # Theme color -> return as-is
-  if (color %in% theme_colors) {
-    return(color)
-  }
-
-  # Named R color or hex -> normalize to "#RRGGBB" via grDevices
-  hex <- tryCatch(
-    toupper(grDevices::rgb(t(grDevices::col2rgb(color)), maxColorValue = 255)),
-    error = function(e) {
-      cli::cli_abort(
-        paste0(
-          "Invalid color ",
-          dQuote(color),
-          ". ",
-          "Supply a hex string, a named R color, or a theme color."
-        ),
-        call = rlang::caller_env(2)
-      )
-    }
-  )
-  hex
-}
-
-#' Validate a color property value for S7 objects.
-#'
-#' Returns an error string on failure (used by S7 property validators),
-#' or `NULL` on success.
-#'
-#' @noRd
-validate_color <- function(value) {
-  if (is.null(value)) {
-    return(NULL)
-  }
-  tryCatch(
-    {
-      normalize_color(value)
-      NULL
-    },
-    error = function(e) conditionMessage(e)
-  )
-}
-
-# -- Color classes -----------------------------------------------------------
-
-#' Opaque color for use in text styles
-#'
-#' Represents a Google Slides `opaqueColor` - a color with no alpha channel.
-#' Used for text foreground and background colors (`updateTextStyle`).
-#'
-#' Accepts a hex string (`"#RRGGBB"`), a named R color (e.g. `"red"`),
-#' an RGB numeric vector `c(r, g, b)` with values in [0, 1], or a Google
-#' Slides theme color string (e.g. `"ACCENT1"`).
-#'
-#' @param color A color value in any accepted format (see above).
-#'
-#' @export
-solid_color <- S7::new_class(
-  "solid_color",
-  properties = list(
-    color = S7::new_property(
-      NULL | S7::class_character,
-      setter = function(self, value) {
-        self@color <- normalize_color(value)
-        self
-      },
-      validator = function(value) {
-        if (is.null(value)) {
-          return(NULL)
-        }
-        tryCatch(
-          {
-            normalize_color(value)
-            NULL
-          },
-          error = function(e) conditionMessage(e)
-        )
-      }
-    )
-  )
-)
-
-#' Color with optional alpha for use in fills
-#'
-#' Represents a Google Slides `solidFill` - a color with an optional alpha
-#' (opacity) value. Used for table cell background fills and border fills
-#' (`updateTableCellProperties`, `updateTableBorderProperties`).
-#'
-#' The `color` argument accepts the same formats as [solid_color()].
-#' `alpha` is a number in [0, 1] where `0` is fully transparent and `1` is
-#' fully opaque. When `NULL` (the default) the alpha field is omitted from the
-#' API request, which the API treats as fully opaque.
-#'
-#' @param color A color value in any format accepted by [solid_color()].
-#' @param alpha `NULL` or a single number in [0, 1].
-#'
-#' @export
-transparent_color <- S7::new_class(
-  "transparent_color",
-  properties = list(
-    color = S7::new_property(
-      solid_color,
-      setter = function(self, value) {
-        if (S7::S7_inherits(value, solid_color)) {
-          self@color <- value
-        } else {
-          self@color <- solid_color(color = normalize_color(value))
-        }
-        self
-      }
-    ),
-    alpha = S7::new_property(
-      NULL | S7::class_numeric,
-      validator = function(value) {
-        if (is.null(value)) {
-          return(NULL)
-        }
-        if (length(value) != 1) {
-          return("alpha must be a single value")
-        }
-        if (value < 0 || value > 1) return("alpha must be in [0, 1]")
-      }
-    )
-  )
-)
-
-# -- color_to_api() generic --------------------------------------------------
-
-#' Convert a color object to its Google Slides API representation
-#'
-#' A generic function dispatching on the color class:
-#'
-#' * `solid_color` -> `list(opaqueColor = ...)` used for text styles.
-#' * `transparent_color` -> `list(solidFill = list(color = ..., alpha = ...))`
-#'   used for table border fills and cell background fills.
-#'
-#' @param color A [solid_color] or [transparent_color] object.
-#' @return A named list suitable for embedding in a Google Slides API request.
-#' @noRd
-color_to_api <- S7::new_generic("color_to_api", "color")
-
-# Internal helper: hex or theme string -> innermost rgbColor/themeColor node.
-# @noRd
-.color_str_to_inner <- function(color_str) {
-  if (is.null(color_str)) {
-    return(NULL)
-  }
-  if (color_str %in% theme_colors) {
-    return(list(themeColor = color_str))
-  }
-  rgb_int <- grDevices::col2rgb(color_str)
-  list(
-    rgbColor = list(
-      red = rgb_int[1L] / 255,
-      green = rgb_int[2L] / 255,
-      blue = rgb_int[3L] / 255
-    )
-  )
-}
-
-S7::method(color_to_api, solid_color) <- function(color) {
-  inner <- .color_str_to_inner(color@color)
-  if (is.null(inner)) NULL else list(opaqueColor = inner)
-}
-
-S7::method(color_to_api, transparent_color) <- function(color) {
-  inner <- .color_str_to_inner(color@color@color)
-  if (is.null(inner)) {
-    return(NULL)
-  }
-  fill <- list(color = inner)
-  if (!is.null(color@alpha)) {
-    fill$alpha <- color@alpha
-  }
-  list(solidFill = fill)
-}
 
 #' Text styling properties
 #'
@@ -284,27 +53,23 @@ text_style <- S7::new_class(
   "text_style",
   properties = list(
     bg_color = S7::new_property(
-      NULL | solid_color,
+      NULL | r2s_color,
       setter = function(self, value) {
         if (is.null(value)) {
           self@bg_color <- NULL
-        } else if (S7::S7_inherits(value, solid_color)) {
-          self@bg_color <- value
         } else {
-          self@bg_color <- solid_color(color = normalize_color(value))
+          self@bg_color <- as_r2s_color(value)
         }
         self
       }
     ),
     text_color = S7::new_property(
-      NULL | solid_color,
+      NULL | r2s_color,
       setter = function(self, value) {
         if (is.null(value)) {
           self@text_color <- NULL
-        } else if (S7::S7_inherits(value, solid_color)) {
-          self@text_color <- value
         } else {
-          self@text_color <- solid_color(color = normalize_color(value))
+          self@text_color <- as_r2s_color(value)
         }
         self
       }
@@ -529,12 +294,12 @@ text_style <- S7::new_class(
     style = S7::new_property(S7::class_list, getter = function(self) {
       list(
         backgroundColor = if (!is.null(self@bg_color)) {
-          color_to_api(self@bg_color)
+          as_opaque_color_api(self@bg_color)
         } else {
           NULL
         },
         foregroundColor = if (!is.null(self@text_color)) {
-          color_to_api(self@text_color)
+          as_opaque_color_api(self@text_color)
         } else {
           NULL
         },
@@ -1155,11 +920,13 @@ combine_style_impl <- function(
         val2 <- field_val(e2, field)
 
         if (!identical(val1, val2)) {
+          fmt1 <- if (is.object(val1)) format(val1) else val1
+          fmt2 <- if (is.object(val2)) format(val2) else val2
           cli::cli_abort(
             c(
               "Can't combine text styles: conflicting values for {.field {field}}",
-              "x" = "Object 1 has {.val {val1}}",
-              "x" = "Object 2 has {.val {val2}}"
+              "x" = "Object 1 has {.val {fmt1}}",
+              "x" = "Object 2 has {.val {fmt2}}"
             ),
             call = call
           )
