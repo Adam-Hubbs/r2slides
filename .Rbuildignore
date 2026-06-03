@@ -9,3 +9,4 @@
 ^vignettes/articles/*_files$
 ^vignettes/articles$
 ^\.claude$
+^README\.qmd$

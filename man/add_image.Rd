@@ -22,14 +22,17 @@ or a publicly accessible URL string.}
 \item{position}{An object of class `r2slides::slide_position`.}
 
 \item{fit}{Controls how the image maps onto the `position` bounding box.
-One of:
-- `"contain"` (default): scale to fit entirely within the bounding box,
-  preserving aspect ratio, centered.
-- `"cover"`: fill the bounding box completely, clipping overflow from the
-  center, preserving aspect ratio.
-- `"distort"`: stretch to fill exactly, ignoring aspect ratio.
-- `"raw"`: place at the image's natural pixel size at the given `dpi`,
-  anchored to the top-left of `position`. Overflow is allowed.}
+  One of:
+  - `"contain"` (default): scale to fit entirely within the bounding box,
+    preserving aspect ratio, centered.
+  - `"cover"`: fill the bounding box completely, clipping overflow from the
+    center, preserving aspect ratio.
+  - `"distort"`: stretch to fill exactly, ignoring aspect ratio.
+  - `"raw"`: place at the image's natural pixel size at the given `dpi`,
+    anchored to the top-left of `position`. Overflow is allowed.
+
+  All modes except `"distort"` require the `magick` package to read image
+  dimensions.}
 
 \item{dpi}{Numeric. Only used when `fit = "raw"`. The DPI to use when
 converting pixels to inches. `NULL` auto-detects from the file metadata,

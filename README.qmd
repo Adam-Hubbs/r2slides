@@ -1,3 +1,11 @@
+---
+format:
+  gfm:
+    default-image-extension: ""
+---
+
+<!-- README.md is generated from README.qmd. Please edit that file -->
+
 # r2slides
 
 [![Codecov test coverage](https://codecov.io/gh/Adam-Hubbs/r2slides/graph/badge.svg)](https://app.codecov.io/gh/Adam-Hubbs/r2slides) [![R-CMD-check](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml)
