@@ -488,7 +488,7 @@ presentation <- R6::R6Class(
       cli::cli_dl(c(
         "Title" = self$title %||% "{.emph Not set}",
         "ID" = self$presentation_id %||% "{.emph Not set}",
-        "Slides" = as.character(length(self$slides) %||% 0),
+        "Slides" = as.character(length(private$slide_ids) %||% 0),
         "Active" = if (private$is_active_flag) "{.strong Yes}" else "No",
         "Last refreshed" = if (!is.null(self$last_refreshed)) {
           format(self$last_refreshed, "%Y-%m-%d %H:%M:%S")
