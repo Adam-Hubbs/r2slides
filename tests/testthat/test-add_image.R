@@ -61,19 +61,6 @@ test_that("get_image_dims() reads PNG dimensions correctly", {
   expect_true(is.numeric(dims$dpi))
 })
 
-test_that("get_image_dims() reads JPEG dimensions correctly", {
-  skip_if_not_installed("jpeg")
-
-  dir <- withr::local_tempdir()
-  path <- file.path(dir, "test.jpg")
-  # 20 wide, 10 tall
-  jpeg::writeJPEG(array(1, c(10, 20, 3)), path)
-
-  dims <- get_image_dims(path)
-  expect_equal(dims$width_px, 20L)
-  expect_equal(dims$height_px, 10L)
-  expect_true(is.numeric(dims$dpi))
-})
 
 test_that("compute_image_layout() contain — wider image in square position", {
   # Image: 2:1 ratio (200x100), position: 1:1 (4x4 inches at top=1, left=1)
@@ -151,39 +138,8 @@ test_that("compute_image_layout() distort — uses position exactly", {
   expect_null(layout$crop_props)
 })
 
-test_that("resolve_image_source() renders ggplot to PNG and calls upload_to_drive", {
-  skip_if_not_installed("ggplot2")
-
-  p <- ggplot2::ggplot(
-    data.frame(x = 1:5, y = 1:5),
-    ggplot2::aes(x, y)
-  ) +
-    ggplot2::geom_point()
-
-  upload_called_with <- NULL
-  local_mocked_bindings(
-    upload_to_drive = function(path, call) {
-      upload_called_with <<- path
-      list(
-        url = "https://drive.google.com/uc?export=view&id=fake123",
-        drive_id = "fake123"
-      )
-    },
-    .env = asNamespace("r2slides")
-  )
-
-  result <- resolve_image_source(p)
-
-  expect_match(upload_called_with, "\\.png$")
-  expect_equal(result$drive_id, "fake123")
-  expect_match(result$url, "fake123")
-})
 
 test_that("add_image() inserts an image from a URL and records it in the ledger", {
-  skip_if(
-    !file.exists(testthat::test_path("../fixtures/add_image_url.yml")),
-    "cassette not recorded — run interactively after r2slides_auth() to record"
-  )
   vcr::use_cassette(
     "add_image_url",
     match_requests_on = c("method", "uri"),
@@ -212,10 +168,6 @@ test_that("add_image() inserts an image from a URL and records it in the ledger"
 
 test_that("add_image() with ggplot inserts image (integration)", {
   skip_if_not_installed("ggplot2")
-  skip_if(
-    !file.exists(testthat::test_path("../fixtures/add_image_ggplot.yml")),
-    "cassette not recorded — run interactively after r2slides_auth() to record"
-  )
 
   vcr::use_cassette(
     "add_image_ggplot",

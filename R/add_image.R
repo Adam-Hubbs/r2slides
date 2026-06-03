@@ -51,11 +51,13 @@ add_image <- function(
 
   if (!is.null(resolved$drive_id)) {
     on.exit(
-      try(
-        googledrive::drive_rm(googledrive::as_id(resolved$drive_id))
-      ),
+      try(googledrive::drive_rm(googledrive::as_id(resolved$drive_id))),
       add = TRUE
     )
+  }
+
+  if (isTRUE(resolved$is_temp) && !is.null(resolved$local_path)) {
+    on.exit(unlink(resolved$local_path), add = TRUE)
   }
 
   dim_source <- resolved$local_path %||% resolved$url
@@ -153,10 +155,10 @@ resolve_image_source <- function(image, call = rlang::caller_env()) {
       reason = "to render ggplot objects as images"
     )
     tmp <- tempfile(fileext = ".png")
-    on.exit(unlink(tmp), add = TRUE)
     ggplot2::ggsave(tmp, plot = image, device = "png")
     result <- upload_to_drive(tmp, call = call)
     result$local_path <- tmp
+    result$is_temp <- TRUE
     result
   } else if (
     is.character(image) && length(image) == 1L && grepl("^https?://", image)
