@@ -47,13 +47,12 @@ test_that("add_image() errors on invalid position before any API call", {
   )
 })
 
-test_that("get_image_dims() reads PNG dimensions correctly", {
-  skip_if_not_installed("png")
+test_that("get_image_dims() reads image dimensions correctly", {
+  skip_if_not_installed("magick")
 
   dir <- withr::local_tempdir()
   path <- file.path(dir, "test.png")
-  # 20 wide, 10 tall (width_px = 20, height_px = 10)
-  png::writePNG(array(1, c(10, 20, 3)), path)
+  magick::image_write(magick::image_blank(20, 10), path, format = "png")
 
   dims <- get_image_dims(path)
   expect_equal(dims$width_px, 20L)

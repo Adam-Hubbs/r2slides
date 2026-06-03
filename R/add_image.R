@@ -21,6 +21,9 @@
 #'   - `"distort"`: stretch to fill exactly, ignoring aspect ratio.
 #'   - `"raw"`: place at the image's natural pixel size at the given `dpi`,
 #'     anchored to the top-left of `position`. Overflow is allowed.
+#'
+#'   All modes except `"distort"` require the `magick` package to read image
+#'   dimensions.
 #' @param dpi Numeric. Only used when `fit = "raw"`. The DPI to use when
 #'   converting pixels to inches. `NULL` auto-detects from the file metadata,
 #'   falling back to 96.
@@ -231,169 +234,19 @@ mime_type_from_path <- function(path, call = rlang::caller_env()) {
 
 
 # Returns list(width_px, height_px, dpi) for a local file path or URL.
-# Reads only the minimum bytes needed; does not load the full image into memory
-# (except for URLs, where a full download is required).
-get_image_dims <- function(path) {
-  if (grepl("^https?://", path)) {
-    raw <- httr2::request(path) |>
-      httr2::req_perform() |>
-      httr2::resp_body_raw()
-    tmp <- tempfile()
-    on.exit(unlink(tmp), add = TRUE)
-    writeBin(raw, tmp)
-    return(get_image_dims(tmp))
-  }
-
-  header <- readBin(path, "raw", n = 16L)
-
-  if (
-    length(header) >= 4L &&
-      header[1] == as.raw(0x89) &&
-      header[2] == as.raw(0x50) &&
-      header[3] == as.raw(0x4e) &&
-      header[4] == as.raw(0x47)
-  ) {
-    return(read_png_dims(path))
-  }
-
-  if (
-    length(header) >= 3L &&
-      header[1] == as.raw(0xff) &&
-      header[2] == as.raw(0xd8) &&
-      header[3] == as.raw(0xff)
-  ) {
-    return(read_jpeg_dims(path))
-  }
-
-  if (
-    length(header) >= 6L &&
-      (rawToChar(header[1:6]) == "GIF87a" || rawToChar(header[1:6]) == "GIF89a")
-  ) {
-    return(read_gif_dims(path))
-  }
-
-  cli::cli_abort(
-    "Could not detect image format for {.path {path}}. Expected PNG, JPEG, or GIF."
+get_image_dims <- function(path, call = rlang::caller_env()) {
+  rlang::check_installed(
+    "magick",
+    reason = "to read image dimensions for fit modes other than 'distort'"
   )
-}
-
-
-read_png_dims <- function(path) {
-  raw_bytes <- readBin(path, "raw", n = 24L)
-  width_px <- readBin(raw_bytes[17:20], "integer", size = 4L, endian = "big")
-  height_px <- readBin(raw_bytes[21:24], "integer", size = 4L, endian = "big")
-  dpi <- read_png_dpi(path)
-  list(width_px = width_px, height_px = height_px, dpi = dpi)
-}
-
-
-read_png_dpi <- function(path) {
-  raw_bytes <- readBin(path, "raw", n = 65536L)
-  n <- length(raw_bytes)
-
-  target <- as.raw(c(0x70, 0x48, 0x59, 0x73))
-
-  for (i in seq_len(n - 12L)) {
-    if (
-      raw_bytes[i] == target[1] &&
-        raw_bytes[i + 1] == target[2] &&
-        raw_bytes[i + 2] == target[3] &&
-        raw_bytes[i + 3] == target[4]
-    ) {
-      x_ppu <- readBin(
-        raw_bytes[(i + 4):(i + 7)],
-        "integer",
-        size = 4L,
-        endian = "big"
-      )
-      unit <- as.integer(raw_bytes[i + 8])
-      if (unit == 1L) {
-        return(round(x_ppu / 39.3701))
-      }
-      return(96L)
-    }
-  }
-
-  96L
-}
-
-
-read_jpeg_dims <- function(path) {
-  raw_bytes <- readBin(path, "raw", n = 65536L)
-  n <- length(raw_bytes)
-
-  width_px <- NULL
-  height_px <- NULL
-  dpi <- 96L
-
-  i <- 3L
-  while (i < n - 8L) {
-    if (raw_bytes[i] != as.raw(0xff)) {
-      i <- i + 1L
-      next
-    }
-
-    marker <- raw_bytes[i + 1]
-
-    if (marker == as.raw(0xe0) && i + 15L <= n) {
-      density_unit <- as.integer(raw_bytes[i + 11])
-      x_density <- readBin(
-        raw_bytes[(i + 12):(i + 13)],
-        "integer",
-        size = 2L,
-        endian = "big",
-        signed = FALSE
-      )
-      if (density_unit == 1L && x_density > 0L) {
-        dpi <- x_density
-      } else if (density_unit == 2L && x_density > 0L) {
-        dpi <- round(x_density * 2.54)
-      }
-    }
-
-    if ((marker == as.raw(0xc0) || marker == as.raw(0xc2)) && i + 8L <= n) {
-      height_px <- readBin(
-        raw_bytes[(i + 5):(i + 6)],
-        "integer",
-        size = 2L,
-        endian = "big",
-        signed = FALSE
-      )
-      width_px <- readBin(
-        raw_bytes[(i + 7):(i + 8)],
-        "integer",
-        size = 2L,
-        endian = "big",
-        signed = FALSE
-      )
-      break
-    }
-
-    seg_len <- readBin(
-      raw_bytes[(i + 2):(i + 3)],
-      "integer",
-      size = 2L,
-      endian = "big",
-      signed = FALSE
-    )
-    i <- i + 2L + seg_len
-  }
-
-  if (is.null(width_px) || is.null(height_px)) {
-    cli::cli_abort(
-      "Could not read dimensions from JPEG file {.path {path}}."
-    )
-  }
-
-  list(width_px = width_px, height_px = height_px, dpi = dpi)
-}
-
-
-read_gif_dims <- function(path) {
-  raw_bytes <- readBin(path, "raw", n = 10L)
-  width_px <- readBin(raw_bytes[7:8], "integer", size = 2L, endian = "little")
-  height_px <- readBin(raw_bytes[9:10], "integer", size = 2L, endian = "little")
-  list(width_px = width_px, height_px = height_px, dpi = 96L)
+  info <- magick::image_info(magick::image_read(path))
+  dpi <- suppressWarnings(as.integer(strsplit(info$density[[1]], "x")[[1]][[1]]))
+  if (is.na(dpi) || dpi <= 0L) dpi <- 96L
+  list(
+    width_px = as.integer(info$width[[1]]),
+    height_px = as.integer(info$height[[1]]),
+    dpi = dpi
+  )
 }
 
 
