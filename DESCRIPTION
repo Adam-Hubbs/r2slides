@@ -14,29 +14,30 @@ Depends:
     R (>= 4.3.0)
 Imports:
     cli,
+    dplyr (>= 1.2.0),
     gargle,
-    httr,
-    rlang (>= 1.2.0),
-    stringr,
-    httr2,
     googledrive,
     googlesheets4,
-    S7,
-    dplyr (>= 1.2.0),
+    httr,
+    httr2,
     purrr,
     R6,
-    tibble,
-    png
-Suggests: 
-    testthat (>= 3.0.0),
-    ggplot2,
-    vdiffr,
-    quarto,
-    vcr,
-    withr,
+    rlang (>= 1.2.0),
+    S7,
+    stringr,
+    tibble
+Suggests:
     flextable,
-    officer,
+    ggplot2,
     gt
+    magick,
+    officer,
+    png,
+    quarto,
+    testthat (>= 3.0.0),
+    vcr,
+    vdiffr,
+    withr,
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
