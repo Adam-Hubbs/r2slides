@@ -1,127 +1,76 @@
-#' Sheet Id class
+#' @import S7
+NULL
+
+#' Sheet ID class
 #'
-#' @param gs4_sheet A googlesheets4 sheet id, or something coercible to one
-#' @param sheet_id An integer referencing a sheet id
-#' @param call Optional. Call environment used in error messages.
-#' @param x An object of class `sht_id`
+#' A typed reference to a specific sheet (tab) within a Google Sheets spreadsheet.
 #'
-#' @rdname new_sht_id
+#' @param spreadsheet_id A single string. The Google Sheets spreadsheet ID.
+#' @param sheet_id A single string. The sheet tab ID.
+#'
 #' @export
-new_sht_id <- function(gs4_sheet, sheet_id, call = rlang::caller_env()) {
-  gs4_obj <- tryCatch(
-    googlesheets4::as_sheets_id(gs4_sheet),
-    error = function(e) {
-      cli::cli_abort(
-        c(
-          "x" = "{.arg gs4_sheet} must be coercible to a googlesheets4 sheets id."
-        ),
-        call = call
-      )
-    }
-  )
-
-  if (!rlang::is_string(sheet_id)) {
-    cli::cli_abort(
-      c("x" = "{.arg sheet_id} must be a single string."),
-      call = call
-    )
-  }
-
-  structure(
-    list(
-      gs4_sheet = gs4_sheet,
-      sheet_id = sheet_id
+sht_id <- S7::new_class(
+  "sht_id",
+  properties = list(
+    spreadsheet_id = S7::new_property(
+      S7::class_character,
+      validator = function(value) {
+        if (length(value) != 1L) "@spreadsheet_id must be a single string"
+      }
     ),
-    class = "sht_id"
+    sheet_id = S7::new_property(
+      S7::class_character,
+      validator = function(value) {
+        if (length(value) != 1L) "@sheet_id must be a single string"
+      }
+    )
   )
-}
+)
 
-#' @rdname new_sht_id
+#' @rdname sht_id
+#' @param x An object to test
 #' @export
-is_sht_id <- function(x) {
-  inherits(x, "sht_id") &&
-    is.list(x) &&
-    !is.null(x$gs4_sheet) &&
-    rlang::is_string(x$sheet_id)
-}
+is_sht_id <- function(x) S7::S7_inherits(x, sht_id)
 
-#' Print a sht_id object
-#'
-#' @param x The object to print
-#' @param ... Additional arguments
-#'
-#' @export
-print.sht_id <- function(x, ...) {
+S7::method(print, sht_id) <- function(x, ...) {
   cli::cli_text("sht_id:")
   cli::cli_bullets(c(
-    "Spreadsheet: {.val {as.character(x$gs4_sheet)}}",
-    "Sheet id: {.val {x$sheet_id}}"
+    "Spreadsheet: {.val {x@spreadsheet_id}}",
+    "Sheet id: {.val {x@sheet_id}}"
   ))
   invisible(x)
 }
 
 
-#' Chart Id class
+#' Chart ID class
 #'
-#' @param gs4_sheet A googlesheets4 sheet id, or something coercible to one
-#' @param sheet_id An integer referencing a sheet id
-#' @param chart_id An integer referencing a chart id
-#' @param call Optional. Call environment used in error messages.
-#' @param x An object of class `chart_id`
-#' @param ... Additional arguments from print
+#' A typed reference to a specific chart within a Google Sheets sheet. Inherits
+#' from [sht_id].
 #'
-#' @rdname new_chart_id
+#' @param spreadsheet_id A single string. The Google Sheets spreadsheet ID.
+#' @param sheet_id A single string. The sheet tab ID.
+#' @param chart_id A single string. The chart ID.
+#'
 #' @export
-new_chart_id <- function(
-  gs4_sheet,
-  sheet_id,
-  chart_id,
-  call = rlang::caller_env()
-) {
-  gs4_obj <- tryCatch(
-    googlesheets4::as_sheets_id(gs4_sheet),
-    error = function(e) {
-      cli::cli_abort(
-        c(
-          "x" = "{.arg gs4_sheet} must be coercible to a googlesheets4 sheets id."
-        ),
-        call = call
-      )
-    }
-  )
-
-  if (!rlang::is_string(sheet_id)) {
-    cli::cli_abort(
-      c("x" = "{.arg sheet_id} must be a single string."),
-      call = call
+chart_id <- S7::new_class(
+  "chart_id",
+  parent = sht_id,
+  properties = list(
+    chart_id = S7::new_property(
+      S7::class_character,
+      validator = function(value) {
+        if (length(value) != 1L) "@chart_id must be a single string"
+      }
     )
-  }
-
-  if (!rlang::is_scalar_integer(chart_id)) {
-    cli::cli_abort(
-      c("x" = "{.arg chart_id} must be a single integer"),
-      call = call
-    )
-  }
-
-  structure(
-    list(
-      gs4_sheet = gs4_sheet,
-      sheet_id = sheet_id,
-      chart_id = chart_id
-    ),
-    class = c("chart_id", "sht_id")
   )
-}
+)
 
-#' @rdname new_chart_id
-#' @export
-print.chart_id <- function(x, ...) {
+S7::method(print, chart_id) <- function(x, ...) {
   cli::cli_text("chart_id:")
   cli::cli_bullets(c(
-    "Spreadsheet: {.val {as.character(x$gs4_sheet)}}",
-    "Sheet id: {.val {x$sheet_id}}",
-    "Chart id: {.val {x$chart_id}}"
+    "Spreadsheet: {.val {x@spreadsheet_id}}",
+    "Sheet id: {.val {x@sheet_id}}",
+    "Chart id: {.val {x@chart_id}}"
   ))
   invisible(x)
 }
@@ -129,13 +78,14 @@ print.chart_id <- function(x, ...) {
 
 #' Get chart_id from a Google Sheet
 #'
-#' Retrieves Sheet object from a specified sheet. Errors is 0 or more than 1 chart is found.
+#' Retrieves the chart ID from a specified sheet. Errors if 0 or more than 1
+#' chart is found.
 #'
-#' @param spreadsheet_obj A sht_id object.
-#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
+#' @param spreadsheet_obj A `sht_id` object.
+#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()`.
 #' @param call Optional. Call environment used in error messages.
 #'
-#' @returns A list of the spreadsheet_id (string) the sheet_id (integer) and chart_id (integer)
+#' @returns A `chart_id` object
 #'
 #' @export
 get_chart_id <- function(
@@ -145,44 +95,40 @@ get_chart_id <- function(
 ) {
   if (!is_sht_id(spreadsheet_obj)) {
     cli::cli_abort(
+      c("x" = "{.arg spreadsheet_obj} must be a {.cls sht_id} object.")
+    )
+  }
+
+  response <- query(
+    endpoint = "sheets.spreadsheets.get",
+    params = list(
+      spreadsheetId = spreadsheet_obj@spreadsheet_id,
+      includeGridData = FALSE
+    ),
+    base = "sheets",
+    token = token
+  )
+
+  matching_sheet <- purrr::keep(
+    response$sheets,
+    ~ .x$properties$sheetId == spreadsheet_obj@sheet_id
+  )
+
+  if (length(matching_sheet) == 0L) {
+    cli::cli_abort(
       c(
-        'x' = "{.arg spreadsheet_obj} must be a {.cls sht_id} object."
+        x = "Sheet with ID {.val {spreadsheet_obj@sheet_id}} not found in spreadsheet."
       )
     )
   }
 
-  # Get spreadsheet data with sheet information
-  response <- query(
-    endpoint = 'sheets.spreadsheets.get',
-    params = list(
-      spreadsheetId = spreadsheet_obj$gs4_sheet,
-      includeGridData = FALSE
-    ),
-    base = 'sheets',
-    token = token
-  )
-
-  # Find the matching sheet
-  matching_sheet <- purrr::keep(
-    response$sheets,
-    ~ .x$properties$sheetId == spreadsheet_obj$sheet_id
-  )
-
-  if (length(matching_sheet) == 0) {
-    cli::cli_abort(
-      c(x = "Sheet with ID {sheet_id} not found in spreadsheet.")
-    )
-  }
-
-  # Check that there is only one chart
-  if (length(matching_sheet[[1]]$charts) == 0) {
+  if (length(matching_sheet[[1]]$charts) == 0L) {
     cli::cli_abort(
       c(
         x = "Sheet {.var {matching_sheet[[1]]$properties$title}} has no charts."
       )
     )
-  } else if (length(matching_sheet[[1]]$charts) > 1) {
-    # Create bullet points for each chart found
+  } else if (length(matching_sheet[[1]]$charts) > 1L) {
     chart_bullets <- purrr::map_chr(
       matching_sheet[[1]]$charts,
       ~ {
@@ -191,19 +137,18 @@ get_chart_id <- function(
         paste0("A ", chart_type, " chart '", chart_title, "' was found")
       }
     )
-
     cli::cli_abort(
       c(
         x = "Sheet {.var {matching_sheet[[1]]$properties$title}} has more than one chart.",
-        i = "{ {length(chart_bullets)} } charts were found:",
+        i = "{length(chart_bullets)} charts were found:",
         rlang::set_names(chart_bullets, rep("*", length(chart_bullets)))
       )
     )
-  } else {
-    return(new_chart_id(
-      gs4_sheet = spreadsheet_obj$gs4_sheet,
-      sheet_id = spreadsheet_obj$sheet_id,
-      chart_id = matching_sheet[[1]]$charts[[1]]$chartId
-    ))
   }
+
+  chart_id(
+    spreadsheet_id = spreadsheet_obj@spreadsheet_id,
+    sheet_id = spreadsheet_obj@sheet_id,
+    chart_id = as.character(matching_sheet[[1]]$charts[[1]]$chartId)
+  )
 }

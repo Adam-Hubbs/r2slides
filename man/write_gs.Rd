@@ -4,15 +4,20 @@
 \alias{write_gs}
 \title{Writes data to a Google Sheet}
 \usage{
-write_gs(data, sheet)
+write_gs(data, sheet, spreadsheet = get_active_spreadsheet())
 }
 \arguments{
 \item{data}{A data frame to write to the Google Sheet.}
 
 \item{sheet}{The name of the sheet to write to.}
+
+\item{spreadsheet}{Optional. An `r2slides::spreadsheet` object, a
+[googlesheets4::sheets_id], or any object accepted by
+[googlesheets4::as_sheets_id()] (spreadsheet ID string or URL). Defaults
+to [get_active_spreadsheet()].}
 }
 \value{
-A sht_id object
+A `sht_id` object
 }
 \description{
 Writes data to a Google Sheet

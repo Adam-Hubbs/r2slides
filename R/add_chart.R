@@ -59,8 +59,8 @@ add_linked_chart <- function(
               unit = "EMU"
             )
           ),
-          spreadsheetId = chart_obj$gs4_sheet,
-          chartId = chart_obj$chart_id,
+          spreadsheetId = chart_obj@spreadsheet_id,
+          chartId = as.integer(chart_obj@chart_id),
           linkingMode = linked
         )
       )

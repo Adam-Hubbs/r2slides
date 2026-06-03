@@ -2,45 +2,45 @@
 #'
 #' @param data A data frame to write to the Google Sheet.
 #' @param sheet The name of the sheet to write to.
+#' @param spreadsheet Optional. An `r2slides::spreadsheet` object, a
+#'   [googlesheets4::sheets_id], or any object accepted by
+#'   [googlesheets4::as_sheets_id()] (spreadsheet ID string or URL). Defaults
+#'   to [get_active_spreadsheet()].
 #'
-#' @returns A sht_id object
+#' @returns A `sht_id` object
 #'
 #' @export
-write_gs <- function(data, sheet) {
-  # Check if ss exists in global environment
-  if (!exists("ss", envir = .GlobalEnv)) {
-    cli::cli_abort(
-      "No spreadsheet object 'ss' found in global environment. Initialize with {.code ss <- as_sheets_id(...)}"
-    )
-  }
-
-  ss <- get("ss", envir = .GlobalEnv)
-
-  # Get current sheet metadata
-  ss_metadata <- tryCatch(
-    googlesheets4::gs4_get(ss),
-    error = function(e) {
-      cli::cli_abort("Failed to get spreadsheet metadata:", parent = e)
-    }
+write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
+  ss <- tryCatch(
+    googlesheets4::as_sheets_id(spreadsheet),
+    error = \(e)
+      cli::cli_abort(
+        c(
+          "{.arg spreadsheet} must be an {.cls r2slides::spreadsheet} or a googlesheets4-compatible object.",
+          "i" = "Pass a {.cls sheets_id}, a spreadsheet URL, or a spreadsheet ID string."
+        ),
+        parent = e
+      )
   )
 
-  # Check if sheet exists
-  existing_sheets <- ss_metadata$sheets$name
-  sheet_exists <- sheet %in% existing_sheets
+  ss_metadata <- tryCatch(
+    googlesheets4::gs4_get(ss),
+    error = \(e)
+      cli::cli_abort("Failed to get spreadsheet metadata.", parent = e)
+  )
 
-  # Create sheet if it doesn't exist
-  if (!sheet_exists) {
-    cli::cli_alert_info("Sheet '{sheet}' does not exist. Creating it now...")
+  if (!sheet %in% ss_metadata$sheets$name) {
+    cli::cli_alert_info(
+      "Sheet {.val {sheet}} does not exist. Creating it now..."
+    )
     tryCatch(
       googlesheets4::sheet_add(ss = ss, sheet = sheet),
-      error = function(e) {
-        cli::cli_abort("Failed to create sheet '{sheet}':", parent = e)
-      }
+      error = \(e)
+        cli::cli_abort("Failed to create sheet {.val {sheet}}.", parent = e)
     )
-    cli::cli_alert_success("Sheet '{sheet}' created successfully.")
+    cli::cli_alert_success("Sheet {.val {sheet}} created successfully.")
   }
 
-  # Write data to sheet
   tryCatch(
     googlesheets4::range_write(
       ss = ss,
@@ -48,20 +48,17 @@ write_gs <- function(data, sheet) {
       sheet = sheet,
       reformat = FALSE
     ),
-    error = function(e) {
-      cli::cli_abort("Error writing data to sheet '{sheet}':", parent = e)
-    }
+    error = \(e)
+      cli::cli_abort("Error writing data to sheet {.val {sheet}}.", parent = e)
   )
 
-  # Get sheet_id for the written sheet
   ss_metadata_updated <- googlesheets4::gs4_get(ss)
-  sheet_id <- ss_metadata_updated$sheets$id[
-    ss_metadata_updated$sheets$name == sheet
-  ]
-  sheet_id <- as.character(sheet_id)
+  sheet_id <- as.character(
+    ss_metadata_updated$sheets$id[ss_metadata_updated$sheets$name == sheet]
+  )
 
-  # Extract spreadsheet ID from ss object
-  ss_id <- ss_metadata_updated$spreadsheet_id
-
-  return(new_sht_id(gs4_sheet = ss_id, sheet_id = sheet_id))
+  sht_id(
+    spreadsheet_id = ss_metadata_updated$spreadsheet_id,
+    sheet_id = sheet_id
+  )
 }

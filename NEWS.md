@@ -1,3 +1,10 @@
+# Version 0.0.9075
+
+* New `register_spreadsheet(id)` and `new_spreadsheet(title)` functions create a lean R6 `spreadsheet` class that mirrors the `presentation` workflow. The active spreadsheet is stored in the package environment and retrieved with `get_active_spreadsheet()`, so `write_gs()` no longer requires a global `ss` object.
+* `write_gs()` now accepts an `r2slides::spreadsheet` object, a `googlesheets4::sheets_id`, or any object accepted by `googlesheets4::as_sheets_id()` via its new `spreadsheet` argument (default: `get_active_spreadsheet()`).
+* `sht_id` and `chart_id` are now S7 classes with property access via `@`. The old `new_sht_id()` and `new_chart_id()` S3 constructors are removed — use `sht_id()` and `chart_id()` directly. `is_sht_id()` now uses S7 inheritance so it returns `TRUE` for `chart_id` objects.
+* `create_spreadsheet_env_in_global()` and the `google_spreadsheet` global environment pattern are removed.
+
 # Version 0.0.9074
 * `solid_color()` now stores red/green/blue as numeric components (no hex round-trip) and accepts all the same inputs as before. `theme_color()` is a new exported class for Google Slides theme color references (e.g. `"ACCENT1"`). Both extend a common `r2s_color` base class that carries an optional `alpha` channel. The old `transparent_color()` class is removed — pass `alpha` directly to `solid_color()` or `theme_color()` instead. A new `visualize()` generic renders a color swatch or theme name. Colors with `alpha` set used in text-style contexts now produce a warning that alpha will be ignored.
 
