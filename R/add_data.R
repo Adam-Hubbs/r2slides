@@ -11,8 +11,8 @@
 #'
 #' @export
 write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
-  ss <- tryCatch(
-    googlesheets4::as_sheets_id(spreadsheet),
+  ss_id <- tryCatch(
+    as.character(googlesheets4::as_sheets_id(spreadsheet)),
     error = \(e)
       cli::cli_abort(
         c(
@@ -23,18 +23,20 @@ write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
       )
   )
 
-  ss_metadata <- tryCatch(
-    googlesheets4::gs4_get(ss),
-    error = \(e)
-      cli::cli_abort("Failed to get spreadsheet metadata.", parent = e)
+  metadata <- query(
+    endpoint = "sheets.spreadsheets.get",
+    params = list(spreadsheetId = ss_id, includeGridData = FALSE),
+    base = "sheets"
   )
 
-  if (!sheet %in% ss_metadata$sheets$name) {
+  existing_sheets <- purrr::map_chr(metadata$sheets, ~ .x$properties$title)
+
+  if (!sheet %in% existing_sheets) {
     cli::cli_alert_info(
       "Sheet {.val {sheet}} does not exist. Creating it now..."
     )
     tryCatch(
-      googlesheets4::sheet_add(ss = ss, sheet = sheet),
+      googlesheets4::sheet_add(ss = ss_id, sheet = sheet),
       error = \(e)
         cli::cli_abort("Failed to create sheet {.val {sheet}}.", parent = e)
     )
@@ -43,7 +45,7 @@ write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
 
   tryCatch(
     googlesheets4::range_write(
-      ss = ss,
+      ss = ss_id,
       data = data,
       sheet = sheet,
       reformat = FALSE
@@ -52,13 +54,19 @@ write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
       cli::cli_abort("Error writing data to sheet {.val {sheet}}.", parent = e)
   )
 
-  ss_metadata_updated <- googlesheets4::gs4_get(ss)
-  sheet_id <- as.character(
-    ss_metadata_updated$sheets$id[ss_metadata_updated$sheets$name == sheet]
+  metadata_updated <- query(
+    endpoint = "sheets.spreadsheets.get",
+    params = list(spreadsheetId = ss_id, includeGridData = FALSE),
+    base = "sheets"
+  )
+
+  sheet_props <- purrr::detect(
+    metadata_updated$sheets,
+    ~ .x$properties$title == sheet
   )
 
   sht_id(
-    spreadsheet_id = ss_metadata_updated$spreadsheet_id,
-    sheet_id = sheet_id
+    spreadsheet_id = metadata_updated$spreadsheetId,
+    sheet_id = as.character(sheet_props$properties$sheetId)
   )
 }

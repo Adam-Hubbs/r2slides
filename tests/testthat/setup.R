@@ -184,9 +184,18 @@ vcr::vcr_configure(
   record = if (identical(Sys.getenv("CI"), "true")) "none" else "once"
 )
 
-# If r2slides_auth() was called before running tests, auth is already live and
-# vcr can record new cassettes. Otherwise, deauth everything and rely on
-# recorded cassettes. To record new requests, call r2slides_auth() first.
+# If no token is present yet, try to pick one up from the gargle cache
+# (non-interactively). This covers the common case where devtools::test()
+# calls load_all() and clears the in-memory credential, even though the user
+# already authenticated. If the cache lookup fails we fall through to deauth.
+if (!inherits(r2slides:::.auth$cred, "Token2.0")) {
+  tryCatch(
+    r2slides_auth(),
+    error = \(e) NULL
+  )
+}
+
+# If we still have no token, deauth everything and rely on recorded cassettes.
 if (!inherits(r2slides:::.auth$cred, "Token2.0")) {
   r2slides:::.auth$set_auth_active(FALSE)
   googledrive::drive_deauth()

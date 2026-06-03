@@ -1,0 +1,254 @@
+http_interactions:
+- request:
+    method: GET
+    uri: https://sheets.googleapis.com/v4/spreadsheets/1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI
+  response:
+    status: 200
+    headers:
+      alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      content-encoding: gzip
+      content-length: '1248'
+      content-type: application/json; charset=UTF-8
+      date: Wed, 03 Jun 2026 20:46:54 GMT
+      server: ESF
+      vary:
+      - Origin
+      - X-Origin
+      - Referer
+      x-content-type-options: nosniff
+      x-frame-options: SAMEORIGIN
+      x-l2-request-path: l2-managed-6
+      x-xss-protection: '0'
+    body:
+      string: |
+        {
+          "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
+          "properties": {
+            "title": "r2slides testing spreadsheet",
+            "locale": "en",
+            "autoRecalc": "ON_CHANGE",
+            "timeZone": "America/New_York",
+            "defaultFormat": {
+              "backgroundColor": {
+                "red": 1,
+                "green": 1,
+                "blue": 1
+              },
+              "padding": {
+                "top": 2,
+                "right": 3,
+                "bottom": 2,
+                "left": 3
+              },
+              "verticalAlignment": "BOTTOM",
+              "wrapStrategy": "OVERFLOW_CELL",
+              "textFormat": {
+                "foregroundColor": {},
+                "fontFamily": "arial,sans,sans-serif",
+                "fontSize": 10,
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "foregroundColorStyle": {
+                  "rgbColor": {}
+                }
+              },
+              "backgroundColorStyle": {
+                "rgbColor": {
+                  "red": 1,
+                  "green": 1,
+                  "blue": 1
+                }
+              }
+            },
+            "spreadsheetTheme": {
+              "primaryFontFamily": "Arial",
+              "themeColors": [
+                {
+                  "colorType": "TEXT",
+                  "color": {
+                    "rgbColor": {}
+                  }
+                },
+                {
+                  "colorType": "BACKGROUND",
+                  "color": {
+                    "rgbColor": {
+                      "red": 1,
+                      "green": 1,
+                      "blue": 1
+                    }
+                  }
+                },
+                {
+                  "colorType": "ACCENT1",
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.34509805,
+                      "green": 0.5686275,
+                      "blue": 0.6784314
+                    }
+                  }
+                },
+                {
+                  "colorType": "ACCENT2",
+                  "color": {
+                    "rgbColor": {
+                      "green": 0.27058825,
+                      "blue": 0.38039216
+                    }
+                  }
+                },
+                {
+                  "colorType": "ACCENT3",
+                  "color": {
+                    "rgbColor": {
+                      "red": 1,
+                      "green": 0.43529412,
+                      "blue": 0.19215687
+                    }
+                  }
+                },
+                {
+                  "colorType": "ACCENT4",
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.10980392,
+                      "green": 0.4627451,
+                      "blue": 0.52156866
+                    }
+                  }
+                },
+                {
+                  "colorType": "ACCENT5",
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.05882353,
+                      "green": 0.27058825,
+                      "blue": 0.65882355
+                    }
+                  }
+                },
+                {
+                  "colorType": "ACCENT6",
+                  "color": {
+                    "rgbColor": {
+                      "red": 0.29803923,
+                      "green": 0.8627451,
+                      "blue": 0.54509807
+                    }
+                  }
+                },
+                {
+                  "colorType": "LINK",
+                  "color": {
+                    "rgbColor": {
+                      "green": 0.5921569,
+                      "blue": 0.654902
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "sheets": [
+            {
+              "properties": {
+                "sheetId": 1654711040,
+                "title": "Bar",
+                "index": 0,
+                "sheetType": "GRID",
+                "gridProperties": {
+                  "rowCount": 992,
+                  "columnCount": 26
+                }
+              },
+              "charts": [
+                {
+                  "chartId": 1622092212,
+                  "spec": {
+                    "title": "Points scored",
+                    "basicChart": {
+                      "chartType": "BAR",
+                      "axis": [
+                        {
+                          "position": "BOTTOM_AXIS",
+                          "viewWindowOptions": {}
+                        },
+                        {
+                          "position": "LEFT_AXIS",
+                          "viewWindowOptions": {}
+                        }
+                      ],
+                      "series": [
+                        {
+                          "series": {
+                            "sourceRange": {
+                              "sources": [
+                                {
+                                  "sheetId": 1654711040,
+                                  "startRowIndex": 0,
+                                  "endRowIndex": 50,
+                                  "startColumnIndex": 1,
+                                  "endColumnIndex": 2
+                                }
+                              ]
+                            }
+                          },
+                          "targetAxis": "BOTTOM_AXIS",
+                          "dataLabel": {
+                            "type": "NONE",
+                            "textFormat": {
+                              "fontFamily": "Roboto"
+                            }
+                          }
+                        },
+                        {
+                          "series": {
+                            "sourceRange": {
+                              "sources": [
+                                {
+                                  "sheetId": 1654711040,
+                                  "startRowIndex": 0,
+                                  "endRowIndex": 50,
+                                  "startColumnIndex": 2,
+                                  "endColumnIndex": 3
+                                }
+                              ]
+                            }
+                          },
+                          "targetAxis": "BOTTOM_AXIS",
+                          "dataLabel": {
+                            "type": "NONE",
+                            "textFormat": {
+                              "fontFamily": "Roboto"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "hiddenDimensionStrategy": "SKIP_HIDDEN_ROWS_AND_COLUMNS",
+                    "titleTextFormat": {
+                      "fontFamily": "Roboto"
+                    },
+                    "fontName": "Roboto"
+                  },
+                  "position": {
+                    "overlayPosition": {
+                      "anchorCell": {
+                        "sheetId": 1654711040,
+                        "rowIndex": 6
+                      },
+                      "widthPixels": 600,
+                      "heightPixels": 371
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI/edit?ouid=109179231983825231355"
+        }
+  recorded_at: 2026-06-03 20:46:54
+recorded_with: VCR-vcr/2.1.0

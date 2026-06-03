@@ -143,39 +143,45 @@ spreadsheet <- R6::R6Class(
     is_active_flag = FALSE,
 
     create_new = function(title) {
-      ss_id <- googlesheets4::gs4_create(name = title)
-      meta <- googlesheets4::gs4_get(ss_id)
-      private$populate(meta)
+      response <- query(
+        endpoint = "sheets.spreadsheets.create",
+        body = list(properties = list(title = title)),
+        base = "sheets"
+      )
+      private$populate_from_response(response)
       cli::cli_alert_success("Created spreadsheet {.val {self$title}}")
       invisible(self)
     },
 
     open_existing = function(id) {
-      ss_id <- tryCatch(
-        googlesheets4::as_sheets_id(id),
+      spreadsheet_id <- tryCatch(
+        as.character(googlesheets4::as_sheets_id(id)),
         error = \(e)
           cli::cli_abort(
             "Could not resolve {.arg id} to a spreadsheet ID.",
             parent = e
           )
       )
-      meta <- tryCatch(
-        googlesheets4::gs4_get(ss_id),
-        error = \(e)
-          cli::cli_abort(
-            "Could not access spreadsheet. Check the ID is valid and you have permission.",
-            parent = e
-          )
+      response <- query(
+        endpoint = "sheets.spreadsheets.get",
+        params = list(spreadsheetId = spreadsheet_id, includeGridData = FALSE),
+        base = "sheets"
       )
-      private$populate(meta)
+      private$populate_from_response(response)
       cli::cli_alert_success("Opened spreadsheet {.val {self$title}}")
       invisible(self)
     },
 
-    populate = function(meta) {
-      self$spreadsheet_id <- meta$spreadsheet_id
-      self$title <- meta$name
-      self$sheets <- dplyr::select(meta$sheets, "name", "id")
+    populate_from_response = function(response) {
+      self$spreadsheet_id <- response$spreadsheetId
+      self$title <- response$properties$title
+      self$sheets <- tibble::tibble(
+        name = purrr::map_chr(response$sheets, ~ .x$properties$title),
+        id = purrr::map_chr(
+          response$sheets,
+          ~ as.character(.x$properties$sheetId)
+        )
+      )
     },
 
     finalize = function() {

@@ -60,9 +60,9 @@ r2slides_auth <- function(
   .auth$set_cred(cred)
   .auth$set_auth_active(TRUE)
 
-  # Set auth in gs4 and googlesdrive
-  googledrive::drive_auth(token = r2slides_token())
-  googlesheets4::gs4_auth(token = r2slides_token())
+  # Set auth in gs4 and googledrive using the raw Token2.0, not httr::config()
+  googledrive::drive_auth(token = .auth$cred)
+  googlesheets4::gs4_auth(token = .auth$cred)
 
   invisible()
 }
