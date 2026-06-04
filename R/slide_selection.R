@@ -200,7 +200,7 @@ on_slide_after <- function(slide, offset = 1, ps) {
 #'   equal `text`. When `FALSE`, the notes need only *contain*
 #'   `text` (matched as a Perl-compatible regular expression via
 #'   [stringr::regex()](https://stringr.tidyverse.org/reference/modifiers.html).
-#' @param on_multiple What to do when multiple slides match: 
+#' @param on_multiple What to do when multiple slides match:
 #'   * `error`: (default) raises an error listing the matching slide numbers
 #'   * `return`: returns all matches as a named list of slide objects (names are slide IDs)
 #' @rdname on_slide_id

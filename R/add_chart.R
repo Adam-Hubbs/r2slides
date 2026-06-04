@@ -22,7 +22,7 @@
 #' if(FALSE) {
 #' # Assumes that there is a chart already made on the references sheet
 #'  chart_data |>
-#'    write_gs("Seahawks vs Dolphins Points Per Game") |> 
+#'    write_gs("Seahawks vs Dolphins Points Per Game") |>
 #'    get_chart_id() |>
 #'    add_linked_chart(
 #'      on_slide_number(

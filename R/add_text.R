@@ -1,7 +1,7 @@
 #' Add text in a Google Slides presentation
 #'
 #' Adds text into a new text box on a Google Slides presentation. Text can be formatted by text_style.
-#' 
+#'
 #' @param slide_obj A Google Slides slide object.
 #' @param text A character string of text to add.
 #' @param position An object of class `r2slides::slide_position`

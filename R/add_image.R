@@ -2,14 +2,14 @@
 #'
 #' @description
 #' Inserts an image onto a slide. Accepts a ggplot object, a local file path,
-#' or a publicly accessible URL. 
+#' or a publicly accessible URL.
 #'
 #' When given a ggplot or local file, the image is temporarily uploaded to
 #' Google Drive, inserted into the slide, then deleted from Drive.
 #' The image is permanently embedded in the presentation after insertion.
 #'
 #' @param slide_obj A Google Slides slide object.
-#' @param image A ggplot object, a local file path, or a publicly accessible URL string. 
+#' @param image A ggplot object, a local file path, or a publicly accessible URL string.
 #' If an image is specified, it must be in one of the following formats:
 #'   * png
 #'   * jpg
@@ -38,7 +38,7 @@
 #' if(FALSE) {
 #' plot <- ggplot(mtcars, aes(x = cyl, y = hp)) +
 #'            geom_point()
-#' 
+#'
 #'   on_slide_number(4) |>
 #'     add_image(plot)
 #' }
@@ -250,7 +250,9 @@ get_image_dims <- function(path, call = rlang::caller_env()) {
     reason = "to read image dimensions for fit modes other than 'distort'"
   )
   info <- magick::image_info(magick::image_read(path))
-  dpi <- suppressWarnings(as.integer(strsplit(info$density[[1]], "x")[[1]][[1]]))
+  dpi <- suppressWarnings(as.integer(strsplit(info$density[[1]], "x")[[1]][[
+    1
+  ]]))
   if (is.na(dpi) || dpi <= 0L) dpi <- 96L
   list(
     width_px = as.integer(info$width[[1]]),

@@ -153,7 +153,8 @@ test_that("add_image() inserts an image from a URL and records it in the ledger"
       add_image(
         slide_obj,
         image = "https://www.gstatic.com/webp/gallery/1.jpg",
-        position = in_top_left()
+        position = in_top_left(),
+        fit = "distort"
       )
 
       delete_slide_raw(ps, test_slide_id)
@@ -167,6 +168,7 @@ test_that("add_image() inserts an image from a URL and records it in the ledger"
 
 test_that("add_image() with ggplot inserts image (integration)", {
   skip_if_not_installed("ggplot2")
+  skip_if_not_installed("magick")
 
   vcr::use_cassette(
     "add_image_ggplot",

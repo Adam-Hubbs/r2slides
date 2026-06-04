@@ -15,7 +15,7 @@ peek <- S7::new_generic("peek", "x")
 #' @export
 method(peek, slide) <- function(x, ...) {
   rlang::check_installed("png", reason = 'To show the thumbnail')
-  
+
   url <- query(
     endpoint = "slides.presentations.pages.getThumbnail",
     params = list(
