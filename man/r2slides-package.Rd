@@ -12,6 +12,7 @@ Create Google Slides from R code. This utilizes the Google Slides and Google She
 Useful links:
 \itemize{
   \item \url{https://github.com/Adam-Hubbs/r2slides}
+  \item \url{https://adam-hubbs.github.io/r2slides}
   \item Report bugs at \url{https://github.com/Adam-Hubbs/r2slides/issues}
 }
 

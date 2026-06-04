@@ -37,20 +37,22 @@ on_slide_with_notes(text, exact = TRUE, on_multiple = c("error", "return"), ps)
 \item{offset}{A position integer - the number of slides after the reference slide. Can be negative to return slides before the reference slide}
 
 \item{text}{A string to search for in slide speaker notes. By default
-(\code{exact = TRUE}), the notes must equal \code{text} exactly. Pass a
-\code{\link[stringr]{stringr-pattern}} object (e.g.
+\code{exact = TRUE}, the notes must equal \code{text} exactly. Pass a
+\href{https://stringr.tidyverse.org/reference/modifiers.html}{\verb{stringr modifier}} object (e.g.
 \code{stringr::regex(...)}, \code{stringr::fixed(...)},
-\code{stringr::coll(...)}) as \code{text} to use a different matching
+\code{stringr::coll(...)} as \code{text} to use a different matching
 strategy.}
 
 \item{exact}{Logical. When \code{TRUE} (default) the full notes string must
 equal \code{text}. When \code{FALSE}, the notes need only \emph{contain}
 \code{text} (matched as a Perl-compatible regular expression via
-\code{\link[stringr]{regex}}).}
+\href{https://stringr.tidyverse.org/reference/modifiers.html}{stringr::regex()}.}
 
-\item{on_multiple}{What to do when multiple slides match: \code{"error"}
-(default) raises an error listing the matching slide numbers; \code{"return"}
-returns all matches as a named list of slide objects (names are slide IDs)}
+\item{on_multiple}{What to do when multiple slides match:
+\itemize{
+\item \code{error}: (default) raises an error listing the matching slide numbers
+\item \code{return}: returns all matches as a named list of slide objects (names are slide IDs)
+}}
 }
 \value{
 A slide object

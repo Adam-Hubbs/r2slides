@@ -22,9 +22,16 @@ border_style_values <- c(
 )
 
 #' Table Objects
-#' 
-#' Intermediate representation for various table back-ends
-#' 
+#'
+#' `r2slides_table` is the internal representation of a table in r2slides.
+#' It holds cell-level content and styling in a form that can be pushed to the
+#' Google Slides API.
+#'
+#' You should not construct `r2slides_table` objects directly. Instead, use
+#' [as_r2slides_table()] to convert a supported table object (e.g. a
+#' **flextable**) into one.
+#'
+#' @usage NULL
 #' @export
 r2slides_table <- S7::new_class(
   "r2slides_table",

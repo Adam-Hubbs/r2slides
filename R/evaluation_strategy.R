@@ -143,7 +143,7 @@ clear_request_buffer <- function() {
 
 #' Execute buffered API requests
 #'
-#' Executes all pending requests in the buffer. Each request is removed from the
+#' EXPERIMENTAL. Executes all pending requests in the buffer. Each request is removed from the
 #' buffer after it is attempted, whether or not it succeeds. Typically called
 #' after accumulating requests with the `"lazy"` evaluation strategy (see
 #' [set_evaluation_strategy()]).

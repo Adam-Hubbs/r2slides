@@ -48,7 +48,19 @@ theme_colors <- c(
   )
 }
 
-# Abstract base for all r2slides colors. Holds the optional alpha channel.
+#' Color classes
+#'
+#' r2slides represents colors as one of two concrete classes, both of which are
+#' subclasses of `r2s_color`:
+#'
+#' - `solid_color` — a color with known RGB values. Accepts a hex string,
+#'   a named R color, or a numeric `c(r, g, b)` vector.
+#' - `theme_color` — a reference to a named Google Slides presentation theme
+#'   color. The actual RGB value is not resolved until the slide is rendered.
+#'
+#' @usage NULL
+#' @export
+#' @name r2s_color
 r2s_color <- S7::new_class(
   "r2s_color",
   abstract = TRUE,
@@ -64,16 +76,13 @@ r2s_color <- S7::new_class(
   )
 )
 
-#' Solid color
-#'
-#' A color with known RGB values. Accepts a hex string (`"#RRGGBB"` or
-#' `"#RGB"`), a named R color (e.g. `"red"`), or an RGB numeric vector
-#' `c(r, g, b)` with values in \[0, 1\].
-#'
-#' @param color Hex string, named R color, or `c(r, g, b)` in \[0, 1\].
+#' @param color Hex string (e.g. `"#4285F4"` or `"#F4A"`), a named R color
+#'   (e.g. `"red"`), or a numeric vector `c(r, g, b)` with each value in
+#'   \[0, 1\].
 #' @param alpha `NULL` or a number in \[0, 1\]. `NULL` (the default) omits the
-#'   alpha field from fill API requests (treated as fully opaque). Only
-#'   meaningful in fill contexts; ignored with a warning in text-style contexts.
+#'   alpha field from API requests, which Google Slides treats as fully opaque.
+#'   Only meaningful in fill contexts; ignored with a warning in text-style
+#'   contexts.
 #'
 #' @export
 #' @rdname r2s_color
@@ -97,16 +106,9 @@ solid_color <- S7::new_class(
   }
 )
 
-#' Theme color
-#'
-#' A reference to a Google Slides presentation theme color. The actual RGB
-#' value is not known until resolved against a specific presentation.
-#'
 #' @param theme One of `"DARK1"`, `"LIGHT1"`, `"DARK2"`, `"LIGHT2"`,
-#'   `"ACCENT1"`-`"ACCENT6"`, `"HYPERLINK"`, `"FOLLOWED_HYPERLINK"`,
+#'   `"ACCENT1"`–`"ACCENT6"`, `"HYPERLINK"`, `"FOLLOWED_HYPERLINK"`,
 #'   `"TEXT1"`, `"BACKGROUND1"`, `"TEXT2"`, `"BACKGROUND2"`.
-#' @param alpha `NULL` or a number in \[0, 1\]. Only meaningful in fill
-#'   contexts; ignored with a warning in text-style contexts.
 #'
 #' @export
 #' @rdname r2s_color
@@ -221,11 +223,12 @@ S7::method(print, theme_color) <- function(x, ...) {
 #' presentation theme.
 #'
 #' @param color An [r2s_color] object.
+#' @param ... Ignored; present for S7 generic compatibility.
 #'
 #' @export
-visualize <- S7::new_generic("visualize", "color")
+visualize_color <- S7::new_generic("visualize", "color")
 
-S7::method(visualize, solid_color) <- function(color) {
+S7::method(visualize_color, solid_color) <- function(color) {
   hex <- grDevices::rgb(color@red, color@green, color@blue)
   op <- graphics::par(mar = rep(0, 4))
   on.exit(graphics::par(op))
@@ -234,7 +237,7 @@ S7::method(visualize, solid_color) <- function(color) {
   invisible(color)
 }
 
-S7::method(visualize, theme_color) <- function(color) {
+S7::method(visualize_color, theme_color) <- function(color) {
   cli::cli_inform(
     "Theme color {.val {color@theme}}: actual value depends on the presentation theme."
   )

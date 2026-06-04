@@ -3,16 +3,13 @@
 \name{r2slides_table}
 \alias{r2slides_table}
 \title{Table Objects}
-\usage{
-r2slides_table(
-  cells = list(),
-  n_rows = integer(0),
-  n_cols = integer(0),
-  col_widths = NULL,
-  row_heights = NULL,
-  header_rows = 0L
-)
-}
 \description{
-Intermediate representation for various table back-ends
+\code{r2slides_table} is the internal representation of a table in r2slides.
+It holds cell-level content and styling in a form that can be pushed to the
+Google Slides API.
+}
+\details{
+You should not construct \code{r2slides_table} objects directly. Instead, use
+\code{\link[=as_r2slides_table]{as_r2slides_table()}} to convert a supported table object (e.g. a
+\strong{flextable}) into one.
 }

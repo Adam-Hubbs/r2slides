@@ -191,18 +191,18 @@ on_slide_after <- function(slide, offset = 1, ps) {
 
 
 #' @param text A string to search for in slide speaker notes. By default
-#'   (\code{exact = TRUE}), the notes must equal \code{text} exactly. Pass a
-#'   \code{\link[stringr]{stringr-pattern}} object (e.g.
-#'   \code{stringr::regex(...)}, \code{stringr::fixed(...)},
-#'   \code{stringr::coll(...)}) as \code{text} to use a different matching
+#'   `exact = TRUE`, the notes must equal `text` exactly. Pass a
+#'   [`stringr modifier`](https://stringr.tidyverse.org/reference/modifiers.html) object (e.g.
+#'   `stringr::regex(...)`, `stringr::fixed(...)`,
+#'   `stringr::coll(...)` as `text` to use a different matching
 #'   strategy.
-#' @param exact Logical. When \code{TRUE} (default) the full notes string must
-#'   equal \code{text}. When \code{FALSE}, the notes need only \emph{contain}
-#'   \code{text} (matched as a Perl-compatible regular expression via
-#'   \code{\link[stringr]{regex}}).
-#' @param on_multiple What to do when multiple slides match: \code{"error"}
-#'   (default) raises an error listing the matching slide numbers; \code{"return"}
-#'   returns all matches as a named list of slide objects (names are slide IDs)
+#' @param exact Logical. When `TRUE` (default) the full notes string must
+#'   equal `text`. When `FALSE`, the notes need only *contain*
+#'   `text` (matched as a Perl-compatible regular expression via
+#'   [stringr::regex()](https://stringr.tidyverse.org/reference/modifiers.html).
+#' @param on_multiple What to do when multiple slides match: 
+#'   * `error`: (default) raises an error listing the matching slide numbers
+#'   * `return`: returns all matches as a named list of slide objects (names are slide IDs)
 #' @rdname on_slide_id
 #' @export
 on_slide_with_notes <- function(
@@ -258,7 +258,7 @@ on_slide_with_notes <- function(
             'stringr_regex'
           ))
     ) {
-      matched <- stringr::str_detect(notes, coll(text))
+      matched <- stringr::str_detect(notes, stringr::coll(text))
       if (sum(matched) > 0) {
         cli::cli_abort(c(
           "x" = "No slides found whose notes match the regex {.val {text}}",

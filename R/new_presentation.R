@@ -1,6 +1,5 @@
 #' @import R6
 #' @import tibble
-#' @import png
 NULL
 
 
