@@ -33,13 +33,13 @@ text_style(
 
 - bg_color:
 
-  Background color. Accepts a hex string (e.g. \`"#FF0000"\`), a named R
-  color (e.g. \`"red"\`), an RGB numeric vector \`c(r, g, b)\` with
-  values in \\0, 1\\, or a theme color string (e.g. \`"ACCENT1"\`).
+  Background color. Accepts a hex string (e.g. `"#FF0000"`), a named R
+  color (e.g. `"red"`), an RGB numeric vector `c(r, g, b)` with values
+  in \[0, 1\], or a theme color string (e.g. `"ACCENT1"`).
 
 - text_color:
 
-  Text (foreground) color. Same formats as \`bg_color\`.
+  Text (foreground) color. Same formats as `bg_color`.
 
 - bold:
 
@@ -79,13 +79,13 @@ text_style(
 
 - alignment:
 
-  Paragraph horizontal alignment. One of \`"ALIGNMENT_UNSPECIFIED"\`,
-  \`"START"\`, \`"CENTER"\`, \`"END"\`, or \`"JUSTIFIED"\`.
+  Paragraph horizontal alignment. One of `"ALIGNMENT_UNSPECIFIED"`,
+  `"START"`, `"CENTER"`, `"END"`, or `"JUSTIFIED"`.
 
 - line_spacing:
 
-  Line spacing as a percentage of normal, e.g. \`100\` for
-  single-spacing, \`200\` for double-spacing. Must be \>= 0.
+  Line spacing as a percentage of normal, e.g. `100` for single-spacing,
+  `200` for double-spacing. Must be \>= 0.
 
 - indent_start:
 
@@ -109,10 +109,10 @@ text_style(
 
 - direction:
 
-  Text direction. One of \`"TEXT_DIRECTION_UNSPECIFIED"\`,
-  \`"LEFT_TO_RIGHT"\`, or \`"RIGHT_TO_LEFT"\`.
+  Text direction. One of `"TEXT_DIRECTION_UNSPECIFIED"`,
+  `"LEFT_TO_RIGHT"`, or `"RIGHT_TO_LEFT"`.
 
 - spacing_mode:
 
-  Spacing mode. One of \`"SPACING_MODE_UNSPECIFIED"\`,
-  \`"NEVER_COLLAPSE"\`, or \`"COLLAPSE_LISTS"\`.
+  Spacing mode. One of `"SPACING_MODE_UNSPECIFIED"`, `"NEVER_COLLAPSE"`,
+  or `"COLLAPSE_LISTS"`.

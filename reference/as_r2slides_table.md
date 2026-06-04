@@ -1,11 +1,12 @@
 # Convert a table object to an r2slides_table
 
-\`as_r2slides_table()\` is a generic function that converts a table
-object (e.g. from \*\*gt\*\* or \*\*flextable\*\*) into an
-\[r2slides_table\] object suitable for rendering as a Google Slides
-table element.
+`as_r2slides_table()` is a generic function that converts a table object
+(e.g. from **gt** or **flextable**) into an
+[r2slides_table](https://adam-hubbs.github.io/r2slides/reference/r2slides_table.md)
+object suitable for rendering as a Google Slides table element.
 
-Methods for specific table classes should return an \[r2slides_table\]
+Methods for specific table classes should return an
+[r2slides_table](https://adam-hubbs.github.io/r2slides/reference/r2slides_table.md)
 object.
 
 ## Usage
@@ -18,8 +19,8 @@ as_r2slides_table(x, ...)
 
 - x:
 
-  A table object. Methods are expected for classes such as \`gt_tbl\`
-  (from \*\*gt\*\*) and \`flextable\` (from \*\*flextable\*\*).
+  A table object. Methods are expected for classes such as `gt_tbl`
+  (from **gt**) and `flextable` (from **flextable**).
 
 - ...:
 
@@ -27,4 +28,6 @@ as_r2slides_table(x, ...)
 
 ## Value
 
-An \[r2slides_table\] object.
+An
+[r2slides_table](https://adam-hubbs.github.io/r2slides/reference/r2slides_table.md)
+object.

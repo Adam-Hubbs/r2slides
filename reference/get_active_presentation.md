@@ -10,4 +10,4 @@ get_active_presentation()
 
 ## Value
 
-A \`presentation\` object, or errors if none active
+A `presentation` object, or errors if none active

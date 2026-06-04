@@ -22,7 +22,8 @@ relative_position(
 
 - position:
 
-  An object of class \`r2slides::slide_position\`
+  An object of class
+  [`r2slides::slide_position`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
 
 - top_transformation:
 
@@ -46,7 +47,8 @@ relative_position(
 
 ## Value
 
-A new object of class \`r2slides::slide_position\`
+A new object of class
+[`r2slides::slide_position`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
 
 ## Examples
 

@@ -5,7 +5,8 @@ coverage](https://codecov.io/gh/Adam-Hubbs/r2slides/graph/badge.svg)](https://ap
 [![R-CMD-check](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Adam-Hubbs/r2slides/actions/workflows/R-CMD-check.yaml)
 
 r2slides is a package designed to create and modify Google Slides
-presentations in R.
+presentations in R. It can be used to push tables, charts, and images to
+Google Slides.
 
 To install r2slides, run
 

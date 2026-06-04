@@ -32,16 +32,18 @@ add_text_multi(
 
 - position:
 
-  A vector of objects of class \`r2slides::slide_position\`
+  A vector of objects of class
+  [`r2slides::slide_position`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
 
 - position_base:
 
-  A vector of objects of class \`r2slides::slide_position\`
+  A vector of objects of class
+  [`r2slides::slide_position`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
 
 - element_id:
 
   Optional. A vector of string IDs of an existing text element to
-  update. If element_id is \`NULL\` a new element will be created.
+  update. If element_id is `NULL` a new element will be created.
 
 - text_style:
 
@@ -49,14 +51,15 @@ add_text_multi(
 
 - order:
 
-  Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
-  each created element. Default: \`"front"\`. Ignored for elements
-  updated via \`element_id\`.
+  Optional. One of `"front"` or `"back"`. Controls the Z-order of each
+  created element. Default: `"front"`. Ignored for elements updated via
+  `element_id`.
 
 - token:
 
-  Optional. An OAuth2 token. The default uses \`r2slides_token()\` to
-  find a token.
+  Optional. An OAuth2 token. The default uses
+  [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
+  to find a token.
 
 - pass_strategy:
 

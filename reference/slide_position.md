@@ -59,10 +59,12 @@ slide_position(
 ## Details
 
 When rotation is applied, the object rotates around its center point.
-The \`top\`, \`left\`, \`width\`, and \`height\` properties describe the
+The `top`, `left`, `width`, and `height` properties describe the
 object's intrinsic dimensions before rotation. The rotation is applied
 as an affine transformation using the scaleX, scaleY, shearX, and shearY
 computed properties.
 
 To get the axis-aligned bounding box that contains the rotated object,
-use the \`bounding_box()\` function.
+use the
+[`bounding_box()`](https://adam-hubbs.github.io/r2slides/reference/bounding_box.md)
+function.

@@ -11,7 +11,7 @@ full Google Slides URL."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9073</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9075</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,10 +74,10 @@ full Google Slides URL.</p>
 
 
 <dl><dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
-<dd><p>A slide identifier. Can be either:
-- A numeric slide ID
-- A string containing slide ID
-- A full Google Slides URL</p></dd>
+<dd><p>A slide identifier. Can be either:</p><ul><li><p>A numeric slide ID</p></li>
+<li><p>A string containing slide ID</p></li>
+<li><p>A full Google Slides URL</p></li>
+</ul></dd>
 
 
 <dt id="arg-ps">ps<a class="anchor" aria-label="anchor" href="#arg-ps"></a></dt>
@@ -102,10 +102,10 @@ full Google Slides URL.</p>
 
 <dt id="arg-text">text<a class="anchor" aria-label="anchor" href="#arg-text"></a></dt>
 <dd><p>A string to search for in slide speaker notes. By default
-(<code>exact = TRUE</code>), the notes must equal <code>text</code> exactly. Pass a
-<code>stringr-pattern</code> object (e.g.
+<code>exact = TRUE</code>, the notes must equal <code>text</code> exactly. Pass a
+<a href="https://stringr.tidyverse.org/reference/modifiers.html" class="external-link"><code>stringr modifier</code></a> object (e.g.
 <code>stringr::regex(...)</code>, <code>stringr::fixed(...)</code>,
-<code>stringr::coll(...)</code>) as <code>text</code> to use a different matching
+<code>stringr::coll(...)</code> as <code>text</code> to use a different matching
 strategy.</p></dd>
 
 
@@ -113,13 +113,13 @@ strategy.</p></dd>
 <dd><p>Logical. When <code>TRUE</code> (default) the full notes string must
 equal <code>text</code>. When <code>FALSE</code>, the notes need only <em>contain</em>
 <code>text</code> (matched as a Perl-compatible regular expression via
-<code><a href="https://stringr.tidyverse.org/reference/modifiers.html" class="external-link">regex</a></code>).</p></dd>
+<a href="https://stringr.tidyverse.org/reference/modifiers.html" class="external-link">stringr::regex()</a>.</p></dd>
 
 
 <dt id="arg-on-multiple">on_multiple<a class="anchor" aria-label="anchor" href="#arg-on-multiple"></a></dt>
-<dd><p>What to do when multiple slides match: <code>"error"</code>
-(default) raises an error listing the matching slide numbers; <code>"return"</code>
-returns all matches as a named list of slide objects (names are slide IDs)</p></dd>
+<dd><p>What to do when multiple slides match:</p><ul><li><p><code>error</code>: (default) raises an error listing the matching slide numbers</p></li>
+<li><p><code>return</code>: returns all matches as a named list of slide objects (names are slide IDs)</p></li>
+</ul></dd>
 
 </dl></div>
     <div class="section level2">

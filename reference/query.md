@@ -40,24 +40,25 @@ query(
 
 - token:
 
-  Optional. An OAuth2 token. The default uses \`r2slides_token()\` to
-  find a token.
+  Optional. An OAuth2 token. The default uses
+  [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
+  to find a token.
 
 - debug:
 
-  Optional. If \`TRUE\`, return the unexecuted request. If \`FALSE\`,
-  execute the request.\` Default: \`FALSE\`.
+  Optional. If `TRUE`, return the unexecuted request. If `FALSE`,
+  execute the request.`Default:`FALSE\`.
 
 - max_tries:
 
-  Optional. Maximum number of attempts before giving up. Default: \`4\`.
-  Set to \`1\` to disable retrying.
+  Optional. Maximum number of attempts before giving up. Default: `4`.
+  Set to `1` to disable retrying.
 
 - backoff_base:
 
   Optional. Base (in seconds) for truncated exponential backoff.
-  Default: \`3\`. Wait time per attempt is \`min(backoff_base ^
-  attempt, 60) + runif(1, 0, 1)\` seconds.
+  Default: `3`. Wait time per attempt is
+  `min(backoff_base ^ attempt, 60) + runif(1, 0, 1)` seconds.
 
 - call:
 

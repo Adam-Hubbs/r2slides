@@ -27,7 +27,7 @@ create_styling_request(
 - element_id:
 
   A string ID of an existing text element to update. If element_id is
-  \`NULL\` a new element will be created.
+  `NULL` a new element will be created.
 
 - ...:
 

@@ -26,13 +26,13 @@ correct_slide_size(
 
 - dim:
 
-  One of \`"width"\` or \`"height"\`.
+  One of `"width"` or `"height"`.
 
 - slide_size:
 
   Optional. A list containing slide size specifications for converting.
   In the form of list(x_height = 7.5, x_width = 13.3, y_height = 5,
-  y_width = 9). \`x\_\` indicates converting from and \`y\_\` indicates
+  y_width = 9). `x_` indicates converting from and `y_` indicates
   converting too. You can override this to convert between custom slide
   sizes. If left blank it converts from PowerPoint to Google Slides.
 
@@ -42,5 +42,5 @@ correct_slide_size(
 
 ## Value
 
-A numeric value of corrected position/size. Will error if \`slide_size\`
+A numeric value of corrected position/size. Will error if `slide_size`
 is provided but is not a list.

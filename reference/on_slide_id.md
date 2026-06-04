@@ -22,8 +22,13 @@ on_slide_with_notes(text, exact = TRUE, on_multiple = c("error", "return"), ps)
 
 - id:
 
-  A slide identifier. Can be either: - A numeric slide ID - A string
-  containing slide ID - A full Google Slides URL
+  A slide identifier. Can be either:
+
+  - A numeric slide ID
+
+  - A string containing slide ID
+
+  - A full Google Slides URL
 
 - ps:
 
@@ -49,23 +54,27 @@ on_slide_with_notes(text, exact = TRUE, on_multiple = c("error", "return"), ps)
 - text:
 
   A string to search for in slide speaker notes. By default
-  (`exact = TRUE`), the notes must equal `text` exactly. Pass a
-  `stringr-pattern` object (e.g. `stringr::regex(...)`,
-  `stringr::fixed(...)`, `stringr::coll(...)`) as `text` to use a
-  different matching strategy.
+  `exact = TRUE`, the notes must equal `text` exactly. Pass a
+  [`stringr modifier`](https://stringr.tidyverse.org/reference/modifiers.html)
+  object (e.g. `stringr::regex(...)`, `stringr::fixed(...)`,
+  `stringr::coll(...)` as `text` to use a different matching strategy.
 
 - exact:
 
   Logical. When `TRUE` (default) the full notes string must equal
   `text`. When `FALSE`, the notes need only *contain* `text` (matched as
   a Perl-compatible regular expression via
-  [`regex`](https://stringr.tidyverse.org/reference/modifiers.html)).
+  [stringr::regex()](https://stringr.tidyverse.org/reference/modifiers.html).
 
 - on_multiple:
 
-  What to do when multiple slides match: `"error"` (default) raises an
-  error listing the matching slide numbers; `"return"` returns all
-  matches as a named list of slide objects (names are slide IDs)
+  What to do when multiple slides match:
+
+  - `error`: (default) raises an error listing the matching slide
+    numbers
+
+  - `return`: returns all matches as a named list of slide objects
+    (names are slide IDs)
 
 ## Value
 

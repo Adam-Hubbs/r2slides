@@ -10,6 +10,8 @@ Useful links:
 
 - <https://github.com/Adam-Hubbs/r2slides>
 
+- <https://adam-hubbs.github.io/r2slides>
+
 - Report bugs at <https://github.com/Adam-Hubbs/r2slides/issues>
 
 ## Author

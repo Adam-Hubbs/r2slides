@@ -100,7 +100,7 @@ Create or open a presentation
 
 #### Returns
 
-A new \`presentation\` object
+A new `presentation` object
 
 ------------------------------------------------------------------------
 

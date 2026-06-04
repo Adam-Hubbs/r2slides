@@ -1,6 +1,8 @@
-# Add a linked Google Sheets chart to a Google Slides presentation
+# Add a linked chart form Google Sheets
 
-Add a linked Google Sheets chart to a Google Slides presentation
+`add_linked_chart()` takes an existing Google Sheets chart and embeds it
+in a Google Slides presentation. By default, it is *linked*, so updates
+made to the chart will also update on the presentation.
 
 ## Usage
 
@@ -28,22 +30,29 @@ add_linked_chart(
 
 - position:
 
-  An object of class \`r2slides::slide_position\`
+  An object of class
+  [`r2slides::slide_position`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
 
 - linked:
 
   Optional. A logical indicating whether the chart should be linked.
-  Default: \`TRUE\`.
+
+  - `TRUE` (the default): The chart is linked so updates made in the
+    Google Sheet will also appear on the presentation.
+
+  - `FALSE`: Inserts an image of the chart as it currently exists. Will
+    not automatically update.
 
 - order:
 
-  Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
-  the created chart element. Default: \`"front"\`.
+  Optional. One of `"front"` or `"back"`. Controls the Z-order of the
+  created chart element. Default: `"front"`.
 
 - token:
 
-  Optional. An OAuth2 token. The default uses \`r2slides_token()\` to
-  find a token.
+  Optional. An OAuth2 token. The default uses
+  [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
+  to find a token.
 
 - call:
 
@@ -51,4 +60,27 @@ add_linked_chart(
 
 ## Value
 
-The Google Slides slide object (invisibly)
+The Google Slides slide object
+
+## Details
+
+`add_linked_chart()` puts the inputed chart in the exact area of the
+supplied `slides_position` object. This means that your chart may be
+re-sized.
+
+## Examples
+
+``` r
+if(FALSE) {
+# Assumes that there is a chart already made on the references sheet
+ chart_data |>
+   write_gs("Seahawks vs Dolphins Points Per Game") |> 
+   get_chart_id() |>
+   add_linked_chart(
+     on_slide_number(
+       4
+     ),
+     in_top_left()
+  )
+}
+```

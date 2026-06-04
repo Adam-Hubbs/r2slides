@@ -16,4 +16,4 @@ is.presentation(x)
 
 ## Value
 
-\`TRUE\` if \`x\` is a \`presentation\`, \`FALSE\` otherwise
+`TRUE` if `x` is a `presentation`, `FALSE` otherwise

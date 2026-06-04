@@ -11,5 +11,5 @@ r2slides_token()
 
 ## Value
 
-An authentication configuration or \`NULL\` if authentication is not
+An authentication configuration or `NULL` if authentication is not
 active.

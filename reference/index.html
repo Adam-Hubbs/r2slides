@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9073</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9075</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,10 +56,17 @@
 
       <dl><dt>
 
+          <code><a href="add_image.html">add_image()</a></code>
+
+        </dt>
+        <dd>Add image to a Google Slides presentation</dd>
+
+        <dt>
+
           <code><a href="add_linked_chart.html">add_linked_chart()</a></code>
 
         </dt>
-        <dd>Add a linked Google Sheets chart to a Google Slides presentation</dd>
+        <dd>Add a linked chart form Google Sheets</dd>
 
         <dt>
 
@@ -73,7 +80,7 @@
           <code><a href="add_text.html">add_text()</a></code>
 
         </dt>
-        <dd>Add or update text in a Google Slides presentation</dd>
+        <dd>Add text in a Google Slides presentation</dd>
 
         <dt>
 
@@ -98,6 +105,13 @@
 
         <dt>
 
+          <code><a href="chart_id.html">chart_id()</a></code>
+
+        </dt>
+        <dd>Chart ID class</dd>
+
+        <dt>
+
           <code><a href="clear_request_buffer.html">clear_request_buffer()</a></code>
 
         </dt>
@@ -116,13 +130,6 @@
 
         </dt>
         <dd>Correct slide sizes</dd>
-
-        <dt>
-
-          <code><a href="create_spreadsheet_env_in_global.html">create_spreadsheet_env_in_global()</a></code>
-
-        </dt>
-        <dd>Create spreadsheet environment</dd>
 
         <dt>
 
@@ -158,6 +165,13 @@
 
         </dt>
         <dd>Get the currently active presentation</dd>
+
+        <dt>
+
+          <code><a href="get_active_spreadsheet.html">get_active_spreadsheet()</a></code>
+
+        </dt>
+        <dd>Get the currently active spreadsheet</dd>
 
         <dt>
 
@@ -217,10 +231,10 @@
 
         <dt>
 
-          <code><a href="new_chart_id.html">new_chart_id()</a></code> <code><a href="new_chart_id.html">print(<i>&lt;chart_id&gt;</i>)</a></code>
+          <code><a href="is.spreadsheet.html">is.spreadsheet()</a></code>
 
         </dt>
-        <dd>Chart Id class</dd>
+        <dd>Check if an object is a spreadsheet</dd>
 
         <dt>
 
@@ -231,17 +245,17 @@
 
         <dt>
 
-          <code><a href="new_sht_id.html">new_sht_id()</a></code> <code><a href="new_sht_id.html">is_sht_id()</a></code>
-
-        </dt>
-        <dd>Sheet Id class</dd>
-
-        <dt>
-
           <code><a href="new_slide.html">new_slide()</a></code>
 
         </dt>
         <dd>Create a new slide in a Google Slides presentation</dd>
+
+        <dt>
+
+          <code><a href="new_spreadsheet.html">new_spreadsheet()</a></code>
+
+        </dt>
+        <dd>Create a new Google Sheets spreadsheet</dd>
 
         <dt>
 
@@ -266,17 +280,17 @@
 
         <dt>
 
-          <code><a href="print.sht_id.html">print(<i>&lt;sht_id&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Print a sht_id object</dd>
-
-        <dt>
-
           <code><a href="query.html">query()</a></code>
 
         </dt>
         <dd>Query Google API's</dd>
+
+        <dt>
+
+          <code><a href="r2s_color.html">solid_color()</a></code> <code><a href="r2s_color.html">theme_color()</a></code>
+
+        </dt>
+        <dd>Color classes</dd>
 
         <dt>
 
@@ -294,6 +308,13 @@
 
         <dt>
 
+          <code><a href="r2slides_table.html">r2slides_table</a></code>
+
+        </dt>
+        <dd>Table Objects</dd>
+
+        <dt>
+
           <code><a href="r2slides_token.html">r2slides_token()</a></code>
 
         </dt>
@@ -305,6 +326,13 @@
 
         </dt>
         <dd>Register a Google Slides presentation</dd>
+
+        <dt>
+
+          <code><a href="register_spreadsheet.html">register_spreadsheet()</a></code>
+
+        </dt>
+        <dd>Register an existing Google Sheets spreadsheet</dd>
 
         <dt>
 
@@ -322,17 +350,17 @@
 
         <dt>
 
-          <code><a href="set_defaults.html">set_defaults()</a></code>
-
-        </dt>
-        <dd>Set default style values</dd>
-
-        <dt>
-
           <code><a href="set_evaluation_strategy.html">set_evaluation_strategy()</a></code>
 
         </dt>
         <dd>Set the request evaluation strategy</dd>
+
+        <dt>
+
+          <code><a href="sht_id.html">sht_id()</a></code> <code><a href="sht_id.html">is_sht_id()</a></code>
+
+        </dt>
+        <dd>Sheet ID class</dd>
 
         <dt>
 
@@ -357,10 +385,10 @@
 
         <dt>
 
-          <code><a href="solid_color.html">solid_color()</a></code>
+          <code><a href="spreadsheet.html">spreadsheet</a></code>
 
         </dt>
-        <dd>Opaque color for use in text styles</dd>
+        <dd>R6 Class for Google Sheets Spreadsheets</dd>
 
         <dt>
 
@@ -385,13 +413,6 @@
 
         <dt>
 
-          <code><a href="transparent_color.html">transparent_color()</a></code>
-
-        </dt>
-        <dd>Color with optional alpha for use in fills</dd>
-
-        <dt>
-
           <code><a href="view_request_buffer.html">view_request_buffer()</a></code>
 
         </dt>
@@ -399,10 +420,17 @@
 
         <dt>
 
+          <code><a href="visualize_color.html">visualize_color()</a></code>
+
+        </dt>
+        <dd>Visualize a color</dd>
+
+        <dt>
+
           <code><a href="write_gs.html">write_gs()</a></code>
 
         </dt>
-        <dd>Writes data to a Google Sheet</dd>
+        <dd>Write data to a Google Sheet</dd>
       </dl></div>
   </main></div>
 

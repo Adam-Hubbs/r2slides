@@ -1,8 +1,9 @@
 # Add a table to a Google Slides slide
 
-Converts \`table\` to an \[r2slides_table\] (if it isn't one already),
-builds the necessary batchUpdate requests, and submits them in order to
-the Slides API.
+Converts `table` to an
+[r2slides_table](https://adam-hubbs.github.io/r2slides/reference/r2slides_table.md)
+(if it isn't one already), builds the necessary batchUpdate requests,
+and submits them in order to the Slides API.
 
 ## Usage
 
@@ -22,36 +23,44 @@ add_table(
 
 - slide_obj:
 
-  A \`r2slides::slide\` object.
+  A
+  [`r2slides::slide`](https://adam-hubbs.github.io/r2slides/reference/slide.md)
+  object.
 
 - table:
 
-  An \[r2slides_table\], or any object for which an
-  \[as_r2slides_table()\] method exists (e.g. a \*\*flextable\*\*).
+  An
+  [r2slides_table](https://adam-hubbs.github.io/r2slides/reference/r2slides_table.md),
+  or any object for which an
+  [`as_r2slides_table()`](https://adam-hubbs.github.io/r2slides/reference/as_r2slides_table.md)
+  method exists (e.g. a **flextable**).
 
 - position:
 
-  A \[slide_position\] describing where to place the table.
+  A
+  [slide_position](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
+  describing where to place the table.
 
 - order:
 
-  One of \`"front"\` or \`"back"\`. Controls the Z-order of the created
-  element. Default: \`"front"\`.
+  One of `"front"` or `"back"`. Controls the Z-order of the created
+  element. Default: `"front"`.
 
 - table_id:
 
   Optional character string. Object ID to assign to the new table.
-  Auto-generated when \`NULL\`.
+  Auto-generated when `NULL`.
 
 - debug:
 
-  Logical. When \`TRUE\` the requests are returned instead of submitted
-  to the API. Default: \`FALSE\`.
+  Logical. When `TRUE` the requests are returned instead of submitted to
+  the API. Default: `FALSE`.
 
 - token:
 
-  Optional OAuth2 token. Defaults to \`r2slides_token()\`.
+  Optional OAuth2 token. Defaults to
+  [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md).
 
 ## Value
 
-The \`slide_obj\` (invisibly).
+The `slide_obj` (invisibly).

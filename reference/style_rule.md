@@ -20,10 +20,10 @@ style_rule(when = TRUE, what = NULL, default = NULL)
 
 - what:
 
-  A list of text styles. Each style corresponds to a selector in
-  \`when\`. If the number of styles is less than the number of
-  selectors, the last style is treated as the default style to apply
-  when no other selectors match.
+  A list of text styles. Each style corresponds to a selector in `when`.
+  If the number of styles is less than the number of selectors, the last
+  style is treated as the default style to apply when no other selectors
+  match.
 
 - default:
 

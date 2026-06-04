@@ -4,8 +4,8 @@ Registers an already created google slides presentation so you can
 modify it in R. The user supplies either a name, url, or
 presentation_id. Supplying multiple will cause the function to error. If
 multiple presentation match a given identifier (only possible for name)
-the function presents you with a dribble (see the \`googledrive\`
-package) and ask which one you want.
+the function presents you with a dribble (see the `googledrive` package)
+and ask which one you want.
 
 ## Usage
 

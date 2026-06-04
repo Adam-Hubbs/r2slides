@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9073</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9075</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,21 @@
       <small>Source: <a href="https://github.com/Adam-Hubbs/r2slides/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.9075" id="version-009075">Version 0.0.9075<a class="anchor" aria-label="anchor" href="#version-009075"></a></h2>
+<ul><li>New <code>register_spreadsheet(id)</code> and <code>new_spreadsheet(title)</code> functions create a lean R6 <code>spreadsheet</code> class that mirrors the <code>presentation</code> workflow. The active spreadsheet is stored in the package environment and retrieved with <code><a href="../reference/get_active_spreadsheet.html">get_active_spreadsheet()</a></code>, so <code><a href="../reference/write_gs.html">write_gs()</a></code> no longer requires a global <code>ss</code> object.</li>
+<li>
+<code><a href="../reference/write_gs.html">write_gs()</a></code> now accepts an <code><a href="../reference/spreadsheet.html">r2slides::spreadsheet</a></code> object, a <code><a href="https://googlesheets4.tidyverse.org/reference/sheets_id.html" class="external-link">googlesheets4::sheets_id</a></code>, or any object accepted by <code><a href="https://googlesheets4.tidyverse.org/reference/sheets_id.html" class="external-link">googlesheets4::as_sheets_id()</a></code> via its new <code>spreadsheet</code> argument (default: <code><a href="../reference/get_active_spreadsheet.html">get_active_spreadsheet()</a></code>).</li>
+<li>
+<code>sht_id</code> and <code>chart_id</code> are now S7 classes with property access via <code>@</code>. The old <code>new_sht_id()</code> and <code>new_chart_id()</code> S3 constructors are removed — use <code><a href="../reference/sht_id.html">sht_id()</a></code> and <code><a href="../reference/chart_id.html">chart_id()</a></code> directly. <code><a href="../reference/sht_id.html">is_sht_id()</a></code> now uses S7 inheritance so it returns <code>TRUE</code> for <code>chart_id</code> objects.</li>
+<li>
+<code>create_spreadsheet_env_in_global()</code> and the <code>google_spreadsheet</code> global environment pattern are removed.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.9074" id="version-009074">Version 0.0.9074<a class="anchor" aria-label="anchor" href="#version-009074"></a></h2>
+<ul><li>
+<code><a href="../reference/r2s_color.html">solid_color()</a></code> now stores red/green/blue as numeric components (no hex round-trip) and accepts all the same inputs as before. <code><a href="../reference/r2s_color.html">theme_color()</a></code> is a new exported class for Google Slides theme color references (e.g. <code>"ACCENT1"</code>). Both extend a common <code>r2s_color</code> base class that carries an optional <code>alpha</code> channel. The old <code>transparent_color()</code> class is removed — pass <code>alpha</code> directly to <code><a href="../reference/r2s_color.html">solid_color()</a></code> or <code><a href="../reference/r2s_color.html">theme_color()</a></code> instead. A new <code>visualize()</code> generic renders a color swatch or theme name. Colors with <code>alpha</code> set used in text-style contexts now produce a warning that alpha will be ignored.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.9073" id="version-009073">Version 0.0.9073<a class="anchor" aria-label="anchor" href="#version-009073"></a></h2>
 <ul><li>New lazy evaluation strategy: use <code>set_evaluation_strategy("lazy")</code> to buffer API requests instead of executing them immediately, then flush with <code><a href="../reference/execute_requests.html">execute_requests()</a></code>. <code><a href="../reference/get_evaluation_strategy.html">get_evaluation_strategy()</a></code> returns the current setting. <code><a href="../reference/view_request_buffer.html">view_request_buffer()</a></code> inspects queued requests and <code><a href="../reference/clear_request_buffer.html">clear_request_buffer()</a></code> resets the buffer. <code>execute_requests(batch_all = TRUE)</code> (the default) merges all pending <code>batchUpdate</code> requests for the same presentation into a single API call.</li>

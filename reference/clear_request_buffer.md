@@ -11,8 +11,9 @@ clear_request_buffer()
 
 ## Value
 
-\`NULL\`, invisibly.
+`NULL`, invisibly.
 
 ## See also
 
-\[view_request_buffer()\], \[execute_requests()\]
+[`view_request_buffer()`](https://adam-hubbs.github.io/r2slides/reference/view_request_buffer.md),
+[`execute_requests()`](https://adam-hubbs.github.io/r2slides/reference/execute_requests.md)

@@ -50,12 +50,14 @@ str_matches(text, pattern, missing = c("error", "none", "all"))
 
 ## Value
 
-\- \`str_before()\`: A numeric vector of length 2 containing the start
-position (1) and the position of the first occurrence of the character -
-\`str_after()\`: A numeric vector of length 2 containing the position of
-the first occurrence of the character and the end of the string -
-\`str_matches()\`: A matrix with start and end positions of the first
-match
+- `str_before()`: A numeric vector of length 2 containing the start
+  position (1) and the position of the first occurrence of the character
+
+- `str_after()`: A numeric vector of length 2 containing the position of
+  the first occurrence of the character and the end of the string
+
+- `str_matches()`: A matrix with start and end positions of the first
+  match
 
 ## Examples
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r2slides</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9073</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9075</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,21 +87,21 @@
 
 
 <dt id="arg-token">token<a class="anchor" aria-label="anchor" href="#arg-token"></a></dt>
-<dd><p>Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.</p></dd>
+<dd><p>Optional. An OAuth2 token. The default uses <code><a href="r2slides_token.html">r2slides_token()</a></code> to find a token.</p></dd>
 
 
 <dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
-<dd><p>Optional. If `TRUE`, return the unexecuted request. If `FALSE`, execute the request.` Default: `FALSE`.</p></dd>
+<dd><p>Optional. If <code>TRUE</code>, return the unexecuted request. If <code>FALSE</code>, execute the request.<code>Default:</code>FALSE`.</p></dd>
 
 
 <dt id="arg-max-tries">max_tries<a class="anchor" aria-label="anchor" href="#arg-max-tries"></a></dt>
-<dd><p>Optional. Maximum number of attempts before giving up. Default: `4`.
-Set to `1` to disable retrying.</p></dd>
+<dd><p>Optional. Maximum number of attempts before giving up. Default: <code>4</code>.
+Set to <code>1</code> to disable retrying.</p></dd>
 
 
 <dt id="arg-backoff-base">backoff_base<a class="anchor" aria-label="anchor" href="#arg-backoff-base"></a></dt>
-<dd><p>Optional. Base (in seconds) for truncated exponential backoff. Default: `3`.
-Wait time per attempt is `min(backoff_base ^ attempt, 60) + runif(1, 0, 1)` seconds.</p></dd>
+<dd><p>Optional. Base (in seconds) for truncated exponential backoff. Default: <code>3</code>.
+Wait time per attempt is <code>min(backoff_base ^ attempt, 60) + runif(1, 0, 1)</code> seconds.</p></dd>
 
 
 <dt id="arg-call">call<a class="anchor" aria-label="anchor" href="#arg-call"></a></dt>

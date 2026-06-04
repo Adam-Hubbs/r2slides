@@ -2,7 +2,7 @@
 
 These four functions adjust the stacking order of a page element on its
 slide using the Google Slides
-\[UpdatePageElementsZOrderRequest\](https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations/request#updatepageelementszorderrequest).
+[UpdatePageElementsZOrderRequest](https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations/request#updatepageelementszorderrequest).
 
 ## Usage
 
@@ -20,8 +20,8 @@ send_backward(element)
 
 - element:
 
-  An object of class \`element\`.
+  An object of class `element`.
 
 ## Value
 
-The \`element\` object, invisibly.
+The `element` object, invisibly.

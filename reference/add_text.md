@@ -1,6 +1,7 @@
-# Add or update text in a Google Slides presentation
+# Add text in a Google Slides presentation
 
-Add or update text in a Google Slides presentation
+Adds text into a new text box on a Google Slides presentation. Text can
+be formatted by text_style.
 
 ## Usage
 
@@ -30,27 +31,38 @@ add_text(
 
 - position:
 
-  An object of class \`r2slides::slide_position\`
+  An object of class
+  [`r2slides::slide_position`](https://adam-hubbs.github.io/r2slides/reference/slide_position.md)
 
 - element_id:
 
   Optional. A string ID of an existing text element to update. If
-  element_id is \`NULL\` a new element will be created.
+  element_id is `NULL` a new element will be created.
 
 - text_style:
 
-  Optional. A list of text styling properties.
+  Optional. A list of text styling properties. One of:
+
+  - NULL (the default): Styling is determined by the defaults for the
+    Google Slides presentation
+
+  - r2slides::text_style object: List of Text styling
+
+  - r2slides::style_rule object: Conditionally formatted object that
+    defined styles and when to use those styles. Resolves to a
+    text_style object.
 
 - order:
 
-  Optional. One of \`"front"\` or \`"back"\`. Controls the Z-order of
-  the created element. Default: \`"front"\`. Ignored when updating an
-  existing element via \`element_id\`.
+  Optional. One of `"front"` or `"back"`. Controls the Z-order of the
+  created element. Default: `"front"`. Ignored when updating an existing
+  element via `element_id`.
 
 - token:
 
-  Optional. An OAuth2 token. The default uses \`r2slides_token()\` to
-  find a token.
+  Optional. An OAuth2 token. The default uses
+  [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
+  to find a token.
 
 - debug:
 
@@ -64,3 +76,12 @@ add_text(
 ## Value
 
 The Google Slides slide object (invisibly).
+
+## Examples
+
+``` r
+if(FALSE) {
+on_slide_number(2) |>
+  add_text("Hello there!", position = in_top_left())
+}
+```
