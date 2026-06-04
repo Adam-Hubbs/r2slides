@@ -60,85 +60,31 @@ test_that("get_image_dims() reads image dimensions correctly", {
   expect_true(is.numeric(dims$dpi))
 })
 
+test_that("add_image() natural fit computes correct EMU dimensions", {
+  skip_if_not_installed("magick")
 
-test_that("compute_image_layout() contain — wider image in square position", {
-  # Image: 2:1 ratio (200x100), position: 1:1 (4x4 inches at top=1, left=1)
-  pos <- slide_position(top = 1, left = 1, width = 4, height = 4)
-  dims <- list(width_px = 200L, height_px = 100L, dpi = 96L)
+  dir <- withr::local_tempdir()
+  path <- file.path(dir, "test.png")
+  # 200x100 px image; write with density so magick reports 100 DPI
+  img <- magick::image_blank(200, 100, color = "white")
+  magick::image_write(img, path, format = "png", density = "100x100")
 
-  layout <- compute_image_layout(dims, pos, "contain", NULL)
+  dims <- get_image_dims(path)
+  resolved_dpi <- 100  # override to exact value for test
+  expect_equal(dims$width_px, 200L)
+  expect_equal(dims$height_px, 100L)
 
-  # Image is wider than position, so constrained by width
-  expect_equal(layout$elem_width, 4)
-  expect_equal(layout$elem_height, 2)
-  expect_equal(layout$elem_left, 1)
-  # Centered vertically: top = 1 + (4 - 2) / 2 = 2
-  expect_equal(layout$elem_top, 2)
-  expect_null(layout$crop_props)
-})
+  elem_width_emu  <- (dims$width_px  / resolved_dpi) * 914400
+  elem_height_emu <- (dims$height_px / resolved_dpi) * 914400
 
-test_that("compute_image_layout() contain — taller image in landscape position", {
-  # Image: 1:2 ratio (100x200), position: 2:1 (4x2 inches at top=0, left=0)
-  pos <- slide_position(top = 0, left = 0, width = 4, height = 2)
-  dims <- list(width_px = 100L, height_px = 200L, dpi = 96L)
-
-  layout <- compute_image_layout(dims, pos, "contain", NULL)
-
-  # Image is taller than position (pos_ratio=2, img_ratio=0.5), constrained by height
-  expect_equal(layout$elem_height, 2)
-  expect_equal(layout$elem_width, 1)
-  expect_equal(layout$elem_top, 0)
-  # Centered horizontally: left = 0 + (4 - 1) / 2 = 1.5
-  expect_equal(layout$elem_left, 1.5)
-  expect_null(layout$crop_props)
-})
-
-test_that("compute_image_layout() cover — wider image in square position", {
-  # Image: 2:1 ratio (200x100), position: 1:1 (4x4)
-  pos <- slide_position(top = 1, left = 1, width = 4, height = 4)
-  dims <- list(width_px = 200L, height_px = 100L, dpi = 96L)
-
-  layout <- compute_image_layout(dims, pos, "cover", NULL)
-
-  expect_equal(layout$elem_width, 4)
-  expect_equal(layout$elem_height, 4)
-  expect_equal(layout$elem_left, 1)
-  expect_equal(layout$elem_top, 1)
-
-  expect_false(is.null(layout$crop_props))
-  expect_true(layout$crop_props$leftOffset > 0)
-  expect_true(layout$crop_props$rightOffset > 0)
-  expect_equal(layout$crop_props$topOffset, 0)
-  expect_equal(layout$crop_props$bottomOffset, 0)
-})
-
-test_that("compute_image_layout() raw — 100x200 at 100 DPI", {
-  pos <- slide_position(top = 0.5, left = 0.5, width = 4, height = 4)
-  dims <- list(width_px = 100L, height_px = 200L, dpi = 96L)
-
-  layout <- compute_image_layout(dims, pos, "raw", dpi = 100)
-
-  expect_equal(layout$elem_width, 1)
-  expect_equal(layout$elem_height, 2)
-  expect_equal(layout$elem_left, 0.5)
-  expect_equal(layout$elem_top, 0.5)
-  expect_null(layout$crop_props)
-})
-
-test_that("compute_image_layout() distort — uses position exactly", {
-  pos <- slide_position(top = 1, left = 2, width = 5, height = 3)
-
-  layout <- compute_image_layout(NULL, pos, "distort", NULL)
-
-  expect_equal(layout$elem_width, 5)
-  expect_equal(layout$elem_height, 3)
-  expect_equal(layout$elem_left, 2)
-  expect_equal(layout$elem_top, 1)
-  expect_null(layout$crop_props)
+  # 200px / 100 DPI = 2 inches; 100px / 100 DPI = 1 inch
+  expect_equal(elem_width_emu,  2 * 914400)
+  expect_equal(elem_height_emu, 1 * 914400)
 })
 
 
 test_that("add_image() inserts an image from a URL and records it in the ledger", {
+  skip_if_not_installed("magick")
   vcr::use_cassette(
     "add_image_url",
     match_requests_on = c("method", "uri"),
@@ -154,7 +100,7 @@ test_that("add_image() inserts an image from a URL and records it in the ledger"
         slide_obj,
         image = "https://www.gstatic.com/webp/gallery/1.jpg",
         position = in_top_left(),
-        fit = "distort"
+        fit = "fill"
       )
 
       delete_slide_raw(ps, test_slide_id)

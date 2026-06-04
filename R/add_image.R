@@ -15,19 +15,15 @@
 #'   * jpg
 #'   * gif
 #' @param position An object of class `r2slides::slide_position`.
-#' @param fit Controls how the image maps onto the `position` bounding box.
-#'   One of:
-#'   - `"contain"` (default): scale to fit entirely within the bounding box,
-#'     preserving aspect ratio, centered.
-#'   - `"cover"`: fill the bounding box completely, clipping overflow from the
-#'     center, preserving aspect ratio.
-#'   - `"distort"`: stretch to fill exactly, ignoring aspect ratio.
-#'   - `"raw"`: place at the image's natural pixel size at the given `dpi`,
-#'     anchored to the top-left of `position`. Overflow is allowed.
-#'
-#'   All modes except `"distort"` require the `magick` package to read image
-#'   dimensions.
-#' @param dpi Numeric. Only used when `fit = "raw"`. The DPI to use when
+#' @param fit Controls how the image is sized on the slide. One of:
+#'   - `"fill"` (default): the image occupies exactly the `position` bounding
+#'     box, ignoring aspect ratio. For ggplot objects, the plot is rendered
+#'     directly at the target dimensions. For local files, the `magick` package
+#'     is required to resize the image before upload.
+#'   - `"natural"`: the image is placed at its true pixel dimensions (converted
+#'     to inches using `dpi`), anchored to the top-left corner of `position`.
+#'     The image may overflow the bounding box. Requires the `magick` package.
+#' @param dpi Numeric. Only used when `fit = "natural"`. The DPI to use when
 #'   converting pixels to inches. `NULL` auto-detects from the file metadata,
 #'   falling back to 96.
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of
@@ -40,14 +36,14 @@
 #'            geom_point()
 #'
 #'   on_slide_number(4) |>
-#'     add_image(plot)
+#'     add_image(plot, position = in_top_left())
 #' }
 #' @export
 add_image <- function(
   slide_obj,
   image,
   position,
-  fit = c("contain", "cover", "distort", "raw"),
+  fit = c("fill", "natural"),
   dpi = NULL,
   order = c("front", "back")
 ) {
@@ -60,11 +56,20 @@ add_image <- function(
     )
   }
 
+  # Pre-resize to the exact position dimensions before uploading. Google Slides
+  # preserves the original aspect ratio even when a specific size is requested,
+  # so we resize client-side first to guarantee the correct proportions.
+  if (fit == "fill") {
+    fill_path <- preprocess_for_fill(image, position)
+    on.exit(unlink(fill_path), add = TRUE)
+    image <- fill_path
+  }
+
   resolved <- resolve_image_source(image)
 
   if (!is.null(resolved$drive_id)) {
     on.exit(
-      try(googledrive::drive_rm(googledrive::as_id(resolved$drive_id))),
+      suppressMessages(try(googledrive::drive_rm(googledrive::as_id(resolved$drive_id)))),
       add = TRUE
     )
   }
@@ -73,87 +78,90 @@ add_image <- function(
     on.exit(unlink(resolved$local_path), add = TRUE)
   }
 
-  dim_source <- resolved$local_path %||% resolved$url
-  img_dims <- if (fit == "distort") NULL else get_image_dims(dim_source)
+  if (fit == "fill") {
+    elem_width_emu  <- position@width_emu
+    elem_height_emu <- position@height_emu
+  } else {
+    rlang::check_installed("magick", reason = "to read image dimensions for fit = 'natural'")
+    dim_source <- resolved$local_path %||% resolved$url
+    img_dims <- get_image_dims(dim_source)
+    resolved_dpi <- dpi %||% img_dims$dpi
+    elem_width_emu  <- (img_dims$width_px  / resolved_dpi) * 914400
+    elem_height_emu <- (img_dims$height_px / resolved_dpi) * 914400
+  }
 
-  layout <- compute_image_layout(img_dims, position, fit, dpi)
+  obj_id <- paste0(
+    "r2img",
+    gsub("[^0-9A-Za-z]", "", format(Sys.time(), "%Y%m%d%H%M%OS6"))
+  )
 
-  emu <- 914400L
-  create_image_request <- list(
-    requests = list(
-      list(
-        createImage = list(
-          url = resolved$url,
-          elementProperties = list(
-            pageObjectId = slide_obj@slide_id,
-            size = list(
-              width = list(
-                magnitude = layout$elem_width * emu,
-                unit = "EMU"
-              ),
-              height = list(
-                magnitude = layout$elem_height * emu,
-                unit = "EMU"
-              )
-            ),
-            transform = list(
-              scaleX = position@scaleX,
-              scaleY = position@scaleY,
-              shearX = position@shearX,
-              shearY = position@shearY,
-              translateX = layout$elem_left * emu,
-              translateY = layout$elem_top * emu,
-              unit = "EMU"
-            )
+  requests <- list(
+    list(
+      createImage = list(
+        objectId = obj_id,
+        url = resolved$url,
+        elementProperties = list(
+          pageObjectId = slide_obj@slide_id,
+          size = list(
+            width  = list(magnitude = elem_width_emu,  unit = "EMU"),
+            height = list(magnitude = elem_height_emu, unit = "EMU")
+          ),
+          transform = list(
+            scaleX     = position@scaleX,
+            scaleY     = position@scaleY,
+            shearX     = position@shearX,
+            shearY     = position@shearY,
+            translateX = position@left_emu,
+            translateY = position@top_emu,
+            unit       = "EMU"
           )
         )
       )
     )
   )
 
-  rsp <- query(
+  # Clear crop offsets so the (already correctly sized) image fills the
+  # element without any additional aspect-ratio adjustment by Google Slides.
+  if (fit == "fill") {
+    requests <- c(requests, list(
+      list(
+        updateImageProperties = list(
+          objectId = obj_id,
+          imageProperties = list(
+            cropProperties = list(
+              leftOffset   = 0,
+              rightOffset  = 0,
+              topOffset    = 0,
+              bottomOffset = 0
+            )
+          ),
+          fields = "cropProperties"
+        )
+      )
+    ))
+  }
+
+  query(
     endpoint = "slides.presentations.batchUpdate",
     params = list(presentationId = slide_obj@presentation$presentation_id),
-    body = create_image_request,
+    body = list(requests = requests),
     base = "slides"
   )
 
-  new_id <- rsp$replies[[1]]$createImage$objectId
-
-  if (!is.null(new_id) && !is.null(layout$crop_props)) {
-    update_crop_request <- list(
-      requests = list(list(
-        updateImageProperties = list(
-          objectId = new_id,
-          imageProperties = list(cropProperties = layout$crop_props),
-          fields = "cropProperties"
-        )
-      ))
-    )
-    query(
-      endpoint = "slides.presentations.batchUpdate",
-      params = list(presentationId = slide_obj@presentation$presentation_id),
-      body = update_crop_request,
-      base = "slides"
-    )
-  }
-
-  if (!is.null(new_id) && order == "back") {
+  if (order == "back") {
     zorder_by_id(
       presentation_id = slide_obj@presentation$presentation_id,
-      element_id = new_id,
+      element_id = obj_id,
       operation = resolve_zorder_op(order)
     )
   }
 
-  if (!is.null(new_id)) {
-    slide_obj@presentation$add_to_ledger(
-      element_id = new_id,
-      slide_id = slide_obj@slide_id,
-      element_type = "image",
-      element_text = NA_character_
-    )
-  }
+  slide_obj@presentation$add_to_ledger(
+    element_id = obj_id,
+    slide_id = slide_obj@slide_id,
+    element_type = "image",
+    element_text = NA_character_
+  )
 
   invisible(slide_obj)
 }
@@ -168,7 +176,7 @@ resolve_image_source <- function(image, call = rlang::caller_env()) {
       reason = "to render ggplot objects as images"
     )
     tmp <- tempfile(fileext = ".png")
-    ggplot2::ggsave(tmp, plot = image, device = "png")
+    suppressMessages(ggplot2::ggsave(tmp, plot = image, device = "png"))
     result <- upload_to_drive(tmp, call = call)
     result$local_path <- tmp
     result$is_temp <- TRUE
@@ -201,11 +209,11 @@ resolve_image_source <- function(image, call = rlang::caller_env()) {
 upload_to_drive <- function(path, call = rlang::caller_env()) {
   mime <- mime_type_from_path(path, call = call)
 
-  drive_file <- googledrive::drive_upload(
+  drive_file <- suppressMessages(googledrive::drive_upload(
     media = path,
     name = basename(path),
     type = mime
-  )
+  ))
 
   file_id <- drive_file$id[[1]]
 
@@ -243,11 +251,46 @@ mime_type_from_path <- function(path, call = rlang::caller_env()) {
 }
 
 
+# Resizes an image to exactly position@width x position@height and saves it
+# to a temp PNG. For ggplot objects, ggsave renders at the target size
+# directly (no magick required). For local files, magick is used to resize.
+preprocess_for_fill <- function(image, position, call = rlang::caller_env()) {
+  out <- tempfile(fileext = ".png")
+
+  if (inherits(image, "gg")) {
+    rlang::check_installed("ggplot2", reason = "to render ggplot objects as images")
+    suppressMessages(ggplot2::ggsave(
+      out,
+      plot   = image,
+      device = "png",
+      width  = position@width,
+      height = position@height,
+      units  = "in",
+      dpi    = 300
+    ))
+  } else {
+    rlang::check_installed("magick", reason = "to resize images for fit = 'fill'")
+    is_url <- is.character(image) && length(image) == 1L && grepl("^https?://", image)
+    if (!is_url && !file.exists(image)) {
+      cli::cli_abort("File not found: {.path {image}}", call = call)
+    }
+    geo <- paste0(round(position@width * 300L), "x", round(position@height * 300L), "!")
+    magick::image_write(
+      magick::image_resize(magick::image_read(image), geo),
+      out,
+      format = "png"
+    )
+  }
+
+  out
+}
+
+
 # Returns list(width_px, height_px, dpi) for a local file path or URL.
 get_image_dims <- function(path, call = rlang::caller_env()) {
   rlang::check_installed(
     "magick",
-    reason = "to read image dimensions for fit modes other than 'distort'"
+    reason = "to read image dimensions for fit = 'natural'"
   )
   info <- magick::image_info(magick::image_read(path))
   dpi <- suppressWarnings(as.integer(strsplit(info$density[[1]], "x")[[1]][[
@@ -262,82 +305,3 @@ get_image_dims <- function(path, call = rlang::caller_env()) {
 }
 
 
-# Computes element placement given image dimensions, a slide_position bounding
-# box, and a fit mode. Returns list(elem_left, elem_top, elem_width,
-# elem_height, crop_props), all in inches.
-compute_image_layout <- function(img_dims, position, fit, dpi = NULL) {
-  pos_w <- position@width
-  pos_h <- position@height
-  pos_l <- position@left
-  pos_t <- position@top
-
-  if (fit == "distort") {
-    return(list(
-      elem_left = pos_l,
-      elem_top = pos_t,
-      elem_width = pos_w,
-      elem_height = pos_h,
-      crop_props = NULL
-    ))
-  }
-
-  img_w <- img_dims$width_px
-  img_h <- img_dims$height_px
-  img_ratio <- img_w / img_h
-  pos_ratio <- pos_w / pos_h
-
-  if (fit == "contain") {
-    if (img_ratio > pos_ratio) {
-      elem_w <- pos_w
-      elem_h <- pos_w / img_ratio
-      elem_l <- pos_l
-      elem_t <- pos_t + (pos_h - elem_h) / 2
-    } else {
-      elem_h <- pos_h
-      elem_w <- pos_h * img_ratio
-      elem_l <- pos_l + (pos_w - elem_w) / 2
-      elem_t <- pos_t
-    }
-    crop_props <- NULL
-  } else if (fit == "cover") {
-    elem_w <- pos_w
-    elem_h <- pos_h
-    elem_l <- pos_l
-    elem_t <- pos_t
-
-    if (img_ratio > pos_ratio) {
-      visible_w <- img_h * pos_ratio
-      h_offset <- (img_w - visible_w) / (2 * img_w)
-      crop_props <- list(
-        leftOffset = h_offset,
-        rightOffset = h_offset,
-        topOffset = 0,
-        bottomOffset = 0
-      )
-    } else {
-      visible_h <- img_w / pos_ratio
-      v_offset <- (img_h - visible_h) / (2 * img_h)
-      crop_props <- list(
-        leftOffset = 0,
-        rightOffset = 0,
-        topOffset = v_offset,
-        bottomOffset = v_offset
-      )
-    }
-  } else if (fit == "raw") {
-    resolved_dpi <- dpi %||% img_dims$dpi %||% 96
-    elem_w <- img_w / resolved_dpi
-    elem_h <- img_h / resolved_dpi
-    elem_l <- pos_l
-    elem_t <- pos_t
-    crop_props <- NULL
-  }
-
-  list(
-    elem_left = elem_l,
-    elem_top = elem_t,
-    elem_width = elem_w,
-    elem_height = elem_h,
-    crop_props = crop_props
-  )
-}

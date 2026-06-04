@@ -7,9 +7,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15478'
+      content-length: '16226'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 20:26:29 GMT
+      date: Thu, 04 Jun 2026 21:44:42 GMT
       server: ESF
       vary:
       - Origin
@@ -2747,7 +2747,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIjh7sX8Q9Rt4ToIOsM1s0z-G5xmXY4mWsXfyV5M7-pv9QNt7Sk4A101tcVQm6Y85YEHSgeAV7SrUcbMp-9rYNsSnWu5nH74Anj1T72eG1TTD5D9R7wno3gD_yoDwpBE7C0aHCo8rOYxc0qAiVEj8sXXU2q0w_s8mXne6p73Hbss7mtoWXKg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIM-romTjYf5neNZ-jkLcwYytg517U4NcK6WiNUPimZ7dwS7NoE4IN_oyN4ZMfODRBhJlLm8ksnnkHF-D3cjADBmfZQpF4pbnfEFKrSC_IKO1zU_7hH6qMdzQQLi_RVj6-dJjrLeZbyOI5e8ryhN8zq0fewZQ1EtE_N4QpaYvWCLKojYtDLg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -2997,7 +2997,7 @@ http_interactions:
                   }
                 },
                 {
-                  "objectId": "SLIDES_API1442060914_0",
+                  "objectId": "r2img20260604152607427215",
                   "size": {
                     "width": {
                       "magnitude": 37500,
@@ -3009,14 +3009,14 @@ http_interactions:
                     }
                   },
                   "transform": {
-                    "scaleX": 43.8912,
-                    "scaleY": 43.8912,
-                    "translateX": 749808,
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 109728,
                     "translateY": 1353312,
                     "unit": "EMU"
                   },
                   "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdKkrCjt6N2q-jFH3bSKTOGnj__YCPMaZBgL1eGmJgKqfwHiGBBWyLIMtR4RiTqDaSbNc0Q1dPY2D5uB_i7mdxz_frYGpBGCQ9adi5V1-8eqJdUrlDGjr53EiOvfyr_Nig9GODGj5t6IMDJ_eHGKbIurps53Qr0qF82hW-puO_w_-drD53ifA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdBXP5gTO1Zt5Fv02r5laY9yEKXzTeLEYa15qG6Yo7SXkv2A3br8BpCitIZUfLhi6Ft8EwEcFRIsY4Ci3PkLh7wBbuyGcdd_5yI1-5vRflbcSiLarI6fkrPpBoLfPpYccncLJKsgG2TlxD2mnwmOxRFZuO6Npf_rG6VASNXRI7Y8rmMPY8=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "imageProperties": {
                       "outline": {
                         "outlineFill": {
@@ -3053,7 +3053,187 @@ http_interactions:
                         "propertyState": "NOT_RENDERED"
                       }
                     },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1W_L1ytFyzJL9QcAIBAxWlywVOrhTEJHq"
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1d9mMFaCM-8MseHdynedgJHzGnj_GWdOq"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604152612223752",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 6144768,
+                    "translateY": 1353312,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUelceye9ZkaphZ49MZwqw3u5NTYlEOT5EIGfhzEbczXbgZ6lLlbAMKYH4F9gh0ewiHSVyZuZWrtwbaiu-b9hlSmTxs8rTi0iXSqFaZDQ4RZt8MQTqCLU2GPyFIB28AH_PdJHYkm_poqbR4Nw-sxx5O1Rwvgfg9sQwh0MtASF2ntzu-tyCw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1QHBtAGrHkPB3YT-UOdPPYfnuW8NgNshO"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604153434172163",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 6144768,
+                    "translateY": 3374136,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdEQjMb2znQFYSvvFJXWStkUOv8fI7lw_H_Dc_LCg8ezTwgsyIcWQ9AcJrJBn-MYeZg26-gvq-6yyOIEYBsF9eVZM3E1El45nrHEmVXkoQJ-lIvQQfxGQILX0y0ESNd8DEEkc9KmM6kb5w8OD4TMuCossaX6uD4QynaEycbpAjOVa1bc_Q7vA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=14pWIj4pgvgg4jU7gfthg96rXAGBNcQAD"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604153716152420",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 3127248,
+                    "translateY": 3374136,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUd9THbAsk6mA9UybcRboTAgBR8Axg5ri7Q2xZEKgamu7QnJcKLJ9vV-ua-n_x1nX8Bo3bBn8VR1aA5hQKy8C3m1kJMMCq6EGdeIuK-AHUSDaZtCd3EcjBTOTXPijz9V6gkj206y1JJrKSqTY2vpX6cB0WOL7K9teWV5AcKldc-276vB1t_2Nw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=12-Q7OAPaKN-hqUSA-pLs3VfaxyxRx2xG"
                   }
                 }
               ],
@@ -12533,7 +12713,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "hk7mU5WQki4I4g",
+          "revisionId": "0J0V8vKNld4cxg",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -13602,7 +13782,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-04 20:26:29
+  recorded_at: 2026-06-04 21:44:42
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -13611,9 +13791,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15478'
+      content-length: '16226'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 20:26:29 GMT
+      date: Thu, 04 Jun 2026 21:44:43 GMT
       server: ESF
       vary:
       - Origin
@@ -16351,7 +16531,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIjh7sX8Q9Rt4ToIOsM1s0z-G5xmXY4mWsXfyV5M7-pv9QNt7Sk4A101tcVQm6Y85YEHSgeAV7SrUcbMp-9rYNsSnWu5nH74Anj1T72eG1TTD5D9R7wno3gD_yoDwpBE7C0aHCo8rOYxc0qAiVEj8sXXU2q0w_s8mXne6p73Hbss7mtoWXKg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIM-romTjYf5neNZ-jkLcwYytg517U4NcK6WiNUPimZ7dwS7NoE4IN_oyN4ZMfODRBhJlLm8ksnnkHF-D3cjADBmfZQpF4pbnfEFKrSC_IKO1zU_7hH6qMdzQQLi_RVj6-dJjrLeZbyOI5e8ryhN8zq0fewZQ1EtE_N4QpaYvWCLKojYtDLg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -16601,7 +16781,7 @@ http_interactions:
                   }
                 },
                 {
-                  "objectId": "SLIDES_API1442060914_0",
+                  "objectId": "r2img20260604152607427215",
                   "size": {
                     "width": {
                       "magnitude": 37500,
@@ -16613,14 +16793,14 @@ http_interactions:
                     }
                   },
                   "transform": {
-                    "scaleX": 43.8912,
-                    "scaleY": 43.8912,
-                    "translateX": 749808,
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 109728,
                     "translateY": 1353312,
                     "unit": "EMU"
                   },
                   "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdKkrCjt6N2q-jFH3bSKTOGnj__YCPMaZBgL1eGmJgKqfwHiGBBWyLIMtR4RiTqDaSbNc0Q1dPY2D5uB_i7mdxz_frYGpBGCQ9adi5V1-8eqJdUrlDGjr53EiOvfyr_Nig9GODGj5t6IMDJ_eHGKbIurps53Qr0qF82hW-puO_w_-drD53ifA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdBXP5gTO1Zt5Fv02r5laY9yEKXzTeLEYa15qG6Yo7SXkv2A3br8BpCitIZUfLhi6Ft8EwEcFRIsY4Ci3PkLh7wBbuyGcdd_5yI1-5vRflbcSiLarI6fkrPpBoLfPpYccncLJKsgG2TlxD2mnwmOxRFZuO6Npf_rG6VASNXRI7Y8rmMPY8=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "imageProperties": {
                       "outline": {
                         "outlineFill": {
@@ -16657,7 +16837,187 @@ http_interactions:
                         "propertyState": "NOT_RENDERED"
                       }
                     },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1W_L1ytFyzJL9QcAIBAxWlywVOrhTEJHq"
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1d9mMFaCM-8MseHdynedgJHzGnj_GWdOq"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604152612223752",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 6144768,
+                    "translateY": 1353312,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUelceye9ZkaphZ49MZwqw3u5NTYlEOT5EIGfhzEbczXbgZ6lLlbAMKYH4F9gh0ewiHSVyZuZWrtwbaiu-b9hlSmTxs8rTi0iXSqFaZDQ4RZt8MQTqCLU2GPyFIB28AH_PdJHYkm_poqbR4Nw-sxx5O1Rwvgfg9sQwh0MtASF2ntzu-tyCw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1QHBtAGrHkPB3YT-UOdPPYfnuW8NgNshO"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604153434172163",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 6144768,
+                    "translateY": 3374136,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdEQjMb2znQFYSvvFJXWStkUOv8fI7lw_H_Dc_LCg8ezTwgsyIcWQ9AcJrJBn-MYeZg26-gvq-6yyOIEYBsF9eVZM3E1El45nrHEmVXkoQJ-lIvQQfxGQILX0y0ESNd8DEEkc9KmM6kb5w8OD4TMuCossaX6uD4QynaEycbpAjOVa1bc_Q7vA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=14pWIj4pgvgg4jU7gfthg96rXAGBNcQAD"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604153716152420",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 3127248,
+                    "translateY": 3374136,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUd9THbAsk6mA9UybcRboTAgBR8Axg5ri7Q2xZEKgamu7QnJcKLJ9vV-ua-n_x1nX8Bo3bBn8VR1aA5hQKy8C3m1kJMMCq6EGdeIuK-AHUSDaZtCd3EcjBTOTXPijz9V6gkj206y1JJrKSqTY2vpX6cB0WOL7K9teWV5AcKldc-276vB1t_2Nw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=12-Q7OAPaKN-hqUSA-pLs3VfaxyxRx2xG"
                   }
                 }
               ],
@@ -26137,7 +26497,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "hk7mU5WQki4I4g",
+          "revisionId": "0J0V8vKNld4cxg",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -27206,7 +27566,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-04 20:26:29
+  recorded_at: 2026-06-04 21:44:43
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -27215,9 +27575,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '209'
+      content-length: '210'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 20:26:30 GMT
+      date: Thu, 04 Jun 2026 21:44:43 GMT
       server: ESF
       vary:
       - Origin
@@ -27234,15 +27594,15 @@ http_interactions:
           "replies": [
             {
               "createSlide": {
-                "objectId": "SLIDES_API1566420090_0"
+                "objectId": "SLIDES_API1773499513_0"
               }
             }
           ],
           "writeControl": {
-            "requiredRevisionId": "Ls5-dDu6uWanpQ"
+            "requiredRevisionId": "-VDiBp0PX6HuRQ"
           }
         }
-  recorded_at: 2026-06-04 20:26:30
+  recorded_at: 2026-06-04 21:44:43
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -27251,9 +27611,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15538'
+      content-length: '16280'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 20:26:30 GMT
+      date: Thu, 04 Jun 2026 21:44:43 GMT
       server: ESF
       vary:
       - Origin
@@ -29991,7 +30351,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIjh7sX8Q9Rt4ToIOsM1s0z-G5xmXY4mWsXfyV5M7-pv9QNt7Sk4A101tcVQm6Y85YEHSgeAV7SrUcbMp-9rYNsSnWu5nH74Anj1T72eG1TTD5D9R7wno3gD_yoDwpBE7C0aHCo8rOYxc0qAiVEj8sXXU2q0w_s8mXne6p73Hbss7mtoWXKg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIM-romTjYf5neNZ-jkLcwYytg517U4NcK6WiNUPimZ7dwS7NoE4IN_oyN4ZMfODRBhJlLm8ksnnkHF-D3cjADBmfZQpF4pbnfEFKrSC_IKO1zU_7hH6qMdzQQLi_RVj6-dJjrLeZbyOI5e8ryhN8zq0fewZQ1EtE_N4QpaYvWCLKojYtDLg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -30241,7 +30601,7 @@ http_interactions:
                   }
                 },
                 {
-                  "objectId": "SLIDES_API1442060914_0",
+                  "objectId": "r2img20260604152607427215",
                   "size": {
                     "width": {
                       "magnitude": 37500,
@@ -30253,14 +30613,14 @@ http_interactions:
                     }
                   },
                   "transform": {
-                    "scaleX": 43.8912,
-                    "scaleY": 43.8912,
-                    "translateX": 749808,
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 109728,
                     "translateY": 1353312,
                     "unit": "EMU"
                   },
                   "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdKkrCjt6N2q-jFH3bSKTOGnj__YCPMaZBgL1eGmJgKqfwHiGBBWyLIMtR4RiTqDaSbNc0Q1dPY2D5uB_i7mdxz_frYGpBGCQ9adi5V1-8eqJdUrlDGjr53EiOvfyr_Nig9GODGj5t6IMDJ_eHGKbIurps53Qr0qF82hW-puO_w_-drD53ifA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdBXP5gTO1Zt5Fv02r5laY9yEKXzTeLEYa15qG6Yo7SXkv2A3br8BpCitIZUfLhi6Ft8EwEcFRIsY4Ci3PkLh7wBbuyGcdd_5yI1-5vRflbcSiLarI6fkrPpBoLfPpYccncLJKsgG2TlxD2mnwmOxRFZuO6Npf_rG6VASNXRI7Y8rmMPY8=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "imageProperties": {
                       "outline": {
                         "outlineFill": {
@@ -30297,7 +30657,187 @@ http_interactions:
                         "propertyState": "NOT_RENDERED"
                       }
                     },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1W_L1ytFyzJL9QcAIBAxWlywVOrhTEJHq"
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1d9mMFaCM-8MseHdynedgJHzGnj_GWdOq"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604152612223752",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 6144768,
+                    "translateY": 1353312,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUelceye9ZkaphZ49MZwqw3u5NTYlEOT5EIGfhzEbczXbgZ6lLlbAMKYH4F9gh0ewiHSVyZuZWrtwbaiu-b9hlSmTxs8rTi0iXSqFaZDQ4RZt8MQTqCLU2GPyFIB28AH_PdJHYkm_poqbR4Nw-sxx5O1Rwvgfg9sQwh0MtASF2ntzu-tyCw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1QHBtAGrHkPB3YT-UOdPPYfnuW8NgNshO"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604153434172163",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 6144768,
+                    "translateY": 3374136,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdEQjMb2znQFYSvvFJXWStkUOv8fI7lw_H_Dc_LCg8ezTwgsyIcWQ9AcJrJBn-MYeZg26-gvq-6yyOIEYBsF9eVZM3E1El45nrHEmVXkoQJ-lIvQQfxGQILX0y0ESNd8DEEkc9KmM6kb5w8OD4TMuCossaX6uD4QynaEycbpAjOVa1bc_Q7vA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=14pWIj4pgvgg4jU7gfthg96rXAGBNcQAD"
+                  }
+                },
+                {
+                  "objectId": "r2img20260604153716152420",
+                  "size": {
+                    "width": {
+                      "magnitude": 24000,
+                      "unit": "EMU"
+                    },
+                    "height": {
+                      "magnitude": 13500,
+                      "unit": "EMU"
+                    }
+                  },
+                  "transform": {
+                    "scaleX": 121.92,
+                    "scaleY": 121.92,
+                    "translateX": 3127248,
+                    "translateY": 3374136,
+                    "unit": "EMU"
+                  },
+                  "image": {
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUd9THbAsk6mA9UybcRboTAgBR8Axg5ri7Q2xZEKgamu7QnJcKLJ9vV-ua-n_x1nX8Bo3bBn8VR1aA5hQKy8C3m1kJMMCq6EGdeIuK-AHUSDaZtCd3EcjBTOTXPijz9V6gkj206y1JJrKSqTY2vpX6cB0WOL7K9teWV5AcKldc-276vB1t_2Nw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "imageProperties": {
+                      "outline": {
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "themeColor": "DARK2"
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
+                      },
+                      "shadow": {
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
+                      }
+                    },
+                    "sourceUrl": "https://drive.google.com/uc?export=view&id=12-Q7OAPaKN-hqUSA-pLs3VfaxyxRx2xG"
                   }
                 }
               ],
@@ -30597,16 +31137,16 @@ http_interactions:
               }
             },
             {
-              "objectId": "SLIDES_API1566420090_0",
+              "objectId": "SLIDES_API1773499513_0",
               "slideProperties": {
                 "layoutObjectId": "p12",
                 "masterObjectId": "simple-light-2",
                 "notesPage": {
-                  "objectId": "SLIDES_API1566420090_0:notes",
+                  "objectId": "SLIDES_API1773499513_0:notes",
                   "pageType": "NOTES",
                   "pageElements": [
                     {
-                      "objectId": "SLIDES_API1566420090_1",
+                      "objectId": "SLIDES_API1773499513_1",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -30637,7 +31177,7 @@ http_interactions:
                       }
                     },
                     {
-                      "objectId": "SLIDES_API1566420090_2",
+                      "objectId": "SLIDES_API1773499513_2",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -30685,7 +31225,7 @@ http_interactions:
                     }
                   },
                   "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API1566420090_2"
+                    "speakerNotesObjectId": "SLIDES_API1773499513_2"
                   }
                 }
               },
@@ -39876,7 +40416,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "Ls5-dDu6uWanpQ",
+          "revisionId": "-VDiBp0PX6HuRQ",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -40945,7 +41485,199 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-04 20:26:30
+  recorded_at: 2026-06-04 21:44:43
+- request:
+    method: POST
+    uri: https://www.googleapis.com/upload/drive/v3/files?supportsAllDrives=TRUE&fields=%2A&uploadType=multipart
+  response:
+    status: 200
+    headers:
+      content-type: application/json; charset=UTF-8
+      x-guploader-uploadid: AJ5rDhGiWJG0gqxq3vM7UvG3Ny7PdYnaSkVE44EcKeWc69HRdb2N-Axh98cRA-vYYLEAraQe
+      access-control-allow-credentials: 'true'
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      date: Thu, 04 Jun 2026 21:44:44 GMT
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      pragma: no-cache
+      server: ESF
+      vary: Origin, X-Origin
+      x-content-type-options: nosniff
+      x-frame-options: SAMEORIGIN
+      x-xss-protection: '0'
+      content-length: '4478'
+      alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      string: |
+        {
+          "kind": "drive#file",
+          "id": "1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB",
+          "name": "filea0726fed4673.png",
+          "mimeType": "image/png",
+          "starred": false,
+          "trashed": false,
+          "explicitlyTrashed": false,
+          "parents": [
+            "0ACOFRjalKxnQUk9PVA"
+          ],
+          "spaces": [
+            "drive"
+          ],
+          "version": "1",
+          "webContentLink": "https://drive.google.com/uc?id=1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB/view?usp=drivesdk",
+          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+          "hasThumbnail": true,
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPZkAcjDVpOkwAEf9AyAxbYQ8WYva4JSFBmToaTGcXwDMBACj1vn66F_txzI8n0WYtOo-cgjwrDyY56pfEXhw_DnKvfcMX_h95UWLiu8cVvpI6p5g=s220",
+          "thumbnailVersion": "1",
+          "viewedByMe": false,
+          "createdTime": "2026-06-04T21:44:44.376Z",
+          "modifiedTime": "2026-06-04T21:44:44.376Z",
+          "modifiedByMeTime": "2026-06-04T21:44:44.376Z",
+          "modifiedByMe": true,
+          "owners": [
+            {
+              "kind": "drive#user",
+              "displayName": "Adam Hubbs",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocIc9cExndU3VoL2lvCtYkmI1l0ywsCW5X__u5cjF8b_8SdP2A=s64",
+              "me": true,
+              "permissionId": "13669810728446326842",
+              "emailAddress": "adam@y2analytics.com"
+            }
+          ],
+          "lastModifyingUser": {
+            "kind": "drive#user",
+            "displayName": "Adam Hubbs",
+            "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocIc9cExndU3VoL2lvCtYkmI1l0ywsCW5X__u5cjF8b_8SdP2A=s64",
+            "me": true,
+            "permissionId": "13669810728446326842",
+            "emailAddress": "adam@y2analytics.com"
+          },
+          "shared": false,
+          "ownedByMe": true,
+          "downloadRestrictions": {
+            "itemDownloadRestriction": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            },
+            "effectiveDownloadRestrictionWithContext": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            }
+          },
+          "capabilities": {
+            "canAcceptOwnership": false,
+            "canAddChildren": false,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": true,
+            "canChangeItemDownloadRestriction": true,
+            "canChangeSecurityUpdateEnabled": false,
+            "canChangeViewersCanCopyContent": true,
+            "canComment": true,
+            "canCopy": true,
+            "canDelete": true,
+            "canDisableInheritedPermissions": false,
+            "canDownload": true,
+            "canEdit": true,
+            "canEnableInheritedPermissions": true,
+            "canListChildren": false,
+            "canModifyContent": true,
+            "canModifyContentRestriction": true,
+            "canModifyEditorContentRestriction": true,
+            "canModifyOwnerContentRestriction": true,
+            "canModifyLabels": false,
+            "canMoveChildrenWithinDrive": false,
+            "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
+            "canReadLabels": false,
+            "canReadRevisions": true,
+            "canRemoveChildren": false,
+            "canRemoveContentRestriction": false,
+            "canRemoveMyDriveParent": true,
+            "canRename": true,
+            "canShare": true,
+            "canTrash": true,
+            "canUntrash": true,
+            "canStartApproval": true
+          },
+          "viewersCanCopyContent": true,
+          "copyRequiresWriterPermission": false,
+          "writersCanShare": true,
+          "permissions": [
+            {
+              "kind": "drive#permission",
+              "id": "13669810728446326842",
+              "type": "user",
+              "emailAddress": "adam@y2analytics.com",
+              "role": "owner",
+              "displayName": "adam",
+              "deleted": false,
+              "pendingOwner": false
+            }
+          ],
+          "permissionIds": [
+            "13669810728446326842"
+          ],
+          "originalFilename": "filea0726fed4673.png",
+          "fullFileExtension": "png",
+          "fileExtension": "png",
+          "md5Checksum": "2c10090dd0356411687da7e6d477c145",
+          "sha1Checksum": "3d10905c1cabdbb80d2c0a8410788e93a4c3962b",
+          "sha256Checksum": "91bdbe7b9e6295b165521ff40fcf40e57b19fa63dd977681e405904b8524a60c",
+          "size": "674603",
+          "quotaBytesUsed": "674603",
+          "headRevisionId": "0ByOFRjalKxnQL3lSTittK2s5ME5laUZIem9DOW1nSVJVZ3prPQ",
+          "imageMediaMetadata": {
+            "width": 960,
+            "height": 540,
+            "rotation": 0
+          },
+          "isAppAuthorized": true,
+          "clientEncryptionDetails": {
+            "decryptionMetadata": {
+              "wrappedKey": "",
+              "kaclsId": "0",
+              "aes256GcmChunkSize": "unset",
+              "keyFormat": "unsetKeyFormat",
+              "encryptionResourceKeyHash": ""
+            }
+          },
+          "linkShareMetadata": {
+            "securityUpdateEligible": false,
+            "securityUpdateEnabled": true
+          },
+          "inheritedPermissionsDisabled": false
+        }
+  recorded_at: 2026-06-04 21:44:44
+- request:
+    method: POST
+    uri: https://www.googleapis.com/drive/v3/files/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB/permissions
+  response:
+    status: 200
+    headers:
+      vary: Origin, X-Origin
+      date: Thu, 04 Jun 2026 21:44:45 GMT
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      pragma: no-cache
+      content-type: application/json; charset=UTF-8
+      content-encoding: gzip
+      server: ESF
+      content-length: '117'
+      x-xss-protection: '0'
+      x-frame-options: SAMEORIGIN
+      x-content-type-options: nosniff
+      alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      string: |
+        {
+          "kind": "drive#permission",
+          "id": "anyoneWithLink",
+          "type": "anyone",
+          "role": "reader",
+          "allowFileDiscovery": false
+        }
+  recorded_at: 2026-06-04 21:44:45
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -40954,9 +41686,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '210'
+      content-length: '214'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 20:26:31 GMT
+      date: Thu, 04 Jun 2026 21:44:47 GMT
       server: ESF
       vary:
       - Origin
@@ -40973,15 +41705,228 @@ http_interactions:
           "replies": [
             {
               "createImage": {
-                "objectId": "SLIDES_API1142616786_0"
+                "objectId": "r2img20260604154445297125"
               }
-            }
+            },
+            {}
           ],
           "writeControl": {
-            "requiredRevisionId": "QVDLsg62KjsPJw"
+            "requiredRevisionId": "lxzQlCwQZq72ug"
           }
         }
-  recorded_at: 2026-06-04 20:26:31
+  recorded_at: 2026-06-04 21:44:47
+- request:
+    method: GET
+    uri: https://www.googleapis.com/drive/v3/files/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB?supportsAllDrives=TRUE&fields=%2A
+  response:
+    status: 200
+    headers:
+      vary: Origin, X-Origin
+      pragma: no-cache
+      date: Thu, 04 Jun 2026 21:44:47 GMT
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      content-type: application/json; charset=UTF-8
+      content-encoding: gzip
+      server: ESF
+      content-length: '1671'
+      x-xss-protection: '0'
+      x-frame-options: SAMEORIGIN
+      x-content-type-options: nosniff
+      alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      string: |
+        {
+          "kind": "drive#file",
+          "id": "1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB",
+          "name": "filea0726fed4673.png",
+          "mimeType": "image/png",
+          "starred": false,
+          "trashed": false,
+          "explicitlyTrashed": false,
+          "parents": [
+            "0ACOFRjalKxnQUk9PVA"
+          ],
+          "spaces": [
+            "drive"
+          ],
+          "version": "2",
+          "webContentLink": "https://drive.google.com/uc?id=1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB/view?usp=drivesdk",
+          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+          "hasThumbnail": true,
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPJFstxyIq_USh9v6MXjCQPJeCrCqNGu8zVkEho1Fcg9pVGJn52UXwssIGt6ivPdVaKnSXgUxTp8fVmB8DLhpMEQlMSKaHeXXsuZIXMtmTc9EUnUg=s220",
+          "thumbnailVersion": "1",
+          "viewedByMe": false,
+          "createdTime": "2026-06-04T21:44:44.376Z",
+          "modifiedTime": "2026-06-04T21:44:45.111Z",
+          "modifiedByMeTime": "2026-06-04T21:44:45.111Z",
+          "modifiedByMe": true,
+          "owners": [
+            {
+              "kind": "drive#user",
+              "displayName": "Adam Hubbs",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocIc9cExndU3VoL2lvCtYkmI1l0ywsCW5X__u5cjF8b_8SdP2A=s64",
+              "me": true,
+              "permissionId": "13669810728446326842",
+              "emailAddress": "adam@y2analytics.com"
+            }
+          ],
+          "lastModifyingUser": {
+            "kind": "drive#user",
+            "displayName": "Adam Hubbs",
+            "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocIc9cExndU3VoL2lvCtYkmI1l0ywsCW5X__u5cjF8b_8SdP2A=s64",
+            "me": true,
+            "permissionId": "13669810728446326842",
+            "emailAddress": "adam@y2analytics.com"
+          },
+          "shared": true,
+          "ownedByMe": true,
+          "downloadRestrictions": {
+            "itemDownloadRestriction": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            },
+            "effectiveDownloadRestrictionWithContext": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            }
+          },
+          "capabilities": {
+            "canAcceptOwnership": false,
+            "canAddChildren": false,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": true,
+            "canChangeItemDownloadRestriction": true,
+            "canChangeSecurityUpdateEnabled": false,
+            "canChangeViewersCanCopyContent": true,
+            "canComment": true,
+            "canCopy": true,
+            "canDelete": true,
+            "canDisableInheritedPermissions": false,
+            "canDownload": true,
+            "canEdit": true,
+            "canEnableInheritedPermissions": true,
+            "canListChildren": false,
+            "canModifyContent": true,
+            "canModifyContentRestriction": true,
+            "canModifyEditorContentRestriction": true,
+            "canModifyOwnerContentRestriction": true,
+            "canModifyLabels": false,
+            "canMoveChildrenWithinDrive": false,
+            "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
+            "canReadLabels": false,
+            "canReadRevisions": true,
+            "canRemoveChildren": false,
+            "canRemoveContentRestriction": false,
+            "canRemoveMyDriveParent": true,
+            "canRename": true,
+            "canShare": true,
+            "canTrash": true,
+            "canUntrash": true,
+            "canStartApproval": true
+          },
+          "viewersCanCopyContent": true,
+          "copyRequiresWriterPermission": false,
+          "writersCanShare": true,
+          "permissions": [
+            {
+              "kind": "drive#permission",
+              "id": "anyoneWithLink",
+              "type": "anyone",
+              "role": "reader",
+              "allowFileDiscovery": false,
+              "permissionDetails": [
+                {
+                  "permissionType": "file",
+                  "role": "reader",
+                  "inherited": false
+                }
+              ]
+            },
+            {
+              "kind": "drive#permission",
+              "id": "13669810728446326842",
+              "type": "user",
+              "emailAddress": "adam@y2analytics.com",
+              "role": "owner",
+              "displayName": "Adam Hubbs",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocIc9cExndU3VoL2lvCtYkmI1l0ywsCW5X__u5cjF8b_8SdP2A=s64",
+              "permissionDetails": [
+                {
+                  "permissionType": "file",
+                  "role": "writer",
+                  "inherited": true
+                },
+                {
+                  "permissionType": "file",
+                  "role": "owner",
+                  "inherited": false
+                }
+              ],
+              "deleted": false,
+              "pendingOwner": false
+            }
+          ],
+          "permissionIds": [
+            "anyoneWithLink",
+            "13669810728446326842"
+          ],
+          "originalFilename": "filea0726fed4673.png",
+          "fullFileExtension": "png",
+          "fileExtension": "png",
+          "md5Checksum": "2c10090dd0356411687da7e6d477c145",
+          "sha1Checksum": "3d10905c1cabdbb80d2c0a8410788e93a4c3962b",
+          "sha256Checksum": "91bdbe7b9e6295b165521ff40fcf40e57b19fa63dd977681e405904b8524a60c",
+          "size": "674603",
+          "quotaBytesUsed": "674603",
+          "headRevisionId": "0ByOFRjalKxnQL3lSTittK2s5ME5laUZIem9DOW1nSVJVZ3prPQ",
+          "imageMediaMetadata": {
+            "width": 960,
+            "height": 540,
+            "rotation": 0
+          },
+          "isAppAuthorized": true,
+          "clientEncryptionDetails": {
+            "decryptionMetadata": {
+              "wrappedKey": "",
+              "kaclsId": "0",
+              "kaclsName": "",
+              "aes256GcmChunkSize": "unset",
+              "jwt": "",
+              "keyFormat": "unsetKeyFormat",
+              "encryptionResourceKeyHash": ""
+            }
+          },
+          "linkShareMetadata": {
+            "securityUpdateEligible": false,
+            "securityUpdateEnabled": true
+          },
+          "inheritedPermissionsDisabled": false
+        }
+  recorded_at: 2026-06-04 21:44:47
+- request:
+    method: DELETE
+    uri: https://www.googleapis.com/drive/v3/files/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB?supportsAllDrives=TRUE
+  response:
+    status: 204
+    headers:
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      date: Thu, 04 Jun 2026 21:44:47 GMT
+      pragma: no-cache
+      vary: Origin, X-Origin
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      content-type: text/html
+      server: ESF
+      x-xss-protection: '0'
+      x-frame-options: SAMEORIGIN
+      x-content-type-options: nosniff
+      alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      string: ''
+  recorded_at: 2026-06-04 21:44:47
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -40990,9 +41935,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '164'
+      content-length: '162'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 20:26:31 GMT
+      date: Thu, 04 Jun 2026 21:44:48 GMT
       server: ESF
       vary:
       - Origin
@@ -41010,8 +41955,8 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "x3R5WthraTWQBw"
+            "requiredRevisionId": "0BjduTkA9o--Dw"
           }
         }
-  recorded_at: 2026-06-04 20:26:31
+  recorded_at: 2026-06-04 21:44:48
 recorded_with: VCR-vcr/2.1.0

@@ -8,7 +8,7 @@ add_image(
   slide_obj,
   image,
   position,
-  fit = c("contain", "cover", "distort", "raw"),
+  fit = c("fill", "natural"),
   dpi = NULL,
   order = c("front", "back")
 )
@@ -26,22 +26,18 @@ If an image is specified, it must be in one of the following formats:
 
 \item{position}{An object of class \code{r2slides::slide_position}.}
 
-\item{fit}{Controls how the image maps onto the \code{position} bounding box.
-One of:
+\item{fit}{Controls how the image is sized on the slide. One of:
 \itemize{
-\item \code{"contain"} (default): scale to fit entirely within the bounding box,
-preserving aspect ratio, centered.
-\item \code{"cover"}: fill the bounding box completely, clipping overflow from the
-center, preserving aspect ratio.
-\item \code{"distort"}: stretch to fill exactly, ignoring aspect ratio.
-\item \code{"raw"}: place at the image's natural pixel size at the given \code{dpi},
-anchored to the top-left of \code{position}. Overflow is allowed.
-}
+\item \code{"fill"} (default): the image occupies exactly the \code{position} bounding
+box, ignoring aspect ratio. For ggplot objects, the plot is rendered
+directly at the target dimensions. For local files, the \code{magick} package
+is required to resize the image before upload.
+\item \code{"natural"}: the image is placed at its true pixel dimensions (converted
+to inches using \code{dpi}), anchored to the top-left corner of \code{position}.
+The image may overflow the bounding box. Requires the \code{magick} package.
+}}
 
-All modes except \code{"distort"} require the \code{magick} package to read image
-dimensions.}
-
-\item{dpi}{Numeric. Only used when \code{fit = "raw"}. The DPI to use when
+\item{dpi}{Numeric. Only used when \code{fit = "natural"}. The DPI to use when
 converting pixels to inches. \code{NULL} auto-detects from the file metadata,
 falling back to 96.}
 
@@ -65,6 +61,6 @@ plot <- ggplot(mtcars, aes(x = cyl, y = hp)) +
            geom_point()
 
   on_slide_number(4) |>
-    add_image(plot)
+    add_image(plot, position = in_top_left())
 }
 }
