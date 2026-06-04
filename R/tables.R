@@ -21,7 +21,11 @@ border_style_values <- c(
   "TRANSPARENT"
 )
 
-#' @noRd
+#' Table Objects
+#' 
+#' Intermediate representation for various table back-ends
+#' 
+#' @export
 r2slides_table <- S7::new_class(
   "r2slides_table",
   properties = list(

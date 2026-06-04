@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_chart.R
 \name{add_linked_chart}
 \alias{add_linked_chart}
-\title{Add a linked Google Sheets chart to a Google Slides presentation}
+\title{Add a linked chart form Google Sheets}
 \usage{
 add_linked_chart(
   chart_obj,
@@ -19,20 +19,42 @@ add_linked_chart(
 
 \item{slide_obj}{A Google Slides slide object}
 
-\item{position}{An object of class `r2slides::slide_position`}
+\item{position}{An object of class \code{r2slides::slide_position}}
 
-\item{linked}{Optional. A logical indicating whether the chart should be linked. Default: `TRUE`.}
+\item{linked}{Optional. A logical indicating whether the chart should be linked.
+\itemize{
+\item \code{TRUE} (the default): The chart is linked so updates made in the Google Sheet will also appear on the presentation.
+\item \code{FALSE}: Inserts an image of the chart as it currently exists. Will not automatically update.
+}}
 
-\item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of the
-created chart element. Default: `"front"`.}
+\item{order}{Optional. One of \code{"front"} or \code{"back"}. Controls the Z-order of the
+created chart element. Default: \code{"front"}.}
 
-\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
+\item{token}{Optional. An OAuth2 token. The default uses \code{r2slides_token()} to find a token.}
 
 \item{call}{Optional. Call environment used in error messages.}
 }
 \value{
-The Google Slides slide object (invisibly)
+The Google Slides slide object
 }
 \description{
-Add a linked Google Sheets chart to a Google Slides presentation
+\code{add_linked_chart()} takes an existing Google Sheets chart and embeds it in a Google Slides presentation.
+By default, it is \emph{linked}, so updates made to the chart will also update on the presentation.
+}
+\details{
+\code{add_linked_chart()} puts the inputed chart in the exact area of the supplied \code{slides_position} object.
+This means that your chart may be re-sized.
+}
+\examples{
+if(FALSE) {
+ chart_data |>
+   write_gs("Seahawks vs Dolphins Points Per Game") |> # Assumes that there is a chart already made on this sheet
+   get_chart_id() |>
+   add_linked_chart(
+     on_slide_number(
+       4
+     ),
+     in_top_left()
+  )
+}
 }

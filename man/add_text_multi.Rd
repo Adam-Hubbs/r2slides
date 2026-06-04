@@ -23,18 +23,18 @@ add_text_multi(
 
 \item{text}{A vector of character strings to add.}
 
-\item{position}{A vector of objects of class `r2slides::slide_position`}
+\item{position}{A vector of objects of class \code{r2slides::slide_position}}
 
-\item{position_base}{A vector of objects of class `r2slides::slide_position`}
+\item{position_base}{A vector of objects of class \code{r2slides::slide_position}}
 
-\item{element_id}{Optional. A vector of string IDs of an existing text element to update. If element_id is `NULL` a new element will be created.}
+\item{element_id}{Optional. A vector of string IDs of an existing text element to update. If element_id is \code{NULL} a new element will be created.}
 
 \item{text_style}{Optional. A vector of text_style or style_rule objects.}
 
-\item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of each
-created element. Default: `"front"`. Ignored for elements updated via `element_id`.}
+\item{order}{Optional. One of \code{"front"} or \code{"back"}. Controls the Z-order of each
+created element. Default: \code{"front"}. Ignored for elements updated via \code{element_id}.}
 
-\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
+\item{token}{Optional. An OAuth2 token. The default uses \code{r2slides_token()} to find a token.}
 
 \item{pass_strategy}{Optional. A strategy to pass additional values to style_rule objects.}
 

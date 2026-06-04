@@ -14,14 +14,14 @@ correct_slide_size(
 \arguments{
 \item{pos}{A length one numeric vector.}
 
-\item{dim}{One of `"width"` or `"height"`.}
+\item{dim}{One of \code{"width"} or \code{"height"}.}
 
-\item{slide_size}{Optional. A list containing slide size specifications for converting. In the form of list(x_height = 7.5, x_width = 13.3, y_height = 5, y_width = 9). `x_` indicates converting from and `y_` indicates converting too. You can override this to convert between custom slide sizes. If left blank it converts from PowerPoint to Google Slides.}
+\item{slide_size}{Optional. A list containing slide size specifications for converting. In the form of list(x_height = 7.5, x_width = 13.3, y_height = 5, y_width = 9). \code{x_} indicates converting from and \code{y_} indicates converting too. You can override this to convert between custom slide sizes. If left blank it converts from PowerPoint to Google Slides.}
 
 \item{call}{Optional. The execution environment, used for error messages.}
 }
 \value{
-A numeric value of corrected position/size. Will error if `slide_size` is provided
+A numeric value of corrected position/size. Will error if \code{slide_size} is provided
 but is not a list.
 }
 \description{

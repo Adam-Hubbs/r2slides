@@ -7,20 +7,22 @@
 view_request_buffer()
 }
 \value{
-A [tibble::tibble()] with columns:
-  - `id`: integer row identifier
-  - `request`: a list of query arguments (endpoint, params, body, base, etc.)
-  - `time_requested`: when the request was buffered
-  - `resource_id`: the resource identifier from the request params
-    (`presentationId`, `spreadsheetId`, or `fileId`), or `NA`
-  - `user_call`: the calling environment captured at buffer time, used for
-    error attribution on execution
+A \code{\link[tibble:tibble]{tibble::tibble()}} with columns:
+\itemize{
+\item \code{id}: integer row identifier
+\item \code{request}: a list of query arguments (endpoint, params, body, base, etc.)
+\item \code{time_requested}: when the request was buffered
+\item \code{resource_id}: the resource identifier from the request params
+(\code{presentationId}, \code{spreadsheetId}, or \code{fileId}), or \code{NA}
+\item \code{user_call}: the calling environment captured at buffer time, used for
+error attribution on execution
+}
 }
 \description{
 Returns a tibble showing all buffered API requests. Each row represents one
-deferred [query()] call. Useful for inspecting what is queued when using the
-`"lazy"` evaluation strategy.
+deferred \code{\link[=query]{query()}} call. Useful for inspecting what is queued when using the
+\code{"lazy"} evaluation strategy.
 }
 \seealso{
-[set_evaluation_strategy()], [execute_requests()]
+\code{\link[=set_evaluation_strategy]{set_evaluation_strategy()}}, \code{\link[=execute_requests]{execute_requests()}}
 }

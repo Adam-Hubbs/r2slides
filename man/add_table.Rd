@@ -15,29 +15,29 @@ add_table(
 )
 }
 \arguments{
-\item{slide_obj}{A `r2slides::slide` object.}
+\item{slide_obj}{A \code{r2slides::slide} object.}
 
-\item{table}{An [r2slides_table], or any object for which an
-[as_r2slides_table()] method exists (e.g. a **flextable**).}
+\item{table}{An \link{r2slides_table}, or any object for which an
+\code{\link[=as_r2slides_table]{as_r2slides_table()}} method exists (e.g. a \strong{flextable}).}
 
-\item{position}{A [slide_position] describing where to place the table.}
+\item{position}{A \link{slide_position} describing where to place the table.}
 
-\item{order}{One of `"front"` or `"back"`. Controls the Z-order of the
-created element. Default: `"front"`.}
+\item{order}{One of \code{"front"} or \code{"back"}. Controls the Z-order of the
+created element. Default: \code{"front"}.}
 
 \item{table_id}{Optional character string. Object ID to assign to the new
-table. Auto-generated when `NULL`.}
+table. Auto-generated when \code{NULL}.}
 
-\item{debug}{Logical. When `TRUE` the requests are returned instead of
-submitted to the API. Default: `FALSE`.}
+\item{debug}{Logical. When \code{TRUE} the requests are returned instead of
+submitted to the API. Default: \code{FALSE}.}
 
-\item{token}{Optional OAuth2 token. Defaults to `r2slides_token()`.}
+\item{token}{Optional OAuth2 token. Defaults to \code{r2slides_token()}.}
 }
 \value{
-The `slide_obj` (invisibly).
+The \code{slide_obj} (invisibly).
 }
 \description{
-Converts `table` to an [r2slides_table] (if it isn't one already), builds
+Converts \code{table} to an \link{r2slides_table} (if it isn't one already), builds
 the necessary batchUpdate requests, and submits them in order to the Slides
 API.
 }

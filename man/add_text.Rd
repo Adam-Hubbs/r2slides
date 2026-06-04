@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_text.R
 \name{add_text}
 \alias{add_text}
-\title{Add or update text in a Google Slides presentation}
+\title{Add text in a Google Slides presentation}
 \usage{
 add_text(
   slide_obj,
@@ -21,17 +21,22 @@ add_text(
 
 \item{text}{A character string of text to add.}
 
-\item{position}{An object of class `r2slides::slide_position`}
+\item{position}{An object of class \code{r2slides::slide_position}}
 
-\item{element_id}{Optional. A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.}
+\item{element_id}{Optional. A string ID of an existing text element to update. If element_id is \code{NULL} a new element will be created.}
 
-\item{text_style}{Optional. A list of text styling properties.}
+\item{text_style}{Optional. A list of text styling properties. One of:
+\itemize{
+\item NULL (the default): Styling is determined by the defaults for the Google Slides presentation
+\item r2slides::text_style object: List of Text styling
+\item r2slides::style_rule object: Conditionally formatted object that defined styles and when to use those styles. Resolves to a text_style object.
+}}
 
-\item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of the
-created element. Default: `"front"`. Ignored when updating an existing element
-via `element_id`.}
+\item{order}{Optional. One of \code{"front"} or \code{"back"}. Controls the Z-order of the
+created element. Default: \code{"front"}. Ignored when updating an existing element
+via \code{element_id}.}
 
-\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
+\item{token}{Optional. An OAuth2 token. The default uses \code{r2slides_token()} to find a token.}
 
 \item{debug}{Optional. A logical indicating whether to return the request objects, or evaluate them. Default: FALSE.}
 
@@ -41,5 +46,11 @@ via `element_id`.}
 The Google Slides slide object (invisibly).
 }
 \description{
-Add or update text in a Google Slides presentation
+Adds text into a new text box on a Google Slides presentation. Text can be formatted by text_style.
+}
+\examples{
+if(FALSE) {
+on_slide_number(2) |>
+  add_text("Hello there!", position = in_top_left())
+}
 }

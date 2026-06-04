@@ -7,12 +7,12 @@
 get_evaluation_strategy()
 }
 \value{
-A string, either `"eager"` or `"lazy"`.
+A string, either \code{"eager"} or \code{"lazy"}.
 }
 \description{
-Returns the value of the `r2slides_request_evaluation_strategy` environment
-variable, defaulting to `"eager"` if unset.
+Returns the value of the \code{r2slides_request_evaluation_strategy} environment
+variable, defaulting to \code{"eager"} if unset.
 }
 \seealso{
-[set_evaluation_strategy()]
+\code{\link[=set_evaluation_strategy]{set_evaluation_strategy()}}
 }

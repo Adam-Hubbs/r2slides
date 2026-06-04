@@ -7,7 +7,7 @@
 get_active_presentation()
 }
 \value{
-A `presentation` object, or errors if none active
+A \code{presentation} object, or errors if none active
 }
 \description{
 Get the currently active presentation

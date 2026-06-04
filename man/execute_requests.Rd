@@ -7,21 +7,21 @@
 execute_requests(batch_all = TRUE)
 }
 \arguments{
-\item{batch_all}{Logical. If `TRUE` (the default), all pending
-`slides.presentations.batchUpdate` requests for the same presentation are
+\item{batch_all}{Logical. If \code{TRUE} (the default), all pending
+\code{slides.presentations.batchUpdate} requests for the same presentation are
 merged into a single API call per presentation. Other request types are
-executed individually. If `FALSE`, every buffered request is executed
+executed individually. If \code{FALSE}, every buffered request is executed
 one at a time in the order it was added.}
 }
 \value{
-`NULL`, invisibly.
+\code{NULL}, invisibly.
 }
 \description{
 Executes all pending requests in the buffer. Each request is removed from the
 buffer after it is attempted, whether or not it succeeds. Typically called
-after accumulating requests with the `"lazy"` evaluation strategy (see
-[set_evaluation_strategy()]).
+after accumulating requests with the \code{"lazy"} evaluation strategy (see
+\code{\link[=set_evaluation_strategy]{set_evaluation_strategy()}}).
 }
 \seealso{
-[set_evaluation_strategy()], [view_request_buffer()]
+\code{\link[=set_evaluation_strategy]{set_evaluation_strategy()}}, \code{\link[=view_request_buffer]{view_request_buffer()}}
 }

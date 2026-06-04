@@ -76,6 +76,7 @@ r2s_color <- S7::new_class(
 #'   meaningful in fill contexts; ignored with a warning in text-style contexts.
 #'
 #' @export
+#' @rdname r2s_color
 solid_color <- S7::new_class(
   "solid_color",
   parent = r2s_color,
@@ -108,6 +109,7 @@ solid_color <- S7::new_class(
 #'   contexts; ignored with a warning in text-style contexts.
 #'
 #' @export
+#' @rdname r2s_color
 theme_color <- S7::new_class(
   "theme_color",
   parent = r2s_color,

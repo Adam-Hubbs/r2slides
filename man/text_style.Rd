@@ -28,11 +28,11 @@ text_style(
 )
 }
 \arguments{
-\item{bg_color}{Background color. Accepts a hex string (e.g. `"#FF0000"`),
-a named R color (e.g. `"red"`), an RGB numeric vector `c(r, g, b)` with
-values in \[0, 1\], or a theme color string (e.g. `"ACCENT1"`).}
+\item{bg_color}{Background color. Accepts a hex string (e.g. \code{"#FF0000"}),
+a named R color (e.g. \code{"red"}), an RGB numeric vector \code{c(r, g, b)} with
+values in [0, 1], or a theme color string (e.g. \code{"ACCENT1"}).}
 
-\item{text_color}{Text (foreground) color. Same formats as `bg_color`.}
+\item{text_color}{Text (foreground) color. Same formats as \code{bg_color}.}
 
 \item{bold}{A logical indicating whether the text should be bold.}
 
@@ -53,11 +53,11 @@ values in \[0, 1\], or a theme color string (e.g. `"ACCENT1"`).}
 \item{underline}{A logical indicating whether the text should be underlined.}
 
 \item{alignment}{Paragraph horizontal alignment. One of
-`"ALIGNMENT_UNSPECIFIED"`, `"START"`, `"CENTER"`, `"END"`, or
-`"JUSTIFIED"`.}
+\code{"ALIGNMENT_UNSPECIFIED"}, \code{"START"}, \code{"CENTER"}, \code{"END"}, or
+\code{"JUSTIFIED"}.}
 
-\item{line_spacing}{Line spacing as a percentage of normal, e.g. `100` for
-single-spacing, `200` for double-spacing. Must be >= 0.}
+\item{line_spacing}{Line spacing as a percentage of normal, e.g. \code{100} for
+single-spacing, \code{200} for double-spacing. Must be >= 0.}
 
 \item{indent_start}{Indent from the start side (left for LTR), in points.}
 
@@ -69,11 +69,11 @@ single-spacing, `200` for double-spacing. Must be >= 0.}
 
 \item{indent_first_line}{First-line indent, in points.}
 
-\item{direction}{Text direction. One of `"TEXT_DIRECTION_UNSPECIFIED"`,
-`"LEFT_TO_RIGHT"`, or `"RIGHT_TO_LEFT"`.}
+\item{direction}{Text direction. One of \code{"TEXT_DIRECTION_UNSPECIFIED"},
+\code{"LEFT_TO_RIGHT"}, or \code{"RIGHT_TO_LEFT"}.}
 
-\item{spacing_mode}{Spacing mode. One of `"SPACING_MODE_UNSPECIFIED"`,
-`"NEVER_COLLAPSE"`, or `"COLLAPSE_LISTS"`.}
+\item{spacing_mode}{Spacing mode. One of \code{"SPACING_MODE_UNSPECIFIED"},
+\code{"NEVER_COLLAPSE"}, or \code{"COLLAPSE_LISTS"}.}
 }
 \description{
 Text styling properties

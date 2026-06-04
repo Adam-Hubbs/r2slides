@@ -36,10 +36,10 @@ slide_position(
 A system for working with Google Slides positions and sizes.
 }
 \details{
-When rotation is applied, the object rotates around its center point. The `top`, `left`,
-`width`, and `height` properties describe the object's intrinsic dimensions before rotation.
+When rotation is applied, the object rotates around its center point. The \code{top}, \code{left},
+\code{width}, and \code{height} properties describe the object's intrinsic dimensions before rotation.
 The rotation is applied as an affine transformation using the scaleX, scaleY, shearX, and
 shearY computed properties.
 
-To get the axis-aligned bounding box that contains the rotated object, use the `bounding_box()` function.
+To get the axis-aligned bounding box that contains the rotated object, use the \code{bounding_box()} function.
 }

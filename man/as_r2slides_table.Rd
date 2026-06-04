@@ -7,18 +7,18 @@
 as_r2slides_table(x, ...)
 }
 \arguments{
-\item{x}{A table object. Methods are expected for classes such as `gt_tbl`
-(from **gt**) and `flextable` (from **flextable**).}
+\item{x}{A table object. Methods are expected for classes such as \code{gt_tbl}
+(from \strong{gt}) and \code{flextable} (from \strong{flextable}).}
 
 \item{...}{Additional arguments passed to methods.}
 }
 \value{
-An [r2slides_table] object.
+An \link{r2slides_table} object.
 }
 \description{
-`as_r2slides_table()` is a generic function that converts a table object
-(e.g. from **gt** or **flextable**) into an [r2slides_table] object suitable
+\code{as_r2slides_table()} is a generic function that converts a table object
+(e.g. from \strong{gt} or \strong{flextable}) into an \link{r2slides_table} object suitable
 for rendering as a Google Slides table element.
 
-Methods for specific table classes should return an [r2slides_table] object.
+Methods for specific table classes should return an \link{r2slides_table} object.
 }

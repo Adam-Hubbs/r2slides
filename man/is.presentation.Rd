@@ -10,7 +10,7 @@ is.presentation(x)
 \item{x}{An object to check}
 }
 \value{
-`TRUE` if `x` is a `presentation`, `FALSE` otherwise
+\code{TRUE} if \code{x} is a \code{presentation}, \code{FALSE} otherwise
 }
 \description{
 Check if an object is a presentation

@@ -7,7 +7,7 @@
 get_active_spreadsheet()
 }
 \value{
-A `spreadsheet` object, or errors if none is active
+A \code{spreadsheet} object, or errors if none is active
 }
 \description{
 Get the currently active spreadsheet

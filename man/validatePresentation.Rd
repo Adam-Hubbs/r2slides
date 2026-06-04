@@ -11,8 +11,8 @@ validatePresentation(presentation)
 }
 \value{
 Nothing. The function will error if the specified environment doesn't
-exist in `.GlobalEnv` or if it's missing any of the required objects
-(`presentation_id`, `slide_ids`, or `current_slide_id`).
+exist in \code{.GlobalEnv} or if it's missing any of the required objects
+(\code{presentation_id}, \code{slide_ids}, or \code{current_slide_id}).
 }
 \description{
 Validate presentation environment

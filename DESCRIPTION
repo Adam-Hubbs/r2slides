@@ -8,7 +8,7 @@ Description: Create Google Slides from R code. This utilizes the Google
     Slides and Google Sheets API's to create charts and slides from R
     code. It is roughly similar to Officer, but with the Google Suite.
 License: MIT + file LICENSE
-URL: https://github.com/Adam-Hubbs/r2slides
+URL: https://github.com/Adam-Hubbs/r2slides, https://adam-hubbs.github.io/r2slides
 BugReports: https://github.com/Adam-Hubbs/r2slides/issues
 Depends: 
     R (>= 4.3.0)
@@ -29,7 +29,7 @@ Imports:
 Suggests:
     flextable,
     ggplot2,
-    gt
+    gt,
     magick,
     officer,
     png,
@@ -37,9 +37,10 @@ Suggests:
     testthat (>= 3.0.0),
     vcr,
     vdiffr,
-    withr,
+    withr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Config/Needs/website: quarto
 Config/roxygen2/version: 8.0.0
+Roxygen: list(markdown = TRUE)

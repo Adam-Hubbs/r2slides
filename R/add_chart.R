@@ -1,16 +1,35 @@
-#' Add a linked Google Sheets chart to a Google Slides presentation
+#' Add a linked chart form Google Sheets
+#'
+#' `add_linked_chart()` takes an existing Google Sheets chart and embeds it in a Google Slides presentation.
+#' By default, it is *linked*, so updates made to the chart will also update on the presentation.
+#'
+#' `add_linked_chart()` puts the inputed chart in the exact area of the supplied `slides_position` object.
+#' This means that your chart may be re-sized.
 #'
 #' @param chart_obj A Google Sheets chart object
 #' @param slide_obj A Google Slides slide object
 #' @param position An object of class `r2slides::slide_position`
-#' @param linked Optional. A logical indicating whether the chart should be linked. Default: `TRUE`.
+#' @param linked Optional. A logical indicating whether the chart should be linked.
+#'    * `TRUE` (the default): The chart is linked so updates made in the Google Sheet will also appear on the presentation.
+#'    * `FALSE`: Inserts an image of the chart as it currently exists. Will not automatically update.
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
 #'   created chart element. Default: `"front"`.
 #' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param call Optional. Call environment used in error messages.
 #'
-#' @returns The Google Slides slide object (invisibly)
-#'
+#' @returns The Google Slides slide object
+#' @examples
+#' if(FALSE) {
+#'  chart_data |>
+#'    write_gs("Seahawks vs Dolphins Points Per Game") |> # Assumes that there is a chart already made on this sheet
+#'    get_chart_id() |>
+#'    add_linked_chart(
+#'      on_slide_number(
+#'        4
+#'      ),
+#'      in_top_left()
+#'   )
+#' }
 #' @export
 add_linked_chart <- function(
   chart_obj,

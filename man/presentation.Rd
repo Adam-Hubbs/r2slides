@@ -69,7 +69,7 @@ An R6 class to represent and manipulate Google Slides presentations.
     \if{html}{\out{</div>}}
   }
   \subsection{Returns}{
-    A new `presentation` object
+    A new \code{presentation} object
   }
 }
 

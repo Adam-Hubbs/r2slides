@@ -1,10 +1,15 @@
-#' Add or update text in a Google Slides presentation
+#' Add text in a Google Slides presentation
 #'
+#' Adds text into a new text box on a Google Slides presentation. Text can be formatted by text_style.
+#' 
 #' @param slide_obj A Google Slides slide object.
 #' @param text A character string of text to add.
 #' @param position An object of class `r2slides::slide_position`
 #' @param element_id Optional. A string ID of an existing text element to update. If element_id is `NULL` a new element will be created.
-#' @param text_style Optional. A list of text styling properties.
+#' @param text_style Optional. A list of text styling properties. One of:
+#'     * NULL (the default): Styling is determined by the defaults for the Google Slides presentation
+#'     * r2slides::text_style object: List of Text styling
+#'     * r2slides::style_rule object: Conditionally formatted object that defined styles and when to use those styles. Resolves to a text_style object.
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
 #'   created element. Default: `"front"`. Ignored when updating an existing element
 #'   via `element_id`.
@@ -13,7 +18,11 @@
 #' @param ... Additional values available to style_rule objects.
 #'
 #' @returns The Google Slides slide object (invisibly).
-#'
+#' @examples
+#' if(FALSE) {
+#' on_slide_number(2) |>
+#'   add_text("Hello there!", position = in_top_left())
+#' }
 #' @export
 add_text <- function(
   slide_obj,

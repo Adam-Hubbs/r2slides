@@ -16,13 +16,13 @@ send_forward(element)
 send_backward(element)
 }
 \arguments{
-\item{element}{An object of class `element`.}
+\item{element}{An object of class \code{element}.}
 }
 \value{
-The `element` object, invisibly.
+The \code{element} object, invisibly.
 }
 \description{
 These four functions adjust the stacking order of a page element on its
 slide using the Google Slides
-[UpdatePageElementsZOrderRequest](https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations/request#updatepageelementszorderrequest).
+\href{https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations/request#updatepageelementszorderrequest}{UpdatePageElementsZOrderRequest}.
 }

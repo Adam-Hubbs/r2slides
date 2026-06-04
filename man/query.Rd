@@ -26,15 +26,15 @@ query(
 
 \item{base}{Optional. A string indicating the API base service name. (i.e. 'slides', or 'sheets')}
 
-\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.}
+\item{token}{Optional. An OAuth2 token. The default uses \code{r2slides_token()} to find a token.}
 
-\item{debug}{Optional. If `TRUE`, return the unexecuted request. If `FALSE`, execute the request.` Default: `FALSE`.}
+\item{debug}{Optional. If \code{TRUE}, return the unexecuted request. If \code{FALSE}, execute the request.\verb{Default:}FALSE`.}
 
-\item{max_tries}{Optional. Maximum number of attempts before giving up. Default: `4`.
-Set to `1` to disable retrying.}
+\item{max_tries}{Optional. Maximum number of attempts before giving up. Default: \code{4}.
+Set to \code{1} to disable retrying.}
 
-\item{backoff_base}{Optional. Base (in seconds) for truncated exponential backoff. Default: `3`.
-Wait time per attempt is `min(backoff_base ^ attempt, 60) + runif(1, 0, 1)` seconds.}
+\item{backoff_base}{Optional. Base (in seconds) for truncated exponential backoff. Default: \code{3}.
+Wait time per attempt is \code{min(backoff_base ^ attempt, 60) + runif(1, 0, 1)} seconds.}
 
 \item{call}{Optional. Call environment used in error messages.}
 

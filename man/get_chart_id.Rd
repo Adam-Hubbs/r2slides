@@ -7,14 +7,14 @@
 get_chart_id(spreadsheet_obj, token = NULL, call = rlang::caller_env())
 }
 \arguments{
-\item{spreadsheet_obj}{A `sht_id` object.}
+\item{spreadsheet_obj}{A \code{sht_id} object.}
 
-\item{token}{Optional. An OAuth2 token. The default uses `r2slides_token()`.}
+\item{token}{Optional. An OAuth2 token. The default uses \code{r2slides_token()}.}
 
 \item{call}{Optional. Call environment used in error messages.}
 }
 \value{
-A `chart_id` object
+A \code{chart_id} object
 }
 \description{
 Retrieves the chart ID from a specified sheet. Errors if 0 or more than 1

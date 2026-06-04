@@ -4,8 +4,8 @@
 \alias{spreadsheet}
 \title{R6 Class for Google Sheets Spreadsheets}
 \description{
-An R6 class to represent a Google Sheets spreadsheet. Use [new_spreadsheet()]
-or [register_spreadsheet()] to create instances.
+An R6 class to represent a Google Sheets spreadsheet. Use \code{\link[=new_spreadsheet]{new_spreadsheet()}}
+or \code{\link[=register_spreadsheet]{register_spreadsheet()}} to create instances.
 }
 \section{Public fields}{
   \if{html}{\out{<div class="r6-fields">}}
@@ -50,7 +50,7 @@ or [register_spreadsheet()] to create instances.
     \if{html}{\out{</div>}}
   }
   \subsection{Returns}{
-    A new `spreadsheet` object
+    A new \code{spreadsheet} object
   }
 }
 

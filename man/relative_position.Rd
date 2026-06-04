@@ -13,7 +13,7 @@ relative_position(
 )
 }
 \arguments{
-\item{position}{An object of class `r2slides::slide_position`}
+\item{position}{An object of class \code{r2slides::slide_position}}
 
 \item{top_transformation}{A function to apply to the top value, or a scalar numeric to replace it}
 
@@ -24,7 +24,7 @@ relative_position(
 \item{height_transformation}{A function to apply to the height value, or a scalar numeric to replace it}
 }
 \value{
-A new object of class `r2slides::slide_position`
+A new object of class \code{r2slides::slide_position}
 }
 \description{
 Takes a slide position object, applies transformations to its dimensions,

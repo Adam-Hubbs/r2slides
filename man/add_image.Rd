@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_image.R
 \name{add_image}
 \alias{add_image}
-\title{Add an image to a Google Slides presentation}
+\title{Add image to a Google Slides presentation}
 \usage{
 add_image(
   slide_obj,
@@ -16,30 +16,37 @@ add_image(
 \arguments{
 \item{slide_obj}{A Google Slides slide object.}
 
-\item{image}{A ggplot object, a local file path (png, jpg, or gif),
-or a publicly accessible URL string.}
+\item{image}{A ggplot object, a local file path, or a publicly accessible URL string.
+If an image is specified, it must be in one of the following formats:
+\itemize{
+\item png
+\item jpg
+\item gif
+}}
 
-\item{position}{An object of class `r2slides::slide_position`.}
+\item{position}{An object of class \code{r2slides::slide_position}.}
 
-\item{fit}{Controls how the image maps onto the `position` bounding box.
-  One of:
-  - `"contain"` (default): scale to fit entirely within the bounding box,
-    preserving aspect ratio, centered.
-  - `"cover"`: fill the bounding box completely, clipping overflow from the
-    center, preserving aspect ratio.
-  - `"distort"`: stretch to fill exactly, ignoring aspect ratio.
-  - `"raw"`: place at the image's natural pixel size at the given `dpi`,
-    anchored to the top-left of `position`. Overflow is allowed.
+\item{fit}{Controls how the image maps onto the \code{position} bounding box.
+One of:
+\itemize{
+\item \code{"contain"} (default): scale to fit entirely within the bounding box,
+preserving aspect ratio, centered.
+\item \code{"cover"}: fill the bounding box completely, clipping overflow from the
+center, preserving aspect ratio.
+\item \code{"distort"}: stretch to fill exactly, ignoring aspect ratio.
+\item \code{"raw"}: place at the image's natural pixel size at the given \code{dpi},
+anchored to the top-left of \code{position}. Overflow is allowed.
+}
 
-  All modes except `"distort"` require the `magick` package to read image
-  dimensions.}
+All modes except \code{"distort"} require the \code{magick} package to read image
+dimensions.}
 
-\item{dpi}{Numeric. Only used when `fit = "raw"`. The DPI to use when
-converting pixels to inches. `NULL` auto-detects from the file metadata,
+\item{dpi}{Numeric. Only used when \code{fit = "raw"}. The DPI to use when
+converting pixels to inches. \code{NULL} auto-detects from the file metadata,
 falling back to 96.}
 
-\item{order}{Optional. One of `"front"` or `"back"`. Controls the Z-order of
-the created element. Default: `"front"`.}
+\item{order}{Optional. One of \code{"front"} or \code{"back"}. Controls the Z-order of
+the created element. Default: \code{"front"}.}
 }
 \value{
 The Google Slides slide object (invisibly).
@@ -51,4 +58,13 @@ or a publicly accessible URL.
 When given a ggplot or local file, the image is temporarily uploaded to
 Google Drive, inserted into the slide, then deleted from Drive.
 The image is permanently embedded in the presentation after insertion.
+}
+\examples{
+if(FALSE) {
+plot <- ggplot(mtcars, aes(x = cyl, y = hp)) +
+           geom_point()
+
+  on_slide_number(4) |>
+    add_image(plot)
+}
 }

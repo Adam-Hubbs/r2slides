@@ -1,16 +1,19 @@
-#' Add an image to a Google Slides presentation
+#' Add image to a Google Slides presentation
 #'
 #' @description
 #' Inserts an image onto a slide. Accepts a ggplot object, a local file path,
-#' or a publicly accessible URL.
+#' or a publicly accessible URL. 
 #'
 #' When given a ggplot or local file, the image is temporarily uploaded to
 #' Google Drive, inserted into the slide, then deleted from Drive.
 #' The image is permanently embedded in the presentation after insertion.
 #'
 #' @param slide_obj A Google Slides slide object.
-#' @param image A ggplot object, a local file path (png, jpg, or gif),
-#'   or a publicly accessible URL string.
+#' @param image A ggplot object, a local file path, or a publicly accessible URL string. 
+#' If an image is specified, it must be in one of the following formats:
+#'   * png
+#'   * jpg
+#'   * gif
 #' @param position An object of class `r2slides::slide_position`.
 #' @param fit Controls how the image maps onto the `position` bounding box.
 #'   One of:
@@ -31,7 +34,14 @@
 #'   the created element. Default: `"front"`.
 #'
 #' @returns The Google Slides slide object (invisibly).
-#'
+#' @examples
+#' if(FALSE) {
+#' plot <- ggplot(mtcars, aes(x = cyl, y = hp)) +
+#'            geom_point()
+#' 
+#'   on_slide_number(4) |>
+#'     add_image(plot)
+#' }
 #' @export
 add_image <- function(
   slide_obj,

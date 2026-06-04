@@ -10,10 +10,10 @@ register_spreadsheet(id, set_active = TRUE)
 \item{id}{A spreadsheet ID string or Google Sheets URL.}
 
 \item{set_active}{Optional. A logical value indicating whether to set the
-spreadsheet as the active spreadsheet. Default: `TRUE`.}
+spreadsheet as the active spreadsheet. Default: \code{TRUE}.}
 }
 \value{
-A `spreadsheet` object
+A \code{spreadsheet} object
 }
 \description{
 Registers an existing Google Sheets spreadsheet so you can use it in r2slides.

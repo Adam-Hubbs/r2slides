@@ -19,5 +19,5 @@ chart_id(
 }
 \description{
 A typed reference to a specific chart within a Google Sheets sheet. Inherits
-from [sht_id].
+from \link{sht_id}.
 }

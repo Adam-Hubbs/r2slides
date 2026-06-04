@@ -35,11 +35,13 @@ str_matches(text, pattern, missing = c("error", "none", "all"))
 \item{pattern}{A regular expression pattern to search for}
 }
 \value{
-- `str_before()`: A numeric vector of length 2 containing the start position (1) and
-  the position of the first occurrence of the character
-- `str_after()`: A numeric vector of length 2 containing the position of the first
-  occurrence of the character and the end of the string
-- `str_matches()`: A matrix with start and end positions of the first match
+\itemize{
+\item \code{str_before()}: A numeric vector of length 2 containing the start position (1) and
+the position of the first occurrence of the character
+\item \code{str_after()}: A numeric vector of length 2 containing the position of the first
+occurrence of the character and the end of the string
+\item \code{str_matches()}: A matrix with start and end positions of the first match
+}
 }
 \description{
 Helper functions to extract position information for text styling and

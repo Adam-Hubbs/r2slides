@@ -10,10 +10,10 @@ new_spreadsheet(title = "Untitled Spreadsheet", set_active = TRUE)
 \item{title}{Optional. A single string. The title of the spreadsheet.}
 
 \item{set_active}{Optional. A logical value indicating whether to set the
-spreadsheet as the active spreadsheet. Default: `TRUE`.}
+spreadsheet as the active spreadsheet. Default: \code{TRUE}.}
 }
 \value{
-A `spreadsheet` object
+A \code{spreadsheet} object
 }
 \description{
 Create a new Google Sheets spreadsheet

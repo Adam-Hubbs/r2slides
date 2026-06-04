@@ -1,5 +1,7 @@
-#' Writes data to a Google Sheet
+#' Write data to a Google Sheet
 #'
+#' `write_gs()` takes data and writes it to a Sheet. It is a wrapper around `googlesheets4::range_write()`.
+#' 
 #' @param data A data frame to write to the Google Sheet.
 #' @param sheet The name of the sheet to write to.
 #' @param spreadsheet Optional. An `r2slides::spreadsheet` object, a
@@ -7,8 +9,12 @@
 #'   [googlesheets4::as_sheets_id()] (spreadsheet ID string or URL). Defaults
 #'   to [get_active_spreadsheet()].
 #'
-#' @returns A `sht_id` object
-#'
+#' @returns A `sht_id` object.
+#' @examples
+#' if(FALSE){
+#'   mtcars |>
+#'     write_gs("Cars")
+#' }
 #' @export
 write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
   ss_id <- tryCatch(

@@ -7,10 +7,10 @@
 visualize(color, ...)
 }
 \arguments{
-\item{color}{An [r2s_color] object.}
+\item{color}{An \link{r2s_color} object.}
 }
 \description{
-Renders a color swatch for [solid_color] objects, or prints an informative
-message for [theme_color] objects whose actual value depends on the
+Renders a color swatch for \link{solid_color} objects, or prints an informative
+message for \link{theme_color} objects whose actual value depends on the
 presentation theme.
 }

@@ -20,9 +20,11 @@ on_slide_with_notes(text, exact = TRUE, on_multiple = c("error", "return"), ps)
 }
 \arguments{
 \item{id}{A slide identifier. Can be either:
-- A numeric slide ID
-- A string containing slide ID
-- A full Google Slides URL}
+\itemize{
+\item A numeric slide ID
+\item A string containing slide ID
+\item A full Google Slides URL
+}}
 
 \item{ps}{A presentation object}
 

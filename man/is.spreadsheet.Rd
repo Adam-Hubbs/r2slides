@@ -10,7 +10,7 @@ is.spreadsheet(x)
 \item{x}{An object to check}
 }
 \value{
-`TRUE` if `x` is a `spreadsheet`, `FALSE` otherwise
+\code{TRUE} if \code{x} is a \code{spreadsheet}, \code{FALSE} otherwise
 }
 \description{
 Check if an object is a spreadsheet

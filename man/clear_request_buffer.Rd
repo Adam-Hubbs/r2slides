@@ -7,12 +7,12 @@
 clear_request_buffer()
 }
 \value{
-`NULL`, invisibly.
+\code{NULL}, invisibly.
 }
 \description{
 Removes all entries from the internal request buffer. Useful for resetting
 state between workflows.
 }
 \seealso{
-[view_request_buffer()], [execute_requests()]
+\code{\link[=view_request_buffer]{view_request_buffer()}}, \code{\link[=execute_requests]{execute_requests()}}
 }

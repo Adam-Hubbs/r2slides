@@ -7,18 +7,18 @@
 set_evaluation_strategy(strategy = c("eager", "lazy"))
 }
 \arguments{
-\item{strategy}{One of `"eager"` (default) or `"lazy"`.}
+\item{strategy}{One of \code{"eager"} (default) or \code{"lazy"}.}
 }
 \value{
 The strategy string, invisibly.
 }
 \description{
-Controls whether API requests are executed immediately (`"eager"`, the
-default) or buffered for later batch execution (`"lazy"`). When `"lazy"`,
-requests accumulate in an internal buffer until [execute_requests()] is
+Controls whether API requests are executed immediately (\code{"eager"}, the
+default) or buffered for later batch execution (\code{"lazy"}). When \code{"lazy"},
+requests accumulate in an internal buffer until \code{\link[=execute_requests]{execute_requests()}} is
 called.
 }
 \seealso{
-[get_evaluation_strategy()], [execute_requests()],
-  [view_request_buffer()]
+\code{\link[=get_evaluation_strategy]{get_evaluation_strategy()}}, \code{\link[=execute_requests]{execute_requests()}},
+\code{\link[=view_request_buffer]{view_request_buffer()}}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_data.R
 \name{write_gs}
 \alias{write_gs}
-\title{Writes data to a Google Sheet}
+\title{Write data to a Google Sheet}
 \usage{
 write_gs(data, sheet, spreadsheet = get_active_spreadsheet())
 }
@@ -11,14 +11,20 @@ write_gs(data, sheet, spreadsheet = get_active_spreadsheet())
 
 \item{sheet}{The name of the sheet to write to.}
 
-\item{spreadsheet}{Optional. An `r2slides::spreadsheet` object, a
-[googlesheets4::sheets_id], or any object accepted by
-[googlesheets4::as_sheets_id()] (spreadsheet ID string or URL). Defaults
-to [get_active_spreadsheet()].}
+\item{spreadsheet}{Optional. An \code{r2slides::spreadsheet} object, a
+\link[googlesheets4:sheets_id]{googlesheets4::sheets_id}, or any object accepted by
+\code{\link[googlesheets4:as_sheets_id]{googlesheets4::as_sheets_id()}} (spreadsheet ID string or URL). Defaults
+to \code{\link[=get_active_spreadsheet]{get_active_spreadsheet()}}.}
 }
 \value{
-A `sht_id` object
+A \code{sht_id} object.
 }
 \description{
-Writes data to a Google Sheet
+\code{write_gs()} takes data and writes it to a Sheet. It is a wrapper around \code{googlesheets4::range_write()}.
+}
+\examples{
+if(FALSE){
+  mtcars |>
+    write_gs("Cars")
+}
 }
