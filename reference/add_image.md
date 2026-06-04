@@ -14,7 +14,7 @@ add_image(
   slide_obj,
   image,
   position,
-  fit = c("contain", "cover", "distort", "raw"),
+  fit = c("fill", "natural"),
   dpi = NULL,
   order = c("front", "back")
 )
@@ -45,27 +45,23 @@ add_image(
 
 - fit:
 
-  Controls how the image maps onto the `position` bounding box. One of:
+  Controls how the image is sized on the slide. One of:
 
-  - `"contain"` (default): scale to fit entirely within the bounding
-    box, preserving aspect ratio, centered.
+  - `"fill"` (default): the image occupies exactly the `position`
+    bounding box, ignoring aspect ratio. For ggplot objects, the plot is
+    rendered directly at the target dimensions. For local files, the
+    `magick` package is required to resize the image before upload.
 
-  - `"cover"`: fill the bounding box completely, clipping overflow from
-    the center, preserving aspect ratio.
-
-  - `"distort"`: stretch to fill exactly, ignoring aspect ratio.
-
-  - `"raw"`: place at the image's natural pixel size at the given `dpi`,
-    anchored to the top-left of `position`. Overflow is allowed.
-
-  All modes except `"distort"` require the `magick` package to read
-  image dimensions.
+  - `"natural"`: the image is placed at its true pixel dimensions
+    (converted to inches using `dpi`), anchored to the top-left corner
+    of `position`. The image may overflow the bounding box. Requires the
+    `magick` package.
 
 - dpi:
 
-  Numeric. Only used when `fit = "raw"`. The DPI to use when converting
-  pixels to inches. `NULL` auto-detects from the file metadata, falling
-  back to 96.
+  Numeric. Only used when `fit = "natural"`. The DPI to use when
+  converting pixels to inches. `NULL` auto-detects from the file
+  metadata, falling back to 96.
 
 - order:
 
@@ -84,6 +80,6 @@ plot <- ggplot(mtcars, aes(x = cyl, y = hp)) +
            geom_point()
 
   on_slide_number(4) |>
-    add_image(plot)
+    add_image(plot, position = in_top_left())
 }
 ```
