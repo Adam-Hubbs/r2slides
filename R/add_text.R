@@ -43,143 +43,44 @@ add_text <- function(
     )
   }
 
-  # Validate position object
   if (!inherits(position, "r2slides::slide_position")) {
     cli::cli_abort(
       "Position must be an object of class {.cls r2slides::slide_position} not a {.cls {class(position)}}"
     )
   }
 
-  # Get current slide_id
-  slide_id <- slide_obj@slide_id
-
   params <- list(presentationId = slide_obj@presentation$presentation_id)
 
-  new_element <- is.null(element_id)
-
-  if (new_element) {
-    element_id <- paste0(
-      "text_",
-      format(Sys.time(), "%Y%m%d%H%M%S"),
-      "_",
-      sample(1000:9999, 1)
-    )
-    shape_request <-
-      list(
-        list(
-          createShape = list(
-            objectId = element_id,
-            shapeType = "TEXT_BOX",
-            elementProperties = list(
-              pageObjectId = slide_id,
-              size = list(
-                width = list(
-                  magnitude = position@width_emu,
-                  unit = "EMU"
-                ),
-                height = list(
-                  magnitude = position@height_emu,
-                  unit = "EMU"
-                )
-              ),
-              transform = list(
-                scaleX = position@scaleX,
-                scaleY = position@scaleY,
-                shearX = position@shearX,
-                shearY = position@shearY,
-                translateX = position@left_emu,
-                translateY = position@top_emu,
-                unit = "EMU"
-              )
-            )
-          )
-        )
-      )
-  }
-
-  insert_text_request <-
-    list(
-      list(
-        insertText = list(
-          objectId = element_id,
-          text = text
-        )
-      )
-    )
-
-  if (!is.null(text_style)) {
-    # if it is a text_style object, convert it to a style_rule object
-    if (inherits(text_style, "r2slides::text_style")) {
-      text_style <- style_rule(default = text_style)
-    }
-    text_style_request <-
-      create_styling_request(
-        style_rule = text_style,
-        text = text,
-        element_id = element_id,
-        ...
-      )
-  } else {
-    text_style_request <- NULL
-  }
-
-  shape_request <- list(requests = purrr::compact(shape_request))
-  insert_text_request <- list(requests = purrr::compact(insert_text_request))
-
-  text_style_request <- purrr::compact(text_style_request)
-
-  all_text_style_requests <- NULL
-
-  for (i in seq_along(text_style_request)) {
-    all_text_style_requests <- c(
-      all_text_style_requests,
-      list(list(requests = text_style_request[i]))
-    )
-  }
-
-  query(
-    endpoint = 'slides.presentations.batchUpdate',
-    params = params,
-    body = shape_request,
-    base = 'slides',
-    token = token,
-    debug = debug
+  result <- .build_text_request_items(
+    text = text,
+    position = position,
+    element_id = element_id,
+    text_style = text_style,
+    slide_id = slide_obj@slide_id,
+    ...
   )
 
   query(
     endpoint = 'slides.presentations.batchUpdate',
     params = params,
-    body = insert_text_request,
+    body = list(requests = result$items),
     base = 'slides',
     token = token,
     debug = debug
   )
 
-  purrr::walk(all_text_style_requests, \(x) {
-    query(
-      endpoint = 'slides.presentations.batchUpdate',
-      params = params,
-      body = x,
-      base = 'slides',
-      token = token,
-      debug = debug
-    )
-  })
-
-  # Apply Z-order only when creating a new element
-  if (new_element && !debug) {
+  if (result$new_element && !debug) {
     if (order == 'back') {
       zorder_by_id(
         presentation_id = slide_obj@presentation$presentation_id,
-        element_id = element_id,
+        element_id = result$element_id,
         operation = resolve_zorder_op(order)
       )
     }
   }
 
-  # Update the ledger
   slide_obj@presentation$add_to_ledger(
-    element_id = element_id,
+    element_id = result$element_id,
     slide_id = slide_obj@slide_id,
     element_type = "text",
     element_text = text
@@ -315,8 +216,9 @@ add_text_multi <- function(
     }
   )
 
-  # Now map over recycled arguments
-  results <- tryCatch(
+  params <- list(presentationId = slide_obj@presentation$presentation_id)
+
+  build_results <- tryCatch(
     purrr::pmap(
       list(
         text = text_recycled,
@@ -326,16 +228,14 @@ add_text_multi <- function(
         dots = dots_for_map
       ),
       function(text, final_position, element_id, text_style, dots) {
-        add_text(
-          slide_obj = slide_obj,
+        rlang::exec(
+          .build_text_request_items,
           text = text,
           position = final_position,
           element_id = element_id,
           text_style = text_style,
-          order = order,
-          token = token,
-          debug = debug,
-          ... = !!!dots
+          slide_id = slide_obj@slide_id,
+          !!!dots
         )
       }
     ),
@@ -344,7 +244,122 @@ add_text_multi <- function(
     }
   )
 
-  return(invisible(results[[1]]))
+  all_items <- purrr::list_c(purrr::map(build_results, "items"))
+
+  query(
+    endpoint = 'slides.presentations.batchUpdate',
+    params = params,
+    body = list(requests = all_items),
+    base = 'slides',
+    token = token,
+    debug = debug
+  )
+
+  if (!debug) {
+    purrr::walk(build_results, \(result) {
+      if (result$new_element && order == 'back') {
+        zorder_by_id(
+          presentation_id = slide_obj@presentation$presentation_id,
+          element_id = result$element_id,
+          operation = resolve_zorder_op(order)
+        )
+      }
+    })
+  }
+
+  purrr::walk(
+    purrr::map2(build_results, text_recycled, \(result, txt) list(result = result, text = txt)),
+    \(x) {
+      slide_obj@presentation$add_to_ledger(
+        element_id = x$result$element_id,
+        slide_id = slide_obj@slide_id,
+        element_type = "text",
+        element_text = x$text
+      )
+    }
+  )
+
+  return(invisible(slide_obj))
+}
+
+
+# Builds the list of batchUpdate request items for a single text element without
+# making any API calls. Returns a list with: element_id, new_element flag, and
+# items (the list of request objects to include in a batchUpdate requests array).
+.build_text_request_items <- function(
+  text,
+  position,
+  element_id = NULL,
+  text_style = NULL,
+  slide_id,
+  ...
+) {
+  new_element <- is.null(element_id)
+
+  if (new_element) {
+    element_id <- paste0(
+      "text_",
+      format(Sys.time(), "%Y%m%d%H%M%S"),
+      "_",
+      sample(1000:9999, 1)
+    )
+    shape_items <- list(
+      list(
+        createShape = list(
+          objectId = element_id,
+          shapeType = "TEXT_BOX",
+          elementProperties = list(
+            pageObjectId = slide_id,
+            size = list(
+              width = list(magnitude = position@width_emu, unit = "EMU"),
+              height = list(magnitude = position@height_emu, unit = "EMU")
+            ),
+            transform = list(
+              scaleX = position@scaleX,
+              scaleY = position@scaleY,
+              shearX = position@shearX,
+              shearY = position@shearY,
+              translateX = position@left_emu,
+              translateY = position@top_emu,
+              unit = "EMU"
+            )
+          )
+        )
+      )
+    )
+  } else {
+    shape_items <- list()
+  }
+
+  insert_items <- list(
+    list(
+      insertText = list(
+        objectId = element_id,
+        text = text
+      )
+    )
+  )
+
+  if (!is.null(text_style)) {
+    if (inherits(text_style, "r2slides::text_style")) {
+      text_style <- style_rule(default = text_style)
+    }
+    raw_style <- create_styling_request(
+      style_rule = text_style,
+      text = text,
+      element_id = element_id,
+      ...
+    )
+    style_items <- purrr::map(seq_along(raw_style), \(i) raw_style[i])
+  } else {
+    style_items <- list()
+  }
+
+  list(
+    element_id = element_id,
+    new_element = new_element,
+    items = c(shape_items, insert_items, style_items)
+  )
 }
 
 
