@@ -7,9 +7,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '16226'
+      content-length: '15648'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 21:44:42 GMT
+      date: Sat, 06 Jun 2026 17:17:33 GMT
       server: ESF
       vary:
       - Origin
@@ -2747,7 +2747,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIM-romTjYf5neNZ-jkLcwYytg517U4NcK6WiNUPimZ7dwS7NoE4IN_oyN4ZMfODRBhJlLm8ksnnkHF-D3cjADBmfZQpF4pbnfEFKrSC_IKO1zU_7hH6qMdzQQLi_RVj6-dJjrLeZbyOI5e8ryhN8zq0fewZQ1EtE_N4QpaYvWCLKojYtDLg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdplcJf4taFTj6FpqqfQ3XQQ70ji12-ZjWATMwv4uK6fRD4yi_FXxQ7oki6gUYd7rVG4rq1xZnsI0ODJDTneQbJNg_8K5l3DcsfYo8kGJ-ku6FbpDCCUVZuWA_YIaJLp6YLvD2vX4JqUqCv4CLSEZxe8Nh1gw5nTLxBx2gUex58i6A6t9MCrw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -2915,7 +2915,7 @@ http_interactions:
               "objectId": "g3db51d43376_0_30",
               "pageElements": [
                 {
-                  "objectId": "g3db51d43376_0_31",
+                  "objectId": "text_20260604213140_1768",
                   "size": {
                     "width": {
                       "magnitude": 3000000,
@@ -2927,102 +2927,228 @@ http_interactions:
                     }
                   },
                   "transform": {
-                    "scaleX": 2.8402,
-                    "scaleY": 0.1909,
-                    "translateX": 311700,
-                    "translateY": 445025,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 914400,
                     "unit": "EMU"
                   },
                   "shape": {
                     "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "1st\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
                     "shapeProperties": {
                       "shapeBackgroundFill": {
-                        "propertyState": "INHERIT"
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
                       },
                       "outline": {
-                        "propertyState": "INHERIT"
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "rgbColor": {}
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
                       },
                       "shadow": {
-                        "propertyState": "INHERIT"
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
                       },
+                      "contentAlignment": "TOP",
                       "autofit": {
-                        "fontScale": 0.9
-                      }
-                    },
-                    "placeholder": {
-                      "type": "TITLE",
-                      "parentObjectId": "p4_i0"
-                    }
-                  }
-                },
-                {
-                  "objectId": "g3db51d43376_0_32",
-                  "size": {
-                    "width": {
-                      "magnitude": 3000000,
-                      "unit": "EMU"
-                    },
-                    "height": {
-                      "magnitude": 3000000,
-                      "unit": "EMU"
-                    }
-                  },
-                  "transform": {
-                    "scaleX": 2.8402,
-                    "scaleY": 1.1388,
-                    "translateX": 311700,
-                    "translateY": 1152475,
-                    "unit": "EMU"
-                  },
-                  "shape": {
-                    "shapeType": "TEXT_BOX",
-                    "shapeProperties": {
-                      "shapeBackgroundFill": {
-                        "propertyState": "INHERIT"
-                      },
-                      "outline": {
-                        "propertyState": "INHERIT"
-                      },
-                      "shadow": {
-                        "propertyState": "INHERIT"
-                      },
-                      "autofit": {
+                        "autofitType": "NONE",
                         "fontScale": 1
                       }
-                    },
-                    "placeholder": {
-                      "type": "BODY",
-                      "parentObjectId": "p4_i1"
                     }
                   }
                 },
                 {
-                  "objectId": "r2img20260604152607427215",
+                  "objectId": "text_20260604213140_8061",
                   "size": {
                     "width": {
-                      "magnitude": 37500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 37500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 109728,
-                    "translateY": 1353312,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 1828800,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdBXP5gTO1Zt5Fv02r5laY9yEKXzTeLEYa15qG6Yo7SXkv2A3br8BpCitIZUfLhi6Ft8EwEcFRIsY4Ci3PkLh7wBbuyGcdd_5yI1-5vRflbcSiLarI6fkrPpBoLfPpYccncLJKsgG2TlxD2mnwmOxRFZuO6Npf_rG6VASNXRI7Y8rmMPY8=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "2nd\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -3051,38 +3177,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1d9mMFaCM-8MseHdynedgJHzGnj_GWdOq"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604152612223752",
+                  "objectId": "text_20260604213140_9441",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 6144768,
-                    "translateY": 1353312,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 2743200,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUelceye9ZkaphZ49MZwqw3u5NTYlEOT5EIGfhzEbczXbgZ6lLlbAMKYH4F9gh0ewiHSVyZuZWrtwbaiu-b9hlSmTxs8rTi0iXSqFaZDQ4RZt8MQTqCLU2GPyFIB28AH_PdJHYkm_poqbR4Nw-sxx5O1Rwvgfg9sQwh0MtASF2ntzu-tyCw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "3rd\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -3111,38 +3313,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1QHBtAGrHkPB3YT-UOdPPYfnuW8NgNshO"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604153434172163",
+                  "objectId": "text_20260604213140_7023",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 6144768,
-                    "translateY": 3374136,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 3657600,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdEQjMb2znQFYSvvFJXWStkUOv8fI7lw_H_Dc_LCg8ezTwgsyIcWQ9AcJrJBn-MYeZg26-gvq-6yyOIEYBsF9eVZM3E1El45nrHEmVXkoQJ-lIvQQfxGQILX0y0ESNd8DEEkc9KmM6kb5w8OD4TMuCossaX6uD4QynaEycbpAjOVa1bc_Q7vA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "4th\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -3171,38 +3449,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=14pWIj4pgvgg4jU7gfthg96rXAGBNcQAD"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604153716152420",
+                  "objectId": "text_20260604213140_2661",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 3127248,
-                    "translateY": 3374136,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 4572000,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUd9THbAsk6mA9UybcRboTAgBR8Axg5ri7Q2xZEKgamu7QnJcKLJ9vV-ua-n_x1nX8Bo3bBn8VR1aA5hQKy8C3m1kJMMCq6EGdeIuK-AHUSDaZtCd3EcjBTOTXPijz9V6gkj206y1JJrKSqTY2vpX6cB0WOL7K9teWV5AcKldc-276vB1t_2Nw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "5th\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -3231,9 +3585,13 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=12-Q7OAPaKN-hqUSA-pLs3VfaxyxRx2xG"
+                    }
                   }
                 }
               ],
@@ -12713,7 +13071,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "0J0V8vKNld4cxg",
+          "revisionId": "LTr_L9Ou8lykCg",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -13782,7 +14140,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-04 21:44:42
+  recorded_at: 2026-06-06 17:17:33
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -13791,9 +14149,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '16226'
+      content-length: '15648'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 21:44:43 GMT
+      date: Sat, 06 Jun 2026 17:17:33 GMT
       server: ESF
       vary:
       - Origin
@@ -16531,7 +16889,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIM-romTjYf5neNZ-jkLcwYytg517U4NcK6WiNUPimZ7dwS7NoE4IN_oyN4ZMfODRBhJlLm8ksnnkHF-D3cjADBmfZQpF4pbnfEFKrSC_IKO1zU_7hH6qMdzQQLi_RVj6-dJjrLeZbyOI5e8ryhN8zq0fewZQ1EtE_N4QpaYvWCLKojYtDLg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdplcJf4taFTj6FpqqfQ3XQQ70ji12-ZjWATMwv4uK6fRD4yi_FXxQ7oki6gUYd7rVG4rq1xZnsI0ODJDTneQbJNg_8K5l3DcsfYo8kGJ-ku6FbpDCCUVZuWA_YIaJLp6YLvD2vX4JqUqCv4CLSEZxe8Nh1gw5nTLxBx2gUex58i6A6t9MCrw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -16699,7 +17057,7 @@ http_interactions:
               "objectId": "g3db51d43376_0_30",
               "pageElements": [
                 {
-                  "objectId": "g3db51d43376_0_31",
+                  "objectId": "text_20260604213140_1768",
                   "size": {
                     "width": {
                       "magnitude": 3000000,
@@ -16711,102 +17069,228 @@ http_interactions:
                     }
                   },
                   "transform": {
-                    "scaleX": 2.8402,
-                    "scaleY": 0.1909,
-                    "translateX": 311700,
-                    "translateY": 445025,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 914400,
                     "unit": "EMU"
                   },
                   "shape": {
                     "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "1st\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
                     "shapeProperties": {
                       "shapeBackgroundFill": {
-                        "propertyState": "INHERIT"
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
                       },
                       "outline": {
-                        "propertyState": "INHERIT"
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "rgbColor": {}
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
                       },
                       "shadow": {
-                        "propertyState": "INHERIT"
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
                       },
+                      "contentAlignment": "TOP",
                       "autofit": {
-                        "fontScale": 0.9
-                      }
-                    },
-                    "placeholder": {
-                      "type": "TITLE",
-                      "parentObjectId": "p4_i0"
-                    }
-                  }
-                },
-                {
-                  "objectId": "g3db51d43376_0_32",
-                  "size": {
-                    "width": {
-                      "magnitude": 3000000,
-                      "unit": "EMU"
-                    },
-                    "height": {
-                      "magnitude": 3000000,
-                      "unit": "EMU"
-                    }
-                  },
-                  "transform": {
-                    "scaleX": 2.8402,
-                    "scaleY": 1.1388,
-                    "translateX": 311700,
-                    "translateY": 1152475,
-                    "unit": "EMU"
-                  },
-                  "shape": {
-                    "shapeType": "TEXT_BOX",
-                    "shapeProperties": {
-                      "shapeBackgroundFill": {
-                        "propertyState": "INHERIT"
-                      },
-                      "outline": {
-                        "propertyState": "INHERIT"
-                      },
-                      "shadow": {
-                        "propertyState": "INHERIT"
-                      },
-                      "autofit": {
+                        "autofitType": "NONE",
                         "fontScale": 1
                       }
-                    },
-                    "placeholder": {
-                      "type": "BODY",
-                      "parentObjectId": "p4_i1"
                     }
                   }
                 },
                 {
-                  "objectId": "r2img20260604152607427215",
+                  "objectId": "text_20260604213140_8061",
                   "size": {
                     "width": {
-                      "magnitude": 37500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 37500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 109728,
-                    "translateY": 1353312,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 1828800,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdBXP5gTO1Zt5Fv02r5laY9yEKXzTeLEYa15qG6Yo7SXkv2A3br8BpCitIZUfLhi6Ft8EwEcFRIsY4Ci3PkLh7wBbuyGcdd_5yI1-5vRflbcSiLarI6fkrPpBoLfPpYccncLJKsgG2TlxD2mnwmOxRFZuO6Npf_rG6VASNXRI7Y8rmMPY8=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "2nd\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -16835,38 +17319,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1d9mMFaCM-8MseHdynedgJHzGnj_GWdOq"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604152612223752",
+                  "objectId": "text_20260604213140_9441",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 6144768,
-                    "translateY": 1353312,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 2743200,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUelceye9ZkaphZ49MZwqw3u5NTYlEOT5EIGfhzEbczXbgZ6lLlbAMKYH4F9gh0ewiHSVyZuZWrtwbaiu-b9hlSmTxs8rTi0iXSqFaZDQ4RZt8MQTqCLU2GPyFIB28AH_PdJHYkm_poqbR4Nw-sxx5O1Rwvgfg9sQwh0MtASF2ntzu-tyCw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "3rd\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -16895,38 +17455,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1QHBtAGrHkPB3YT-UOdPPYfnuW8NgNshO"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604153434172163",
+                  "objectId": "text_20260604213140_7023",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 6144768,
-                    "translateY": 3374136,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 3657600,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdEQjMb2znQFYSvvFJXWStkUOv8fI7lw_H_Dc_LCg8ezTwgsyIcWQ9AcJrJBn-MYeZg26-gvq-6yyOIEYBsF9eVZM3E1El45nrHEmVXkoQJ-lIvQQfxGQILX0y0ESNd8DEEkc9KmM6kb5w8OD4TMuCossaX6uD4QynaEycbpAjOVa1bc_Q7vA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "4th\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -16955,38 +17591,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=14pWIj4pgvgg4jU7gfthg96rXAGBNcQAD"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604153716152420",
+                  "objectId": "text_20260604213140_2661",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 3127248,
-                    "translateY": 3374136,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 4572000,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUd9THbAsk6mA9UybcRboTAgBR8Axg5ri7Q2xZEKgamu7QnJcKLJ9vV-ua-n_x1nX8Bo3bBn8VR1aA5hQKy8C3m1kJMMCq6EGdeIuK-AHUSDaZtCd3EcjBTOTXPijz9V6gkj206y1JJrKSqTY2vpX6cB0WOL7K9teWV5AcKldc-276vB1t_2Nw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "5th\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -17015,9 +17727,13 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=12-Q7OAPaKN-hqUSA-pLs3VfaxyxRx2xG"
+                    }
                   }
                 }
               ],
@@ -26497,7 +27213,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "0J0V8vKNld4cxg",
+          "revisionId": "LTr_L9Ou8lykCg",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -27566,7 +28282,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-04 21:44:43
+  recorded_at: 2026-06-06 17:17:33
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -27577,7 +28293,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '210'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 21:44:43 GMT
+      date: Sat, 06 Jun 2026 17:17:33 GMT
       server: ESF
       vary:
       - Origin
@@ -27594,15 +28310,15 @@ http_interactions:
           "replies": [
             {
               "createSlide": {
-                "objectId": "SLIDES_API1773499513_0"
+                "objectId": "SLIDES_API1663313954_0"
               }
             }
           ],
           "writeControl": {
-            "requiredRevisionId": "-VDiBp0PX6HuRQ"
+            "requiredRevisionId": "-2NCm49hBHh58A"
           }
         }
-  recorded_at: 2026-06-04 21:44:43
+  recorded_at: 2026-06-06 17:17:33
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -27611,9 +28327,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '16280'
+      content-length: '15712'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 21:44:43 GMT
+      date: Sat, 06 Jun 2026 17:17:34 GMT
       server: ESF
       vary:
       - Origin
@@ -30351,7 +31067,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfIM-romTjYf5neNZ-jkLcwYytg517U4NcK6WiNUPimZ7dwS7NoE4IN_oyN4ZMfODRBhJlLm8ksnnkHF-D3cjADBmfZQpF4pbnfEFKrSC_IKO1zU_7hH6qMdzQQLi_RVj6-dJjrLeZbyOI5e8ryhN8zq0fewZQ1EtE_N4QpaYvWCLKojYtDLg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdplcJf4taFTj6FpqqfQ3XQQ70ji12-ZjWATMwv4uK6fRD4yi_FXxQ7oki6gUYd7rVG4rq1xZnsI0ODJDTneQbJNg_8K5l3DcsfYo8kGJ-ku6FbpDCCUVZuWA_YIaJLp6YLvD2vX4JqUqCv4CLSEZxe8Nh1gw5nTLxBx2gUex58i6A6t9MCrw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -30519,7 +31235,7 @@ http_interactions:
               "objectId": "g3db51d43376_0_30",
               "pageElements": [
                 {
-                  "objectId": "g3db51d43376_0_31",
+                  "objectId": "text_20260604213140_1768",
                   "size": {
                     "width": {
                       "magnitude": 3000000,
@@ -30531,102 +31247,228 @@ http_interactions:
                     }
                   },
                   "transform": {
-                    "scaleX": 2.8402,
-                    "scaleY": 0.1909,
-                    "translateX": 311700,
-                    "translateY": 445025,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 914400,
                     "unit": "EMU"
                   },
                   "shape": {
                     "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "1st\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
                     "shapeProperties": {
                       "shapeBackgroundFill": {
-                        "propertyState": "INHERIT"
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
                       },
                       "outline": {
-                        "propertyState": "INHERIT"
+                        "outlineFill": {
+                          "solidFill": {
+                            "color": {
+                              "rgbColor": {}
+                            },
+                            "alpha": 1
+                          }
+                        },
+                        "weight": {
+                          "magnitude": 9525,
+                          "unit": "EMU"
+                        },
+                        "dashStyle": "SOLID",
+                        "propertyState": "NOT_RENDERED"
                       },
                       "shadow": {
-                        "propertyState": "INHERIT"
+                        "type": "OUTER",
+                        "transform": {
+                          "scaleX": 1,
+                          "scaleY": 1,
+                          "unit": "EMU"
+                        },
+                        "alignment": "BOTTOM_LEFT",
+                        "blurRadius": {
+                          "unit": "EMU"
+                        },
+                        "color": {
+                          "rgbColor": {}
+                        },
+                        "alpha": 1,
+                        "rotateWithShape": false,
+                        "propertyState": "NOT_RENDERED"
                       },
+                      "contentAlignment": "TOP",
                       "autofit": {
-                        "fontScale": 0.9
-                      }
-                    },
-                    "placeholder": {
-                      "type": "TITLE",
-                      "parentObjectId": "p4_i0"
-                    }
-                  }
-                },
-                {
-                  "objectId": "g3db51d43376_0_32",
-                  "size": {
-                    "width": {
-                      "magnitude": 3000000,
-                      "unit": "EMU"
-                    },
-                    "height": {
-                      "magnitude": 3000000,
-                      "unit": "EMU"
-                    }
-                  },
-                  "transform": {
-                    "scaleX": 2.8402,
-                    "scaleY": 1.1388,
-                    "translateX": 311700,
-                    "translateY": 1152475,
-                    "unit": "EMU"
-                  },
-                  "shape": {
-                    "shapeType": "TEXT_BOX",
-                    "shapeProperties": {
-                      "shapeBackgroundFill": {
-                        "propertyState": "INHERIT"
-                      },
-                      "outline": {
-                        "propertyState": "INHERIT"
-                      },
-                      "shadow": {
-                        "propertyState": "INHERIT"
-                      },
-                      "autofit": {
+                        "autofitType": "NONE",
                         "fontScale": 1
                       }
-                    },
-                    "placeholder": {
-                      "type": "BODY",
-                      "parentObjectId": "p4_i1"
                     }
                   }
                 },
                 {
-                  "objectId": "r2img20260604152607427215",
+                  "objectId": "text_20260604213140_8061",
                   "size": {
                     "width": {
-                      "magnitude": 37500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 37500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 109728,
-                    "translateY": 1353312,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 1828800,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdBXP5gTO1Zt5Fv02r5laY9yEKXzTeLEYa15qG6Yo7SXkv2A3br8BpCitIZUfLhi6Ft8EwEcFRIsY4Ci3PkLh7wBbuyGcdd_5yI1-5vRflbcSiLarI6fkrPpBoLfPpYccncLJKsgG2TlxD2mnwmOxRFZuO6Npf_rG6VASNXRI7Y8rmMPY8=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "2nd\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -30655,38 +31497,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1d9mMFaCM-8MseHdynedgJHzGnj_GWdOq"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604152612223752",
+                  "objectId": "text_20260604213140_9441",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 6144768,
-                    "translateY": 1353312,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 2743200,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUelceye9ZkaphZ49MZwqw3u5NTYlEOT5EIGfhzEbczXbgZ6lLlbAMKYH4F9gh0ewiHSVyZuZWrtwbaiu-b9hlSmTxs8rTi0iXSqFaZDQ4RZt8MQTqCLU2GPyFIB28AH_PdJHYkm_poqbR4Nw-sxx5O1Rwvgfg9sQwh0MtASF2ntzu-tyCw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "3rd\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -30715,38 +31633,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=1QHBtAGrHkPB3YT-UOdPPYfnuW8NgNshO"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604153434172163",
+                  "objectId": "text_20260604213140_7023",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 6144768,
-                    "translateY": 3374136,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 3657600,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdEQjMb2znQFYSvvFJXWStkUOv8fI7lw_H_Dc_LCg8ezTwgsyIcWQ9AcJrJBn-MYeZg26-gvq-6yyOIEYBsF9eVZM3E1El45nrHEmVXkoQJ-lIvQQfxGQILX0y0ESNd8DEEkc9KmM6kb5w8OD4TMuCossaX6uD4QynaEycbpAjOVa1bc_Q7vA=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "4th\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -30775,38 +31769,114 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=14pWIj4pgvgg4jU7gfthg96rXAGBNcQAD"
+                    }
                   }
                 },
                 {
-                  "objectId": "r2img20260604153716152420",
+                  "objectId": "text_20260604213140_2661",
                   "size": {
                     "width": {
-                      "magnitude": 24000,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     },
                     "height": {
-                      "magnitude": 13500,
+                      "magnitude": 3000000,
                       "unit": "EMU"
                     }
                   },
                   "transform": {
-                    "scaleX": 121.92,
-                    "scaleY": 121.92,
-                    "translateX": 3127248,
-                    "translateY": 3374136,
+                    "scaleX": 0.2134,
+                    "scaleY": 0.0914,
+                    "translateX": 1828800,
+                    "translateY": 4572000,
                     "unit": "EMU"
                   },
-                  "image": {
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUd9THbAsk6mA9UybcRboTAgBR8Axg5ri7Q2xZEKgamu7QnJcKLJ9vV-ua-n_x1nX8Bo3bBn8VR1aA5hQKy8C3m1kJMMCq6EGdeIuK-AHUSDaZtCd3EcjBTOTXPijz9V6gkj206y1JJrKSqTY2vpX6cB0WOL7K9teWV5AcKldc-276vB1t_2Nw=s2048?key=RNwwVGokoq38YVVJVb2bWA",
-                    "imageProperties": {
+                  "shape": {
+                    "shapeType": "TEXT_BOX",
+                    "text": {
+                      "textElements": [
+                        {
+                          "endIndex": 4,
+                          "paragraphMarker": {
+                            "style": {
+                              "lineSpacing": 100,
+                              "alignment": "START",
+                              "indentStart": {
+                                "unit": "PT"
+                              },
+                              "indentEnd": {
+                                "unit": "PT"
+                              },
+                              "spaceAbove": {
+                                "unit": "PT"
+                              },
+                              "spaceBelow": {
+                                "unit": "PT"
+                              },
+                              "indentFirstLine": {
+                                "unit": "PT"
+                              },
+                              "direction": "LEFT_TO_RIGHT",
+                              "spacingMode": "COLLAPSE_LISTS"
+                            }
+                          }
+                        },
+                        {
+                          "endIndex": 4,
+                          "textRun": {
+                            "content": "5th\n",
+                            "style": {
+                              "backgroundColor": {},
+                              "foregroundColor": {
+                                "opaqueColor": {
+                                  "rgbColor": {}
+                                }
+                              },
+                              "bold": true,
+                              "italic": true,
+                              "fontFamily": "Arial",
+                              "fontSize": {
+                                "magnitude": 7,
+                                "unit": "PT"
+                              },
+                              "baselineOffset": "NONE",
+                              "smallCaps": false,
+                              "strikethrough": false,
+                              "underline": false,
+                              "weightedFontFamily": {
+                                "fontFamily": "Arial",
+                                "weight": 700
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "shapeProperties": {
+                      "shapeBackgroundFill": {
+                        "propertyState": "NOT_RENDERED",
+                        "solidFill": {
+                          "color": {
+                            "rgbColor": {
+                              "red": 1,
+                              "green": 1,
+                              "blue": 1
+                            }
+                          },
+                          "alpha": 1
+                        }
+                      },
                       "outline": {
                         "outlineFill": {
                           "solidFill": {
                             "color": {
-                              "themeColor": "DARK2"
+                              "rgbColor": {}
                             },
                             "alpha": 1
                           }
@@ -30835,9 +31905,13 @@ http_interactions:
                         "alpha": 1,
                         "rotateWithShape": false,
                         "propertyState": "NOT_RENDERED"
+                      },
+                      "contentAlignment": "TOP",
+                      "autofit": {
+                        "autofitType": "NONE",
+                        "fontScale": 1
                       }
-                    },
-                    "sourceUrl": "https://drive.google.com/uc?export=view&id=12-Q7OAPaKN-hqUSA-pLs3VfaxyxRx2xG"
+                    }
                   }
                 }
               ],
@@ -31137,16 +32211,16 @@ http_interactions:
               }
             },
             {
-              "objectId": "SLIDES_API1773499513_0",
+              "objectId": "SLIDES_API1663313954_0",
               "slideProperties": {
                 "layoutObjectId": "p12",
                 "masterObjectId": "simple-light-2",
                 "notesPage": {
-                  "objectId": "SLIDES_API1773499513_0:notes",
+                  "objectId": "SLIDES_API1663313954_0:notes",
                   "pageType": "NOTES",
                   "pageElements": [
                     {
-                      "objectId": "SLIDES_API1773499513_1",
+                      "objectId": "SLIDES_API1663313954_1",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -31177,7 +32251,7 @@ http_interactions:
                       }
                     },
                     {
-                      "objectId": "SLIDES_API1773499513_2",
+                      "objectId": "SLIDES_API1663313954_2",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -31225,7 +32299,7 @@ http_interactions:
                     }
                   },
                   "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API1773499513_2"
+                    "speakerNotesObjectId": "SLIDES_API1663313954_2"
                   }
                 }
               },
@@ -40416,7 +41490,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "-VDiBp0PX6HuRQ",
+          "revisionId": "-2NCm49hBHh58A",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -41485,7 +42559,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-04 21:44:43
+  recorded_at: 2026-06-06 17:17:34
 - request:
     method: POST
     uri: https://www.googleapis.com/upload/drive/v3/files?supportsAllDrives=TRUE&fields=%2A&uploadType=multipart
@@ -41493,10 +42567,10 @@ http_interactions:
     status: 200
     headers:
       content-type: application/json; charset=UTF-8
-      x-guploader-uploadid: AJ5rDhGiWJG0gqxq3vM7UvG3Ny7PdYnaSkVE44EcKeWc69HRdb2N-Axh98cRA-vYYLEAraQe
+      x-guploader-uploadid: AJ5rDhG56VGVgXR_Frr4lvEIMjQXL37upo8edRbCWtI1e92XPSLWGVBT1GQv_sITy8cR1oidjDsbRRA
       access-control-allow-credentials: 'true'
       cache-control: no-cache, no-store, max-age=0, must-revalidate
-      date: Thu, 04 Jun 2026 21:44:44 GMT
+      date: Sat, 06 Jun 2026 17:17:35 GMT
       expires: Mon, 01 Jan 1990 00:00:00 GMT
       pragma: no-cache
       server: ESF
@@ -41510,8 +42584,8 @@ http_interactions:
       string: |
         {
           "kind": "drive#file",
-          "id": "1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB",
-          "name": "filea0726fed4673.png",
+          "id": "16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci",
+          "name": "file165956caf2f2.png",
           "mimeType": "image/png",
           "starred": false,
           "trashed": false,
@@ -41523,16 +42597,16 @@ http_interactions:
             "drive"
           ],
           "version": "1",
-          "webContentLink": "https://drive.google.com/uc?id=1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB&export=download",
-          "webViewLink": "https://drive.google.com/file/d/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB/view?usp=drivesdk",
+          "webContentLink": "https://drive.google.com/uc?id=16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci&export=download",
+          "webViewLink": "https://drive.google.com/file/d/16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci/view?usp=drivesdk",
           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
           "hasThumbnail": true,
-          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPZkAcjDVpOkwAEf9AyAxbYQ8WYva4JSFBmToaTGcXwDMBACj1vn66F_txzI8n0WYtOo-cgjwrDyY56pfEXhw_DnKvfcMX_h95UWLiu8cVvpI6p5g=s220",
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOBoTKGZrUdIN_3O_z1yIbY7-mSYK6551tJFF5WZm2UBC7EDVBObTYh0clFLCWAB7x6AgA0RUN6qvsC9vsHyrdmKv48y5h53KB2hXlSxjQSuz_fKQ=s220",
           "thumbnailVersion": "1",
           "viewedByMe": false,
-          "createdTime": "2026-06-04T21:44:44.376Z",
-          "modifiedTime": "2026-06-04T21:44:44.376Z",
-          "modifiedByMeTime": "2026-06-04T21:44:44.376Z",
+          "createdTime": "2026-06-06T17:17:35.062Z",
+          "modifiedTime": "2026-06-06T17:17:35.062Z",
+          "modifiedByMeTime": "2026-06-06T17:17:35.062Z",
           "modifiedByMe": true,
           "owners": [
             {
@@ -41618,15 +42692,15 @@ http_interactions:
           "permissionIds": [
             "13669810728446326842"
           ],
-          "originalFilename": "filea0726fed4673.png",
+          "originalFilename": "file165956caf2f2.png",
           "fullFileExtension": "png",
           "fileExtension": "png",
-          "md5Checksum": "2c10090dd0356411687da7e6d477c145",
-          "sha1Checksum": "3d10905c1cabdbb80d2c0a8410788e93a4c3962b",
-          "sha256Checksum": "91bdbe7b9e6295b165521ff40fcf40e57b19fa63dd977681e405904b8524a60c",
+          "md5Checksum": "84054a6ee019854660ca3ffefdac1239",
+          "sha1Checksum": "fd52461cd3df0c543abdb252aa6025c61d02e0b1",
+          "sha256Checksum": "3d73c359db6a524c36b729812e30b3822e5c389dde048f143d40d441ec8453f9",
           "size": "674603",
           "quotaBytesUsed": "674603",
-          "headRevisionId": "0ByOFRjalKxnQL3lSTittK2s5ME5laUZIem9DOW1nSVJVZ3prPQ",
+          "headRevisionId": "0ByOFRjalKxnQbUpnZkFqejZaUzcxc1E2Q2pnbmNxekx5RzVZPQ",
           "imageMediaMetadata": {
             "width": 960,
             "height": 540,
@@ -41648,18 +42722,18 @@ http_interactions:
           },
           "inheritedPermissionsDisabled": false
         }
-  recorded_at: 2026-06-04 21:44:44
+  recorded_at: 2026-06-06 17:17:35
 - request:
     method: POST
-    uri: https://www.googleapis.com/drive/v3/files/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB/permissions
+    uri: https://www.googleapis.com/drive/v3/files/16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci/permissions
   response:
     status: 200
     headers:
       vary: Origin, X-Origin
-      date: Thu, 04 Jun 2026 21:44:45 GMT
-      expires: Mon, 01 Jan 1990 00:00:00 GMT
-      cache-control: no-cache, no-store, max-age=0, must-revalidate
       pragma: no-cache
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      date: Sat, 06 Jun 2026 17:17:36 GMT
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
       content-type: application/json; charset=UTF-8
       content-encoding: gzip
       server: ESF
@@ -41677,7 +42751,7 @@ http_interactions:
           "role": "reader",
           "allowFileDiscovery": false
         }
-  recorded_at: 2026-06-04 21:44:45
+  recorded_at: 2026-06-06 17:17:35
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -41688,7 +42762,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '214'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 21:44:47 GMT
+      date: Sat, 06 Jun 2026 17:17:38 GMT
       server: ESF
       vary:
       - Origin
@@ -41705,31 +42779,31 @@ http_interactions:
           "replies": [
             {
               "createImage": {
-                "objectId": "r2img20260604154445297125"
+                "objectId": "r2img20260606111736032835"
               }
             },
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "lxzQlCwQZq72ug"
+            "requiredRevisionId": "FQfbGewTV23DdQ"
           }
         }
-  recorded_at: 2026-06-04 21:44:47
+  recorded_at: 2026-06-06 17:17:37
 - request:
     method: GET
-    uri: https://www.googleapis.com/drive/v3/files/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB?supportsAllDrives=TRUE&fields=%2A
+    uri: https://www.googleapis.com/drive/v3/files/16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci?supportsAllDrives=TRUE&fields=%2A
   response:
     status: 200
     headers:
-      vary: Origin, X-Origin
       pragma: no-cache
-      date: Thu, 04 Jun 2026 21:44:47 GMT
+      vary: Origin, X-Origin
       expires: Mon, 01 Jan 1990 00:00:00 GMT
       cache-control: no-cache, no-store, max-age=0, must-revalidate
+      date: Sat, 06 Jun 2026 17:17:38 GMT
       content-type: application/json; charset=UTF-8
       content-encoding: gzip
       server: ESF
-      content-length: '1671'
+      content-length: '1664'
       x-xss-protection: '0'
       x-frame-options: SAMEORIGIN
       x-content-type-options: nosniff
@@ -41738,8 +42812,8 @@ http_interactions:
       string: |
         {
           "kind": "drive#file",
-          "id": "1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB",
-          "name": "filea0726fed4673.png",
+          "id": "16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci",
+          "name": "file165956caf2f2.png",
           "mimeType": "image/png",
           "starred": false,
           "trashed": false,
@@ -41751,16 +42825,16 @@ http_interactions:
             "drive"
           ],
           "version": "2",
-          "webContentLink": "https://drive.google.com/uc?id=1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB&export=download",
-          "webViewLink": "https://drive.google.com/file/d/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB/view?usp=drivesdk",
+          "webContentLink": "https://drive.google.com/uc?id=16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci&export=download",
+          "webViewLink": "https://drive.google.com/file/d/16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci/view?usp=drivesdk",
           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
           "hasThumbnail": true,
-          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBPJFstxyIq_USh9v6MXjCQPJeCrCqNGu8zVkEho1Fcg9pVGJn52UXwssIGt6ivPdVaKnSXgUxTp8fVmB8DLhpMEQlMSKaHeXXsuZIXMtmTc9EUnUg=s220",
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBMQHd08J-QJukp2gDjPOIdaJqjYzPUc4sKJnWClIiC2tiP77KUtFjLPQW__eZh9XDafab3r-2FWWRIeTplrOmyongPYLPIB_l0_rDEgYXDxIpWU=s220",
           "thumbnailVersion": "1",
           "viewedByMe": false,
-          "createdTime": "2026-06-04T21:44:44.376Z",
-          "modifiedTime": "2026-06-04T21:44:45.111Z",
-          "modifiedByMeTime": "2026-06-04T21:44:45.111Z",
+          "createdTime": "2026-06-06T17:17:35.062Z",
+          "modifiedTime": "2026-06-06T17:17:35.869Z",
+          "modifiedByMeTime": "2026-06-06T17:17:35.869Z",
           "modifiedByMe": true,
           "owners": [
             {
@@ -41874,15 +42948,15 @@ http_interactions:
             "anyoneWithLink",
             "13669810728446326842"
           ],
-          "originalFilename": "filea0726fed4673.png",
+          "originalFilename": "file165956caf2f2.png",
           "fullFileExtension": "png",
           "fileExtension": "png",
-          "md5Checksum": "2c10090dd0356411687da7e6d477c145",
-          "sha1Checksum": "3d10905c1cabdbb80d2c0a8410788e93a4c3962b",
-          "sha256Checksum": "91bdbe7b9e6295b165521ff40fcf40e57b19fa63dd977681e405904b8524a60c",
+          "md5Checksum": "84054a6ee019854660ca3ffefdac1239",
+          "sha1Checksum": "fd52461cd3df0c543abdb252aa6025c61d02e0b1",
+          "sha256Checksum": "3d73c359db6a524c36b729812e30b3822e5c389dde048f143d40d441ec8453f9",
           "size": "674603",
           "quotaBytesUsed": "674603",
-          "headRevisionId": "0ByOFRjalKxnQL3lSTittK2s5ME5laUZIem9DOW1nSVJVZ3prPQ",
+          "headRevisionId": "0ByOFRjalKxnQbUpnZkFqejZaUzcxc1E2Q2pnbmNxekx5RzVZPQ",
           "imageMediaMetadata": {
             "width": 960,
             "height": 540,
@@ -41906,17 +42980,17 @@ http_interactions:
           },
           "inheritedPermissionsDisabled": false
         }
-  recorded_at: 2026-06-04 21:44:47
+  recorded_at: 2026-06-06 17:17:38
 - request:
     method: DELETE
-    uri: https://www.googleapis.com/drive/v3/files/1R8pf725rrm89e1xIWH5OsPcNBYEQCWRB?supportsAllDrives=TRUE
+    uri: https://www.googleapis.com/drive/v3/files/16WLbnT2b14a5aiRRaO7hvdMfZcqoAEci?supportsAllDrives=TRUE
   response:
     status: 204
     headers:
-      expires: Mon, 01 Jan 1990 00:00:00 GMT
-      date: Thu, 04 Jun 2026 21:44:47 GMT
-      pragma: no-cache
       vary: Origin, X-Origin
+      pragma: no-cache
+      date: Sat, 06 Jun 2026 17:17:38 GMT
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
       cache-control: no-cache, no-store, max-age=0, must-revalidate
       content-type: text/html
       server: ESF
@@ -41926,7 +43000,7 @@ http_interactions:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       string: ''
-  recorded_at: 2026-06-04 21:44:47
+  recorded_at: 2026-06-06 17:17:38
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -41935,9 +43009,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '162'
+      content-length: '161'
       content-type: application/json; charset=UTF-8
-      date: Thu, 04 Jun 2026 21:44:48 GMT
+      date: Sat, 06 Jun 2026 17:17:38 GMT
       server: ESF
       vary:
       - Origin
@@ -41955,8 +43029,8 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "0BjduTkA9o--Dw"
+            "requiredRevisionId": "gCcfnPYAiY_duw"
           }
         }
-  recorded_at: 2026-06-04 21:44:48
+  recorded_at: 2026-06-06 17:17:38
 recorded_with: VCR-vcr/2.1.0
