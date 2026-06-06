@@ -87,7 +87,7 @@ test_that("add_image() inserts an image from a URL and records it in the ledger"
   skip_if_not_installed("magick")
   vcr::use_cassette(
     "add_image_url",
-    match_requests_on = c("method", "uri"),
+    match_requests_on = c("method", "host", "path"),
     {
       ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
 
@@ -118,7 +118,7 @@ test_that("add_image() with ggplot inserts image (integration)", {
 
   vcr::use_cassette(
     "add_image_ggplot",
-    match_requests_on = c("method", "uri"),
+    match_requests_on = c("method", "host", "path"),
     {
       ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
 
