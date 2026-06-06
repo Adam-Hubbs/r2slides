@@ -103,6 +103,7 @@ detect_element_type <- function(el) {
 #'   `new_spec` is a named list with `type`, `left`, `top`, `width`, `height`.
 #'   `existing_elements` is a tibble with those same columns plus `element_id`.
 #' @seealso [set_match_fn()], [get_match_fn()], [set_replacement_strategy()]
+#' @importFrom rlang .data
 #' @export
 match_by_type_and_position <- function(tolerance = 0.05) {
   function(new_spec, existing_elements) {
