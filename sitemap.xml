@@ -4,7 +4,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/LICENSE.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/articles/getting-started.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/articles/index.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/articles/lazy-evaluation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/articles/positioning-system.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/articles/styles.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/authors.html</loc></url>
@@ -18,18 +17,15 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/as_r2slides_table.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/bounding_box.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/chart_id.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/clear_request_buffer.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/combine_style.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/correct_slide_size.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/create_styling_request.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/define_relative_transformation_function.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/element.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/execute_requests.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_active_presentation.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_active_spreadsheet.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_all_elements.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_chart_id.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/get_evaluation_strategy.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_match_fn.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_page_elements.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/get_replacement_strategy.html</loc></url>
@@ -61,7 +57,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/relative_position.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/replacement_strategy_params.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/send_to_front.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/set_evaluation_strategy.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/set_match_fn.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/set_replacement_strategy.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/sht_id.html</loc></url>
@@ -73,7 +68,6 @@
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/style_rule.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/text_style.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/validatePresentation.html</loc></url>
-<url><loc>https://adam-hubbs.github.io/r2slides/reference/view_request_buffer.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/visualize_color.html</loc></url>
 <url><loc>https://adam-hubbs.github.io/r2slides/reference/write_gs.html</loc></url>
 </urlset>
