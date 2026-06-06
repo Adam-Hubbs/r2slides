@@ -1,3 +1,5 @@
+# jarl-ignore-file internal_function: Used for testing only
+
 test_that("is.spreadsheet() returns FALSE for non-spreadsheet objects", {
   expect_false(is.spreadsheet(list()))
   expect_false(is.spreadsheet("character"))

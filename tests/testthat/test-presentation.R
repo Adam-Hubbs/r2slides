@@ -1,4 +1,5 @@
-# jarl-ignore internal_function: Used for testing only
+# jarl-ignore-file internal_function: Used for testing only
+
 test_that("register_presentation() opens by direct ID and populates fields", {
   vcr::use_cassette(
     "presentation_register_id",

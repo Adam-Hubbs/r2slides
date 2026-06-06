@@ -44,7 +44,8 @@ jobs:
           plugins: noop
           disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
-
+          gpg_key: ''
+          
       - name: Show testthat output
         if: always()
         run: |

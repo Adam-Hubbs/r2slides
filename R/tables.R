@@ -572,12 +572,6 @@ build_merge_request <- function(
   )
 }
 
-# Map a cell border side name to the Google Slides border position string.
-#' @noRd
-side_to_border_position <- function(side) {
-  switch(side, top = "TOP", bottom = "BOTTOM", left = "LEFT", right = "RIGHT")
-}
-
 
 #' Convert a table object to an r2slides_table
 #'

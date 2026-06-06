@@ -119,15 +119,6 @@ delete_slide_raw <- function(ps, slide_id) {
   invisible(NULL)
 }
 
-# Pull the first request of a given type out of a named request list
-first_req <- function(reqs, type) {
-  found <- Filter(\(r) !is.null(r[[type]]), reqs)
-  if (length(found) == 0L) {
-    return(NULL)
-  }
-  found[[1L]][[type]]
-}
-
 # Find a border request matching row_index / col_index / borderPosition
 find_border_req <- function(border_reqs, row_idx, col_idx, position) {
   Filter(
