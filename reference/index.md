@@ -45,6 +45,12 @@
   : Get chart_id from a Google Sheet
 - [`get_evaluation_strategy()`](https://adam-hubbs.github.io/r2slides/reference/get_evaluation_strategy.md)
   : Get the current request evaluation strategy
+- [`get_match_fn()`](https://adam-hubbs.github.io/r2slides/reference/get_match_fn.md)
+  : Get the current match function
+- [`get_page_elements()`](https://adam-hubbs.github.io/r2slides/reference/get_page_elements.md)
+  : Get page elements for a slide
+- [`get_replacement_strategy()`](https://adam-hubbs.github.io/r2slides/reference/get_replacement_strategy.md)
+  : Get the current replacement strategy
 - [`get_safe_length()`](https://adam-hubbs.github.io/r2slides/reference/get_safe_length.md)
   : Get the length of an argument
 - [`in_qualtrics_title()`](https://adam-hubbs.github.io/r2slides/reference/in_qualtrics_title.md)
@@ -58,6 +64,8 @@
   : Is slide_position
 - [`is.spreadsheet()`](https://adam-hubbs.github.io/r2slides/reference/is.spreadsheet.md)
   : Check if an object is a spreadsheet
+- [`match_by_type_and_position()`](https://adam-hubbs.github.io/r2slides/reference/match_by_type_and_position.md)
+  : Match elements by type and position
 - [`new_presentation()`](https://adam-hubbs.github.io/r2slides/reference/new_presentation.md)
   : Create a new Google Slides presentation
 - [`new_slide()`](https://adam-hubbs.github.io/r2slides/reference/new_slide.md)
@@ -100,6 +108,10 @@
   : Change the Z-order of a page element
 - [`set_evaluation_strategy()`](https://adam-hubbs.github.io/r2slides/reference/set_evaluation_strategy.md)
   : Set the request evaluation strategy
+- [`set_match_fn()`](https://adam-hubbs.github.io/r2slides/reference/set_match_fn.md)
+  : Set the match function
+- [`set_replacement_strategy()`](https://adam-hubbs.github.io/r2slides/reference/set_replacement_strategy.md)
+  : Set the replacement strategy
 - [`sht_id()`](https://adam-hubbs.github.io/r2slides/reference/sht_id.md)
   [`is_sht_id()`](https://adam-hubbs.github.io/r2slides/reference/sht_id.md)
   : Sheet ID class

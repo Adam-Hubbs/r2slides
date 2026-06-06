@@ -60,9 +60,10 @@
 <span>  element_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  text_style <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"front"</span>, <span class="st">"back"</span><span class="op">)</span>,</span>
-<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pass_strategy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
 <span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  replacement_strategy <span class="op">=</span> <span class="fu"><a href="get_replacement_strategy.html">get_replacement_strategy</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  match_fn <span class="op">=</span> <span class="fu"><a href="get_match_fn.html">get_match_fn</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -100,16 +101,28 @@
 created element. Default: <code>"front"</code>. Ignored for elements updated via <code>element_id</code>.</p></dd>
 
 
-<dt id="arg-token">token<a class="anchor" aria-label="anchor" href="#arg-token"></a></dt>
-<dd><p>Optional. An OAuth2 token. The default uses <code><a href="r2slides_token.html">r2slides_token()</a></code> to find a token.</p></dd>
-
-
 <dt id="arg-pass-strategy">pass_strategy<a class="anchor" aria-label="anchor" href="#arg-pass-strategy"></a></dt>
 <dd><p>Optional. A strategy to pass additional values to style_rule objects.</p></dd>
 
 
 <dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
 <dd><p>Optional. A logical indicating whether to print debug messages. Default: FALSE.</p></dd>
+
+
+<dt id="arg-replacement-strategy">replacement_strategy<a class="anchor" aria-label="anchor" href="#arg-replacement-strategy"></a></dt>
+<dd><p>One of <code>"add"</code> (default), <code>"replace"</code>, or
+<code>"skip"</code>. Overrides the package-wide default set by
+<code><a href="set_replacement_strategy.html">set_replacement_strategy()</a></code>. <code>"add"</code> always creates a new element.
+<code>"replace"</code> deletes any matching element and creates a fresh one. <code>"skip"</code>
+leaves a matching element untouched and suppresses creation.</p></dd>
+
+
+<dt id="arg-match-fn">match_fn<a class="anchor" aria-label="anchor" href="#arg-match-fn"></a></dt>
+<dd><p>A function that identifies an existing slide element matching
+the new one. Must have signature
+<code>function(new_spec, existing_elements) -&gt; character(1) | NULL</code>. See
+<code><a href="match_by_type_and_position.html">match_by_type_and_position()</a></code> for details and the built-in implementation.
+Overrides the package-wide default set by <code><a href="set_match_fn.html">set_match_fn()</a></code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

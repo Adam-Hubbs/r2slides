@@ -13,9 +13,10 @@ add_text_multi(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  token = NULL,
   pass_strategy = c("one", "all"),
   debug = FALSE,
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn(),
   ...
 )
 ```
@@ -55,12 +56,6 @@ add_text_multi(
   created element. Default: `"front"`. Ignored for elements updated via
   `element_id`.
 
-- token:
-
-  Optional. An OAuth2 token. The default uses
-  [`r2slides_token()`](https://adam-hubbs.github.io/r2slides/reference/r2slides_token.md)
-  to find a token.
-
 - pass_strategy:
 
   Optional. A strategy to pass additional values to style_rule objects.
@@ -69,6 +64,25 @@ add_text_multi(
 
   Optional. A logical indicating whether to print debug messages.
   Default: FALSE.
+
+- replacement_strategy:
+
+  One of `"add"` (default), `"replace"`, or `"skip"`. Overrides the
+  package-wide default set by
+  [`set_replacement_strategy()`](https://adam-hubbs.github.io/r2slides/reference/set_replacement_strategy.md).
+  `"add"` always creates a new element. `"replace"` deletes any matching
+  element and creates a fresh one. `"skip"` leaves a matching element
+  untouched and suppresses creation.
+
+- match_fn:
+
+  A function that identifies an existing slide element matching the new
+  one. Must have signature
+  `function(new_spec, existing_elements) -> character(1) | NULL`. See
+  [`match_by_type_and_position()`](https://adam-hubbs.github.io/r2slides/reference/match_by_type_and_position.md)
+  for details and the built-in implementation. Overrides the
+  package-wide default set by
+  [`set_match_fn()`](https://adam-hubbs.github.io/r2slides/reference/set_match_fn.md).
 
 - ...:
 
