@@ -19,7 +19,6 @@ utils::globalVariables("properties")
 
   S7::methods_register()
 
-  assign("request_buffer", request_buffer$new(), envir = .r2slides_objects)
   assign("match_fn", match_by_type_and_position(), envir = .r2slides_objects)
 }
 

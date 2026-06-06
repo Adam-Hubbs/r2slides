@@ -30,22 +30,6 @@ query <- function(
   call = rlang::caller_env(),
   ...
 ) {
-  if (isFALSE(debug) && identical(get_evaluation_strategy(), "lazy")) {
-    .get_request_buffer()$add(
-      endpoint = endpoint,
-      params = params,
-      body = body,
-      base = base,
-      max_tries = max_tries,
-      backoff_base = backoff_base,
-      resource_id = params$presentationId %||%
-        params$spreadsheetId %||%
-        params$fileId %||%
-        NA_character_,
-      user_call = call
-    )
-    return(invisible(NULL))
-  }
 
   #Base
   base <- base %||% 'slides'
