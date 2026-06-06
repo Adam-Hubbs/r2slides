@@ -1011,7 +1011,7 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
 #'   table. Auto-generated when `NULL`.
 #' @param debug Logical. When `TRUE` the requests are returned instead of
 #'   submitted to the API. Default: `FALSE`.
-#' @param token Optional OAuth2 token. Defaults to `r2slides_token()`.
+#' @inheritParams replacement_strategy_params
 #'
 #' @returns The `slide_obj` (invisibly).
 #'
@@ -1023,7 +1023,8 @@ add_table <- function(
   order = c("front", "back"),
   table_id = NULL,
   debug = FALSE,
-  token = NULL
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn()
 ) {
   order <- rlang::arg_match(order)
 
@@ -1037,6 +1038,21 @@ add_table <- function(
     cli::cli_abort(
       "{.var position} must be an object of class {.cls r2slides::slide_position}"
     )
+  }
+
+  if (is.null(table_id)) {
+    if (
+      !apply_replacement(
+        slide_obj,
+        "TABLE",
+        position,
+        strategy = replacement_strategy,
+        match_fn = match_fn,
+        debug = debug
+      )
+    ) {
+      return(invisible(slide_obj))
+    }
   }
 
   if (!S7::S7_inherits(table, r2slides_table)) {
@@ -1064,8 +1080,7 @@ add_table <- function(
         endpoint = "slides.presentations.batchUpdate",
         params = params,
         body = req,
-        base = "slides",
-        token = token
+        base = "slides"
       )
     }
   }

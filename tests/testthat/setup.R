@@ -1,35 +1,3 @@
-default_title_args <- list(
-  title_font_size = NULL,
-  title_font_family = NULL,
-  title_font_bold = NULL,
-  title_color = NULL,
-  title_bg_color = NULL,
-  title_left = NULL,
-  title_top = NULL,
-  title_width = NULL,
-  title_height = NULL
-)
-
-default_commentary_args <- list(
-  commentary_font_family = NULL,
-  commentary_color = NULL,
-  commentary_bg_color = NULL,
-  commentary_left = NULL,
-  commentary_top = NULL,
-  commentary_width = NULL,
-  commentary_height = NULL
-)
-
-default_footer_args <- list(
-  footer_font_size = NULL,
-  footer_font_family = NULL,
-  footer_color = NULL,
-  footer_left = NULL,
-  footer_top = NULL,
-  footer_width = NULL,
-  footer_height = NULL
-)
-
 # ── Table test helpers ──────────────────────────────────────────────────────
 
 # A minimal plain flextable: 3 body rows x 3 columns, no merges/borders
@@ -200,4 +168,38 @@ if (!inherits(r2slides:::.auth$cred, "Token2.0")) {
   r2slides:::.auth$set_auth_active(FALSE)
   googledrive::drive_deauth()
   googlesheets4::gs4_deauth()
+}
+
+
+# Google Slides normalises stored transforms: the same 3.2 × 1.8 inch element
+# may come back as (size=3000000, scaleX=0.9754, scaleY=0.5486) rather than
+# (size=2926080, scaleX=1, scaleY=1). Without the scale fix the extracted
+# centroid is wrong and matching fails.
+
+make_raw_el <- function(
+  object_id,
+  shape_type,
+  tx,
+  ty,
+  size_w,
+  size_h,
+  scale_x = 1,
+  scale_y = 1
+) {
+  list(
+    objectId = object_id,
+    transform = list(
+      translateX = tx,
+      translateY = ty,
+      scaleX = scale_x,
+      scaleY = scale_y,
+      shearX = 0,
+      shearY = 0
+    ),
+    size = list(
+      width = list(magnitude = size_w),
+      height = list(magnitude = size_h)
+    ),
+    shape = list(shapeType = shape_type)
+  )
 }

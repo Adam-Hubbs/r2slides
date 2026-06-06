@@ -12,9 +12,10 @@ add_text_multi(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  token = NULL,
   pass_strategy = c("one", "all"),
   debug = FALSE,
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn(),
   ...
 )
 }
@@ -34,11 +35,21 @@ add_text_multi(
 \item{order}{Optional. One of \code{"front"} or \code{"back"}. Controls the Z-order of each
 created element. Default: \code{"front"}. Ignored for elements updated via \code{element_id}.}
 
-\item{token}{Optional. An OAuth2 token. The default uses \code{r2slides_token()} to find a token.}
-
 \item{pass_strategy}{Optional. A strategy to pass additional values to style_rule objects.}
 
 \item{debug}{Optional. A logical indicating whether to print debug messages. Default: FALSE.}
+
+\item{replacement_strategy}{One of \code{"add"} (default), \code{"replace"}, or
+\code{"skip"}. Overrides the package-wide default set by
+\code{\link[=set_replacement_strategy]{set_replacement_strategy()}}. \code{"add"} always creates a new element.
+\code{"replace"} deletes any matching element and creates a fresh one. \code{"skip"}
+leaves a matching element untouched and suppresses creation.}
+
+\item{match_fn}{A function that identifies an existing slide element matching
+the new one. Must have signature
+\verb{function(new_spec, existing_elements) -> character(1) | NULL}. See
+\code{\link[=match_by_type_and_position]{match_by_type_and_position()}} for details and the built-in implementation.
+Overrides the package-wide default set by \code{\link[=set_match_fn]{set_match_fn()}}.}
 
 \item{...}{Additional values available to style_rule objects.}
 }

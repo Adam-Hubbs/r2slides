@@ -70,15 +70,15 @@ test_that("add_image() natural fit computes correct EMU dimensions", {
   magick::image_write(img, path, format = "png", density = "100x100")
 
   dims <- get_image_dims(path)
-  resolved_dpi <- 100  # override to exact value for test
+  resolved_dpi <- 100 # override to exact value for test
   expect_equal(dims$width_px, 200L)
   expect_equal(dims$height_px, 100L)
 
-  elem_width_emu  <- (dims$width_px  / resolved_dpi) * 914400
+  elem_width_emu <- (dims$width_px / resolved_dpi) * 914400
   elem_height_emu <- (dims$height_px / resolved_dpi) * 914400
 
   # 200px / 100 DPI = 2 inches; 100px / 100 DPI = 1 inch
-  expect_equal(elem_width_emu,  2 * 914400)
+  expect_equal(elem_width_emu, 2 * 914400)
   expect_equal(elem_height_emu, 1 * 914400)
 })
 

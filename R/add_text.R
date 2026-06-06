@@ -13,8 +13,8 @@
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
 #'   created element. Default: `"front"`. Ignored when updating an existing element
 #'   via `element_id`.
-#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param debug Optional. A logical indicating whether to return the request objects, or evaluate them. Default: FALSE.
+#' @inheritParams replacement_strategy_params
 #' @param ... Additional values available to style_rule objects.
 #'
 #' @returns The Google Slides slide object (invisibly).
@@ -31,8 +31,9 @@ add_text <- function(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  token = NULL,
   debug = FALSE,
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn(),
   ...
 ) {
   order <- rlang::arg_match(order)
@@ -49,9 +50,24 @@ add_text <- function(
     )
   }
 
+  if (is.null(element_id)) {
+    if (
+      !apply_replacement(
+        slide_obj,
+        "TEXT_BOX",
+        position,
+        strategy = replacement_strategy,
+        match_fn = match_fn,
+        debug = debug
+      )
+    ) {
+      return(invisible(slide_obj))
+    }
+  }
+
   params <- list(presentationId = slide_obj@presentation$presentation_id)
 
-  result <- .build_text_request_items(
+  result <- build_text_request_items(
     text = text,
     position = position,
     element_id = element_id,
@@ -65,7 +81,6 @@ add_text <- function(
     params = params,
     body = list(requests = result$items),
     base = 'slides',
-    token = token,
     debug = debug
   )
 
@@ -100,9 +115,9 @@ add_text <- function(
 #' @param text_style Optional. A vector of text_style or style_rule objects.
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of each
 #'   created element. Default: `"front"`. Ignored for elements updated via `element_id`.
-#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
 #' @param pass_strategy Optional. A strategy to pass additional values to style_rule objects.
 #' @param debug Optional. A logical indicating whether to print debug messages. Default: FALSE.
+#' @inheritParams replacement_strategy_params
 #' @param ... Additional values available to style_rule objects.
 #'
 #' @returns The Google Slides slide object (invisibly).
@@ -116,9 +131,10 @@ add_text_multi <- function(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  token = NULL,
   pass_strategy = c('one', 'all'),
   debug = FALSE,
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn(),
   ...
 ) {
   order <- rlang::arg_match(order)
@@ -150,38 +166,11 @@ add_text_multi <- function(
     )
   }
 
-  # Recycle each argument to max_len
-  recycle_arg <- function(arg, name) {
-    if (is.null(arg)) {
-      return(rep(list(NULL), max_len))
-    }
-    len <- length(arg)
-    if (len == 1 && max_len > 1) {
-      return(rep(list(arg), max_len))
-    } else if (len == max_len) {
-      # Convert to list if not already
-      if (is.list(arg)) {
-        return(arg)
-      } else if (
-        inherits(arg, "r2slides::slide_position") ||
-          inherits(arg, "r2slides::text_style") ||
-          inherits(arg, "r2slides::style_rule") ||
-          is.function(arg) ||
-          rlang::is_quosure(arg)
-      ) {
-        return(list(arg))
-      } else {
-        return(as.list(arg))
-      }
-    }
-    return(list(arg))
-  }
-
-  text_recycled <- recycle_arg(text, "text")
-  position_recycled <- recycle_arg(position, "position")
-  position_base_recycled <- recycle_arg(position_base, "position_base")
-  element_id_recycled <- recycle_arg(element_id, "element_id")
-  text_style_recycled <- recycle_arg(text_style, "text_style")
+  text_recycled <- recycle_arg(text, "text", max_len)
+  position_recycled <- recycle_arg(position, "position", max_len)
+  position_base_recycled <- recycle_arg(position_base, "position_base", max_len)
+  element_id_recycled <- recycle_arg(element_id, "element_id", max_len)
+  text_style_recycled <- recycle_arg(text_style, "text_style", max_len)
 
   # Handle ... based on pass_strategy
   dots <- rlang::list2(...)
@@ -216,6 +205,23 @@ add_text_multi <- function(
     }
   )
 
+  keep_mask <- apply_replacement(
+    slide_obj,
+    "TEXT_BOX",
+    final_position,
+    element_id_recycled,
+    strategy = replacement_strategy,
+    match_fn = match_fn,
+    debug = debug
+  )
+  if (!any(keep_mask)) return(invisible(slide_obj))
+
+  text_recycled <- text_recycled[keep_mask]
+  final_position <- final_position[keep_mask]
+  element_id_recycled <- element_id_recycled[keep_mask]
+  text_style_recycled <- text_style_recycled[keep_mask]
+  dots_for_map <- dots_for_map[keep_mask]
+
   params <- list(presentationId = slide_obj@presentation$presentation_id)
 
   build_results <- tryCatch(
@@ -229,7 +235,7 @@ add_text_multi <- function(
       ),
       function(text, final_position, element_id, text_style, dots) {
         rlang::exec(
-          .build_text_request_items,
+          build_text_request_items,
           text = text,
           position = final_position,
           element_id = element_id,
@@ -251,7 +257,6 @@ add_text_multi <- function(
     params = params,
     body = list(requests = all_items),
     base = 'slides',
-    token = token,
     debug = debug
   )
 
@@ -268,7 +273,11 @@ add_text_multi <- function(
   }
 
   purrr::walk(
-    purrr::map2(build_results, text_recycled, \(result, txt) list(result = result, text = txt)),
+    purrr::map2(
+      build_results,
+      text_recycled,
+      \(result, txt) list(result = result, text = txt)
+    ),
     \(x) {
       slide_obj@presentation$add_to_ledger(
         element_id = x$result$element_id,
@@ -286,7 +295,7 @@ add_text_multi <- function(
 # Builds the list of batchUpdate request items for a single text element without
 # making any API calls. Returns a list with: element_id, new_element flag, and
 # items (the list of request objects to include in a batchUpdate requests array).
-.build_text_request_items <- function(
+build_text_request_items <- function(
   text,
   position,
   element_id = NULL,
@@ -409,4 +418,32 @@ get_safe_length <- function(arg) {
       }
     }
   )
+}
+
+
+# Recycle each argument to max_len
+recycle_arg <- function(arg, name, max_len) {
+  if (is.null(arg)) {
+    return(rep(list(NULL), max_len))
+  }
+  len <- length(arg)
+  if (len == 1 && max_len > 1) {
+    return(rep(list(arg), max_len))
+  } else if (len == max_len) {
+    # Convert to list if not already
+    if (is.list(arg)) {
+      return(arg)
+    } else if (
+      inherits(arg, "r2slides::slide_position") ||
+        inherits(arg, "r2slides::text_style") ||
+        inherits(arg, "r2slides::style_rule") ||
+        is.function(arg) ||
+        rlang::is_quosure(arg)
+    ) {
+      return(list(arg))
+    } else {
+      return(as.list(arg))
+    }
+  }
+  return(list(arg))
 }

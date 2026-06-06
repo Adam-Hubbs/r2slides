@@ -10,8 +10,8 @@ add_linked_chart(
   position,
   linked = TRUE,
   order = c("front", "back"),
-  token = NULL,
-  call = rlang::caller_env()
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn()
 )
 }
 \arguments{
@@ -30,9 +30,17 @@ add_linked_chart(
 \item{order}{Optional. One of \code{"front"} or \code{"back"}. Controls the Z-order of the
 created chart element. Default: \code{"front"}.}
 
-\item{token}{Optional. An OAuth2 token. The default uses \code{r2slides_token()} to find a token.}
+\item{replacement_strategy}{One of \code{"add"} (default), \code{"replace"}, or
+\code{"skip"}. Overrides the package-wide default set by
+\code{\link[=set_replacement_strategy]{set_replacement_strategy()}}. \code{"add"} always creates a new element.
+\code{"replace"} deletes any matching element and creates a fresh one. \code{"skip"}
+leaves a matching element untouched and suppresses creation.}
 
-\item{call}{Optional. Call environment used in error messages.}
+\item{match_fn}{A function that identifies an existing slide element matching
+the new one. Must have signature
+\verb{function(new_spec, existing_elements) -> character(1) | NULL}. See
+\code{\link[=match_by_type_and_position]{match_by_type_and_position()}} for details and the built-in implementation.
+Overrides the package-wide default set by \code{\link[=set_match_fn]{set_match_fn()}}.}
 }
 \value{
 The Google Slides slide object

@@ -11,7 +11,8 @@ add_table(
   order = c("front", "back"),
   table_id = NULL,
   debug = FALSE,
-  token = NULL
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn()
 )
 }
 \arguments{
@@ -31,7 +32,17 @@ table. Auto-generated when \code{NULL}.}
 \item{debug}{Logical. When \code{TRUE} the requests are returned instead of
 submitted to the API. Default: \code{FALSE}.}
 
-\item{token}{Optional OAuth2 token. Defaults to \code{r2slides_token()}.}
+\item{replacement_strategy}{One of \code{"add"} (default), \code{"replace"}, or
+\code{"skip"}. Overrides the package-wide default set by
+\code{\link[=set_replacement_strategy]{set_replacement_strategy()}}. \code{"add"} always creates a new element.
+\code{"replace"} deletes any matching element and creates a fresh one. \code{"skip"}
+leaves a matching element untouched and suppresses creation.}
+
+\item{match_fn}{A function that identifies an existing slide element matching
+the new one. Must have signature
+\verb{function(new_spec, existing_elements) -> character(1) | NULL}. See
+\code{\link[=match_by_type_and_position]{match_by_type_and_position()}} for details and the built-in implementation.
+Overrides the package-wide default set by \code{\link[=set_match_fn]{set_match_fn()}}.}
 }
 \value{
 The \code{slide_obj} (invisibly).

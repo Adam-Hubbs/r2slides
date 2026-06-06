@@ -14,8 +14,7 @@
 #'    * `FALSE`: Inserts an image of the chart as it currently exists. Will not automatically update.
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
 #'   created chart element. Default: `"front"`.
-#' @param token Optional. An OAuth2 token. The default uses `r2slides_token()` to find a token.
-#' @param call Optional. Call environment used in error messages.
+#' @inheritParams replacement_strategy_params
 #'
 #' @returns The Google Slides slide object
 #' @examples
@@ -38,8 +37,8 @@ add_linked_chart <- function(
   position,
   linked = TRUE,
   order = c("front", "back"),
-  token = NULL,
-  call = rlang::caller_env()
+  replacement_strategy = get_replacement_strategy(),
+  match_fn = get_match_fn()
 ) {
   order <- rlang::arg_match(order)
   linked <- dplyr::if_else(linked, "LINKED", "NOT_LINKED_IMAGE")
@@ -51,6 +50,18 @@ add_linked_chart <- function(
   }
 
   #TODO Add validation for chart_obj and slide_obj
+
+  if (
+    !apply_replacement(
+      slide_obj,
+      "SHEETS_CHART",
+      position,
+      strategy = replacement_strategy,
+      match_fn = match_fn
+    )
+  ) {
+    return(invisible(slide_obj))
+  }
 
   # Define the request to add a linked chart
   add_linked_chart_request <- list(
@@ -92,9 +103,7 @@ add_linked_chart <- function(
     endpoint = 'slides.presentations.batchUpdate',
     params = list(presentationId = slide_obj@presentation$presentation_id),
     body = add_linked_chart_request,
-    base = 'slides',
-    token = token,
-    call = call
+    base = 'slides'
   )
 
   # Apply Z-order using the objectId returned by the API
@@ -104,8 +113,7 @@ add_linked_chart <- function(
       zorder_by_id(
         presentation_id = slide_obj@presentation$presentation_id,
         element_id = new_id,
-        operation = resolve_zorder_op(order),
-        call = call
+        operation = resolve_zorder_op(order)
       )
     }
   }
