@@ -258,7 +258,7 @@ test_that("mirror with Horizontal flip works correctly", {
   mirrored <- mirror(pos, flip_axis = "Horizontal")
 
   expect_equal(mirrored@top, 1)
-  expect_equal(mirrored@left, 5) # 10 - 2 - 3 = 5
+  expect_equal(mirrored@left, 5)
   expect_equal(mirrored@width, 3)
   expect_equal(mirrored@height, 4)
   expect_equal(mirrored@rotation, 0)

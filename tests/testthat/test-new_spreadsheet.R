@@ -53,7 +53,7 @@ test_that("register_spreadsheet() opens by direct ID and populates fields", {
   expect_equal(ss$spreadsheet_id, TEST_SPREADSHEET_ID)
   expect_type(ss$title, "character")
   expect_s3_class(ss$sheets, "tbl_df")
-  expect_true(nrow(ss$sheets) > 0L)
+  expect_gt(nrow(ss$sheets), 0L)
   expect_true(all(c("name", "id") %in% names(ss$sheets)))
 })
 

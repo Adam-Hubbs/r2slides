@@ -41,7 +41,7 @@ r2slides_auth <- function(
   # this catches a common error, where the user passes JSON for an OAuth client
   # to the `path` argument, which only expects a service account token
   #TODO: Change this error to point to r2slides package
-  gargle::check_is_service_account(NULL, hint = "drive_auth_configure")
+  gargle::check_is_service_account(NULL, hint = "r2slides_auth_configure")
 
   cred <- gargle::token_fetch(
     scopes = scopes,
@@ -77,7 +77,7 @@ r2slides_auth <- function(
 r2slides_default_client <- function(path = NULL, name = NULL) {
   rds_path <- path %||%
     system.file("client_json.rds", package = "r2slides", mustWork = TRUE)
-  name <- name %||% 'r2slides y2 client'
+  name <- name %||% "r2slides y2 client"
   json_path <- tempfile()
   decrypted_json <- gargle::secret_read_rds(rds_path, key = .json_key) |>
     writeLines(json_path)

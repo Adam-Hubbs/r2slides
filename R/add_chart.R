@@ -108,15 +108,13 @@ add_linked_chart <- function(
 
   # Apply Z-order using the objectId returned by the API
   new_id <- rsp$replies[[1]]$createSheetsChart$objectId
-  if (!is.null(new_id)) {
-    if (order == 'back') {
-      zorder_by_id(
-        presentation_id = slide_obj@presentation$presentation_id,
-        element_id = new_id,
-        operation = resolve_zorder_op(order)
-      )
-    }
+  if (!is.null(new_id) && order == 'back') {
+    zorder_by_id(
+      presentation_id = slide_obj@presentation$presentation_id,
+      element_id = new_id,
+      operation = resolve_zorder_op(order)
+    )
   }
 
-  return(invisible(slide_obj))
+  invisible(slide_obj)
 }

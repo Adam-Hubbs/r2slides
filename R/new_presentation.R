@@ -12,7 +12,7 @@ NULL
 #'
 #' @export
 new_presentation <- function(
-  title = 'Untitled Presentation',
+  title = "Untitled Presentation",
   set_active = TRUE
 ) {
   presentation$new(title = title, set_active = set_active)
@@ -143,10 +143,8 @@ presentation <- R6::R6Class(
       }
 
       if (exists(".auth", envir = .GlobalEnv)) {
-        if (inherits(.auth, "AuthState")) {
-          if (is.null(.auth$credentials)) {
-            r2slides_auth()
-          }
+        if (inherits(.auth, "AuthState") && is.null(.auth$credentials)) {
+          r2slides_auth()
         }
       }
 
@@ -174,10 +172,8 @@ presentation <- R6::R6Class(
       }
 
       if (exists(".auth", envir = .GlobalEnv)) {
-        if (inherits(.auth, "AuthState")) {
-          if (is.null(.auth$credentials)) {
-            r2slides_auth()
-          }
+        if (inherits(.auth, "AuthState") && is.null(.auth$credentials)) {
+          r2slides_auth()
         }
       }
 

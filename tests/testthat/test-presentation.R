@@ -12,7 +12,7 @@ test_that("register_presentation() opens by direct ID and populates fields", {
   expect_true(is.presentation(ps))
   expect_equal(ps$presentation_id, TEST_PRESENTATION_ID)
   expect_type(ps$title, "character")
-  expect_true(length(ps$get_slide_ids()) > 0)
+  expect_gt(length(ps$get_slide_ids()), 0)
 })
 
 test_that("register_presentation() opens by full URL", {

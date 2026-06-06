@@ -77,7 +77,7 @@ slide <- S7::new_class(
 )
 
 S7::method(`==`, list(slide, slide)) <- function(e1, e2) {
-  return(e1@slide_hash == e2@slide_hash)
+  e1@slide_hash == e2@slide_hash
 }
 
 S7::method(print, slide) <- function(x, ...) {
@@ -146,15 +146,13 @@ on_slide_url <- function(url, ps) {
       register_presentation(pres_id)
       ps <- get_active_presentation()
     }
-  } else {
-    if (active_presentation_exists()) {
-      active <- get_active_presentation()
-      if (active$presentation_id != ps$presentation_id) {
-        cli::cli_warn(c(
-          "x" = "The active presentation ({.val {active$presentation_id}}) is not the presentation passed to {.fn on_slide_url}",
-          "i" = "Set the correct active presentation with {.code register_presentation()}"
-        ))
-      }
+  } else if (active_presentation_exists()) {
+    active <- get_active_presentation()
+    if (active$presentation_id != ps$presentation_id) {
+      cli::cli_warn(c(
+        "x" = "The active presentation ({.val {active$presentation_id}}) is not the presentation passed to {.fn on_slide_url}",
+        "i" = "Set the correct active presentation with {.code register_presentation()}"
+      ))
     }
   }
   ps$get_slide_by_id(slide_id = resolve_slide_id(url, ps$presentation_id))
@@ -338,10 +336,8 @@ resolve_presentation_id <- function(id) {
   }
 
   if (exists(".auth", envir = .GlobalEnv)) {
-    if (inherits(.auth, "AuthState")) {
-      if (is.null(.auth$credentials)) {
-        r2slides_auth()
-      }
+    if (inherits(.auth, "AuthState") && is.null(.auth$credentials)) {
+      r2slides_auth()
     }
   }
 

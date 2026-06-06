@@ -391,7 +391,7 @@ S7::method(plot, slide_position) <- function(
 
   # Ensure we have enough colors
   if (length(all_positions) > length(colors)) {
-    colors <- rep(colors, length.out = length(all_positions))
+    colors <- rep_len(colors, all_positions)
   }
 
   # Create data for rectangles

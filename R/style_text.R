@@ -77,21 +77,17 @@ text_style <- S7::new_class(
     bold = S7::new_property(
       NULL | S7::class_logical,
       validator = function(value) {
-        if (!is.null(value)) {
-          if (length(value) != 1) {
+        if (!is.null(value) && length(value) != 1) {
             return("bold must be a single value")
-          }
         }
       }
     ),
     italic = S7::new_property(
       NULL | S7::class_logical,
       validator = function(value) {
-        if (!is.null(value)) {
-          if (length(value) != 1) {
+        if (!is.null(value) && length(value) != 1) {
             return("italic must be a single value")
           }
-        }
       }
     ),
     font_family = S7::new_property(
@@ -153,31 +149,25 @@ text_style <- S7::new_class(
     small_caps = S7::new_property(
       NULL | S7::class_logical,
       validator = function(value) {
-        if (!is.null(value)) {
-          if (length(value) != 1) {
+        if (!is.null(value) && length(value) != 1) {
             return("small_caps must be a single value")
           }
-        }
       }
     ),
     strikethrough = S7::new_property(
       NULL | S7::class_logical,
       validator = function(value) {
-        if (!is.null(value)) {
-          if (length(value) != 1) {
+        if (!is.null(value) && length(value) != 1) {
             return("strikethrough must be a single value")
           }
-        }
       }
     ),
     underline = S7::new_property(
       NULL | S7::class_logical,
       validator = function(value) {
-        if (!is.null(value)) {
-          if (length(value) != 1) {
+        if (!is.null(value) && length(value) != 1) {
             return("underline must be a single value")
           }
-        }
       }
     ),
 
@@ -490,7 +480,7 @@ style_rule <- S7::new_class(
         )
       }
     }
-
+    
     styles <- purrr::compact(c(what))
     n_selectors <- length(when_quos)
     n_styles <- length(styles)

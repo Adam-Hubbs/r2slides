@@ -147,7 +147,7 @@
     Code
       text_style(bg_color = c(-1, 0, 0))
     Condition
-      Error in `.parse_to_rgb()`:
+      Error in `parse_to_rgb()`:
       ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 ---
@@ -163,7 +163,7 @@
     Code
       text_style(text_color = c(0, 0, 2))
     Condition
-      Error in `.parse_to_rgb()`:
+      Error in `parse_to_rgb()`:
       ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 # combine_style_impl() errors on contradicting field values for all overlapable fields

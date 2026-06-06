@@ -73,7 +73,7 @@ str_before <- function(
       tmp <- c(1, nchar(text))
     }
   }
-  return(tmp)
+  tmp
 }
 
 #' @rdname string-helpers

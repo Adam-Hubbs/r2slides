@@ -30,7 +30,6 @@ query <- function(
   call = rlang::caller_env(),
   ...
 ) {
-
   #Base
   base <- base %||% 'slides'
   #Check that this pattern also works for sheets
@@ -62,13 +61,11 @@ query <- function(
   }
 
   req <- rlang::try_fetch(
-    {
-      gargle::request_develop(
-        endpoint = ept,
-        params = params,
-        base_url = base_url
-      )
-    },
+    gargle::request_develop(
+      endpoint = ept,
+      params = params,
+      base_url = base_url
+    ),
     error = function(e) {
       cli::cli_abort(
         c(x = "Missing or malformed argument:"),
@@ -93,7 +90,7 @@ query <- function(
   body <- body %||% req$body
 
   # Special handling for "GET" methods until this github issue is fixed: https://github.com/r-lib/gargle/issues/292
-  if (req$method == 'GET') {
+  if (req$method == "GET") {
     req <- gargle::request_build(
       path = add_path_params(
         req,

@@ -10,7 +10,7 @@ test_that("on_slide_number() returns a slide at the given index", {
 
   expect_true(is.slide(s))
   expect_type(s@slide_id, "character")
-  expect_true(nchar(s@slide_id) > 0)
+  expect_gt(nchar(s@slide_id), 0)
 })
 
 

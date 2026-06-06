@@ -19,7 +19,7 @@
 write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
   ss_id <- tryCatch(
     as.character(googlesheets4::as_sheets_id(spreadsheet)),
-    error = \(e)
+    error = \(e) {
       cli::cli_abort(
         c(
           "{.arg spreadsheet} must be an {.cls r2slides::spreadsheet} or a googlesheets4-compatible object.",
@@ -27,6 +27,7 @@ write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
         ),
         parent = e
       )
+    }
   )
 
   metadata <- query(
@@ -56,8 +57,9 @@ write_gs <- function(data, sheet, spreadsheet = get_active_spreadsheet()) {
       sheet = sheet,
       reformat = FALSE
     ),
-    error = \(e)
+    error = \(e) {
       cli::cli_abort("Error writing data to sheet {.val {sheet}}.", parent = e)
+    }
   )
 
   metadata_updated <- query(

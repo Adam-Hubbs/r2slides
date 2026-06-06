@@ -156,11 +156,12 @@ spreadsheet <- R6::R6Class(
     open_existing = function(id) {
       spreadsheet_id <- tryCatch(
         as.character(googlesheets4::as_sheets_id(id)),
-        error = \(e)
+        error = \(e) {
           cli::cli_abort(
             "Could not resolve {.arg id} to a spreadsheet ID.",
             parent = e
           )
+        }
       )
       response <- query(
         endpoint = "sheets.spreadsheets.get",

@@ -403,7 +403,7 @@ test_that("get_page_elements() returns a tibble with correct columns", {
     elements,
     c("element_id", "type", "left", "top", "width", "height")
   )
-  expect_true(nrow(elements) >= 1L)
+  expect_gte(nrow(elements), 1L)
   expect_true("TEXT_BOX" %in% elements$type)
 })
 

@@ -70,9 +70,9 @@ add_text <- function(
   result <- build_text_request_items(
     text = text,
     position = position,
+    slide_id = slide_obj@slide_id,
     element_id = element_id,
     text_style = text_style,
-    slide_id = slide_obj@slide_id,
     ...
   )
 
@@ -84,14 +84,12 @@ add_text <- function(
     debug = debug
   )
 
-  if (result$new_element && !debug) {
-    if (order == 'back') {
-      zorder_by_id(
-        presentation_id = slide_obj@presentation$presentation_id,
-        element_id = result$element_id,
-        operation = resolve_zorder_op(order)
-      )
-    }
+  if (result$new_element && !debug && order == 'back') {
+    zorder_by_id(
+      presentation_id = slide_obj@presentation$presentation_id,
+      element_id = result$element_id,
+      operation = resolve_zorder_op(order)
+    )
   }
 
   slide_obj@presentation$add_to_ledger(
@@ -141,7 +139,7 @@ add_text_multi <- function(
   pass_strategy <- rlang::arg_match(pass_strategy)
 
   # Determine the target length from non-scalar arguments
-  lengths <- c(
+  obj_lengths <- c(
     text = get_safe_length(text),
     position = get_safe_length(position),
     position_base = get_safe_length(position_base),
@@ -150,11 +148,11 @@ add_text_multi <- function(
   )
 
   # Remove NULLs (they have length 0)
-  lengths <- lengths[lengths > 0]
+  obj_lengths <- obj_lengths[obj_lengths > 0]
 
-  # Check for valid recycling: all lengths should be 1 or the max length
-  max_len <- max(lengths)
-  invalid <- lengths[lengths != 1 & lengths != max_len]
+  # Check for valid recycling: all obj_lengths should be 1 or the max length
+  max_len <- max(obj_lengths)
+  invalid <- obj_lengths[obj_lengths != 1 & obj_lengths != max_len]
 
   if (length(invalid) > 0) {
     cli::cli_abort(
@@ -238,9 +236,9 @@ add_text_multi <- function(
           build_text_request_items,
           text = text,
           position = final_position,
+          slide_id = slide_obj@slide_id,
           element_id = element_id,
           text_style = text_style,
-          slide_id = slide_obj@slide_id,
           !!!dots
         )
       }
@@ -298,9 +296,9 @@ add_text_multi <- function(
 build_text_request_items <- function(
   text,
   position,
+  slide_id,
   element_id = NULL,
   text_style = NULL,
-  slide_id,
   ...
 ) {
   new_element <- is.null(element_id)
@@ -445,5 +443,5 @@ recycle_arg <- function(arg, name, max_len) {
       return(as.list(arg))
     }
   }
-  return(list(arg))
+  list(arg)
 }

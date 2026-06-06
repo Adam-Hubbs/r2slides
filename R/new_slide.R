@@ -22,10 +22,6 @@ new_slide <- function(
     cli::cli_abort("{.var master} is reserved for officer compatibility")
   }
 
-  # if (length(list(...)) > 0) {
-  #   cli::cli_abort("{.var ...} is reserved for future expansion")
-  # }
-
   if (!is.character(layout)) {
     cli::cli_abort("{.var layout} must be a {.code character}")
   }
@@ -44,7 +40,7 @@ new_slide <- function(
 
   params <- list(presentationId = presentation$presentation_id)
 
-  rsp <- query(
+  query(
     endpoint = 'slides.presentations.batchUpdate',
     params = params,
     body = add_slide_request,

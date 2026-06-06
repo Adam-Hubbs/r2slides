@@ -15,7 +15,7 @@ in_to_emu <- function(x) {
   if (!is.numeric(x)) {
     cli::cli_abort("Position or size argument must be numeric")
   }
-  return(x * 914400)
+  x * 914400
 }
 
 

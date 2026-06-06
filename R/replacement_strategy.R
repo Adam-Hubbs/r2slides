@@ -269,8 +269,9 @@ apply_replacement <- function(
 
   matched <- purrr::map_chr(
     positions[check_idx],
-    \(pos)
+    \(pos) {
       match_fn(element_spec(element_type, pos), existing) %||% NA_character_
+    }
   )
 
   proceed <- rep(TRUE, n)

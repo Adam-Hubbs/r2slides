@@ -18,7 +18,7 @@ theme_colors <- c(
 )
 
 # Parse any color input to list(red, green, blue) in [0, 1].
-.parse_to_rgb <- function(x) {
+parse_to_rgb <- function(x) {
   if (is.numeric(x)) {
     if (length(x) != 3 || any(x < 0) || any(x > 1)) {
       cli::cli_abort(
@@ -95,7 +95,7 @@ solid_color <- S7::new_class(
     blue = S7::class_numeric
   ),
   constructor = function(color, alpha = NULL) {
-    rgb <- .parse_to_rgb(color)
+    rgb <- parse_to_rgb(color)
     S7::new_object(
       S7::S7_object(),
       red = rgb$red,

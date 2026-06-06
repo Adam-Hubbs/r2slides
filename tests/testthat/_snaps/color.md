@@ -11,7 +11,7 @@
     Code
       solid_color(c(0, 0))
     Condition
-      Error in `.parse_to_rgb()`:
+      Error in `parse_to_rgb()`:
       ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 ---
@@ -19,7 +19,7 @@
     Code
       solid_color(c(1.5, 0, 0))
     Condition
-      Error in `.parse_to_rgb()`:
+      Error in `parse_to_rgb()`:
       ! Numeric color must be `c(r, g, b)` with each value in [0, 1].
 
 # solid_color() errors on invalid alpha
