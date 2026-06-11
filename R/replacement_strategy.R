@@ -52,7 +52,9 @@ get_page_elements <- function(slide, ps = slide@presentation) {
     height = numeric()
   )
 
-  if (length(elements) == 0L) return(empty)
+  if (length(elements) == 0L) {
+    return(empty)
+  }
 
   purrr::map(elements, .normalize_page_element) |> purrr::list_rbind()
 }
@@ -62,9 +64,15 @@ detect_element_type <- function(el) {
   if (!is.null(el$shape) && identical(el$shape$shapeType, "TEXT_BOX")) {
     return("TEXT_BOX")
   }
-  if (!is.null(el$sheetsChart)) return("SHEETS_CHART")
-  if (!is.null(el$image)) return("IMAGE")
-  if (!is.null(el$table)) return("TABLE")
+  if (!is.null(el$sheetsChart)) {
+    return("SHEETS_CHART")
+  }
+  if (!is.null(el$image)) {
+    return("IMAGE")
+  }
+  if (!is.null(el$table)) {
+    return("TABLE")
+  }
   "UNSUPPORTED"
 }
 
@@ -107,13 +115,17 @@ detect_element_type <- function(el) {
 #' @export
 match_by_type_and_position <- function(tolerance = 0.05) {
   function(new_spec, existing_elements) {
-    if (nrow(existing_elements) == 0L) return(NULL)
+    if (nrow(existing_elements) == 0L) {
+      return(NULL)
+    }
 
     type_matches <- dplyr::filter(
       existing_elements,
       .data$type == new_spec$type
     )
-    if (nrow(type_matches) == 0L) return(NULL)
+    if (nrow(type_matches) == 0L) {
+      return(NULL)
+    }
 
     new_cx <- new_spec$left + new_spec$width / 2
     new_cy <- new_spec$top + new_spec$height / 2
@@ -124,7 +136,9 @@ match_by_type_and_position <- function(tolerance = 0.05) {
       abs((.data$top + .data$height / 2) - new_cy) <= tolerance
     )
 
-    if (nrow(pos_matches) == 0L) return(NULL)
+    if (nrow(pos_matches) == 0L) {
+      return(NULL)
+    }
 
     if (nrow(pos_matches) > 1L) {
       cli::cli_warn(c(
@@ -247,15 +261,18 @@ apply_replacement <- function(
   positions,
   element_ids = NULL,
   strategy,
-  match_fn,
-  debug = FALSE
+  match_fn
 ) {
   scalar_call <- !is.list(positions)
-  if (scalar_call) positions <- list(positions)
+  if (scalar_call) {
+    positions <- list(positions)
+  }
 
   n <- length(positions)
 
-  if (is.null(element_ids)) element_ids <- rep(list(NULL), n)
+  if (is.null(element_ids)) {
+    element_ids <- rep(list(NULL), n)
+  }
 
   needs_check <- purrr::map_lgl(element_ids, is.null)
 
@@ -290,7 +307,7 @@ apply_replacement <- function(
 
   # strategy == "replace"
   delete_ids <- matched[!is.na(matched)]
-  if (length(delete_ids) > 0L && !debug) {
+  if (length(delete_ids) > 0L) {
     purrr::walk(
       delete_ids,
       \(id) delete_element(slide_obj@presentation$presentation_id, id)

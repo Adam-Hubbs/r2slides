@@ -13,7 +13,6 @@ add_text_multi(
   text_style = NULL,
   order = c("front", "back"),
   pass_strategy = c("one", "all"),
-  debug = FALSE,
   replacement_strategy = get_replacement_strategy(),
   match_fn = get_match_fn(),
   ...
@@ -36,8 +35,6 @@ add_text_multi(
 created element. Default: \code{"front"}. Ignored for elements updated via \code{element_id}.}
 
 \item{pass_strategy}{Optional. A strategy to pass additional values to style_rule objects.}
-
-\item{debug}{Optional. A logical indicating whether to print debug messages. Default: FALSE.}
 
 \item{replacement_strategy}{One of \code{"add"} (default), \code{"replace"}, or
 \code{"skip"}. Overrides the package-wide default set by
