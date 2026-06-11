@@ -13,7 +13,6 @@
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of the
 #'   created element. Default: `"front"`. Ignored when updating an existing element
 #'   via `element_id`.
-#' @param debug Optional. A logical indicating whether to return the request objects, or evaluate them. Default: FALSE.
 #' @inheritParams replacement_strategy_params
 #' @param ... Additional values available to style_rule objects.
 #'
@@ -31,7 +30,6 @@ add_text <- function(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  debug = FALSE,
   replacement_strategy = get_replacement_strategy(),
   match_fn = get_match_fn(),
   ...
@@ -57,8 +55,7 @@ add_text <- function(
         "TEXT_BOX",
         position,
         strategy = replacement_strategy,
-        match_fn = match_fn,
-        debug = debug
+        match_fn = match_fn
       )
     ) {
       return(invisible(slide_obj))
@@ -80,11 +77,10 @@ add_text <- function(
     endpoint = 'slides.presentations.batchUpdate',
     params = params,
     body = list(requests = result$items),
-    base = 'slides',
-    debug = debug
+    base = 'slides'
   )
 
-  if (result$new_element && !debug && order == 'back') {
+  if (result$new_element && order == 'back') {
     zorder_by_id(
       presentation_id = slide_obj@presentation$presentation_id,
       element_id = result$element_id,
@@ -114,7 +110,6 @@ add_text <- function(
 #' @param order Optional. One of `"front"` or `"back"`. Controls the Z-order of each
 #'   created element. Default: `"front"`. Ignored for elements updated via `element_id`.
 #' @param pass_strategy Optional. A strategy to pass additional values to style_rule objects.
-#' @param debug Optional. A logical indicating whether to print debug messages. Default: FALSE.
 #' @inheritParams replacement_strategy_params
 #' @param ... Additional values available to style_rule objects.
 #'
@@ -130,7 +125,6 @@ add_text_multi <- function(
   text_style = NULL,
   order = c("front", "back"),
   pass_strategy = c('one', 'all'),
-  debug = FALSE,
   replacement_strategy = get_replacement_strategy(),
   match_fn = get_match_fn(),
   ...
@@ -209,10 +203,11 @@ add_text_multi <- function(
     final_position,
     element_id_recycled,
     strategy = replacement_strategy,
-    match_fn = match_fn,
-    debug = debug
+    match_fn = match_fn
   )
-  if (!any(keep_mask)) return(invisible(slide_obj))
+  if (!any(keep_mask)) {
+    return(invisible(slide_obj))
+  }
 
   text_recycled <- text_recycled[keep_mask]
   final_position <- final_position[keep_mask]
@@ -254,21 +249,18 @@ add_text_multi <- function(
     endpoint = 'slides.presentations.batchUpdate',
     params = params,
     body = list(requests = all_items),
-    base = 'slides',
-    debug = debug
+    base = 'slides'
   )
 
-  if (!debug) {
-    purrr::walk(build_results, \(result) {
-      if (result$new_element && order == 'back') {
-        zorder_by_id(
-          presentation_id = slide_obj@presentation$presentation_id,
-          element_id = result$element_id,
-          operation = resolve_zorder_op(order)
-        )
-      }
-    })
-  }
+  purrr::walk(build_results, \(result) {
+    if (result$new_element && order == 'back') {
+      zorder_by_id(
+        presentation_id = slide_obj@presentation$presentation_id,
+        element_id = result$element_id,
+        operation = resolve_zorder_op(order)
+      )
+    }
+  })
 
   purrr::walk(
     purrr::map2(

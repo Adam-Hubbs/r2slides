@@ -10,7 +10,6 @@ add_table(
   position,
   order = c("front", "back"),
   table_id = NULL,
-  debug = FALSE,
   replacement_strategy = get_replacement_strategy(),
   match_fn = get_match_fn()
 )
@@ -28,9 +27,6 @@ created element. Default: \code{"front"}.}
 
 \item{table_id}{Optional character string. Object ID to assign to the new
 table. Auto-generated when \code{NULL}.}
-
-\item{debug}{Logical. When \code{TRUE} the requests are returned instead of
-submitted to the API. Default: \code{FALSE}.}
 
 \item{replacement_strategy}{One of \code{"add"} (default), \code{"replace"}, or
 \code{"skip"}. Overrides the package-wide default set by

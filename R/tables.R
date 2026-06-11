@@ -1003,8 +1003,6 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
 #'   created element. Default: `"front"`.
 #' @param table_id Optional character string. Object ID to assign to the new
 #'   table. Auto-generated when `NULL`.
-#' @param debug Logical. When `TRUE` the requests are returned instead of
-#'   submitted to the API. Default: `FALSE`.
 #' @inheritParams replacement_strategy_params
 #'
 #' @returns The `slide_obj` (invisibly).
@@ -1016,7 +1014,6 @@ add_table <- function(
   position,
   order = c("front", "back"),
   table_id = NULL,
-  debug = FALSE,
   replacement_strategy = get_replacement_strategy(),
   match_fn = get_match_fn()
 ) {
@@ -1041,8 +1038,7 @@ add_table <- function(
         "TABLE",
         position,
         strategy = replacement_strategy,
-        match_fn = match_fn,
-        debug = debug
+        match_fn = match_fn
       )
     ) {
       return(invisible(slide_obj))
@@ -1063,10 +1059,6 @@ add_table <- function(
   )
 
   table_id <- reqs$create$requests[[1]]$createTable$objectId
-
-  if (debug) {
-    return(reqs)
-  }
 
   do_batch <- function(req) {
     if (!is.null(req) && length(req$requests) > 0L) {

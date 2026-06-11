@@ -7,12 +7,7 @@
 #' @param ... Ignored; present for S7 generic compatibility.
 #' @name peek
 #' @export
-peek <- S7::new_generic("peek", "x")
-
-
-#' @param slide The slide object you want to get an image of
-#' @rdname peek
-#' @export
+peek <- S7::new_generic("peek", "x") #'
 method(peek, slide) <- function(x, ...) {
   rlang::check_installed("png", reason = 'To show the thumbnail')
 
