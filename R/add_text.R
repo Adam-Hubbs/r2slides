@@ -169,7 +169,7 @@ add_text_multi <- function(
 
   if (pass_strategy == 'one') {
     # Recycle each element of ... individually
-    dots_recycled <- purrr::map(dots, recycle_arg, name = "...")
+    dots_recycled <- purrr::map(dots, recycle_arg, name = "...", max_len = max_len)
 
     # Transpose so each iteration gets one element from each dots argument
     if (length(dots) > 0) {
