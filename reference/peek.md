@@ -6,9 +6,6 @@ Displays a thumbnail of the current slide
 
 ``` r
 peek(x, ...)
-
-## S7 method for class <r2slides::slide>
-peek(x, ...)
 ```
 
 ## Arguments
@@ -21,7 +18,3 @@ peek(x, ...)
 - ...:
 
   Ignored; present for S7 generic compatibility.
-
-- slide:
-
-  The slide object you want to get an image of

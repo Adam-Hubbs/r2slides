@@ -13,7 +13,6 @@ add_text(
   element_id = NULL,
   text_style = NULL,
   order = c("front", "back"),
-  debug = FALSE,
   replacement_strategy = get_replacement_strategy(),
   match_fn = get_match_fn(),
   ...
@@ -42,27 +41,18 @@ add_text(
 
 - text_style:
 
-  Optional. A list of text styling properties. One of:
-
-  - NULL (the default): Styling is determined by the defaults for the
-    Google Slides presentation
-
-  - r2slides::text_style object: List of Text styling
-
-  - r2slides::style_rule object: Conditionally formatted object that
-    defined styles and when to use those styles. Resolves to a
-    text_style object.
+  Optional. A list of text styling properties. One of: \* NULL (the
+  default): Styling is determined by the defaults for the Google Slides
+  presentation \* r2slides::text_style object: List of Text styling \*
+  r2slides::style_rule object: Conditionally formatted object that
+  defined styles and when to use those styles. Resolves to a text_style
+  object.
 
 - order:
 
   Optional. One of `"front"` or `"back"`. Controls the Z-order of the
   created element. Default: `"front"`. Ignored when updating an existing
   element via `element_id`.
-
-- debug:
-
-  Optional. A logical indicating whether to return the request objects,
-  or evaluate them. Default: FALSE.
 
 - replacement_strategy:
 

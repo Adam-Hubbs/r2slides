@@ -58,7 +58,6 @@
 <span>  element_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  text_style <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"front"</span>, <span class="st">"back"</span><span class="op">)</span>,</span>
-<span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  replacement_strategy <span class="op">=</span> <span class="fu"><a href="get_replacement_strategy.html">get_replacement_strategy</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  match_fn <span class="op">=</span> <span class="fu"><a href="get_match_fn.html">get_match_fn</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -86,20 +85,16 @@
 
 
 <dt id="arg-text-style">text_style<a class="anchor" aria-label="anchor" href="#arg-text-style"></a></dt>
-<dd><p>Optional. A list of text styling properties. One of:</p><ul><li><p>NULL (the default): Styling is determined by the defaults for the Google Slides presentation</p></li>
-<li><p>r2slides::text_style object: List of Text styling</p></li>
-<li><p>r2slides::style_rule object: Conditionally formatted object that defined styles and when to use those styles. Resolves to a text_style object.</p></li>
-</ul></dd>
+<dd><p>Optional. A list of text styling properties. One of:
+* NULL (the default): Styling is determined by the defaults for the Google Slides presentation
+* r2slides::text_style object: List of Text styling
+* r2slides::style_rule object: Conditionally formatted object that defined styles and when to use those styles. Resolves to a text_style object.</p></dd>
 
 
 <dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p>Optional. One of <code>"front"</code> or <code>"back"</code>. Controls the Z-order of the
 created element. Default: <code>"front"</code>. Ignored when updating an existing element
 via <code>element_id</code>.</p></dd>
-
-
-<dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
-<dd><p>Optional. A logical indicating whether to return the request objects, or evaluate them. Default: FALSE.</p></dd>
 
 
 <dt id="arg-replacement-strategy">replacement_strategy<a class="anchor" aria-label="anchor" href="#arg-replacement-strategy"></a></dt>

@@ -14,7 +14,6 @@ add_table(
   position,
   order = c("front", "back"),
   table_id = NULL,
-  debug = FALSE,
   replacement_strategy = get_replacement_strategy(),
   match_fn = get_match_fn()
 )
@@ -51,11 +50,6 @@ add_table(
 
   Optional character string. Object ID to assign to the new table.
   Auto-generated when `NULL`.
-
-- debug:
-
-  Logical. When `TRUE` the requests are returned instead of submitted to
-  the API. Default: `FALSE`.
 
 - replacement_strategy:
 
