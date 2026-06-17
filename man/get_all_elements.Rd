@@ -7,11 +7,29 @@
 get_all_elements(slide)
 }
 \arguments{
-\item{slide}{A slide object}
+\item{slide}{A \code{slide} object (e.g. from \code{\link[=on_slide_id]{on_slide_id()}} or \code{\link[=on_slide_number]{on_slide_number()}}).}
 }
 \value{
-A list of element objects
+A list of element objects. Each entry is one of \code{text_element},
+\code{image_element}, \code{chart_element}, \code{table_element}, \code{shape_element}, or the
+base \code{element} class for unrecognised nodes. The list is empty (\code{list()})
+when the slide has no elements.
 }
 \description{
-Get all elements in a slide
+Returns every page element on the slide as a list of typed element objects
+(\code{text_element}, \code{image_element}, etc.). No filtering is applied; use
+\code{\link[=get_elements]{get_elements()}} if you want to filter by type or spatial region.
+}
+\examples{
+if (FALSE) {
+  ps <- register_presentation(id = "YOUR_PRESENTATION_ID", set_active = FALSE)
+  slide_obj <- on_slide_number(1, ps)
+  els <- get_all_elements(slide_obj)
+  length(els)
+}
+
+}
+\seealso{
+\code{\link[=get_elements]{get_elements()}} for filtered retrieval, \code{\link[=element_type]{element_type()}} to
+inspect individual elements.
 }

@@ -191,6 +191,24 @@ as_fill_api <- function(color) {
   list(solidFill = fill)
 }
 
+color_from_api <- function(node) {
+  if (is.null(node) || length(node) == 0) return(NULL)
+  inner <- node$opaqueColor
+  if (is.null(inner)) return(NULL)
+  if (!is.null(inner$rgbColor)) {
+    rgb <- inner$rgbColor
+    solid_color(c(
+      rgb$red %||% 0,
+      rgb$green %||% 0,
+      rgb$blue %||% 0
+    ))
+  } else if (!is.null(inner$themeColor)) {
+    theme_color(inner$themeColor)
+  } else {
+    NULL
+  }
+}
+
 # -- Format / print -----------------------------------------------------------
 
 S7::method(format, solid_color) <- function(x, ...) {

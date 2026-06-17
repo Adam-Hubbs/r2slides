@@ -3,19 +3,72 @@
 \name{element}
 \alias{element}
 \alias{text_element}
-\title{Element Object}
+\alias{image_element}
+\alias{chart_element}
+\alias{table_element}
+\alias{shape_element}
+\title{Element objects}
 \usage{
 element(presentation = NULL, slide = NULL, element_id = character(0))
 
 text_element(presentation = NULL, slide = NULL, element_id = character(0))
+
+image_element(presentation = NULL, slide = NULL, element_id = character(0))
+
+chart_element(presentation = NULL, slide = NULL, element_id = character(0))
+
+table_element(presentation = NULL, slide = NULL, element_id = character(0))
+
+shape_element(presentation = NULL, slide = NULL, element_id = character(0))
 }
 \arguments{
-\item{presentation}{A presentation object}
+\item{presentation}{A \code{presentation} R6 object (from \code{\link[=register_presentation]{register_presentation()}}
+or \code{\link[=new_presentation]{new_presentation()}}).}
 
-\item{slide}{A slide object}
+\item{slide}{A \code{slide} S7 object (from \code{\link[=on_slide_id]{on_slide_id()}} or similar selectors).}
 
-\item{element_id}{An element ID}
+\item{element_id}{A single character string: the element's Google Slides
+object ID.}
+}
+\value{
+An S7 object of the corresponding element class.
 }
 \description{
-An object representing a Google Slides element/slide/presentation combo
+S7 classes representing individual content items on a Google Slides slide.
+Each element holds three pieces of context — the parent \code{presentation}, the
+parent \code{slide}, and the API \code{element_id} — that allow any generic to fetch
+the element's raw data on demand without storing a snapshot.
+
+The concrete subclasses are:
+\itemize{
+\item \code{text_element} — text boxes (shape type \code{TEXT_BOX})
+\item \code{image_element} — inline images
+\item \code{chart_element} — linked Google Sheets charts
+\item \code{table_element} — tables
+\item \code{shape_element} — other shapes (rectangles, ellipses, etc.)
+}
+
+Use \code{\link[=element_type]{element_type()}} to identify the type at runtime, and \code{\link[=get_elements]{get_elements()}}
+or \code{\link[=get_all_elements]{get_all_elements()}} to obtain element objects from a slide.
+}
+\examples{
+if (FALSE) {
+  ps <- register_presentation(id = "YOUR_PRESENTATION_ID", set_active = FALSE)
+  slide_obj <- on_slide_number(1, ps)
+
+  # Retrieve all elements on slide 1
+  els <- get_all_elements(slide_obj)
+
+  # Check the type of the first element
+  element_type(els[[1]])
+
+  # Filter to text elements only
+  text_els <- get_elements(slide_obj, type = "text")
+}
+
+}
+\seealso{
+\code{\link[=get_elements]{get_elements()}}, \code{\link[=get_all_elements]{get_all_elements()}}, \code{\link[=element_type]{element_type()}},
+\code{\link[=get_raw]{get_raw()}}, \code{\link[=get_position]{get_position()}}, \code{\link[=get_text]{get_text()}}, \code{\link[=get_text_style]{get_text_style()}},
+\code{\link[=get_image]{get_image()}}, \code{\link[=get_linked_sheet]{get_linked_sheet()}}, \code{\link[=get_table]{get_table()}}
 }

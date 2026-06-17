@@ -1,3 +1,6 @@
+# Version 0.0.9076
+* You can now read most elements of existing slides back into R: pull the elements off a slide and get their text, formatting, position, images, and linked spreadsheets. This allows prototypes - use the styling of another already existing element. Or fuzzy positioning - use the position of an already existing element.
+
 # Version 0.0.9075
 
 * New `register_spreadsheet(id)` and `new_spreadsheet(title)` functions create a lean R6 `spreadsheet` class that mirrors the `presentation` workflow. The active spreadsheet is stored in the package environment and retrieved with `get_active_spreadsheet()`, so `write_gs()` no longer requires a global `ss` object.

@@ -129,7 +129,48 @@ presentation <- R6::R6Class(
     #'
     #' @return Self, invisibly (for method chaining)
     refresh = function() {
+      private$page_cache <- list()
+      private$page_cache_time <- list()
       private$refresh_internal(force = TRUE)
+    },
+
+    #' @description
+    #' Get raw page data for a slide, with 15-second TTL caching.
+    #'
+    #' Calls the `slides.presentations.pages.get` endpoint and caches the
+    #' result per slide ID with a 15-second time-to-live. Repeated calls
+    #' within the TTL return the cached value without an HTTP request.
+    #' The cache is keyed by `slide_id`, so different slides are cached
+    #' independently. Calling `$refresh()` clears all cached page data so
+    #' the next call always re-fetches.
+    #'
+    #' @param slide_id A single character string: the slide's object ID.
+    #' @param force Logical. If `TRUE`, bypasses the TTL cache and always
+    #'   fetches from the API. Defaults to `FALSE`.
+    #'
+    #' @return A named list: the raw page response from `slides.presentations.pages.get`.
+    get_page_raw = function(slide_id, force = FALSE) {
+      cached_time <- private$page_cache_time[[slide_id]]
+      within_ttl <- !is.null(cached_time) &&
+        as.numeric(difftime(Sys.time(), cached_time, units = "secs")) < 15
+
+      if (!force && within_ttl) {
+        return(private$page_cache[[slide_id]])
+      }
+
+      rsp <- query(
+        endpoint = "slides.presentations.pages.get",
+        params = list(
+          presentationId = self$presentation_id,
+          pageObjectId = slide_id
+        ),
+        base = "slides"
+      )
+
+      private$page_cache[[slide_id]] <- rsp
+      private$page_cache_time[[slide_id]] <- Sys.time()
+
+      rsp
     },
 
     #' @description
@@ -513,6 +554,12 @@ presentation <- R6::R6Class(
 
     # Named character vector: slide_id -> notes text (built at refresh time)
     notes_index = NULL,
+
+    # Per-slide page cache: named list keyed by slide_id
+    page_cache = list(),
+
+    # Per-slide fetch timestamps: named list keyed by slide_id
+    page_cache_time = list(),
 
     # Internal refresh: respects 15-second TTL; use force = TRUE only from public refresh()
     refresh_internal = function(force = FALSE) {

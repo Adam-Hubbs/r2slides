@@ -13,7 +13,7 @@ write_gs(data, sheet, spreadsheet = get_active_spreadsheet())
 
 \item{spreadsheet}{Optional. An \code{r2slides::spreadsheet} object, a
 \link[googlesheets4:sheets_id]{googlesheets4::sheets_id}, or any object accepted by
-\code{\link[googlesheets4:sheets_id]{googlesheets4::as_sheets_id()}} (spreadsheet ID string or URL). Defaults
+\code{\link[googlesheets4:as_sheets_id]{googlesheets4::as_sheets_id()}} (spreadsheet ID string or URL). Defaults
 to \code{\link[=get_active_spreadsheet]{get_active_spreadsheet()}}.}
 }
 \value{

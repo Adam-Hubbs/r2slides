@@ -171,3 +171,85 @@ test_that("format() produces correct string for theme_color", {
     "<theme_color> ACCENT1 (alpha: 0.3)"
   )
 })
+
+
+# color_from_api — pure round-trips --------------------------------------------
+
+test_that("color_from_api() round-trips solid_color via API node", {
+  sc <- solid_color(c(0.5, 0.25, 0.75))
+  node <- as_opaque_color_api(sc)
+  result <- color_from_api(node)
+  expect_true(S7::S7_inherits(result, solid_color))
+  expect_equal(result@red, 0.5)
+  expect_equal(result@green, 0.25)
+  expect_equal(result@blue, 0.75)
+})
+
+test_that("color_from_api() round-trips theme_color via API node", {
+  tc <- theme_color("ACCENT4")
+  node <- as_opaque_color_api(tc)
+  result <- color_from_api(node)
+  expect_true(S7::S7_inherits(result, theme_color))
+  expect_equal(result@theme, "ACCENT4")
+})
+
+test_that("color_from_api() defaults missing rgb channels to 0", {
+  node <- list(opaqueColor = list(rgbColor = list(red = 1)))
+  result <- color_from_api(node)
+  expect_equal(result@red, 1)
+  expect_equal(result@green, 0)
+  expect_equal(result@blue, 0)
+})
+
+test_that("color_from_api() returns NULL for NULL input", {
+  expect_null(color_from_api(NULL))
+})
+
+test_that("color_from_api() returns NULL for empty list input", {
+  expect_null(color_from_api(list()))
+})
+
+
+# color_from_api — LIVE: exercises the real API color node shape ───────────────
+
+test_that("color_from_api() correctly parses text_color from a real API text style node", {
+  vcr::use_cassette(
+    "color_from_api_text_color_live",
+    match_requests_on = c("method", "uri"),
+    {
+      ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
+
+      before <- unlist(ps$get_slide_ids())
+      new_slide(ps)
+      slide_id <- setdiff(unlist(ps$get_slide_ids()), before)[[1]]
+
+      # Red text with a blue background fill via text_style
+      style <- text_style(
+        text_color = solid_color("#FF0000"),
+        bg_color = solid_color("#0000FF")
+      )
+      add_text(
+        on_slide_id(slide_id, ps),
+        "Color test",
+        in_top_left(),
+        text_style = style
+      )
+
+      el <- get_elements(on_slide_id(slide_id, ps), type = "text")[[1]]
+      extracted_style <- get_text_style(el)
+
+      delete_slide_raw(ps, slide_id)
+    }
+  )
+
+  # The extracted style should carry the red text_color we set.
+  # get_text_style() calls text_style_from_api() -> color_from_api() on the
+  # real foregroundColor node that Google Slides stores.
+  expect_s3_class(extracted_style, "r2slides::text_style")
+  expect_false(is.null(extracted_style@text_color))
+  expect_true(S7::S7_inherits(extracted_style@text_color, solid_color))
+  # Google normalises #FF0000 to red=1, green=0, blue=0
+  expect_equal(extracted_style@text_color@red, 1, tolerance = 1e-3)
+  expect_equal(extracted_style@text_color@green, 0, tolerance = 1e-3)
+  expect_equal(extracted_style@text_color@blue, 0, tolerance = 1e-3)
+})

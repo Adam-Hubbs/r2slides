@@ -26,9 +26,11 @@ add_text(
 \item{element_id}{Optional. A string ID of an existing text element to update. If element_id is \code{NULL} a new element will be created.}
 
 \item{text_style}{Optional. A list of text styling properties. One of:
-* NULL (the default): Styling is determined by the defaults for the Google Slides presentation
-* r2slides::text_style object: List of Text styling
-* r2slides::style_rule object: Conditionally formatted object that defined styles and when to use those styles. Resolves to a text_style object.}
+\itemize{
+\item NULL (the default): Styling is determined by the defaults for the Google Slides presentation
+\item r2slides::text_style object: List of Text styling
+\item r2slides::style_rule object: Conditionally formatted object that defined styles and when to use those styles. Resolves to a text_style object.
+}}
 
 \item{order}{Optional. One of \code{"front"} or \code{"back"}. Controls the Z-order of the
 created element. Default: \code{"front"}. Ignored when updating an existing element

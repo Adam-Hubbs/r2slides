@@ -31,6 +31,7 @@ slide <- S7::new_class(
         self@elements_raw |>
           recursively_replace('objectId', '') |>
           recursively_replace('speakerNotesObjectId', '') |>
+          recursively_replace('revisionId', '') |>
           purrr::modify_tree(
             leaf = function(leaf) {
               if (is.numeric(leaf)) {
@@ -47,14 +48,7 @@ slide <- S7::new_class(
     elements_raw = S7::new_property(
       S7::class_character,
       getter = function(self) {
-        query(
-          endpoint = "slides.presentations.pages.get",
-          params = list(
-            presentationId = self@presentation$presentation_id,
-            pageObjectId = self@slide_id
-          ),
-          base = "slides"
-        )
+        self@presentation$get_page_raw(self@slide_id)
       }
     )
   ),
