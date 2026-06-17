@@ -24,7 +24,7 @@ to create instances.
 
 ### Public methods
 
-- [`spreadsheet$new()`](#method-spreadsheet-new)
+- [`spreadsheet$new()`](#method-spreadsheet-initialize)
 
 - [`spreadsheet$set_active()`](#method-spreadsheet-set_active)
 
@@ -40,7 +40,7 @@ to create instances.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `spreadsheet$new()`
 
 Create or open a spreadsheet
 
@@ -68,7 +68,7 @@ A new `spreadsheet` object
 
 ------------------------------------------------------------------------
 
-### Method `set_active()`
+### `spreadsheet$set_active()`
 
 Set this spreadsheet as the active one
 
@@ -82,7 +82,7 @@ Self, invisibly
 
 ------------------------------------------------------------------------
 
-### Method `set_not_active()`
+### `spreadsheet$set_not_active()`
 
 Remove this spreadsheet as the active one
 
@@ -96,7 +96,7 @@ Self, invisibly
 
 ------------------------------------------------------------------------
 
-### Method `is_active()`
+### `spreadsheet$is_active()`
 
 Check if this is the active spreadsheet
 
@@ -110,7 +110,7 @@ Logical
 
 ------------------------------------------------------------------------
 
-### Method `get_url()`
+### `spreadsheet$get_url()`
 
 Get the Google Sheets URL for this spreadsheet
 
@@ -124,7 +124,7 @@ Character URL or NULL
 
 ------------------------------------------------------------------------
 
-### Method `browse()`
+### `spreadsheet$browse()`
 
 Open the spreadsheet in a browser
 
@@ -138,7 +138,7 @@ Self, invisibly
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `spreadsheet$print()`
 
 Print method for spreadsheet objects
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 0.0.9076
+
+- You can now read most elements of existing slides back into R: pull
+  the elements off a slide and get their text, formatting, position,
+  images, and linked spreadsheets. This allows prototypes - use the
+  styling of another already existing element. Or fuzzy positioning -
+  use the position of an already existing element.
+
 ## Version 0.0.9075
 
 - New `register_spreadsheet(id)` and `new_spreadsheet(title)` functions

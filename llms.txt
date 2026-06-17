@@ -94,7 +94,13 @@ chart_data |>
   slide_position object.
 - [`element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
   [`text_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
-  : Element Object
+  [`image_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  [`chart_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  [`table_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  [`shape_element()`](https://adam-hubbs.github.io/r2slides/reference/element.md)
+  : Element objects
+- [`element_type()`](https://adam-hubbs.github.io/r2slides/reference/element_type.md)
+  : Get the type of an element
 - [`get_active_presentation()`](https://adam-hubbs.github.io/r2slides/reference/get_active_presentation.md)
   : Get the currently active presentation
 - [`get_active_spreadsheet()`](https://adam-hubbs.github.io/r2slides/reference/get_active_spreadsheet.md)
@@ -103,14 +109,30 @@ chart_data |>
   : Get all elements in a slide
 - [`get_chart_id()`](https://adam-hubbs.github.io/r2slides/reference/get_chart_id.md)
   : Get chart_id from a Google Sheet
+- [`get_elements()`](https://adam-hubbs.github.io/r2slides/reference/get_elements.md)
+  : Get elements from a slide
+- [`get_image()`](https://adam-hubbs.github.io/r2slides/reference/get_image.md)
+  : Get image URL or file path from an image element
+- [`get_linked_sheet()`](https://adam-hubbs.github.io/r2slides/reference/get_linked_sheet.md)
+  : Get the linked Google Sheet chart reference from a chart element
 - [`get_match_fn()`](https://adam-hubbs.github.io/r2slides/reference/get_match_fn.md)
   : Get the current match function
 - [`get_page_elements()`](https://adam-hubbs.github.io/r2slides/reference/get_page_elements.md)
   : Get page elements for a slide
+- [`get_position()`](https://adam-hubbs.github.io/r2slides/reference/get_position.md)
+  : Get the position of an element
+- [`get_raw()`](https://adam-hubbs.github.io/r2slides/reference/get_raw.md)
+  : Get the raw API node for an element
 - [`get_replacement_strategy()`](https://adam-hubbs.github.io/r2slides/reference/get_replacement_strategy.md)
   : Get the current replacement strategy
 - [`get_safe_length()`](https://adam-hubbs.github.io/r2slides/reference/get_safe_length.md)
   : Get the length of an argument
+- [`get_table()`](https://adam-hubbs.github.io/r2slides/reference/get_table.md)
+  : Get table cell text from a table element
+- [`get_text()`](https://adam-hubbs.github.io/r2slides/reference/get_text.md)
+  : Get the text content of an element
+- [`get_text_style()`](https://adam-hubbs.github.io/r2slides/reference/get_text_style.md)
+  : Get the text style of an element
 - [`in_qualtrics_title()`](https://adam-hubbs.github.io/r2slides/reference/in_qualtrics_title.md)
   : Creates a slide_position object with defaults in the title of the
   slide
@@ -122,6 +144,8 @@ chart_data |>
   : Is slide_position
 - [`is.spreadsheet()`](https://adam-hubbs.github.io/r2slides/reference/is.spreadsheet.md)
   : Check if an object is a spreadsheet
+- [`is_element()`](https://adam-hubbs.github.io/r2slides/reference/is_element.md)
+  : Test whether an object is an element
 - [`match_by_type_and_position()`](https://adam-hubbs.github.io/r2slides/reference/match_by_type_and_position.md)
   : Match elements by type and position
 - [`new_presentation()`](https://adam-hubbs.github.io/r2slides/reference/new_presentation.md)
