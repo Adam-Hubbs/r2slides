@@ -28,7 +28,11 @@ test_that("element_class_for sheetsChart takes priority over image", {
 test_that("element_class_for and get_all_elements dispatch correctly for real API shapes", {
   vcr::use_cassette(
     "element_class_dispatch_live",
-    match_requests_on = c("method", "uri"),
+    # Match on host + path (not full uri): this test uploads an image via
+    # googledrive, whose request carries auth/session query params that vary
+    # per run, so matching on the full uri fails on CI. The image round-trip
+    # test in test-element_generics.R uses the same matcher for this reason.
+    match_requests_on = c("method", "host", "path"),
     {
       ps <- register_presentation(id = TEST_PRESENTATION_ID, set_active = FALSE)
 

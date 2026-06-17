@@ -1,3 +1,4 @@
+# jarl-ignore-file internal_function: Used for testing only
 # ── helpers ───────────────────────────────────────────────────────────────────
 
 make_runs <- function(contents, starts, ends, styles) {
