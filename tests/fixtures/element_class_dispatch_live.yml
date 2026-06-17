@@ -7,9 +7,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15845'
+      content-length: '15849'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:50 GMT
+      date: Wed, 17 Jun 2026 20:59:39 GMT
       server: ESF
       vary:
       - Origin
@@ -2747,7 +2747,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcU8giFcP59PhQDmr58h0W8Ki3T7ERGKdWeupaon02_1yII8nEKFyL7ecKdcOwyTkISwpYkUpcR3j_x6WKdy38OCBRK1nbGy1VqEH8xnfbyh18c_IqbQjWnRSZm9o7gTefMk5v9BcVDnusowg-3wNFn-5FaAIT9kfOr3sb5Gaf1rGuRG4GhIg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcJsNKIgK_GA9svVmXd2S1LglXnQiuTFsIq4QBDP3UL4trZRGWJcva5QNpE5FMPMVGgFk61exBLKQxJLImpmuPC-Ro4cG1MbQNkODgrrLdcyRSSLc6xQopLuYlqzzs-iDODaisRBftt6ENL8j_eH0eLAahuuj-hT2YMdk6RtkvtTAerCtof6w=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -13404,7 +13404,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "RI3-WjguNjysjg",
+          "revisionId": "ND1UVnoV-_brJQ",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -14473,7 +14473,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-17 20:43:50
+  recorded_at: 2026-06-17 20:59:39
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -14482,9 +14482,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15845'
+      content-length: '15849'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:50 GMT
+      date: Wed, 17 Jun 2026 20:59:40 GMT
       server: ESF
       vary:
       - Origin
@@ -17222,7 +17222,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcU8giFcP59PhQDmr58h0W8Ki3T7ERGKdWeupaon02_1yII8nEKFyL7ecKdcOwyTkISwpYkUpcR3j_x6WKdy38OCBRK1nbGy1VqEH8xnfbyh18c_IqbQjWnRSZm9o7gTefMk5v9BcVDnusowg-3wNFn-5FaAIT9kfOr3sb5Gaf1rGuRG4GhIg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcJsNKIgK_GA9svVmXd2S1LglXnQiuTFsIq4QBDP3UL4trZRGWJcva5QNpE5FMPMVGgFk61exBLKQxJLImpmuPC-Ro4cG1MbQNkODgrrLdcyRSSLc6xQopLuYlqzzs-iDODaisRBftt6ENL8j_eH0eLAahuuj-hT2YMdk6RtkvtTAerCtof6w=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -27879,7 +27879,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "RI3-WjguNjysjg",
+          "revisionId": "ND1UVnoV-_brJQ",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -28948,7 +28948,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-17 20:43:50
+  recorded_at: 2026-06-17 20:59:40
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -28959,7 +28959,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '208'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:51 GMT
+      date: Wed, 17 Jun 2026 20:59:40 GMT
       server: ESF
       vary:
       - Origin
@@ -28976,15 +28976,15 @@ http_interactions:
           "replies": [
             {
               "createSlide": {
-                "objectId": "SLIDES_API787361826_0"
+                "objectId": "SLIDES_API493070556_0"
               }
             }
           ],
           "writeControl": {
-            "requiredRevisionId": "27XYs6PR12vdCQ"
+            "requiredRevisionId": "wQeF2YIbdDLT_Q"
           }
         }
-  recorded_at: 2026-06-17 20:43:51
+  recorded_at: 2026-06-17 20:59:40
 - request:
     method: GET
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY
@@ -28993,9 +28993,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '15905'
+      content-length: '15910'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:51 GMT
+      date: Wed, 17 Jun 2026 20:59:40 GMT
       server: ESF
       vary:
       - Origin
@@ -31733,7 +31733,7 @@ http_interactions:
                   "sheetsChart": {
                     "spreadsheetId": "1AUEefHOPD26yefuBsxdyL5vw2DmopSxH308WuttmFCI",
                     "chartId": 1622092212,
-                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcU8giFcP59PhQDmr58h0W8Ki3T7ERGKdWeupaon02_1yII8nEKFyL7ecKdcOwyTkISwpYkUpcR3j_x6WKdy38OCBRK1nbGy1VqEH8xnfbyh18c_IqbQjWnRSZm9o7gTefMk5v9BcVDnusowg-3wNFn-5FaAIT9kfOr3sb5Gaf1rGuRG4GhIg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                    "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcJsNKIgK_GA9svVmXd2S1LglXnQiuTFsIq4QBDP3UL4trZRGWJcva5QNpE5FMPMVGgFk61exBLKQxJLImpmuPC-Ro4cG1MbQNkODgrrLdcyRSSLc6xQopLuYlqzzs-iDODaisRBftt6ENL8j_eH0eLAahuuj-hT2YMdk6RtkvtTAerCtof6w=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                     "sheetsChartProperties": {
                       "chartImageProperties": {
                         "outline": {
@@ -33210,16 +33210,16 @@ http_interactions:
               }
             },
             {
-              "objectId": "SLIDES_API787361826_0",
+              "objectId": "SLIDES_API493070556_0",
               "slideProperties": {
                 "layoutObjectId": "p12",
                 "masterObjectId": "simple-light-2",
                 "notesPage": {
-                  "objectId": "SLIDES_API787361826_0:notes",
+                  "objectId": "SLIDES_API493070556_0:notes",
                   "pageType": "NOTES",
                   "pageElements": [
                     {
-                      "objectId": "SLIDES_API787361826_1",
+                      "objectId": "SLIDES_API493070556_1",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -33250,7 +33250,7 @@ http_interactions:
                       }
                     },
                     {
-                      "objectId": "SLIDES_API787361826_2",
+                      "objectId": "SLIDES_API493070556_2",
                       "size": {
                         "width": {
                           "magnitude": 3000000,
@@ -33298,7 +33298,7 @@ http_interactions:
                     }
                   },
                   "notesProperties": {
-                    "speakerNotesObjectId": "SLIDES_API787361826_2"
+                    "speakerNotesObjectId": "SLIDES_API493070556_2"
                   }
                 }
               },
@@ -42489,7 +42489,7 @@ http_interactions:
             }
           ],
           "locale": "en",
-          "revisionId": "27XYs6PR12vdCQ",
+          "revisionId": "wQeF2YIbdDLT_Q",
           "notesMaster": {
             "objectId": "n",
             "pageType": "NOTES_MASTER",
@@ -43558,7 +43558,7 @@ http_interactions:
             }
           }
         }
-  recorded_at: 2026-06-17 20:43:51
+  recorded_at: 2026-06-17 20:59:40
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -43567,9 +43567,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '216'
+      content-length: '214'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:51 GMT
+      date: Wed, 17 Jun 2026 20:59:40 GMT
       server: ESF
       vary:
       - Origin
@@ -43586,16 +43586,16 @@ http_interactions:
           "replies": [
             {
               "createShape": {
-                "objectId": "text_20260617144351_5986"
+                "objectId": "text_20260617145940_2399"
               }
             },
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "96xW3AbFrmoFTQ"
+            "requiredRevisionId": "0zMOXkw5hpH21A"
           }
         }
-  recorded_at: 2026-06-17 20:43:51
+  recorded_at: 2026-06-17 20:59:40
 - request:
     method: POST
     uri: https://www.googleapis.com/upload/drive/v3/files?supportsAllDrives=TRUE&fields=%2A&uploadType=multipart
@@ -43603,10 +43603,10 @@ http_interactions:
     status: 200
     headers:
       content-type: application/json; charset=UTF-8
-      x-guploader-uploadid: AJ5rDhFn0piRHqn4Mm0kp3wAnuRWsB1in4yp6lrIhd4mPMjWbH0UQKmWmdFvHSv3sqPaUZay
+      x-guploader-uploadid: AJ5rDhHOwpqE2xVdZlSFTCwX3dcYy-olzB-gbLYs0hVfkgI94HJrq389XyHtTWOVEWNoOEMQ-s2FII4
       access-control-allow-credentials: 'true'
       cache-control: no-cache, no-store, max-age=0, must-revalidate
-      date: Wed, 17 Jun 2026 20:43:52 GMT
+      date: Wed, 17 Jun 2026 20:59:42 GMT
       expires: Mon, 01 Jan 1990 00:00:00 GMT
       pragma: no-cache
       server: ESF
@@ -43614,14 +43614,14 @@ http_interactions:
       x-content-type-options: nosniff
       x-frame-options: SAMEORIGIN
       x-xss-protection: '0'
-      content-length: '4480'
+      content-length: '4478'
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       string: |
         {
           "kind": "drive#file",
-          "id": "1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp",
-          "name": "file169924e3d1f41.png",
+          "id": "1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab",
+          "name": "file169923c5169c7.png",
           "mimeType": "image/png",
           "starred": false,
           "trashed": false,
@@ -43633,16 +43633,16 @@ http_interactions:
             "drive"
           ],
           "version": "1",
-          "webContentLink": "https://drive.google.com/uc?id=1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp&export=download",
-          "webViewLink": "https://drive.google.com/file/d/1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp/view?usp=drivesdk",
+          "webContentLink": "https://drive.google.com/uc?id=1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab/view?usp=drivesdk",
           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
           "hasThumbnail": true,
-          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOCdQ5MCjMC9pFN5CG6OuHgFyaNZ-co2hCDNUah6edPNbo3kGvsg3Q9Gl1KI1FKZ_bFsORDdsWN4yRBNF2fhT2bVEgYinpZnODaB0_LIfqb0nc3tA=s220",
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBN_v4VDR4KGKhNh2fm4rJ0iDdqYSAeH6S-r4nyP27MPW7EG4q3raeSDk0OOIY729MidZAjrb2fr56xtTZCHltzKI3bxDU0KftostiQ7fYoI3IyG=s220",
           "thumbnailVersion": "1",
           "viewedByMe": false,
-          "createdTime": "2026-06-17T20:43:52.293Z",
-          "modifiedTime": "2026-06-17T20:43:52.293Z",
-          "modifiedByMeTime": "2026-06-17T20:43:52.293Z",
+          "createdTime": "2026-06-17T20:59:41.586Z",
+          "modifiedTime": "2026-06-17T20:59:41.586Z",
+          "modifiedByMeTime": "2026-06-17T20:59:41.586Z",
           "modifiedByMe": true,
           "owners": [
             {
@@ -43728,15 +43728,15 @@ http_interactions:
           "permissionIds": [
             "13669810728446326842"
           ],
-          "originalFilename": "file169924e3d1f41.png",
+          "originalFilename": "file169923c5169c7.png",
           "fullFileExtension": "png",
           "fileExtension": "png",
-          "md5Checksum": "13e7f976f0f795320f52eac99cd9bb86",
-          "sha1Checksum": "3c76764c7cb0800be1fa62aa89122ace85adfb92",
-          "sha256Checksum": "32e8bcff9a35ca5e0fe9658072b20dc540542b7c57aaaf29e449f361b8c753f7",
+          "md5Checksum": "d02bbc8d79578a06e47b2592e5d5f626",
+          "sha1Checksum": "f4b87feab17489743ba618ea9aeee66cb057fa76",
+          "sha256Checksum": "68b403776e04823211b927aa79b6d2c8c4ff3d736a8e4bd19f180ebffd13b7cd",
           "size": "674603",
           "quotaBytesUsed": "674603",
-          "headRevisionId": "0ByOFRjalKxnQRGlJRUhDUmVkakl1aXdUZHJqN1Y5aDFCZUEwPQ",
+          "headRevisionId": "0ByOFRjalKxnQaWdKY0paam5sTmk2Tm8xamlNT1d0cU0rbUpZPQ",
           "imageMediaMetadata": {
             "width": 960,
             "height": 540,
@@ -43758,18 +43758,18 @@ http_interactions:
           },
           "inheritedPermissionsDisabled": false
         }
-  recorded_at: 2026-06-17 20:43:52
+  recorded_at: 2026-06-17 20:59:42
 - request:
     method: POST
-    uri: https://www.googleapis.com/drive/v3/files/1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp/permissions
+    uri: https://www.googleapis.com/drive/v3/files/1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab/permissions
   response:
     status: 200
     headers:
-      expires: Mon, 01 Jan 1990 00:00:00 GMT
       vary: Origin, X-Origin
-      cache-control: no-cache, no-store, max-age=0, must-revalidate
-      date: Wed, 17 Jun 2026 20:43:53 GMT
       pragma: no-cache
+      date: Wed, 17 Jun 2026 20:59:42 GMT
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
       content-type: application/json; charset=UTF-8
       content-encoding: gzip
       server: ESF
@@ -43787,7 +43787,7 @@ http_interactions:
           "role": "reader",
           "allowFileDiscovery": false
         }
-  recorded_at: 2026-06-17 20:43:53
+  recorded_at: 2026-06-17 20:59:42
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -43796,9 +43796,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '214'
+      content-length: '216'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:54 GMT
+      date: Wed, 17 Jun 2026 20:59:44 GMT
       server: ESF
       vary:
       - Origin
@@ -43815,31 +43815,31 @@ http_interactions:
           "replies": [
             {
               "createImage": {
-                "objectId": "r2img20260617144353328692"
+                "objectId": "r2img20260617145942524173"
               }
             },
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "A0ZxNAnCyZnlng"
+            "requiredRevisionId": "jIGvlR7VIEEzVg"
           }
         }
-  recorded_at: 2026-06-17 20:43:54
+  recorded_at: 2026-06-17 20:59:43
 - request:
     method: GET
-    uri: https://www.googleapis.com/drive/v3/files/1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp?supportsAllDrives=TRUE&fields=%2A
+    uri: https://www.googleapis.com/drive/v3/files/1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab?supportsAllDrives=TRUE&fields=%2A
   response:
     status: 200
     headers:
-      cache-control: no-cache, no-store, max-age=0, must-revalidate
-      date: Wed, 17 Jun 2026 20:43:55 GMT
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      date: Wed, 17 Jun 2026 20:59:44 GMT
       pragma: no-cache
       vary: Origin, X-Origin
-      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      cache-control: no-cache, no-store, max-age=0, must-revalidate
       content-type: application/json; charset=UTF-8
       content-encoding: gzip
       server: ESF
-      content-length: '1674'
+      content-length: '1672'
       x-xss-protection: '0'
       x-frame-options: SAMEORIGIN
       x-content-type-options: nosniff
@@ -43848,8 +43848,8 @@ http_interactions:
       string: |
         {
           "kind": "drive#file",
-          "id": "1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp",
-          "name": "file169924e3d1f41.png",
+          "id": "1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab",
+          "name": "file169923c5169c7.png",
           "mimeType": "image/png",
           "starred": false,
           "trashed": false,
@@ -43860,17 +43860,17 @@ http_interactions:
           "spaces": [
             "drive"
           ],
-          "version": "3",
-          "webContentLink": "https://drive.google.com/uc?id=1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp&export=download",
-          "webViewLink": "https://drive.google.com/file/d/1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp/view?usp=drivesdk",
+          "version": "2",
+          "webContentLink": "https://drive.google.com/uc?id=1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab/view?usp=drivesdk",
           "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
           "hasThumbnail": true,
-          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBNA66KoKeRCntBL-xcHUI0R03l1-r6X6lgQQVXD90umY5RMC-SZGxmEhhGSlH-W0-COtPLa6VKWxoWSGZCPUrQAqQ5wfbouRNVf8y6TnsGQOvNt=s220",
+          "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/AJQWtBOmcPkV2U5CevkT4O2Zg2Mb5JjzAJNez8ERPlNeMt-qGjCMC7pkbDh72wu3amy5GZLGkRWxBrfU3BZQftUhXdnwS7Sh_KCMthNvBggCV_2_x6vy=s220",
           "thumbnailVersion": "1",
           "viewedByMe": false,
-          "createdTime": "2026-06-17T20:43:52.293Z",
-          "modifiedTime": "2026-06-17T20:43:53.102Z",
-          "modifiedByMeTime": "2026-06-17T20:43:53.102Z",
+          "createdTime": "2026-06-17T20:59:41.586Z",
+          "modifiedTime": "2026-06-17T20:59:42.355Z",
+          "modifiedByMeTime": "2026-06-17T20:59:42.355Z",
           "modifiedByMe": true,
           "owners": [
             {
@@ -43984,15 +43984,15 @@ http_interactions:
             "anyoneWithLink",
             "13669810728446326842"
           ],
-          "originalFilename": "file169924e3d1f41.png",
+          "originalFilename": "file169923c5169c7.png",
           "fullFileExtension": "png",
           "fileExtension": "png",
-          "md5Checksum": "13e7f976f0f795320f52eac99cd9bb86",
-          "sha1Checksum": "3c76764c7cb0800be1fa62aa89122ace85adfb92",
-          "sha256Checksum": "32e8bcff9a35ca5e0fe9658072b20dc540542b7c57aaaf29e449f361b8c753f7",
+          "md5Checksum": "d02bbc8d79578a06e47b2592e5d5f626",
+          "sha1Checksum": "f4b87feab17489743ba618ea9aeee66cb057fa76",
+          "sha256Checksum": "68b403776e04823211b927aa79b6d2c8c4ff3d736a8e4bd19f180ebffd13b7cd",
           "size": "674603",
           "quotaBytesUsed": "674603",
-          "headRevisionId": "0ByOFRjalKxnQRGlJRUhDUmVkakl1aXdUZHJqN1Y5aDFCZUEwPQ",
+          "headRevisionId": "0ByOFRjalKxnQaWdKY0paam5sTmk2Tm8xamlNT1d0cU0rbUpZPQ",
           "imageMediaMetadata": {
             "width": 960,
             "height": 540,
@@ -44016,18 +44016,18 @@ http_interactions:
           },
           "inheritedPermissionsDisabled": false
         }
-  recorded_at: 2026-06-17 20:43:55
+  recorded_at: 2026-06-17 20:59:44
 - request:
     method: DELETE
-    uri: https://www.googleapis.com/drive/v3/files/1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp?supportsAllDrives=TRUE
+    uri: https://www.googleapis.com/drive/v3/files/1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab?supportsAllDrives=TRUE
   response:
     status: 204
     headers:
-      expires: Mon, 01 Jan 1990 00:00:00 GMT
       cache-control: no-cache, no-store, max-age=0, must-revalidate
-      vary: Origin, X-Origin
-      date: Wed, 17 Jun 2026 20:43:55 GMT
       pragma: no-cache
+      expires: Mon, 01 Jan 1990 00:00:00 GMT
+      vary: Origin, X-Origin
+      date: Wed, 17 Jun 2026 20:59:44 GMT
       content-type: text/html
       server: ESF
       x-xss-protection: '0'
@@ -44036,7 +44036,7 @@ http_interactions:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       string: ''
-  recorded_at: 2026-06-17 20:43:55
+  recorded_at: 2026-06-17 20:59:44
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -44045,9 +44045,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '209'
+      content-length: '210'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:55 GMT
+      date: Wed, 17 Jun 2026 20:59:44 GMT
       server: ESF
       vary:
       - Origin
@@ -44064,15 +44064,15 @@ http_interactions:
           "replies": [
             {
               "createTable": {
-                "objectId": "table_20260617144355_3209"
+                "objectId": "table_20260617145944_4468"
               }
             }
           ],
           "writeControl": {
-            "requiredRevisionId": "BbmYyhQPyx-1zQ"
+            "requiredRevisionId": "DGCBnPXX_RRhcw"
           }
         }
-  recorded_at: 2026-06-17 20:43:55
+  recorded_at: 2026-06-17 20:59:44
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -44083,7 +44083,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '167'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:56 GMT
+      date: Wed, 17 Jun 2026 20:59:45 GMT
       server: ESF
       vary:
       - Origin
@@ -44103,10 +44103,10 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "itQWYZ5ChF3VgA"
+            "requiredRevisionId": "NWXZgQQEJ4bllA"
           }
         }
-  recorded_at: 2026-06-17 20:43:56
+  recorded_at: 2026-06-17 20:59:44
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -44117,7 +44117,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '170'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:56 GMT
+      date: Wed, 17 Jun 2026 20:59:45 GMT
       server: ESF
       vary:
       - Origin
@@ -44170,10 +44170,10 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "jy6VM8dse96n-A"
+            "requiredRevisionId": "Rk0erMW-Za_XHA"
           }
         }
-  recorded_at: 2026-06-17 20:43:56
+  recorded_at: 2026-06-17 20:59:45
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -44184,7 +44184,7 @@ http_interactions:
       content-encoding: gzip
       content-length: '171'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:56 GMT
+      date: Wed, 17 Jun 2026 20:59:45 GMT
       server: ESF
       vary:
       - Origin
@@ -44249,10 +44249,10 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "lRsGpx1ebkmzuA"
+            "requiredRevisionId": "4I5qwI8YorCX4w"
           }
         }
-  recorded_at: 2026-06-17 20:43:56
+  recorded_at: 2026-06-17 20:59:45
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -44261,9 +44261,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '167'
+      content-length: '166'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:56 GMT
+      date: Wed, 17 Jun 2026 20:59:45 GMT
       server: ESF
       vary:
       - Origin
@@ -44284,21 +44284,21 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "FCKH17kNvu-EIg"
+            "requiredRevisionId": "Qs-KWWns_apOOw"
           }
         }
-  recorded_at: 2026-06-17 20:43:56
+  recorded_at: 2026-06-17 20:59:45
 - request:
     method: GET
-    uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY/pages/SLIDES_API787361826_0
+    uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY/pages/SLIDES_API493070556_0
   response:
     status: 200
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '3149'
+      content-length: '3147'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:57 GMT
+      date: Wed, 17 Jun 2026 20:59:46 GMT
       server: ESF
       vary:
       - Origin
@@ -44311,10 +44311,10 @@ http_interactions:
     body:
       string: |
         {
-          "objectId": "SLIDES_API787361826_0",
+          "objectId": "SLIDES_API493070556_0",
           "pageElements": [
             {
-              "objectId": "text_20260617144351_5986",
+              "objectId": "text_20260617145940_2399",
               "size": {
                 "width": {
                   "magnitude": 3000000,
@@ -44450,7 +44450,7 @@ http_interactions:
               }
             },
             {
-              "objectId": "r2img20260617144353328692",
+              "objectId": "r2img20260617145942524173",
               "size": {
                 "width": {
                   "magnitude": 24000,
@@ -44469,7 +44469,7 @@ http_interactions:
                 "unit": "EMU"
               },
               "image": {
-                "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcCsmOmiOqxRxJG6STbg4oBeMw-ZFdDgYJ723tcezyzTzrzgrmekPakS5_tLjmL7PWT3uApI8c_rdka2vPI2kWYtCFGYoEG96WQS8d5KzzX82QMJWfzts_qpgwA873Gnv3FzFvJ5gpQ_5oNBkDBiPxJJgtaVFSLUReUJRK771f85jXJT4k=s2048?key=RNwwVGokoq38YVVJVb2bWA",
+                "contentUrl": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUeqmR-6OfouncWeifQGnglmoOJjNLiOlkiYqsBw5s0158edVfanpVkbUo0mGLg6oEQCofUFE5ODx_aXFq3V4_VlqbrBaZoroBmEe0ZKM8in6SbXoSm5haT-zxMdswHd2iirVfydq5cAkxc7yt-ws0ahy6_FTITmN5DsqxccCSF7SJJgakg=s2048?key=RNwwVGokoq38YVVJVb2bWA",
                 "imageProperties": {
                   "outline": {
                     "outlineFill": {
@@ -44506,11 +44506,11 @@ http_interactions:
                     "propertyState": "NOT_RENDERED"
                   }
                 },
-                "sourceUrl": "https://drive.google.com/uc?export=view&id=1oZTfbp3Sf-Ec7RFOMmPuhETHgKk81nyp"
+                "sourceUrl": "https://drive.google.com/uc?export=view&id=1jqHeCPDP7S9gLKm0oYfSBC0BfGbP7kab"
               }
             },
             {
-              "objectId": "table_20260617144355_3209",
+              "objectId": "table_20260617145944_4468",
               "size": {
                 "width": {
                   "magnitude": 3000000,
@@ -46137,11 +46137,11 @@ http_interactions:
             "layoutObjectId": "p12",
             "masterObjectId": "simple-light-2",
             "notesPage": {
-              "objectId": "SLIDES_API787361826_0:notes",
+              "objectId": "SLIDES_API493070556_0:notes",
               "pageType": "NOTES",
               "pageElements": [
                 {
-                  "objectId": "SLIDES_API787361826_1",
+                  "objectId": "SLIDES_API493070556_1",
                   "size": {
                     "width": {
                       "magnitude": 3000000,
@@ -46172,7 +46172,7 @@ http_interactions:
                   }
                 },
                 {
-                  "objectId": "SLIDES_API787361826_2",
+                  "objectId": "SLIDES_API493070556_2",
                   "size": {
                     "width": {
                       "magnitude": 3000000,
@@ -46220,18 +46220,18 @@ http_interactions:
                 }
               },
               "notesProperties": {
-                "speakerNotesObjectId": "SLIDES_API787361826_2"
+                "speakerNotesObjectId": "SLIDES_API493070556_2"
               }
             }
           },
-          "revisionId": "FCKH17kNvu-EIg",
+          "revisionId": "Qs-KWWns_apOOw",
           "pageProperties": {
             "pageBackgroundFill": {
               "propertyState": "INHERIT"
             }
           }
         }
-  recorded_at: 2026-06-17 20:43:56
+  recorded_at: 2026-06-17 20:59:46
 - request:
     method: POST
     uri: https://slides.googleapis.com/v1/presentations/1K9z9yY8Z9qmzOvY-qmO_eNYSpstJvBRObQdnsweaXnY:batchUpdate
@@ -46240,9 +46240,9 @@ http_interactions:
     headers:
       alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       content-encoding: gzip
-      content-length: '163'
+      content-length: '164'
       content-type: application/json; charset=UTF-8
-      date: Wed, 17 Jun 2026 20:43:57 GMT
+      date: Wed, 17 Jun 2026 20:59:46 GMT
       server: ESF
       vary:
       - Origin
@@ -46260,8 +46260,8 @@ http_interactions:
             {}
           ],
           "writeControl": {
-            "requiredRevisionId": "6YCXi48sBoOcgA"
+            "requiredRevisionId": "Bli8MGGdubW3GA"
           }
         }
-  recorded_at: 2026-06-17 20:43:57
+  recorded_at: 2026-06-17 20:59:46
 recorded_with: VCR-vcr/2.1.0

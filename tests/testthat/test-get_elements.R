@@ -1,3 +1,5 @@
+# jarl-ignore-file internal_function: Used for testing only
+
 # Pull internal geometry helpers into the test environment so they are
 # unit-testable without the API.
 boxes_overlap <- r2slides:::boxes_overlap
