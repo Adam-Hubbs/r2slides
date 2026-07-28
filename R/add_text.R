@@ -372,7 +372,7 @@ build_text_request_items <- function(
 #' @param arg An argument to get the length of.
 #'
 #' @export
-get_safe_length <- function(arg) {
+get_safe_length <- function(arg, arg_name = rlang::caller_arg(arg)) {
   tryCatch(
     {
       if (is.null(arg)) {
@@ -406,7 +406,7 @@ get_safe_length <- function(arg) {
       } else {
         cli::cli_abort(
           c(
-            "x" = "Error evaluating length of {.var {deparse(substitute(arg))}}"
+            "x" = "Error evaluating length of {.var {arg_name}}"
           ),
           call = rlang::caller_env(5)
         )

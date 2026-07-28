@@ -4,7 +4,7 @@
 \alias{get_safe_length}
 \title{Get the length of an argument}
 \usage{
-get_safe_length(arg)
+get_safe_length(arg, arg_name = rlang::caller_arg(arg))
 }
 \arguments{
 \item{arg}{An argument to get the length of.}
