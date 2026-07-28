@@ -26,6 +26,16 @@
       Caused by error in `relative_position()`:
       ! argument "position" is missing, with no default
 
+# get_safe_length() gives a good error message when the user forgets a comma in `c()`
+
+    Code
+      add_text_multi(on_slide_number(1), sample_txt, position_base = in_top_left(),
+      position = c(1, 2, 3, ), text_style = change_style, stat_sig = attr(
+        month_stat_sig_text, "stat_sig"))
+    Condition
+      Error in `add_text_multi()`:
+      x Error evaluating length of `position`
+
 # add_text_multi() errors when argument lengths cannot be recycled
 
     Code
