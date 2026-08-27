@@ -5,7 +5,7 @@ Get the length of an argument
 ## Usage
 
 ``` r
-get_safe_length(arg)
+get_safe_length(arg, arg_name = rlang::caller_arg(arg))
 ```
 
 ## Arguments
