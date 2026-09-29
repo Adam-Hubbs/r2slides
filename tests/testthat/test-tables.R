@@ -257,6 +257,142 @@ test_that("create_table_requests: visible border request has opaque fill and pos
   expect_gt(props$weight$magnitude, 0)
 })
 
+# -- as_r2slides_table: mixed styles within a cell ------------------------------
+
+test_that("as_r2slides_table: multi-chunk cells concatenate text and use a style_rule", {
+  r2 <- as_r2slides_table(make_rich_ft())
+
+  rich <- purrr::keep(r2@cells, \(c) c@row_index == 1L && c@col_index == 1L)[[
+    1
+  ]]
+  plain <- purrr::keep(r2@cells, \(c) c@row_index == 2L && c@col_index == 1L)[[
+    1
+  ]]
+
+  expect_equal(rich@text, "74%\n▼ 62")
+  expect_s3_class(rich@style@text_style, "r2slides::style_rule")
+  expect_s3_class(plain@style@text_style, "r2slides::text_style")
+})
+
+test_that("create_table_requests: chunk styles are applied to their own ranges after the base style", {
+  r2 <- as_r2slides_table(make_rich_ft())
+  reqs <- create_table_requests(
+    r2,
+    "slide_abc",
+    test_table_position(),
+    table_id = "tbl_rich"
+  )
+
+  text_reqs <- find_cell_reqs(reqs$cells$requests, "updateTextStyle", 1L, 1L)
+  ranges <- purrr::map(text_reqs, \(r) {
+    c(r$textRange$startIndex, r$textRange$endIndex)
+  })
+
+  # Base style over the whole cell, then "74%" and "▼ 62"; the "\n" chunk
+  # carries no formatting of its own so it gets no request.
+  expect_equal(ranges, list(c(0L, 8L), c(0L, 3L), c(4L, 8L)))
+  expect_equal(text_reqs[[2]]$style$fontSize$magnitude, 16)
+  expect_true(text_reqs[[2]]$style$bold)
+  expect_equal(text_reqs[[3]]$style$fontSize$magnitude, 9)
+  expect_equal(
+    text_reqs[[3]]$style$foregroundColor$opaqueColor$rgbColor$red,
+    0xD6 / 255
+  )
+})
+
+test_that("create_table_requests: text ranges count UTF-16 code units", {
+  ft <- flextable::flextable(dplyr::tibble(x = "a")) |>
+    flextable::compose(
+      i = 1,
+      j = "x",
+      value = flextable::as_paragraph(
+        "\U0001F600",
+        flextable::as_chunk(
+          "b",
+          props = flextable::fp_text_default(bold = TRUE)
+        )
+      )
+    )
+  reqs <- create_table_requests(
+    as_r2slides_table(ft),
+    "slide_abc",
+    test_table_position(),
+    table_id = "tbl_utf16"
+  )
+
+  text_reqs <- find_cell_reqs(reqs$cells$requests, "updateTextStyle", 1L, 0L)
+  last <- text_reqs[[length(text_reqs)]]$textRange
+  expect_equal(c(last$startIndex, last$endIndex), c(2L, 3L))
+})
+
+test_that("create_table_requests: user-supplied style_rule styles a cell", {
+  cell <- table_cell(
+    row_index = 0L,
+    col_index = 0L,
+    text = "Total: 42",
+    style = cell_style(
+      text_style = style_rule(
+        when = \() str_after(text, ":"),
+        what = text_style(bold = TRUE)
+      )
+    )
+  )
+  tbl <- r2slides_table(cells = list(cell), n_rows = 1L, n_cols = 1L)
+  reqs <- create_table_requests(
+    tbl,
+    "slide_abc",
+    test_table_position(),
+    table_id = "tbl_rule"
+  )
+
+  text_reqs <- find_cell_reqs(reqs$cells$requests, "updateTextStyle", 0L, 0L)
+  expect_length(text_reqs, 1L)
+  expect_equal(text_reqs[[1]]$objectId, "tbl_rule")
+  expect_equal(text_reqs[[1]]$textRange$startIndex, 6L)
+  expect_equal(text_reqs[[1]]$textRange$endIndex, 9L)
+})
+
+# -- as_r2slides_table: sections and cell properties ---------------------------
+
+test_that("as_r2slides_table: footer rows are included after the body", {
+  ft <- make_plain_ft() |> flextable::add_footer_lines("Source: test")
+  r2 <- as_r2slides_table(ft)
+
+  expect_equal(r2@n_rows, 5L)
+  expect_length(r2@row_heights, 5L)
+  footer <- purrr::keep(r2@cells, \(c) c@row_index == 4L && c@col_index == 0L)[[
+    1
+  ]]
+  expect_equal(footer@text, "Source: test")
+})
+
+test_that("as_r2slides_table: flextable 'center' vertical alignment maps to MIDDLE", {
+  r2 <- as_r2slides_table(make_plain_ft())
+
+  expect_equal(r2@cells[[1]]@style@v_align, "MIDDLE")
+})
+
+test_that("create_table_requests: empty cells still get cell property requests", {
+  ft <- flextable::flextable(dplyr::tibble(x = c("", "b"))) |>
+    flextable::bg(i = 1, bg = "#F1F3F6", part = "body")
+  reqs <- create_table_requests(
+    as_r2slides_table(ft),
+    "slide_abc",
+    test_table_position(),
+    table_id = "tbl_empty"
+  )
+
+  props <- find_cell_reqs(
+    reqs$cells$requests,
+    "updateTableCellProperties",
+    1L,
+    0L
+  )
+  expect_length(find_cell_reqs(reqs$cells$requests, "insertText", 1L, 0L), 0L)
+  expect_length(props, 1L)
+  expect_match(props[[1]]$fields, "tableCellBackgroundFill")
+})
+
 # -- as_r2slides_table: error handling -----------------------------------------
 
 test_that("as_r2slides_table: errors on unsupported input type", {

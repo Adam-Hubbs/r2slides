@@ -1,4 +1,5 @@
 # Version 0.0.9076
+* `add_table()` and `as_r2slides_table()` now support multiple styles within one table cell. Flextable cells built from several chunks (e.g. with `as_paragraph()`) keep each chunk's font, size, color, weight and links, and the cell's `text_style` can now be any `style_rule()`. Flextable footer rows are now included, flextable's `"center"` vertical alignment now maps to middle alignment, and empty cells now keep their background color.
 * You can now read most elements of existing slides back into R: pull the elements off a slide and get their text, formatting, position, images, and linked spreadsheets. This allows prototypes - use the styling of another already existing element. Or fuzzy positioning - use the position of an already existing element.
 
 # Version 0.0.9075

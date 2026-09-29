@@ -39,7 +39,7 @@ r2slides_table <- S7::new_class(
     cells = S7::new_property(
       S7::class_list,
       validator = function(value) {
-        ok <- vapply(value, \(x) S7::S7_inherits(x, table_cell), logical(1))
+        ok <- purrr::map_lgl(value, \(x) S7::S7_inherits(x, table_cell))
         if (!all(ok)) return("cells must be a list of table_cell objects")
       }
     ),
@@ -116,92 +116,134 @@ ft_read_style <- function(slot, row_i, col_key) {
   if (is.null(val) || (length(val) == 1 && is.na(val))) slot$default else val
 }
 
-# Build a `text_style` from a flextable section's text-style slots for one cell.
+ft_is_set <- function(x) {
+  !is.null(x) && length(x) == 1 && !is.na(x)
+}
+
+ft_color <- function(x) {
+  if (ft_is_set(x) && nzchar(x) && x != "transparent") x else NULL
+}
+
+ft_lgl <- function(x) {
+  if (ft_is_set(x) && is.logical(x)) x else NULL
+}
+
+# Build a `text_style` from flextable text properties. `values` is a named
+# list using flextable's property names; it can come from a section's cell
+# defaults or from a single row of a cell's chunk data frame. Unset (`NULL` /
+# `NA`) values are left `NULL` so they inherit from whatever is underneath.
 #' @noRd
-ft_make_text_style <- function(section, row_i, col_key) {
-  txt_s <- section$styles$text
-  par_s <- section$styles$pars
-
-  bold <- ft_read_style(txt_s$bold, row_i, col_key)
-  italic <- ft_read_style(txt_s$italic, row_i, col_key)
-  underline <- ft_read_style(txt_s$underlined, row_i, col_key)
-  strikethrough <- ft_read_style(txt_s$strike, row_i, col_key)
-  font_family <- ft_read_style(txt_s$font.family, row_i, col_key)
-  font_size <- ft_read_style(txt_s$font.size, row_i, col_key)
-
-  raw_text_color <- ft_read_style(txt_s$color, row_i, col_key)
-  raw_bg_color <- ft_read_style(txt_s$shading.color, row_i, col_key)
-
-  text_color <- if (
-    !is.null(raw_text_color) &&
-      !is.na(raw_text_color) &&
-      raw_text_color != "" &&
-      raw_text_color != "transparent"
-  ) {
-    raw_text_color
-  } else {
-    NULL
-  }
-
-  bg_color <- if (
-    !is.null(raw_bg_color) &&
-      !is.na(raw_bg_color) &&
-      raw_bg_color != "" &&
-      raw_bg_color != "transparent"
-  ) {
-    raw_bg_color
-  } else {
-    NULL
-  }
-
-  vert_align <- ft_read_style(txt_s$vertical.align, row_i, col_key)
-  baseline_offset <- switch(
-    vert_align %||% "",
-    "superscript" = "SUPERSCRIPT",
-    "subscript" = "SUBSCRIPT",
-    NULL
-  )
-
-  alignment <- switch(
-    ft_read_style(par_s$text.align, row_i, col_key) %||% "",
-    "left" = "START",
-    "center" = "CENTER",
-    "right" = "END",
-    "justify" = "JUSTIFIED",
-    NULL
-  )
+ft_text_style <- function(values) {
+  font_family <- values$font.family
+  font_size <- values$font.size
+  url <- values$url
 
   text_style(
-    bold = if (isTRUE(bold) || identical(bold, FALSE)) bold else NULL,
-    italic = if (isTRUE(italic) || identical(italic, FALSE)) italic else NULL,
-    underline = if (isTRUE(underline) || identical(underline, FALSE)) {
-      underline
-    } else {
-      NULL
-    },
-    strikethrough = if (
-      isTRUE(strikethrough) || identical(strikethrough, FALSE)
-    ) {
-      strikethrough
-    } else {
-      NULL
-    },
-    font_family = if (!is.null(font_family) && nzchar(font_family)) {
+    bold = ft_lgl(values$bold),
+    italic = ft_lgl(values$italic),
+    underline = ft_lgl(values$underlined),
+    strikethrough = ft_lgl(values$strike),
+    font_family = if (ft_is_set(font_family) && nzchar(font_family)) {
       font_family
     } else {
       NULL
     },
     font_size = if (
-      !is.null(font_size) && is.numeric(font_size) && font_size > 0
+      ft_is_set(font_size) && is.numeric(font_size) && font_size > 0
     ) {
       as.double(font_size)
     } else {
       NULL
     },
-    text_color = text_color,
-    bg_color = bg_color,
-    baseline_offset = baseline_offset,
-    alignment = alignment
+    text_color = ft_color(values$color),
+    bg_color = ft_color(values$shading.color),
+    baseline_offset = switch(
+      values$vertical.align %||% NA_character_,
+      "superscript" = "SUPERSCRIPT",
+      "subscript" = "SUBSCRIPT",
+      NULL
+    ),
+    link = if (ft_is_set(url) && grepl("^https?://", url)) url else NULL,
+    alignment = switch(
+      values$text.align %||% NA_character_,
+      "left" = "START",
+      "center" = "CENTER",
+      "right" = "END",
+      "justify" = "JUSTIFIED",
+      NULL
+    )
+  )
+}
+
+ft_text_props <- c(
+  "bold",
+  "italic",
+  "underlined",
+  "strike",
+  "font.family",
+  "font.size",
+  "color",
+  "shading.color",
+  "vertical.align"
+)
+
+# Build a cell's base `text_style` from a flextable section's default text and
+# paragraph styles.
+#' @noRd
+ft_make_text_style <- function(section, row_i, col_key) {
+  txt_s <- section$styles$text
+  values <- purrr::map(txt_s[ft_text_props], \(slot) {
+    if (is.null(slot)) NULL else ft_read_style(slot, row_i, col_key)
+  })
+  values$text.align <- ft_read_style(
+    section$styles$pars$text.align,
+    row_i,
+    col_key
+  )
+  ft_text_style(values)
+}
+
+# Convert a flextable cell's chunk data frame (one row per formatted chunk)
+# into the cell's text and text style. When no chunk carries its own
+# formatting the cell's base `text_style` is returned unchanged. Otherwise a
+# `style_rule` is built that applies the base style to the whole cell, then
+# each formatted chunk's overrides to its own character range. Chunk
+# properties that are `NA` inherit from the base style.
+#' @noRd
+ft_cell_content <- function(chunk_df, base_ts) {
+  if (!is.data.frame(chunk_df) || nrow(chunk_df) == 0L) {
+    return(list(text = NULL, text_style = base_ts))
+  }
+
+  cols <- intersect(c("txt", "url", ft_text_props), names(chunk_df))
+  chunks <- purrr::map(seq_len(nrow(chunk_df)), \(i) {
+    as.list(chunk_df[i, cols])
+  }) |>
+    purrr::keep(\(ch) ft_is_set(ch$txt) && nzchar(ch$txt))
+
+  if (length(chunks) == 0L) {
+    return(list(text = NULL, text_style = base_ts))
+  }
+
+  texts <- purrr::map_chr(chunks, \(ch) ch$txt)
+  styles <- purrr::map(chunks, ft_text_style)
+  styled <- purrr::map_lgl(styles, \(ts) length(ts@fields) > 0L)
+  text <- paste(texts, collapse = "")
+
+  if (!any(styled)) {
+    return(list(text = text, text_style = base_ts))
+  }
+
+  ends <- cumsum(utf16_length(texts))
+  starts <- ends - utf16_length(texts) + 1L
+  selectors <- purrr::map2(starts[styled], ends[styled], range_selector)
+
+  list(
+    text = text,
+    text_style = style_rule(
+      when = list(TRUE, !!!selectors),
+      what = c(list(base_ts), styles[styled])
+    )
   )
 }
 
@@ -210,28 +252,16 @@ ft_make_text_style <- function(section, row_i, col_key) {
 ft_make_cell_style <- function(section, row_i, col_key, ts) {
   cell_s <- section$styles$cells
 
-  raw_bg <- ft_read_style(cell_s$background.color, row_i, col_key)
-  bg_color <- if (
-    !is.null(raw_bg) &&
-      !is.na(raw_bg) &&
-      raw_bg != "" &&
-      raw_bg != "transparent"
-  ) {
-    raw_bg
-  } else {
-    NULL
-  }
-
   v_align <- switch(
-    ft_read_style(cell_s$vertical.align, row_i, col_key) %||% "",
+    ft_read_style(cell_s$vertical.align, row_i, col_key) %||% NA_character_,
     "top" = "TOP",
-
+    "center" = "MIDDLE",
     "bottom" = "BOTTOM",
     NULL
   )
 
   cell_style(
-    bg_color = bg_color,
+    bg_color = ft_color(ft_read_style(cell_s$background.color, row_i, col_key)),
     text_style = ts,
     v_align = v_align
   )
@@ -598,12 +628,20 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
 
   col_keys <- x$col_keys
   n_cols <- length(col_keys)
+  sections <- purrr::keep(
+    list(x$header, x$body, x$footer),
+    \(sec) !is.null(sec) && nrow(sec$dataset) > 0L
+  )
+  section_rows <- purrr::map_int(sections, \(sec) nrow(sec$dataset))
+  row_offsets <- cumsum(c(0L, section_rows))[seq_along(sections)]
   n_header_rows <- nrow(x$header$dataset)
-  n_body_rows <- nrow(x$body$dataset)
-  n_rows <- n_header_rows + n_body_rows
+  n_rows <- sum(section_rows)
 
   col_widths <- unname(x$body$colwidths) * 72
-  row_heights <- c(x$header$rowheights, x$body$rowheights) * 72
+  row_heights <- purrr::map(sections, \(sec) sec$rowheights) |>
+    purrr::list_c() |>
+    unname()
+  row_heights <- row_heights * 72
 
   extract_section_cells <- function(section, row_offset) {
     n_sec_rows <- nrow(section$dataset)
@@ -624,20 +662,16 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
         is_consumed <- !is.null(col_span_mat) &&
           (col_span_mat[r, ci] == 0L || row_span_mat[r, ci] == 0L)
 
-        ts <- ft_make_text_style(section, r, col_key)
-        cs <- ft_make_cell_style(section, r, col_key, ts)
-
-        chunk_df <- section$content$data[r, col_key][[1]]
-        txt <- if (is.null(chunk_df) || !is.data.frame(chunk_df)) {
-          NULL
-        } else {
-          paste(chunk_df$txt, collapse = "")
-        }
+        content <- ft_cell_content(
+          section$content$data[r, col_key][[1]],
+          ft_make_text_style(section, r, col_key)
+        )
+        cs <- ft_make_cell_style(section, r, col_key, content$text_style)
 
         cells[[idx]] <- table_cell(
           row_index = as.integer(row_offset + r - 1L),
           col_index = as.integer(ci - 1L),
-          text = txt,
+          text = content$text,
           style = cs,
           consumed = isTRUE(is_consumed)
         )
@@ -647,30 +681,21 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
     cells
   }
 
-  header_cells <- extract_section_cells(x$header, row_offset = 0L)
-  body_cells <- extract_section_cells(x$body, row_offset = n_header_rows)
-  all_cells <- c(header_cells, body_cells)
+  all_cells <- purrr::map2(sections, row_offsets, extract_section_cells) |>
+    purrr::list_flatten()
 
-  # Spans
-  header_spans <- ft_extract_spans(x$header, col_keys, row_offset = 0L)
-  body_spans <- ft_extract_spans(x$body, col_keys, row_offset = n_header_rows)
-  all_cells <- apply_spans_to_cells(all_cells, c(header_spans, body_spans))
+  span_specs <- purrr::map2(sections, row_offsets, \(sec, offset) {
+    ft_extract_spans(sec, col_keys, row_offset = offset)
+  }) |>
+    purrr::compact() |>
+    purrr::list_flatten()
+  all_cells <- apply_spans_to_cells(all_cells, span_specs)
 
-  # Borders
-  header_borders <- ft_extract_section_borders(
-    x$header,
-    col_keys,
-    row_offset = 0L
-  )
-  body_borders <- ft_extract_section_borders(
-    x$body,
-    col_keys,
-    row_offset = n_header_rows
-  )
-  all_cells <- apply_borders_to_cells(
-    all_cells,
-    c(header_borders, body_borders)
-  )
+  border_specs <- purrr::map2(sections, row_offsets, \(sec, offset) {
+    ft_extract_section_borders(sec, col_keys, row_offset = offset)
+  }) |>
+    purrr::list_flatten()
+  all_cells <- apply_borders_to_cells(all_cells, border_specs)
   all_cells <- propagate_merge_borders(all_cells)
 
   r2slides_table(
@@ -681,6 +706,27 @@ method(as_r2slides_table, S7::new_S3_class("flextable")) <- function(x) {
     row_heights = row_heights,
     header_rows = as.integer(n_header_rows)
   )
+}
+
+# Build the text styling requests for one table cell. A `text_style` is applied
+# to the whole cell; a `style_rule` is resolved against the cell text by
+# create_styling_request(), whose requests are then scoped to the cell.
+#' @noRd
+cell_text_style_requests <- function(ts, text, table_id, cell_location) {
+  if (is.null(ts)) {
+    return(list())
+  }
+
+  if (S7::S7_inherits(ts, text_style)) {
+    ts <- style_rule(default = ts)
+  }
+
+  raw <- create_styling_request(ts, text, element_id = table_id)
+  purrr::imap(raw, \(req, type) {
+    req$cellLocation <- cell_location
+    rlang::list2(!!type := req)
+  }) |>
+    unname()
 }
 
 #' Build Google Slides API requests for an r2slides_table
@@ -777,41 +823,19 @@ create_table_requests <- function(table, slide_id, position, table_id = NULL) {
       )
     }
 
-    if (has_text && !is.null(cell@style) && !is.null(cell@style@text_style)) {
-      ts <- cell@style@text_style
-      if (S7::S7_inherits(ts, text_style)) {
-        if (length(ts@fields) > 0) {
-          reqs <- c(
-            reqs,
-            list(list(
-              updateTextStyle = list(
-                objectId = table_id,
-                cellLocation = cell_location,
-                textRange = list(type = "ALL"),
-                style = ts@style,
-                fields = paste(ts@fields, collapse = ",")
-              )
-            ))
-          )
-        }
-        if (length(ts@paragraph_fields) > 0) {
-          reqs <- c(
-            reqs,
-            list(list(
-              updateParagraphStyle = list(
-                objectId = table_id,
-                cellLocation = cell_location,
-                textRange = list(type = "ALL"),
-                style = ts@paragraph_style,
-                fields = paste(ts@paragraph_fields, collapse = ",")
-              )
-            ))
-          )
-        }
-      }
+    if (has_text && !is.null(cell@style)) {
+      reqs <- c(
+        reqs,
+        cell_text_style_requests(
+          cell@style@text_style,
+          cell@text,
+          table_id,
+          cell_location
+        )
+      )
     }
 
-    if (has_text && !is.null(cell@style)) {
+    if (!is.null(cell@style)) {
       cs <- cell@style
       tcp <- list()
       tcp_fields <- character()

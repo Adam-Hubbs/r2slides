@@ -152,17 +152,9 @@ collapse_run_styles <- function(runs) {
     return(styles[[1]])
   }
 
-  # Build one function per run that returns c(start, end) in 1-based inclusive
-  # R indices (create_styling_request converts these to 0-based API indices:
-  # startIndex = f_output[1] - 1, endIndex = f_output[2]).
-  # Use a factory to capture start/end by value, avoiding loop-closure issues.
-  make_range_fn <- function(start, end) {
-    force(start)
-    force(end)
-    function() c(start, end)
-  }
-
-  selectors <- purrr::map2(runs$start, runs$end, make_range_fn)
+  # One selector per run returning c(start, end) in 1-based inclusive R
+  # indices (create_styling_request converts these to 0-based API indices).
+  selectors <- purrr::map2(runs$start, runs$end, range_selector)
 
   style_rule(when = list(!!!selectors), what = styles)
 }

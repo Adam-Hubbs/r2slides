@@ -645,7 +645,7 @@ create_styling_request <- function(
         selection_index <- NULL
       } else if (f_output) {
         when_true <- TRUE
-        selection_index <- c(1, nchar(text))
+        selection_index <- c(1, utf16_length(text))
       } else {
         selection_index <- NULL
       }
@@ -714,7 +714,7 @@ create_styling_request <- function(
     text_range <- list(
       type = "FIXED_RANGE",
       startIndex = 0L,
-      endIndex = nchar(text)
+      endIndex = utf16_length(text)
     )
 
     if (length(ts@fields) > 0) {

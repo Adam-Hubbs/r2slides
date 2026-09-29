@@ -38,3 +38,17 @@ recursively_replace <- function(x, what, with) {
     }
   )
 }
+
+# Length of each string in UTF-16 code units, which is how the Slides API
+# counts text indices. Characters outside the BMP (e.g. emoji) take two units.
+utf16_length <- function(x) {
+  purrr::map_int(x, \(s) sum(1L + (utf8ToInt(s) > 0xFFFF)))
+}
+
+# A style_rule selector that always returns the same 1-based inclusive range.
+# A factory is used so `start`/`end` are captured by value.
+range_selector <- function(start, end) {
+  force(start)
+  force(end)
+  function() c(start, end)
+}

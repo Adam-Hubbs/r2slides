@@ -84,6 +84,38 @@ make_borders_ft <- function() {
     )
 }
 
+# Flextable whose body cell [1, y] mixes styles within one cell, mirroring
+# the "value + delta" cells flextable users build with as_paragraph().
+# Cell text: "74%" (bold 16pt) + "\n" (unstyled) + "▼ 62" (9pt red)
+make_rich_ft <- function() {
+  flextable::flextable(dplyr::tibble(x = c("A", "B"), y = c(1, 2))) |>
+    flextable::compose(
+      i = 1,
+      j = "y",
+      value = flextable::as_paragraph(
+        flextable::as_chunk(
+          "74%",
+          props = flextable::fp_text_default(bold = TRUE, font.size = 16)
+        ),
+        "\n",
+        flextable::as_chunk(
+          "▼ 62",
+          props = flextable::fp_text_default(color = "#D64550", font.size = 9)
+        )
+      )
+    )
+}
+
+# Find the requests of one type targeting a given cell
+find_cell_reqs <- function(reqs, type, row_idx, col_idx) {
+  purrr::keep(reqs, \(r) {
+    body <- r[[type]]
+    loc <- body$cellLocation %||% body$tableRange$location
+    !is.null(body) && loc$rowIndex == row_idx && loc$columnIndex == col_idx
+  }) |>
+    purrr::map(\(r) r[[type]])
+}
+
 # A fixed slide_position used across table request tests
 test_table_position <- function() {
   slide_position(top = 1, left = 1, width = 8, height = 5)

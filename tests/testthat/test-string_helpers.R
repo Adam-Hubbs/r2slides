@@ -137,3 +137,7 @@ test_that("`str_matches()` handles errors appropriately", {
   expect_snapshot(error = TRUE, str_matches("hello", NULL))
   expect_snapshot(error = TRUE, str_matches("hello", "["))
 })
+
+test_that("utf16_length() counts astral characters as two code units", {
+  expect_equal(utf16_length(c("abc", "▼", "\U0001F600", "")), c(3L, 1L, 2L, 0L))
+})
